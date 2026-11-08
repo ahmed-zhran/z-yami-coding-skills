@@ -1,0 +1,5 @@
+interface:
+  display_name: "Surface Architecture"
+  short_description: "Choose and enforce a surface's code architecture"
+policy:
+  allow_implicit_invocation: false

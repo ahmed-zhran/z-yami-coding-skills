@@ -1,4 +1,12 @@
-# mattpocock-skills
+# z-yami-coding-skills
+
+## 1.0.0
+
+### Major Changes
+
+- Forked [mattpocock/skills](https://github.com/mattpocock/skills) at `4ae2317` as z-yami-coding-skills. Every branch now records its base, and work lands back into that base: `start-work`, `land`, and `branch-lineage` handle worktrees, landing, and restacking. `release` runs release branches, version tags, and hotfixes, with `changelog` entries compiled at release. `surface-map`, `extract-surface`, `stack-decision`, and `surface-architecture` cover monorepo surfaces, stack choices, and code architecture per surface. `code-review` gains Security and Deep axes (`security-review`, `deep-review`). Also added: `debt`, `learnings`, `reflect`, `skill-eval`, `unslop`, `caveman`, `mermaid-validator`. Renamed `ask-matt` to `ask-yami` and `setup-matt-pocock-skills` to `setup-z-yami-coding-skills`. `AGENTS.md` is the only agent-instructions file. See `UPSTREAM.md` for the full divergence.
+
+## Upstream history (mattpocock-skills)
 
 ## 1.3.2
 

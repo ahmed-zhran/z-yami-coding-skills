@@ -34,7 +34,9 @@ Use this template for writing the PR body:
 
 ## Sections
 
-Skip all preambles and keep prose brief. Use the user's domain language from `GLOSSARY.md`.
+Skip all preambles and keep prose brief. Use the user's domain language from `GLOSSARY.md`. Before publishing, call the Skill tool with "unslop" on the body: humans read it.
+
+State the branch's base in the first line (`Lands into release/2`), and link the issue with `Part of #<n>` (or `Closes #<n>` when the base is the default branch).
 
 ### Summary
 

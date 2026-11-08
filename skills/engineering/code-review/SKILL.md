@@ -1,22 +1,27 @@
 ---
 name: code-review
-description: "Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes: Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/spec asked for?). Runs both reviews in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to \"review since X\"."
+description: "Review the changes since a fixed point (commit, branch, tag, or merge-base; default the branch's recorded base) along two axes: Standards (does the code follow this repo's documented coding standards and surface architecture?) and Spec (does the code match what the originating issue/spec asked for?), plus a Security axis on risky diffs and a Deep axis on request. Runs the axes in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to \"review since X\"."
 ---
 
-Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
+Two-axis review of the diff between `HEAD` and a fixed point:
 
 - **Standards**: does the code conform to this repo's documented coding standards?
 - **Spec**: does the code faithfully implement the originating issue / spec?
 
-Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings. Start every sub-agent with a fresh context window.
+Two more axes join when they apply:
 
-The issue tracker should have been provided to you. If not, tell the user to run `/setup-matt-pocock-skills`.
+- **Security**: when the diff is risky (step 3b), or the user asks.
+- **Deep**: only when the user asks for a deep, strict, or thermo-nuclear review (or passes `--deep`).
+
+All axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings. Start every sub-agent with a fresh context window.
+
+The issue tracker should have been provided to you. If not, tell the user to run `/setup-z-yami-coding-skills`.
 
 ## Process
 
 ### 1. Pin the fixed point
 
-Whatever the user said is the fixed point (a commit SHA, branch name, tag, `main`, `HEAD~5`, etc.). If they didn't specify one, ask for it.
+Whatever the user said is the fixed point (a commit SHA, branch name, tag, `main`, `HEAD~5`, etc.). If they didn't specify one, use the current branch's recorded base (`git config branch.<current>.base`, or the `**Base:**` of its issue; call the Skill tool with "branch-lineage" if you need to resolve it). Ask only when neither exists.
 
 Capture the diff command once: `git diff <fixed-point>...HEAD` (three-dot, so the comparison is against the merge-base). Also note the list of commits via `git log <fixed-point>..HEAD --oneline`.
 
@@ -33,7 +38,9 @@ Look for the originating spec, in this order:
 
 ### 3. Identify the standards sources
 
-Search the repo for every file that documents how code should be written. When `CODING_STANDARDS.md` or `CONTRIBUTING.md` exists, it must be on the list.
+Search the repo for every file that documents how code should be written. When `CODING_STANDARDS.md` or `CONTRIBUTING.md` exists, it must be on the list. So must the architecture doc of every surface the diff touches (`docs/agents/architecture/<surface>.md`) and `docs/agents/stack.md`: code in the wrong layer, an import the dependency rule forbids, or a second library for a slot `stack.md` already fills is a **hard** violation.
+
+**Cross-surface impact.** When `docs/agents/surfaces.md` exists and the diff changes a contract's source of truth, list that contract's consumers from the map. Each consumer the diff does not update (or that the spec does not explicitly leave alone) is a Standards finding.
 
 On top of whatever the repo documents, the Standards axis always carries the **smell baseline** below: a fixed set of Fowler code smells (_Refactoring_, ch.3) that applies even when a repo documents nothing. Two rules bind it:
 
@@ -55,9 +62,14 @@ Each smell reads *what it is* → *how to fix*; match it against the diff:
 - **Middle Man**: a class or function that mostly just delegates onward. → cut it, call the real target direct.
 - **Refused Bequest**: a subclass or implementer that ignores or overrides most of what it inherits. → drop the inheritance, use composition.
 
-### 4. Spawn both sub-agents in parallel
+### 3b. Decide the extra axes
 
-Issue both sub-agent calls together, in the foreground, and aggregate the reports they return.
+- **Security** joins when the diff touches any of: auth, sessions, permissions, personal or health data, payments, file uploads, raw SQL or dynamic queries, crypto or tokens, secrets or env config, new or bumped dependencies, infrastructure or CI config. Also when the user asks.
+- **Deep** joins only when the user asked for it.
+
+### 4. Spawn the sub-agents in parallel
+
+Issue all sub-agent calls together, in the foreground, and aggregate the reports they return.
 
 **Standards sub-agent prompt** should include:
 
@@ -73,11 +85,15 @@ Issue both sub-agent calls together, in the foreground, and aggregate the report
 
 If the spec is missing, skip the Spec sub-agent and note this in the final report.
 
+**Security sub-agent prompt** (when it joins): the diff command and commit list, and the instruction to call the Skill tool with "security-review" and follow it, returning its report.
+
+**Deep sub-agent prompt** (when it joins): the diff command, the architecture docs found in step 3, and the instruction to call the Skill tool with "deep-review" and follow it, returning its report.
+
 ### 5. Aggregate
 
-Present the two reports under `## Standards` and `## Spec` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings, because the two axes are deliberately separate (see _Why two axes_).
+Present the reports under `## Standards`, `## Spec`, and (when they ran) `## Security` and `## Deep` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings, because the axes are deliberately separate (see _Why two axes_).
 
-End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes: that's the reranking the separation exists to prevent.
+End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes: that's the reranking the separation exists to prevent. List any follow-up tickets the Deep axis proposed separately: they are not part of this change.
 
 ## Why two axes
 

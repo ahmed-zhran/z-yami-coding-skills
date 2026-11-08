@@ -1,34 +1,52 @@
 # Engineering
 
-Skills I use daily for code work.
+Skills for daily code work.
 
 ## User-invoked
 
 Reachable only when you type them (Claude Code: `disable-model-invocation: true`; Codex: `policy.allow_implicit_invocation: false` in `agents/openai.yaml`).
 
-- **[ask-matt](./ask-matt/SKILL.md)**: Ask which skill or flow fits your situation. A router over the user-invoked skills in this repo.
+- **[ask-yami](./ask-yami/SKILL.md)**: Ask which skill or flow fits your situation. A router over the skills in this repo.
+- **[setup-z-yami-coding-skills](./setup-z-yami-coding-skills/SKILL.md)**: Configure a repo for the engineering skills (issue tracker, triage labels, domain docs, branching policy, surface map). Run once per repo.
 - **[grill-with-docs](./grill-with-docs/SKILL.md)**: Grilling session that also builds your project's domain model, sharpening terminology and updating `GLOSSARY.md` and ADRs inline.
-- **[triage](./triage/SKILL.md)**: Move issues through a state machine of triage roles.
-- **[improve-codebase-architecture](./improve-codebase-architecture/SKILL.md)**: Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick.
-- **[setup-matt-pocock-skills](./setup-matt-pocock-skills/SKILL.md)**: Configure this repo for the engineering skills (issue tracker, triage labels, domain doc layout). Run once per repo.
-- **[to-spec](./to-spec/SKILL.md)**: Turn the current conversation into a spec and publish it to the issue tracker.
-- **[to-tickets](./to-tickets/SKILL.md)**: Break any plan, spec, or conversation into a set of tracer-bullet tickets, each declaring its blocking edges, whether as text in a local file or as native blocking links on a real tracker.
-- **[implement](./implement/SKILL.md)**: Build the work described by a spec or set of tickets, driving `/tdd` at pre-agreed seams and closing out with `/code-review` before committing.
-- **[implement-spec](./implement-spec/SKILL.md)**: Implement a whole spec on one integration branch. Works the tickets as a task graph, running implementer subagents across the ready frontier for maximum concurrency, then closes out with `/code-review`.
-- **[wayfinder](./wayfinder/SKILL.md)**: Plan a huge chunk of work (more than one agent session can hold) as a shared map of decision tickets on the issue tracker, resolved one at a time until the way to the destination is clear.
-- **[retro](./retro/SKILL.md)**: Suggest improvements to the coding agent's environment (navigation, automated checks, coding standards, steering files, tooling) after a session, most severe first.
+- **[wayfinder](./wayfinder/SKILL.md)**: Plan a huge chunk of work as a shared map of decision tickets on the issue tracker, resolved one at a time until the way is clear.
+- **[to-spec](./to-spec/SKILL.md)**: Turn the current conversation into a spec with a recorded base branch and publish it to the issue tracker.
+- **[to-tickets](./to-tickets/SKILL.md)**: Break a spec into tracer-bullet tickets, each declaring its blockers, its base branch, and its surfaces.
+- **[triage](./triage/SKILL.md)**: Move incoming issues through a state machine of triage roles; for bugs, find the affected version and set the base.
+- **[start-work](./start-work/SKILL.md)**: Start a ticket: cut its branch from the recorded base and open it in its own worktree.
+- **[implement](./implement/SKILL.md)**: Build one ticket with the smallest complete change, `/tdd` and `/code-review`, ending in a PR into its base.
+- **[implement-spec](./implement-spec/SKILL.md)**: Build a whole spec with parallel implementer subagents on one feature branch, ending in one PR for review.
+- **[land](./land/SKILL.md)**: After you approve a PR, merge it into its recorded base, close the issue, restack children, and clean up.
+- **[release](./release/SKILL.md)**: Start a release branch, finish it with version, changelog and tag, or ship a hotfix from a tag.
+- **[stack-decision](./stack-decision/SKILL.md)**: Choose a surface's framework or a library for a slot, recorded as an ADR and in `docs/agents/stack.md`.
+- **[surface-architecture](./surface-architecture/SKILL.md)**: Choose how code is organised inside one surface, write its architecture doc, and enforce it with lint.
+- **[extract-surface](./extract-surface/SKILL.md)**: Plan splitting one monorepo surface into its own repo, carrying exactly the context it needs.
+- **[improve-codebase-architecture](./improve-codebase-architecture/SKILL.md)**: Scan for deepening opportunities and drift from the architecture docs, present them as an HTML report, then grill through the one you pick.
+- **[debt](./debt/SKILL.md)**: Harvest `shortcut:` comments into a debt ledger and turn the due ones into issues.
+- **[reflect](./reflect/SKILL.md)**: After a session, turn its lessons into proposed edits to skills, `AGENTS.md`, and docs.
+- **[retro](./retro/SKILL.md)**: Suggest improvements to the coding agent's environment (navigation, automated checks, coding standards, tooling) after a session, most severe first.
 
 ## Model-invoked
 
 Model- or user-reachable (rich trigger phrasing so the model can reach for them).
 
-- **[prototype](./prototype/SKILL.md)**: Build a throwaway prototype to answer a design question: a single shareable HTML file for state/logic, or several toggleable UI variations.
-
-- **[diagnosing-bugs](./diagnosing-bugs/SKILL.md)**: Disciplined diagnosis loop for hard bugs and performance regressions: build a feedback loop that goes red on this bug → minimise → hypothesise → instrument → fix → regression-test.
-- **[research](./research/SKILL.md)**: Investigate a question against high-trust primary sources and capture the findings as a cited Markdown file in the repo, run as a background agent.
-- **[tdd](./tdd/SKILL.md)**: Test-driven development with a red-green-refactor loop. Builds features or fixes bugs one vertical slice at a time.
-- **[domain-modeling](./domain-modeling/SKILL.md)**: Actively build and sharpen a project's domain model by challenging terms, stress-testing with scenarios, and updating `GLOSSARY.md` and ADRs inline.
-- **[codebase-design](./codebase-design/SKILL.md)**: Shared discipline and vocabulary for designing deep modules: small interfaces, clean seams, testable through the interface.
-- **[code-review](./code-review/SKILL.md)**: Two-axis review of the diff since a fixed point: **Standards** (does it follow the repo's coding standards, plus a Fowler smell baseline?) and **Spec** (does it faithfully implement the originating issue/spec?), run as parallel sub-agents.
-- **[pr](./pr/SKILL.md)**: The shape a pull request body should take: a summary as the smallest visual that makes the change clear, before/after evidence that it works, and a merge-danger call (one-way or two-way door, plus blast radius).
-- **[wizard](./wizard/SKILL.md)**: Generate an interactive bash wizard that walks a human through steps only they can perform: provisioning infrastructure, setting up credentials or CI secrets, walking an unfamiliar third-party dashboard, or running a one-off migration or cutover.
+- **[branch-lineage](./branch-lineage/SKILL.md)**: Every branch records its base at any depth; procedures for resolving bases, starting work in worktrees, landing, and restacking.
+- **[surface-map](./surface-map/SKILL.md)**: Keep the map of monorepo surfaces, their contracts, and each surface's extraction context accurate.
+- **[setup-ts-deep-modules](./setup-ts-deep-modules/SKILL.md)**: Wire dependency-cruiser into a TypeScript repo so each package is a deep module reachable only through its entry files.
+- **[diagnosing-bugs](./diagnosing-bugs/SKILL.md)**: Disciplined diagnosis loop for hard bugs: decide where the fix lands, build a tight feedback loop, minimise, hypothesise, fix with a regression test, ship as a PR, record the cause.
+- **[tdd](./tdd/SKILL.md)**: Test-driven development with a red-green loop, one vertical slice at a time; risky logic always gets a test.
+- **[code-review](./code-review/SKILL.md)**: Review a branch against its base: Standards (including the surface architecture and cross-surface impact) and Spec, plus Security on risky diffs and Deep on request, as parallel sub-agents.
+- **[security-review](./security-review/SKILL.md)**: Exploit-focused security review of a diff, with adversarial validation of every finding.
+- **[deep-review](./deep-review/SKILL.md)**: Extremely strict maintainability audit that hunts for restructurings that delete complexity. Only on explicit request.
+- **[pr](./pr/SKILL.md)**: The shape a pull request body should take: the smallest visual that makes the change clear, before/after evidence, and a merge-danger call.
+- **[changelog](./changelog/SKILL.md)**: One changelog entry per user-visible change, compiled into a version bump and `CHANGELOG.md` section at release.
+- **[learnings](./learnings/SKILL.md)**: Solution notes in `docs/solutions/`: written after non-obvious fixes, read before work in the same area.
+- **[resolving-merge-conflicts](./resolving-merge-conflicts/SKILL.md)**: Resolve an in-progress merge or rebase conflict by intent, traced to each side's primary source.
+- **[prototype](./prototype/SKILL.md)**: Build a throwaway prototype to answer a design question: a single HTML file for state and logic, or toggleable UI variations.
+- **[research](./research/SKILL.md)**: Investigate a question against primary sources and capture the findings as a cited Markdown file, run as a background agent.
+- **[domain-modeling](./domain-modeling/SKILL.md)**: Build and sharpen the domain model: challenge terms, stress-test with scenarios, update `GLOSSARY.md` and ADRs inline.
+- **[codebase-design](./codebase-design/SKILL.md)**: Shared vocabulary for designing deep modules: small interfaces, clean seams, testable through the interface.
+- **[wizard](./wizard/SKILL.md)**: Generate an interactive bash wizard for steps only a human can perform: credentials, dashboards, one-off migrations.
+- **[mermaid-validator](./mermaid-validator/SKILL.md)**: Validate Mermaid diagrams in markdown before committing.
+- **[git-guardrails](./git-guardrails/SKILL.md)**: Hooks (Claude Code or Cursor) that block dangerous git commands, with careful and freeze modes.
+- **[setup-pre-commit](./setup-pre-commit/SKILL.md)**: Set up Husky pre-commit hooks with lint-staged, type checking, and tests.

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Land"
+  short_description: "Merge an approved PR into its base and restack"
+policy:
+  allow_implicit_invocation: false

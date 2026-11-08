@@ -1,0 +1,5 @@
+interface:
+  display_name: "Debt"
+  short_description: "Harvest shortcut: comments into a debt ledger"
+policy:
+  allow_implicit_invocation: false

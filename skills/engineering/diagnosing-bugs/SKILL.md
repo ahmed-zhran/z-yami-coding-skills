@@ -7,7 +7,20 @@ description: Diagnosis loop for hard bugs and performance regressions. Use when 
 
 A discipline for hard bugs. Skip phases only when explicitly justified.
 
-When exploring the codebase, read `GLOSSARY.md` (if it exists) to get a clear mental model of the relevant modules, and check ADRs in the area you're touching.
+When exploring the codebase, read `GLOSSARY.md` (if it exists) to get a clear mental model of the relevant modules, and check ADRs in the area you're touching. Search `docs/solutions/` for the symptom first (call the Skill tool with "learnings"): a note on this exact symptom is the best hypothesis you will get.
+
+## Where the fix lands
+
+Decide this before touching code, because it decides the branch:
+
+| The bug is in | The fix |
+|---------------|---------|
+| A PR still under review | Lives on that PR's branch. No new issue. |
+| Landed on an unreleased `release/<N>` (or a feature branch) | An issue with `**Base:**` that branch. No changelog entry: users never saw it. |
+| A shipped version (a tag on `main`) | A hotfix: tell the user to run `/release hotfix <tag>` first, which creates `hotfix/<slug>` and the issue's base. |
+| Only a local experiment | Wherever the user is working. |
+
+If the user just wants a quick diagnosis with no fix yet, skip this and go straight to Phase 1. Otherwise call the Skill tool with "branch-lineage" and, unless you are already on the right branch, follow its **start work** procedure for the bug's issue.
 
 ## Redact
 
@@ -136,3 +149,13 @@ Required before declaring done:
 - [ ] All `[DEBUG-...]` instrumentation removed (`grep` the prefix)
 - [ ] Throwaway prototypes deleted (or moved to a clearly-marked debug location)
 - [ ] The hypothesis that turned out correct is stated in the commit / PR message, so the next debugger learns
+
+## Phase 7: Ship and record
+
+When the fix is on a work branch (not a quick diagnosis):
+
+1. Call the Skill tool with "code-review", with the branch's base as the fixed point. Fix what it finds.
+2. If the bug shipped to users, call the Skill tool with "changelog" in **entry** mode (type `fixed`).
+3. Follow the **open the PR** procedure from "branch-lineage", then tell the user the PR is ready for review and `/land <pr>` merges it once approved. For a hotfix, remind them that `/release hotfix finish` comes after the land.
+4. If the cause was not obvious, call the Skill tool with "learnings" and write a solution note.
+5. If Phase 5 found no correct seam, say so plainly and recommend `/improve-codebase-architecture` on that area: the missing seam is the real finding.

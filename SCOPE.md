@@ -1,35 +1,19 @@
 # Scope
 
-This repo is the set of skills I use every day. It is curated: ideas are welcome, and each one is judged against the bar below. Issues are for tracking changes to the skills. Questions and discussion go to [GitHub Discussions](https://github.com/mattpocock/skills/discussions).
+This repo is the set of skills I (Ahmed) use every day to ship software: planning, branch lineage, implementation, review, release, and learning from each session. It is a personal, curated fork of [mattpocock/skills](https://github.com/mattpocock/skills); see [`UPSTREAM.md`](./UPSTREAM.md).
 
-## The bar
+## What belongs here
 
-An idea or feedback issue stays open only if it clears **both** parts:
+- **Engineering flow.** Anything that moves work from an idea to a released, tagged version, through specs, tickets, worktrees, PRs, and releases.
+- **Design at three levels.** Project surfaces, stack choices, and code architecture inside a surface.
+- **Quality and learning.** Review axes, debt tracking, solution notes, and skill improvement.
 
-1. **Observed failure.** It describes something that went wrong in a real session: what you ran, what the skill did, what you expected. A hypothetical improvement ("it would be better if...") does not clear this part.
-2. **Fits the philosophy.** It does not match anything in [`.out-of-scope/`](./.out-of-scope/) or a past rejection, and it is not a config option, a harness-specific branch, or a tweak to suit one person's workflow. Those belong in your own `CLAUDE.md` / `AGENTS.md`, or in a fork (skills.sh gives you an editable copy).
+## The bar for a change
 
-Size is irrelevant: a one-word fix and a rewrite face the same bar. Reactions and +1 comments do not count towards it.
-
-## By bucket
-
-- **`engineering/`, `productivity/`, `in-progress/`**: the bar above.
-- **`misc/`**: frozen and unmaintained. Every issue is closed. See [`frozen-misc-skills.md`](./.out-of-scope/frozen-misc-skills.md).
-- **New skills**: proposals and contributions are closed. If the behaviour composes from existing skills, it does not get a new one. See [`new-skills.md`](./.out-of-scope/new-skills.md).
+1. **Observed failure.** Something went wrong in a real session: what was run, what the skill did, what was expected. `/reflect` produces these.
+2. **Composes.** If the behaviour composes from existing skills, change those skills rather than adding a new one. A new skill earns its place by being reused across flows (model-invoked) or by being an entry point a human types (user-invoked).
+3. **Evaluated.** A changed skill passes `skill-eval` before it merges.
 
 ## Already decided
 
-Each file in [`.out-of-scope/`](./.out-of-scope/) records one rejected concept and why. Read them before filing:
-
-- [`frozen-misc-skills.md`](./.out-of-scope/frozen-misc-skills.md)
-- [`harness-name-collisions.md`](./.out-of-scope/harness-name-collisions.md)
-- [`mainstream-issue-trackers-only.md`](./.out-of-scope/mainstream-issue-trackers-only.md)
-- [`native-question-tool.md`](./.out-of-scope/native-question-tool.md)
-- [`new-skills.md`](./.out-of-scope/new-skills.md)
-- [`question-limits.md`](./.out-of-scope/question-limits.md)
-- [`setup-skill-verify-mode.md`](./.out-of-scope/setup-skill-verify-mode.md)
-- [`subagent-recursion.md`](./.out-of-scope/subagent-recursion.md)
-
-## Unclear issues
-
-An issue that can't be judged against the bar gets one round of questions and the `needs-info` label. With no reply from the reporter in 14 days, it is closed. Rejections close as "not planned".
+[`.out-of-scope/`](./.out-of-scope/) holds upstream's rejected concepts, kept as reasoning worth respecting. One no longer applies here: `new-skills.md` (this fork adds skills by design). `frozen-misc-skills.md` still describes `misc/`, which is now empty.

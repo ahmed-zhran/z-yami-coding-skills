@@ -31,6 +31,10 @@ When the shape of that interface is itself in question (how deep the module is, 
 - **Tautological**: the assertion recomputes the expected value the way the code does (`expect(add(a, b)).toBe(a + b)`, a snapshot derived by hand the same way, a constant asserted equal to itself), so it passes by construction and can never disagree with the code. Expected values must come from an independent source of truth: a known-good literal, a worked example, the spec.
 - **Horizontal slicing**: writing all tests first, then all implementation. Bulk tests verify _imagined_ behavior: you test the _shape_ of things rather than user-facing behavior, the tests go insensitive to real changes, and you commit to test structure before understanding the implementation. Work in **vertical slices** instead: one test → one implementation → repeat, each test a **tracer bullet** that responds to what the last cycle taught you.
 
+## What must be tested
+
+Not everything needs a test, but **risky logic** always does: anything with a branch, a loop, a parser, money, permissions, or security leaves at least one test at a seam, even when the seams were agreed narrowly. Layout, styling, configuration, and glue code that only wires existing pieces together need none. Trivial changes need none.
+
 ## Rules of the loop
 
 - **Red before green.** Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.

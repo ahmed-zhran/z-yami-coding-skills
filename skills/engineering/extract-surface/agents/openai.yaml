@@ -1,0 +1,5 @@
+interface:
+  display_name: "Extract Surface"
+  short_description: "Plan splitting a surface into its own repo"
+policy:
+  allow_implicit_invocation: false

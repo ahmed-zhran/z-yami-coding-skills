@@ -1,0 +1,5 @@
+interface:
+  display_name: "Stack Decision"
+  short_description: "Choose and record a surface's stack"
+policy:
+  allow_implicit_invocation: false

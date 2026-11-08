@@ -1,25 +1,13 @@
 # Contributing
 
-Every issue is judged against the bar in [`SCOPE.md`](./SCOPE.md). Read it first.
+This is a personal skills repo. Changes are judged against [`SCOPE.md`](./SCOPE.md).
 
-## Where each request goes
+## Making a change
 
-| You have | Go to |
-| --- | --- |
-| A bug in a skill | [Bug issue](https://github.com/mattpocock/skills/issues/new?template=bug.yml) |
-| A change to an existing skill | [Idea or feedback issue](https://github.com/mattpocock/skills/issues/new?template=idea.yml) |
-| A question, or "how do I...?" | [Discussions: Q&A](https://github.com/mattpocock/skills/discussions/categories/q-a) |
-| An idea for a new skill, or a skill to donate | [Discussions: Ideas](https://github.com/mattpocock/skills/discussions/categories/ideas) |
-| Support for another harness or issue tracker | [Discussions: Ideas](https://github.com/mattpocock/skills/discussions/categories/ideas), after you read [`.out-of-scope/`](./.out-of-scope) |
+1. Open an issue describing the observed failure (what you ran, what happened, what you expected). Repro first, one problem per issue, short.
+2. Branch from `main`, change the skill, and keep `README.md`, the bucket `README.md`, `.claude-plugin/plugin.json`, `ask-yami`, and `UPSTREAM.md` in sync (see [`AGENTS.md`](./AGENTS.md)).
+3. Run `skill-eval` on every skill you changed, and `npm run check-plugin-version`.
+4. Add a changeset (`npx changeset`) for any user-visible change.
+5. Open a PR. No em-dashes in prose.
 
-Pull requests are open to collaborators only, so describe the fix in an issue instead.
-
-## Issues written with AI
-
-Agents are welcome to help, but you post the issue, so you own it:
-
-- **One problem per issue.** Several findings from one session are several issues, or none.
-- **Short.** If it does not fit on one screen, cut it.
-- **Repro first.** The steps that show the problem come before any analysis.
-- **No pasted specs.** No full proposals, plans, or rewritten `SKILL.md` files. Describe the problem; the fix is ours to design.
-- **Not your project's issues.** If your agent files the specs or tickets for your own project here, it has the wrong repo. Run `/setup-matt-pocock-skills` in your project.
+If your agent is trying to file your own project's specs or tickets here, it has the wrong repo: run `/setup-z-yami-coding-skills` in your project.

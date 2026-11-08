@@ -1,0 +1,3 @@
+interface:
+  display_name: "Mermaid Validator"
+  short_description: "Validate Mermaid diagrams in markdown"

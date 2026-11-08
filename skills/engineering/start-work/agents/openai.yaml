@@ -1,0 +1,5 @@
+interface:
+  display_name: "Start Work"
+  short_description: "Cut a ticket branch from its base in a worktree"
+policy:
+  allow_implicit_invocation: false

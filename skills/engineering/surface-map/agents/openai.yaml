@@ -1,0 +1,3 @@
+interface:
+  display_name: "Surface Map"
+  short_description: "Map monorepo surfaces and their contracts"
