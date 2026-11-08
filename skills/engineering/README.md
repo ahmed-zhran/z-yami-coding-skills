@@ -21,6 +21,7 @@ Reachable only when you type them (Claude Code: `disable-model-invocation: true`
 - **[stack-decision](./stack-decision/SKILL.md)**: Choose a surface's framework or a library for a slot, recorded as an ADR and in `docs/agents/stack.md`.
 - **[surface-architecture](./surface-architecture/SKILL.md)**: Choose how code is organised inside one surface, write its architecture doc, and enforce it with lint.
 - **[extract-surface](./extract-surface/SKILL.md)**: Plan splitting one monorepo surface into its own repo, carrying exactly the context it needs.
+- **[software-factory](./software-factory/SKILL.md)**: Shared language for designing a software factory (agents that turn issues, PRs, and schedules into merged code): the tasks it runs and the services it plugs into. Call it alongside a grilling session.
 - **[improve-codebase-architecture](./improve-codebase-architecture/SKILL.md)**: Scan for deepening opportunities and drift from the architecture docs, present them as an HTML report, then grill through the one you pick.
 - **[debt](./debt/SKILL.md)**: Harvest `shortcut:` comments into a debt ledger and turn the due ones into issues.
 - **[reflect](./reflect/SKILL.md)**: After a session, turn its lessons into proposed edits to skills, `AGENTS.md`, and docs.

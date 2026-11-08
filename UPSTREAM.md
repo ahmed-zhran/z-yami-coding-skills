@@ -17,7 +17,7 @@ Conflicts land almost entirely in the **changed** skills below. For each, keep u
 
 ## Kept as upstream
 
-grill-with-docs, wayfinder, prototype, research, domain-modeling, codebase-design, wizard, retro, grill-me, grilling, teach, to-questionnaire, wait-what, writing-for-agents, setup-pre-commit, software-factory (in-progress).
+grill-with-docs, wayfinder, prototype, research, domain-modeling, codebase-design, wizard, retro, grill-me, grilling, teach, to-questionnaire, wait-what, writing-for-agents, setup-pre-commit.
 
 ## Changed
 
@@ -38,6 +38,7 @@ grill-with-docs, wayfinder, prototype, research, domain-modeling, codebase-desig
 | `handoff` | Absorbs `claude-handoff` as `--bg` (Claude Code or Cursor background agent) |
 | `git-guardrails-claude-code` → `git-guardrails` | Moved from `misc/`; Cursor support; allows normal work-branch pushes; careful and freeze modes |
 | `setup-ts-deep-modules` | Moved from `in-progress/` to `engineering/`; now model-invoked so `surface-architecture` can call it |
+| `software-factory` | Moved from `in-progress/` to `engineering/` (promoted); content unchanged |
 | `resolving-merge-conflicts` | Restored from upstream history (removed in v1.3.0), needed for restacking |
 
 ## Added

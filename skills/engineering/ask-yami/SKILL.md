@@ -53,6 +53,7 @@ Decide these before the first ticket of a new surface, and revisit when they sto
 - **`/stack-decision`** picks a surface's framework or a library for a slot, and records an ADR and `docs/agents/stack.md`.
 - **`/surface-architecture`** picks how code is organised inside a surface (feature modules, page-based, clean, vertical slices), writes its architecture doc, and enforces the dependency rule with lint (via `/setup-ts-deep-modules` for TypeScript).
 - **`/extract-surface`** plans splitting a surface into its own repo from its extraction context.
+- **`/software-factory`**: run alongside `/grill-me` when designing automation where agents pick up issues and PRs on their own (triggers, runners, orchestrator, human checkpoints).
 
 ## Review
 

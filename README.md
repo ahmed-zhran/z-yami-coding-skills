@@ -78,6 +78,7 @@ Bugs: `/diagnosing-bugs` on a ticket based on the release branch, or `/release h
 - **[stack-decision](./skills/engineering/stack-decision/SKILL.md)**: Choose and record a surface's stack.
 - **[surface-architecture](./skills/engineering/surface-architecture/SKILL.md)**: Choose, document, and enforce a surface's code architecture.
 - **[extract-surface](./skills/engineering/extract-surface/SKILL.md)**: Plan splitting a surface into its own repo.
+- **[software-factory](./skills/engineering/software-factory/SKILL.md)**: Shared language for designing a factory of agents that turns issues and PRs into merged code.
 - **[improve-codebase-architecture](./skills/engineering/improve-codebase-architecture/SKILL.md)**: Find deepening opportunities and architecture drift.
 - **[debt](./skills/engineering/debt/SKILL.md)**: Harvest `shortcut:` comments into a debt ledger.
 - **[reflect](./skills/engineering/reflect/SKILL.md)**: Turn a session's lessons into skill and doc edits.

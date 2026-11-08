@@ -37,6 +37,7 @@
     "./skills/engineering/stack-decision",
     "./skills/engineering/surface-architecture",
     "./skills/engineering/extract-surface",
+    "./skills/engineering/software-factory",
     "./skills/engineering/improve-codebase-architecture",
     "./skills/engineering/debt",
     "./skills/engineering/reflect",
