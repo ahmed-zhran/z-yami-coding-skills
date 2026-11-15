@@ -1,5 +1,13 @@
 # z-yami-coding-skills
 
+## 1.3.0
+
+### Minor Changes
+
+- [`04889de`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/04889de4581452961688619ee2116001909b487f) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - `/ship-spec` and `/ship-release` open one session per ready ticket on Herdr Desktop (`HC_TERMINAL_ID`) as well as on the Herdr TUI (`HERDR_ENV=1`). The Desktop path uses the vendored `herdr-core` and `herdr-app` skills.
+
+- [`f5f426b`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/f5f426bddc50797aaa248c953862767da3b9aa10) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - `/ship-spec` ships one spec through its tickets until `spec/<issue>` lands in the release. `/ship-release` runs that same procedure once per feature, then tests and tags.
+
 ## 1.2.0
 
 ### Minor Changes
