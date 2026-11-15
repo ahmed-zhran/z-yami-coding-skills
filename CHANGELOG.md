@@ -1,5 +1,11 @@
 # z-yami-coding-skills
 
+## 1.4.1
+
+### Patch Changes
+
+- [`0b95d7c`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/0b95d7cd33d3cd1a356152b4bdd69b248e8a80f4) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - `/ship-spec` and `/ship-release` (and their flows) steer ticket panes by reading the screen on a short loop, not only when `hc` reports `blocked`. Cursor allowlist dialogs ("Run this command?") often stay `working`; the parent clears each with a run-once `y`.
+
 ## 1.4.0
 
 ### Minor Changes
