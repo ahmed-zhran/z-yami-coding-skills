@@ -54,7 +54,7 @@ Only after the user approves the release.
 
 1. **Freeze.** Every open issue whose lineage reaches `release/<N>` has landed, or its `Base:` now names a later release. Stop while that list is non-empty.
 2. **Version and changelog.** Call the Skill tool with "changelog" in **compile** mode for `release/<N>`.
-3. **Write the gate** on the release branch, boxes open, using the checklist below. Commit it with the version bump.
+3. **Write the gate** on the release branch, boxes open, by copying `pending-release.md` from the `release` skill's directory. Commit it with the version bump.
 4. **Release pull request** into `main`. Call the Skill tool with "pr". The evidence is the compiled changelog and the green CI run. Tell the user to review it, then stop.
 5. **After approval:** follow **land** from "branch-lineage" with a merge commit. Never squash a release.
 6. **Tag and publish.** Tag the merge commit on `main` (`v<version>`), push the tag, and publish notes from the new `CHANGELOG.md` section. If the project deploys from tags, say so before pushing the tag.
@@ -64,23 +64,7 @@ Done when the tag is on `main`, the notes are published, the release branch is g
 
 ## Pending checklist
 
-Write this as `docs/agents/pending-release.md`. Fill in the version and tag. Leave every box open.
-
-```markdown
-# Pending release actions
-
-Release <version> (<tag>) is on main. The next release cannot start while a blocking box is open. Check a box only after that work is done, in a commit on the default branch.
-
-## Blocking
-
-- [ ] Retro for this release (`/retro`)
-- [ ] Reflect: edits to skills or docs from this release, or a one-line note that there were none (`/reflect`)
-- [ ] ADRs this release touched, re-read. Mark any the code now violates
-- [ ] Architecture drift and deepening (`/improve-codebase-architecture`)
-- [ ] Risk and repo-scale note: what got harder to change, and whether any surface should leave the repo (`/extract-surface` only if one should)
-- [ ] Human decisions still open, written as questions. Write "none" if there are none
-- [ ] Skills update accepted (`/sync-skills`)
-```
+Copy `pending-release.md` from the `release` skill's directory to `docs/agents/pending-release.md`. Fill in the version and tag. Leave every box open. That file is the list, including the learnings and debt boxes.
 
 Security review and human testing are step 4's stops. They are not a second copy of this list.
 

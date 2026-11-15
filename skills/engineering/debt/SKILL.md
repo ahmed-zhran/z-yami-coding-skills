@@ -12,7 +12,7 @@ disable-model-invocation: true
 shortcut: <the limit>, <when to upgrade>
 ```
 
-For example `// shortcut: loads all rows into memory, paginate past ~10k clinics`. This skill harvests them so "later" does not become "never".
+For example `// shortcut: loads all rows into memory, paginate past ~10k clinics`. This skill harvests them so "later" does not become "never". The post-release gate blocks the next release until `docs/debt.md` lists every marker and every due item is an issue or explicitly kept.
 
 ## Process
 

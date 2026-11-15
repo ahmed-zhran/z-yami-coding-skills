@@ -30,7 +30,7 @@ Every spec and ticket carries a `**Base:**` line, written when that issue is cre
      - **The whole release**: **`/ship-release <N>`** names every feature, runs the `/ship-spec` procedure once per feature, then tests and tags. Two features are two specs, finished one after the other.
    - **No.** It is still one ticket, and the ticket already has a `**Base:**`. **`/implement`** builds that ticket and opens the PR into the recorded base. It stops when the issue has no base. You review it, then **`/land`**.
 5. **`/release finish <N>`** freezes the release, compiles the changelog and version bump, writes the post-release gate, opens the release PR into `main`, lands it after your approval, tags it, and publishes the notes. Human testing, `code-review`, and `security-review` of the release diff happen before that tag. **`/ship-release`** includes this step. Skip it when `/ship-release` already tagged.
-6. **The gate blocks the next release.** `docs/agents/pending-release.md` lands on `main` with open boxes: `/retro`, `/reflect`, an ADR pass, `/improve-codebase-architecture`, a risk and repo-scale note, any human decision still open, and `/sync-skills`. Clear them by doing the work. The next `/release start` or `/ship-release` refuses while a box is open.
+6. **The gate blocks the next release.** `docs/agents/pending-release.md` lands on `main` with open boxes: `/retro`, `/reflect`, `/learnings`, `/debt`, an ADR pass, `/improve-codebase-architecture`, a risk and repo-scale note, any human decision still open, and `/sync-skills`. Clear them by doing the work. The next `/release start` or `/ship-release` refuses while a box is open.
 
 ### Context hygiene
 
@@ -68,8 +68,8 @@ Decide these before the first ticket of a new surface, and revisit when they sto
 ## Codebase health and learning
 
 - **`/improve-codebase-architecture`**: in a spare moment, find deepening opportunities and drift from the architecture docs. Picking one generates an idea for `/grill-with-docs`. Also one box on the post-release gate.
-- **`/debt`**: harvest `shortcut:` comments into a ledger and issues.
-- **`/learnings`**: solution notes in `docs/solutions/`, written after non-obvious fixes and read before work in the same area (model-invoked).
+- **`/debt`**: harvest `shortcut:` comments into a ledger and issues. One box on the post-release gate.
+- **`/learnings`**: solution notes in `docs/solutions/`, written after non-obvious fixes and read before work in the same area (model-invoked). One box on the post-release gate: every non-obvious fix from the release has a note, or the gate says there were none.
 - **`/reflect`** and **`/retro`**: boxes on the post-release gate. `/retro` improves the environment (checks, tooling). `/reflect` turns the session's lessons into edits to skills and docs.
 - **`/sync-skills`**: replace installed skills from this package with the published version. It refuses a locally edited skill file and does not touch skills from anywhere else. One box on the post-release gate.
 - **`/skill-eval`**: score a skill and test its trigger before changing it.

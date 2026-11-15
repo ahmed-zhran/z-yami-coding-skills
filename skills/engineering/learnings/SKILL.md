@@ -9,6 +9,8 @@ Every non-obvious problem solved once should be cheap to solve the second time. 
 
 This is not the glossary (`GLOSSARY.md` holds terms) and not ADRs (`docs/adr/` holds decisions). A note holds an **episode**: a problem and its cause.
 
+Write the note when the fix happens. The post-release gate also blocks the next release until this release's non-obvious fixes each have a note, or the gate file says there were none.
+
 ## Read before you work
 
 Before diagnosing a bug or implementing in an area, search the notes:

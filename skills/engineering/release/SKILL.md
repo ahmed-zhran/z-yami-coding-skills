@@ -37,7 +37,7 @@ Record the decision as an ADR (call the Skill tool with "domain-modeling" for th
 
 1. **Freeze.** List every open issue whose lineage reaches `release/<N>`. Each must land or be re-based onto the next release (update its `Base:`). Stop until that list is empty.
 2. **Version and changelog.** Call the Skill tool with "changelog" in **compile** mode for `release/<N>`. It bumps the version and writes the `CHANGELOG.md` section on the release branch.
-3. **Gate for the next release.** On the release branch, write `docs/agents/pending-release.md` with the checklist below. Fill in the version and tag you are about to cut. Leave every box open. Commit it with the version bump. `/ship-release` writes this same list.
+3. **Gate for the next release.** On the release branch, copy `pending-release.md` from this skill's directory to `docs/agents/pending-release.md`. Fill in the version and tag you are about to cut. Leave every box open. Commit it with the version bump. `/ship-release` copies that same file.
 4. **Release PR.** Open a PR from `release/<N>` into `main` (call the Skill tool with "pr"; the evidence section is the compiled changelog and the green CI run). Tell the user to review it, then stop.
 5. **When the user confirms approval:** follow the **land** procedure from "branch-lineage" with a merge commit (never squash a release).
 6. **Tag and publish.** Tag the merge commit `v<version>`, push the tag, and publish release notes from the new `CHANGELOG.md` section (`gh release create v<version> --notes-file <section>`).
@@ -47,23 +47,7 @@ Done when the tag is on `main`, the release notes are published, the release bra
 
 ### Pending checklist
 
-Keep this list identical to the one in `release-flow`.
-
-```markdown
-# Pending release actions
-
-Release <version> (<tag>) is on main. The next release cannot start while a blocking box is open. Check a box only after that work is done, in a commit on the default branch.
-
-## Blocking
-
-- [ ] Retro for this release (`/retro`)
-- [ ] Reflect: edits to skills or docs from this release, or a one-line note that there were none (`/reflect`)
-- [ ] ADRs this release touched, re-read. Mark any the code now violates
-- [ ] Architecture drift and deepening (`/improve-codebase-architecture`)
-- [ ] Risk and repo-scale note: what got harder to change, and whether any surface should leave the repo (`/extract-surface` only if one should)
-- [ ] Human decisions still open, written as questions. Write "none" if there are none
-- [ ] Skills update accepted (`/sync-skills`)
-```
+The list is `pending-release.md` in this skill's directory. `release-flow` copies that file. Learnings and debt are blocking boxes, with retro and reflect.
 
 ## `hotfix <tag>`
 
@@ -85,4 +69,4 @@ For a bug in a shipped version.
 - Tag the merge commit on `main`, never a commit on the release branch: the tag must be reachable from `main`.
 - An unreleased bug (found on `release/<N>` before `finish`) is not a hotfix: it is an ordinary ticket based on `release/<N>`.
 - If the project deploys from tags, `finish` step 6 is the deploy. Say so before pushing the tag; it is a one-way door.
-- The pending-release gate blocks the next `/release start` and `/ship-release`. It does not block `/release hotfix`. A shipped bug is not the next release. `hotfix finish` does not replace an existing `docs/agents/pending-release.md`. If that file is missing, write the pending checklist for the patch tag so the next release still has a gate.
+- The pending-release gate blocks the next `/release start` and `/ship-release`. It does not block `/release hotfix`. A shipped bug is not the next release. `hotfix finish` does not replace an existing `docs/agents/pending-release.md`. If that file is missing, copy `pending-release.md` from this skill's directory for the patch tag so the next release still has a gate.

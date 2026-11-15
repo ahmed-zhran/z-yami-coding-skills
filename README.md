@@ -97,7 +97,7 @@ for each ticket:  /ship-ticket <n>     (or /start-work, /implement, you review, 
 | **Bugs** | A bug ticket lands into the open release, a hotfix cut from the production tag, or `main` when no release is open. |
 | **Surfaces** | A map of each app, service, and package, the contracts between them, and the context an agent needs. |
 | **Review** | Standards and Spec on the diff, an exploit-focused Security axis on risky diffs, and a strict Deep axis when you ask. |
-| **Learning** | A solution note after a non-obvious fix, a retro after the tag, and a skill evaluator. |
+| **Learning** | A solution note after a non-obvious fix, a debt ledger and a retro after the tag, and a skill evaluator. |
 
 ## Reference
 

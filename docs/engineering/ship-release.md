@@ -25,7 +25,7 @@ A previous release's `docs/agents/pending-release.md` must have no open blocking
 
 ## The gate
 
-The leading word is the **gate**. Before the tag you test the release yourself, and the release diff gets a security review. After the tag, `docs/agents/pending-release.md` is on `main` with open boxes: retro, reflect, the ADRs the release touched, architecture drift, a risk and repo-scale note, any decision only a human can make, and a skills update. Checking a box means that work is done. The next `/ship-release` or `/release start` refuses while one is open.
+The leading word is the **gate**. Before the tag you test the release yourself, and the release diff gets a security review. After the tag, `docs/agents/pending-release.md` is on `main` with open boxes: retro, reflect, learnings, debt, the ADRs the release touched, architecture drift, a risk and repo-scale note, any decision only a human can make, and a skills update. Checking a box means that work is done. The next `/ship-release` or `/release start` refuses while one is open.
 
 Tickets that are still blocked do not get a session. When one lands, the tickets it was blocking can start.
 
