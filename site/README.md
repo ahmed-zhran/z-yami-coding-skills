@@ -1,4 +1,4 @@
-# Yami Coding
+# z-yami-coding-skills
 
 The site for this repo. Source lives in `site/`. GitHub Pages publishes it from this repo.
 

@@ -8,13 +8,13 @@
 
 [![Release 1.2.0](https://img.shields.io/github/v/release/ahmed-zhran/z-yami-coding-skills?style=flat-square&color=8eb6ff&label=release)](https://github.com/ahmed-zhran/z-yami-coding-skills/releases/tag/v1.2.0)
 [![MIT license](https://img.shields.io/github/license/ahmed-zhran/z-yami-coding-skills?style=flat-square&color=1c2030)](./LICENSE)
-[![Site](https://img.shields.io/badge/site-yami--coding-11131c?style=flat-square)](https://ahmed-zhran.github.io/z-yami-coding-skills)
+[![Site](https://img.shields.io/badge/site-z--yami--coding--skills-11131c?style=flat-square)](https://ahmed-zhran.github.io/z-yami-coding-skills)
 
 </div>
 
 [Installation](#installation) · [Quick start](#quick-start) · [What it does](#what-it-does) · [Reference](#reference) · [Site](https://ahmed-zhran.github.io/z-yami-coding-skills)
 
-61 skills in the `z-yami-coding-skills` plugin. A release, a spec, and a ticket each record a base when the issue is created, and the agent lands into that base. You approve before a pull request merges and before a release is tagged. The site is [yami-coding](https://ahmed-zhran.github.io/z-yami-coding-skills).
+61 skills in the `z-yami-coding-skills` plugin. A release, a spec, and a ticket each record a base when the issue is created, and the agent lands into that base. You approve before a pull request merges and before a release is tagged. The site is [z-yami-coding-skills](https://ahmed-zhran.github.io/z-yami-coding-skills).
 
 ## Requirements
 
@@ -182,7 +182,7 @@ for each ticket:  /ship-ticket <n>     (or /start-work, /implement, you review, 
 
 ## Documentation
 
-The site walks the same flow: [yami-coding](https://ahmed-zhran.github.io/z-yami-coding-skills). Skill pages that have one live under [`docs/`](./docs).
+The site walks the same flow: [z-yami-coding-skills](https://ahmed-zhran.github.io/z-yami-coding-skills). Skill pages that have one live under [`docs/`](./docs).
 
 ## Upgrading
 
