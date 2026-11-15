@@ -1,5 +1,15 @@
 # z-yami-coding-skills
 
+## 1.1.0
+
+### Minor Changes
+
+- [`9de731b`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/9de731bc9b715d488545b14e730327bf22858706) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - Promoted `software-factory` from `in-progress/` to `engineering/`: it now ships in the plugin and is listed in the README and `ask-yami`.
+
+- [`3962423`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/39624239e51d9f8fc77eef306b5c56a0deea6caa) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - Add `/ship-ticket` and `/ship-release` so one command runs a ticket or a whole release, with each ready ticket in its own Herdr pane. A post-release gate blocks the next release until retro, architecture, risk, and `/sync-skills` are done. `/sync-skills` updates skills from this package only and refuses to overwrite a locally edited skill file.
+
+  Vendor Herdr's control skill at `v0.9.5` and the Herdr agent guide. Pins and the check for a newer upstream release live in `.agents/external-skills.md`.
+
 ## 1.0.0
 
 ### Major Changes
