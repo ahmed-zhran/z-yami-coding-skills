@@ -1,32 +1,29 @@
-<p align="center">
-  <img src="docs/brand/header.svg" alt="Yami Coding. Ahmed Zhran. 57 skills for release, spec, and ticket." width="100%">
-</p>
+<div align="center">
 
-<p align="center">
-  <a href="https://ahmed-zhran.github.io/yami-coding"><img alt="Site" src="https://img.shields.io/badge/site-yami--coding-8eb6ff?style=flat-square"></a>
-  <img alt="57 skills" src="https://img.shields.io/badge/skills-57-11131c?style=flat-square">
-  <img alt="Agentic workflow" src="https://img.shields.io/badge/workflow-agentic%20coding-1c2030?style=flat-square">
-  <img alt="Release, spec, ticket" src="https://img.shields.io/badge/levels-release%20%C2%B7%20spec%20%C2%B7%20ticket-ffd8a8?style=flat-square&labelColor=11131c">
-  <a href="./LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-1c2030?style=flat-square"></a>
-</p>
+<img src="docs/brand/header.svg" alt="Yami Coding. Ahmed Zhran. 57 skills for release, spec, and ticket." width="880">
 
-<p align="center">
-  <strong>Ahmed Zhran's agent skills for shipping software.</strong><br>
-  A spec, a ticket, and a release each have a branch. The agent lands into the base written on the issue. The site is <a href="https://ahmed-zhran.github.io/yami-coding">yami-coding</a>.
-</p>
+# Yami Coding
 
-| | | |
-| --- | --- | --- |
-| **Lineage** | Every issue records its base when it is created. A spec ticket lands into `spec/<issue>`. That spec lands into `release/<N>`. The release lands on `main`. | `/land` |
-| **Release** | `/ship-release` publishes every spec the release needs, one Herdr pane per ready ticket, and tags only after you approve. | `/ship-release` |
-| **Bugs** | A bug ticket lands into the open release, a hotfix cut from the production tag, or `main` when no release is open. | `/triage` |
-| **Surfaces** | A map of each app, service, and package, the contracts between them, and the context an agent needs. | `/surface-map` |
-| **Review** | Standards, Spec, an exploit-focused Security axis on risky diffs, and a strict Deep axis when you ask. | `/code-review` |
-| **Learning** | Solution notes after non-obvious fixes, a retro after the tag, and a skill evaluator. | `/retro` |
+**Ahmed Zhran's agent skills for shipping software.**
 
-## Install
+[![Release 1.2.0](https://img.shields.io/github/v/release/ahmed-zhran/z-yami-coding-skills?style=flat-square&color=8eb6ff&label=release)](https://github.com/ahmed-zhran/z-yami-coding-skills/releases/tag/v1.2.0)
+[![MIT license](https://img.shields.io/github/license/ahmed-zhran/z-yami-coding-skills?style=flat-square&color=1c2030)](./LICENSE)
+[![Site](https://img.shields.io/badge/site-yami--coding-11131c?style=flat-square)](https://ahmed-zhran.github.io/yami-coding)
 
-Pick one route per agent; installing both gives you every skill twice.
+</div>
+
+[Installation](#installation) · [Quick start](#quick-start) · [What it does](#what-it-does) · [Reference](#reference) · [Site](https://ahmed-zhran.github.io/yami-coding)
+
+57 skills in the `z-yami-coding-skills` plugin. A release, a spec, and a ticket each record a base when the issue is created, and the agent lands into that base. You approve before a pull request merges and before a release is tagged. The site is [yami-coding](https://ahmed-zhran.github.io/yami-coding).
+
+## Requirements
+
+- Claude Code, Codex, or another agent that [skills.sh](https://skills.sh) can install into (Cursor, OpenCode, Windsurf, Devin, Amp, Pi).
+- `/ship-release` runs inside [Herdr](https://herdr.dev). The session must have `HERDR_ENV=1`. The other skills do not need Herdr.
+
+## Installation
+
+Pick one route per agent. Installing both gives you every skill twice.
 
 **Claude Code** (plugin, updates when the version changes):
 
@@ -50,20 +47,18 @@ npx skills@latest add ahmed-zhran/z-yami-coding-skills -a <agent>  # cursor, ope
 
 When the installer asks which skills to take, include `setup-z-yami-coding-skills`. To update, run `npx skills@latest update`, and re-run `add` to pick up new skills.
 
-**Local development** of these skills: `scripts/link-skills.sh` symlinks every skill into `~/.claude/skills` and `~/.agents/skills`, so a `git pull` updates them.
-
-## Get started
+## Quick start
 
 1. Run **`/setup-z-yami-coding-skills`** once per repo. It configures the issue tracker, triage labels, domain docs, the branching policy, and (in a monorepo) the surface map.
-2. Run **`/ask-yami`** whenever you are unsure which skill fits.
+2. Run **`/ask-yami`** when you are unsure which skill fits. It names the next command and stops.
 
-## The main flow
+A whole release, after setup, is one command. It needs Herdr, as noted above.
 
 ```text
 /ship-release 2
 ```
 
-That one command shapes the release, builds each ready ticket in its own Herdr pane, waits for you to approve each pull request, tests, and tags after you approve the release. The next release waits until you clear `docs/agents/pending-release.md`.
+That shapes the release, builds each ready ticket in its own pane, and waits at four stops: the ticket list, each ticket's pull request into `spec/<issue>`, that spec's pull request into the release, and the release itself. The tag happens after you approve the last stop. The next release waits until you clear `docs/agents/pending-release.md`.
 
 The same cycle, one phase at a time:
 
@@ -74,9 +69,26 @@ for each ticket:  /ship-ticket <n>     (or /start-work, /implement, you review, 
 /release finish 2
 ```
 
-`/ship-ticket` is one ticket from branch to merge. `/implement-spec` is the other build door: every ticket on one branch and one pull request, not a release across panes.
+`/ship-ticket` is one ticket from branch to merge. `/implement-spec` builds every ticket of one spec on that spec's branch and opens one pull request. A bug uses `/diagnosing-bugs`. If the bug already shipped, `/release hotfix <tag>` comes first.
 
-Bugs: `/diagnosing-bugs` on a ticket based on the release branch, or `/release hotfix <tag>` first when the bug shipped.
+## What it does
+
+| Phase | You type | You get |
+| --- | --- | --- |
+| Setup | `/setup-z-yami-coding-skills` | Tracker, labels, branching, and a surface map in a monorepo |
+| Shape | `/grill-with-docs`, `/to-spec`, `/to-tickets` | One spec per feature, then tickets, each with a recorded base |
+| One ticket | `/ship-ticket` | A branch cut from that base, through an approved merge |
+| One spec | `/implement-spec` | Every ticket of one spec, one pull request into the release |
+| Release | `/ship-release` | Every spec the release needs, then a tag after you approve |
+| After the tag | `/sync-skills` | This package's skills updated, plus migration records for files the package writes |
+
+| | |
+| --- | --- |
+| **Lineage** | A spec ticket lands into `spec/<issue>`. That spec lands into `release/<N>`. The release lands on `main`. The checked-out branch is never the base. |
+| **Bugs** | A bug ticket lands into the open release, a hotfix cut from the production tag, or `main` when no release is open. |
+| **Surfaces** | A map of each app, service, and package, the contracts between them, and the context an agent needs. |
+| **Review** | Standards and Spec on the diff, an exploit-focused Security axis on risky diffs, and a strict Deep axis when you ask. |
+| **Learning** | A solution note after a non-obvious fix, a retro after the tag, and a skill evaluator. |
 
 ## Reference
 
@@ -155,8 +167,30 @@ Bugs: `/diagnosing-bugs` on a ticket based on the release branch, or `/release h
 - **[caveman](./skills/productivity/caveman/SKILL.md)**: Terse chat replies; files stay full prose.
 - **[skill-eval](./skills/productivity/skill-eval/SKILL.md)**: Score a skill and test its trigger.
 
+## Documentation
+
+The site walks the same flow: [yami-coding](https://ahmed-zhran.github.io/yami-coding). Skill pages that have one live under [`docs/`](./docs).
+
+## Upgrading
+
+Run **`/sync-skills`**. It shows the changelog, waits for you to accept, updates skills installed from this package, and applies migration records for files the package writes (such as `docs/agents/branching.md`). If one of those skill files has local edits, it stops and shows the diff. Skills from other packages stay as they are.
+
+## Changelog
+
+See [`CHANGELOG.md`](./CHANGELOG.md). The current release is [v1.2.0](https://github.com/ahmed-zhran/z-yami-coding-skills/releases/tag/v1.2.0).
+
+## Contributing
+
+See [`CONTRIBUTING.md`](./CONTRIBUTING.md). Issues use the templates in [`.github/ISSUE_TEMPLATE`](./.github/ISSUE_TEMPLATE). Pull requests are for collaborators.
+
+To work on these skills locally, `scripts/link-skills.sh` symlinks every skill into `~/.claude/skills` and `~/.agents/skills`, so a `git pull` updates them.
+
 ## Credits
 
-Yami Coding is Ahmed Zhran's package. The repository license is MIT (`LICENSE`). `herdr`, `herdr-guide`, `security-review`, `caveman`, and `skill-eval` are Apache-2.0, and each of those folders includes the Apache license text.
+Yami Coding is Ahmed Zhran's package. `herdr`, `herdr-guide`, `security-review`, `caveman`, and `skill-eval` are Apache-2.0, and each of those folders includes the Apache license text.
 
 The agentic workflow uses [mattpocock/skills](https://github.com/mattpocock/skills) (MIT) as a base. [`UPSTREAM.md`](./UPSTREAM.md) lists what was kept, changed, added, and dropped. Also adapted, with credit: [security-specialist](https://github.com/fabricioctelles/skills/tree/main/skills/security-specialist) and [skill-evaluation](https://github.com/fabricioctelles/skills/tree/main/skills/skill-evaluation) by Fabricio Telles (Apache-2.0), [caveman](https://github.com/JuliusBrussee/caveman) by Julius Brussee (Apache-2.0), [ponytail](https://github.com/DietrichGebert/ponytail) by Dietrich Gebert (MIT), [avoid-ai-writing](https://github.com/conorbronsdon/avoid-ai-writing) by Conor Bronsdon (MIT), [mermaid-validator](https://github.com/dt418/mermaid-validator-agent-skill) by dt418 (MIT), [herdr](https://github.com/herdrdev/herdr/blob/v0.9.5/skills/herdr/SKILL.md) and the [Herdr agent guide](https://herdr.dev/agent-guide.md) (Apache-2.0). Pins for vendored skills are in [`.agents/external-skills.md`](./.agents/external-skills.md). `deep-review` is inspired by the thermo-nuclear review in [cursor/plugins](https://github.com/cursor/plugins).
+
+## License
+
+MIT. See [`LICENSE`](./LICENSE).
