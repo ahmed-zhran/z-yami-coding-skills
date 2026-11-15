@@ -30,16 +30,16 @@ The TUI sets `HERDR_ENV=1`. Desktop sets `HC_TERMINAL_ID` and does not set `HERD
 
 **Does this replace `hc --skill`?**
 
-No. This copy tells the agent to run `hc --skill` and follow it. The binary you have installed wins when a flag differs from an older note. For children the shipping session started, that session is the person for `blocked` approvals; it does not send those prompts to you at the child's keyboard.
+No. This copy tells the agent to run `hc --skill` and follow it. The binary you have installed wins when a flag differs from an older note. For children the shipping session started, that session is the person for approvals; it does not send those prompts to you at the child's keyboard. Spec-flow's steer loop owns that behaviour: it polls `hc read` while the child is working, because Cursor allowlist dialogs often never flip status to `blocked`.
 
 **Why is a ticket terminal waiting on a shell approval?**
 
-The parent should clear it (`hc keys <t> y` for a run-once approve). If it left the terminal blocked for you, that run was not steering.
+Cursor's "Run this command?" / "Not in allowlist" dialog usually leaves status as `working`, so `hc wait` alone can sit until timeout with the dialog already on screen. The parent should `hc read` every few seconds and clear each prompt with `hc keys <t> y` (run once; one `y` per "Approval 1 of 2"). If it left that dialog for you, that run was not steering.
 
 ## It's working if
 
 - Inside Desktop, a ready ticket shows up as its own terminal in the current tab, and the parent steers it until the pull request URL arrives.
-- Ticket terminals do not wait on you for shell approvals; the parent clears them.
+- Ticket terminals do not wait on you for shell approvals; the parent clears them from a screen-read loop, not only from a `blocked` status.
 - The parent lands the ticket when the ship door owns that level (under `/ship-spec` or `/ship-release`).
 - Outside both hosts, the release stops instead of building every ticket in the parent session.
 

@@ -9,4 +9,4 @@ Ship the one spec the user named. If they named none, ask which feature or issue
 
 Call the Skill tool with "spec-flow" and follow it for that spec under **spec authority**. This run has one spec. Do not invent a second procedure.
 
-**Authority.** This door owns the spec land. The shipping session lands every ticket pull request. You approve only the spec pull request into its base.
+**Authority.** This door owns the spec land. The shipping session lands every ticket pull request. You approve only the spec pull request into its base. Mid-build it **steers** every ticket pane it opened: poll the screen every few seconds (Cursor allowlist dialogs often stay `working`, so status-only `hc wait` misses them), clear each with run-once `y`, and ask you only for a doc break or an unsettled breaking change.

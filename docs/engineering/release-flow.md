@@ -16,7 +16,7 @@ The tracker and branching policy from [setup-z-yami-coding-skills](https://aiher
 
 ## Authority
 
-The leading idea beside one procedure per feature is **authority**. `/ship-release` owns the release land. Naming the features stays in the session you started. Each feature is then `spec-flow` under release authority: its own ticket list, its own fresh session per ready ticket, and its own landing into the release without a separate ask. The next feature starts after that merge. Those ticket sessions know the ticket, not the whole release conversation.
+The leading idea beside one procedure per feature is **authority**. `/ship-release` owns the release land. Naming the features stays in the session you started. Each feature is then `spec-flow` under release authority: its own ticket list, its own fresh session per ready ticket, and its own landing into the release without a separate ask. Bug tickets opened while testing use the same **steer** loop (screen reads every few seconds; Cursor allowlist dialogs often stay `working`). The next feature starts after that merge. Those ticket sessions know the ticket, not the whole release conversation.
 
 Stack and architecture docs that are missing stop the run. The skill tells you which command to type. It does not pick a framework or a folder layout for you.
 

@@ -23,7 +23,7 @@ You invoke this by typing `/ship-spec`, and the agent won't reach for it on its 
 
 ## Authority
 
-The leading word is **authority**. This door owns the spec land. The shipping session steers every ticket pane and lands every ticket. You stop once: the spec pull request into the release. `/ship-release` owns a higher land gate and lands the spec itself.
+The leading word is **authority**. This door owns the spec land. The shipping session steers every ticket pane (screen-read loop for allowlist dialogs that stay `working`) and lands every ticket. You stop once: the spec pull request into the release. `/ship-release` owns a higher land gate and lands the spec itself.
 
 ## Common questions
 

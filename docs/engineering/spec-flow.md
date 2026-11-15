@@ -20,7 +20,7 @@ The leading idea beside the same procedure is **authority**. `/ship-spec` owns t
 
 ## Steer
 
-After a ready ticket has its own session, this run **steers** that session. Shell approvals and questions in the child pane are answered here. You are asked mid-build only when a child would break the docs or make a breaking change the ticket did not settle.
+After a ready ticket has its own session, this run **steers** that session. Shell approvals and questions in the child pane are answered here. You are asked mid-build only when a child would break the docs or make a breaking change the ticket did not settle. Steering reads the child's screen on a short loop, not only when `hc` reports `blocked`, because Cursor allowlist dialogs often keep status as `working`.
 
 ## Common questions
 
@@ -30,7 +30,7 @@ Those are commands only you can invoke. This procedure contains the same publish
 
 **Why did a ticket pane sit on a shell approval?**
 
-The shipping session is supposed to press through those itself. If it left the pane waiting on you, that run was not steering.
+The shipping session is supposed to press through those itself by reading the screen every few seconds and sending run-once `y`. If it waited only on `hc wait` until timeout while "Run this command?" was already up, that run was not steering.
 
 ## It's working if
 

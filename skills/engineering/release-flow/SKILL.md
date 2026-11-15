@@ -49,7 +49,7 @@ On `release/<N>`, against `main`:
 
 Do not stop for a separate human-testing gate. The release pull request in step 5 is the human review of the release.
 
-A bug found here is a ticket whose `**Base:**` is `release/<N>`. It does not get a spec branch. It is not a hotfix. Publish that ticket, then start it in a fresh context window running `ticket-flow`, on the same host `spec-flow` uses for a ready ticket (a TUI pane, or a Desktop `hc run` with the current space and tab labels). **Steer** that session the same way `spec-flow` steers a ticket. When its pull request is open and CI is green, tell it to land. Then return to this step.
+A bug found here is a ticket whose `**Base:**` is `release/<N>`. It does not get a spec branch. It is not a hotfix. Publish that ticket, then start it in a fresh context window running `ticket-flow`, on the same host `spec-flow` uses for a ready ticket (a TUI pane, or a Desktop `hc run` with the current space and tab labels). **Steer** that session with the same loop as `spec-flow`: do not wait only on status; while the child is `working` or `blocked`, `hc read` (or herdr agent read) every few seconds; on "Run this command?", "Not in allowlist", or "Waiting for approval", `hc keys <t> y` immediately (run once; one `y` per queued approval; read again); escalate to the human in this session only for a doc break or unsettled breaking change. When its pull request is open and CI is green, tell it to land. Then return to this step.
 
 ## 5. Finish
 

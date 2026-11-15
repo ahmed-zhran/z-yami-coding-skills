@@ -51,15 +51,18 @@ When a ready ticket still needs a session, pick one host from the environment an
 
 **Neither** variable is set. Stop. Say this session is not inside Herdr TUI or Herdr Desktop. Parallel sessions exist only inside one of those hosts.
 
-**Steer** every ticket session this run started until that session reports its pull request URL or an escalate. Steering is this session's job. The human does not sit in those panes. The generic `hc` / `herdr` manuals say a blocked child needs a person; for children this session started, that person is this session. Keep useful work going while children work. When you need news, on Desktop use `hc wait --children any` (and `hc --skill` for the live flags); on the TUI use the matching wait from the herdr skill. On every `blocked`, `error`, timeout check-in, or child report:
+**Steer** every ticket session this run started until that session reports its pull request URL or an escalate. Steering is this session's job. The human does not sit in those panes. The generic `hc` / `herdr` manuals say a blocked child needs a person; for children this session started, that person is this session.
 
-1. Read the child's screen (`hc read` / `herdr agent read`).
-2. A tool or shell approval the ticket needs to continue: press the approve key (`hc keys <t> y`, or the matching herdr send-keys). Prefer run-once over always-allow.
-3. A question the ticket, the spec, or the docs already answer: answer it in the child's session (`hc send` / `herdr agent prompt`).
-4. A change that would break `GLOSSARY.md`, an ADR, `docs/agents/stack.md`, or a surface architecture doc, or a breaking change the ticket did not already settle: that is an **escalate**. Tell the human in *this* session what the child wants, wait for their answer, then relay it to the child.
-5. The pull request URL: continue at step 4 for that ticket.
+Do not wait only on status. Cursor's "Run this command?" / "Not in allowlist" dialog (and "Waiting for approval") often leaves the child status as `working`: the turn does not advance, and `hc wait` sits until its timeout while the dialog is already on screen. While any ticket child is `working` or `blocked`, poll the screen every few seconds (`hc read` / `herdr agent read`). On Desktop you may still use short `hc wait --children any --timeout` check-ins between reads; the read loop is what catches allowlist dialogs. On the TUI use the matching short wait from the herdr skill the same way.
 
-Do not leave a child you started waiting on the human at that pane's keyboard. Do not ask the human to press keys in a child pane.
+On every read, `blocked`, `error`, timeout check-in, or child report:
+
+1. If the screen shows "Run this command?", "Not in allowlist", or "Waiting for approval": press `hc keys <t> y` (or the matching herdr send-keys) immediately. That is run-once. One `y` clears one queued approval ("Approval 1 of 2"); read again and repeat until the dialog is gone. Do not send shift+tab or choose Run Everything unless the human in this session asks.
+2. A question the ticket, the spec, or the docs already answer: answer it in the child's session (`hc send` / `herdr agent prompt`).
+3. A change that would break `GLOSSARY.md`, an ADR, `docs/agents/stack.md`, or a surface architecture doc, or a breaking change the ticket did not already settle: that is an **escalate**. Tell the human in *this* session what the child wants, wait for their answer, then relay it to the child.
+4. The pull request URL: continue at step 4 for that ticket.
+
+Do not treat `working` as "no person needed" when an approval dialog is on screen. Do not leave a child you started waiting on the human at that pane's keyboard. Do not ask the human to press keys in a child pane.
 
 When one ticket lands, start the tickets it was blocking, and steer those the same way.
 
