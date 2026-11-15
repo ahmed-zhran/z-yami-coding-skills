@@ -1,5 +1,11 @@
 # z-yami-coding-skills
 
+## 1.2.0
+
+### Minor Changes
+
+- [`82589fe`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/82589fe25053fa46ec27fab758f30a745cb34c1c) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - A spec ticket lands into `spec/<issue>`, and that spec lands into `release/<N>`. A bug ticket lands into the open release, a hotfix cut from the production tag, or `main` when no release is open. `/ship-release` publishes every spec the release needs. `/sync-skills` applies the migration records that shipped after the installed version, including the one that updates a consumer `docs/agents/branching.md` to these levels. The package site is [yami-coding](https://ahmed-zhran.github.io/yami-coding).
+
 ## 1.1.0
 
 ### Minor Changes
