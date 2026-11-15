@@ -39,9 +39,9 @@ Model- or user-reachable (rich trigger phrasing so the model can reach for them)
 - **[ticket-flow](./ticket-flow/SKILL.md)**: One ticket from its worktree through review to a landed pull request under the ship door's authority. `/ship-ticket` and `spec-flow` call it.
 - **[spec-flow](./spec-flow/SKILL.md)**: One spec from publish or keep, through its tickets, to a landed spec branch under the ship door's authority. `/ship-spec` and `release-flow` call it.
 - **[release-flow](./release-flow/SKILL.md)**: One release: each feature through `spec-flow`, then the tag and the gate that blocks the next release.
-- **[herdr](./herdr/SKILL.md)**: Control the Herdr TUI from inside a pane. Pinned from herdrdev/herdr. `spec-flow` calls it when `HERDR_ENV=1`.
+- **[herdr](./herdr/SKILL.md)**: Control the Herdr TUI from inside a pane. Pinned from herdrdev/herdr. `spec-flow` calls it when `HERDR_ENV=1` to pack ticket panes into sibling child tabs.
 - **[herdr-core](./herdr-core/SKILL.md)**: Control Herdr Desktop terminals with `hc`. Pinned from herdrdev/herdr-core. `spec-flow` calls it when `HC_TERMINAL_ID` is set.
-- **[herdr-app](./herdr-app/SKILL.md)**: Show spaces, tabs, and panes in the Herdr Desktop window. Pinned from herdrdev/herdr-app.
+- **[herdr-app](./herdr-app/SKILL.md)**: Show spaces, tabs, and panes in the Herdr Desktop window. Pinned from herdrdev/herdr-app. `spec-flow` uses it for sibling child tabs, not the parent's tab.
 - **[herdr-guide](./herdr-guide/SKILL.md)**: Set up Herdr or troubleshoot it with a human. Install, keys, logs, and agent detection. Not a control skill.
 - **[surface-map](./surface-map/SKILL.md)**: Keep the map of monorepo surfaces, their contracts, and each surface's extraction context accurate.
 - **[setup-ts-deep-modules](./setup-ts-deep-modules/SKILL.md)**: Wire dependency-cruiser into a TypeScript repo so each package is a deep module reachable only through its entry files.

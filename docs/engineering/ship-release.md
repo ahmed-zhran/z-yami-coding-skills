@@ -27,7 +27,7 @@ A previous release's `docs/agents/pending-release.md` must have no open blocking
 
 The leading word beside authority is the **gate**. Before the release pull request, the session runs the test suite, a code review, and a security review. After the tag, `docs/agents/pending-release.md` is on `main` with open boxes: retro, reflect, learnings, debt, the ADRs the release touched, architecture drift, a risk and repo-scale note, any decision only a human can make, and a skills update. Checking a box means that work is done. The next `/ship-release` or `/release start` refuses while one is open.
 
-Tickets that are still blocked do not get a session. When one lands, the tickets it was blocking can start. The shipping session **steers** every pane it opened (screen-read loop for allowlist dialogs that stay `working`) and lands lower levels under release authority.
+Tickets that are still blocked do not get a session. When one lands, the tickets it was blocking can start. The shipping session keeps its own tab, packs ticket sessions into sibling tabs (at most six per 2×3 grid), **steers** every pane it opened (screen-read loop for allowlist dialogs that stay `working`), lands lower levels under release authority, and closes finished child panes.
 
 ## Common questions
 
@@ -49,7 +49,7 @@ It stops. It will not quietly switch to one shared branch. Open the session insi
 
 ## It's working if
 
-- Ready tickets appear in their own panes, and blocked tickets do not.
+- Ready tickets appear in sibling child tabs (not the shipping tab), and blocked tickets do not.
 - Ticket and spec panes do not wait on you for merges; the shipping session lands them.
 - You are asked to approve the release pull request into `main`, then the tag lands.
 - After the tag, `docs/agents/pending-release.md` is on `main` and its boxes are still open.

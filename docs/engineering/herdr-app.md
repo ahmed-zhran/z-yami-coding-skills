@@ -2,7 +2,7 @@
 
 `herdr-app` changes what the Herdr Desktop window shows: spaces, tabs, panes, layouts, and mods. It does not start the agent. `hc` does that, and this skill makes the terminal visible.
 
-A terminal with no `herdr.space` label stays hidden. `spec-flow` uses this skill so each ticket terminal is labeled into the current tab. `/ship-spec` and `/ship-release` both reach that procedure.
+A terminal with no `herdr.space` label stays hidden. `spec-flow` uses this skill so each ticket terminal is labeled into a sibling child tab of the current space (not the parent's tab). `/ship-spec` and `/ship-release` both reach that procedure.
 
 ## When to reach for it
 
@@ -25,11 +25,11 @@ The leading word is the **window**. Core keeps the terminals alive after the win
 
 **Why is a ticket terminal missing from the window?**
 
-`hc` workers with no space label stay hidden. The release labels `herdr.space` and `herdr.tab` from `herdr-app ls` so the terminal joins the tab you are in.
+`hc` workers with no space label stay hidden. The release labels `herdr.space` and `herdr.tab` from `herdr-app ls` so the terminal joins a sibling child tab in that space.
 
 ## It's working if
 
-- `herdr-app ls` shows the ticket terminal under the current space and tab.
+- `herdr-app ls` shows the ticket terminal under the current space in a child tab, not the parent's tab.
 - The agent did not open a new space unless you asked for one.
 - Starting and messaging the agent still went through `hc`, not through a window command.
 

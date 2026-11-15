@@ -39,6 +39,8 @@ The edges are the point of the artifact. They work in two ways, depending on the
 | Local markdown | Text in one file per ticket under `.scratch/<feature>/issues/<NN>-<slug>.md`, numbered blockers-first | Top to bottom, by hand |
 | A real tracker (GitHub, Linear) | Native blocking links, or sub-issues where the tracker has them | Any ticket whose blockers are done is on the **frontier** and can be grabbed |
 
+A **blocker checker** runs on every ticket before the quiz and again before publish: each blocker is none, or another ticket of this same spec. A Chart ticket must not be blocked by a Visit ticket on another `spec/<issue>`. A fail is fixed before anything is published: drop a false edge, or recraft the tickets / feature cut / which feature ships first. Soft "comes after" notes stay prose; they are not blockers.
+
 The edges live in the ticket either way. The tracker only decides whether anything can act on them in parallel. `to-tickets` produces the artifact; running it (one session at a time, or a fleet) is your job, not the skill's.
 
 ## The wide-refactor exception
@@ -67,6 +69,9 @@ This was reported across a dozen runs and several models, [most fully in issue #
 **"Blocked by" was written into the issue body instead of a real blocking link.**
 This is the same kind of problem, [reported in issue #513](https://github.com/mattpocock/skills/issues/513), where the agent even stated that GitHub has no native blocking relationship at all. It does: `gh issue create --blocked-by 12,15`. Because the skill publishes blockers first, their numbers are always available at creation time. The body text is meant to be the fallback for trackers with no native edge, not the default. The ticket template now omits `## Blocked by` when the edges are native.
 
+**A ticket of this spec was blocked by a ticket of another spec.**
+The blocker checker treats that as a craft failure. The skill (and `/ship-spec`) removes a false edge, or recrafts the tickets / which feature owns the seam / which feature ships first, until every blocker is same-spec or none, then continues. It does not leave the bad edge listed and build anyway.
+
 **Where do the local tickets go? The v1.1 notes said a root-level `tickets.md`.**
 They did, and that was a bug. A single shared file also caused race conditions when parallel agents wrote to it. Local mode now writes one file per ticket under `.scratch/<feature-slug>/issues/<NN>-<slug>.md`, in dependency order, matching the layout the local tracker template already described. The `NN` prefix is a real ticket ID, so `/implement 03` works instead of retyping a long title.
 
@@ -83,6 +88,7 @@ The skill stops at the artifact, and there is no auto-dispatch mode. Dispatch is
 
 - Every ticket has an answer to "what can I demo when this is done?", and the answer is behaviour, not a layer.
 - The list comes back to you numbered, with a "Blocked by" line on each, before anything is published.
+- The blocker checker passes before publish: every blocker is none or same-spec.
 - The ticket at the top has no blockers and can be started immediately.
 - Nothing in a ticket body is a file path or a line number, except a snippet a prototype produced.
 - Each ticket reads like something a fresh session could finish without you in the room.

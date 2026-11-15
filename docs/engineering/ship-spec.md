@@ -23,7 +23,7 @@ You invoke this by typing `/ship-spec`, and the agent won't reach for it on its 
 
 ## Authority
 
-The leading word is **authority**. This door owns the spec land. The shipping session steers every ticket pane (screen-read loop for allowlist dialogs that stay `working`) and lands every ticket. You stop once: the spec pull request into the release. `/ship-release` owns a higher land gate and lands the spec itself.
+The leading word is **authority**. This door owns the spec land. The shipping session keeps its own tab, opens ticket sessions in sibling tabs (at most six per 2×3 grid), steers them (screen-read loop for allowlist dialogs that stay `working`), lands every ticket, and closes each child's pane after land. You stop once: the spec pull request into the release. `/ship-release` owns a higher land gate and lands the spec itself.
 
 ## Common questions
 
@@ -42,7 +42,8 @@ No. This session lands those under spec authority. You approve the spec pull req
 ## It's working if
 
 - The run still has the spec you named. A second spec issue was not opened.
-- Ready tickets appear in their own sessions, and blocked tickets do not.
+- Ready tickets appear in sibling child tabs (not the shipping tab), and blocked tickets do not.
+- A landed ticket's pane is closed instead of left empty.
 - Ticket panes do not wait on you for shell approvals or ticket merges; the shipping session handles those.
 - After you approve the spec pull request, `spec/<issue>` has merged into the release.
 

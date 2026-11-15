@@ -20,7 +20,7 @@ Herdr Desktop, with `hc` on `PATH`. A session that is already inside a core term
 
 ## The host
 
-The leading word is the **host**. `spec-flow` picks one host and stays there for that spec. On Desktop it calls this skill, labels each ticket terminal with the current space and tab so you can see it, **steers** that terminal until the pull request URL arrives, then lands the ticket under the ship door's authority. On the TUI it calls `herdr` instead. `/ship-spec` and `/ship-release` both reach that procedure.
+The leading word is the **host**. `spec-flow` picks one host and stays there for that spec. On Desktop it calls this skill, labels each ticket terminal into a sibling child tab of the current space (max six per 2×3 grid; the parent's tab stays alone), **steers** that terminal until the pull request URL arrives, lands the ticket under the ship door's authority, then closes the finished child. On the TUI it calls `herdr` instead. `/ship-spec` and `/ship-release` both reach that procedure.
 
 ## Common questions
 
@@ -38,7 +38,7 @@ Cursor's "Run this command?" / "Not in allowlist" dialog usually leaves status a
 
 ## It's working if
 
-- Inside Desktop, a ready ticket shows up as its own terminal in the current tab, and the parent steers it until the pull request URL arrives.
+- Inside Desktop, a ready ticket shows up as its own terminal in a sibling child tab, and the parent steers it until the pull request URL arrives, then closes that terminal after land.
 - Ticket terminals do not wait on you for shell approvals; the parent clears them from a screen-read loop, not only from a `blocked` status.
 - The parent lands the ticket when the ship door owns that level (under `/ship-spec` or `/ship-release`).
 - Outside both hosts, the release stops instead of building every ticket in the parent session.

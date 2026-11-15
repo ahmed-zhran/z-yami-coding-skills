@@ -39,7 +39,14 @@ Break the work into **tracer bullet** tickets.
 
 Give each ticket its **blocking edges**: the other tickets that must complete before it can start. A ticket with no blockers can start immediately.
 
-Give each ticket its **base**: the branch it is cut from and lands into (see the "branch-lineage" skill for the vocabulary). That base is `spec/<spec-issue>`. If the spec has no issue number yet, stop and tell the user to publish it first. If `spec/<spec-issue>` does not exist, cut it from the spec's `**Base:**` and push it. A ticket is **stacked** (based on its blocker's branch) only when it needs the blocker's unlanded code to even start, and `docs/agents/branching.md` allows stacking; otherwise it waits for the blocker to land and shares `spec/<spec-issue>`. Do not point a ticket at the release.
+**Blocker checker (every ticket, before quiz and again before publish).** Each ticket's blockers are either **none**, or **other tickets of this same spec** (same `**Base:** spec/<spec-issue>`, or another ticket in this breakdown). A blocker whose base is another `spec/<issue>`, a `release/*`, or `main` fails. A fail means the breakdown (or the feature cut, or the release's feature order) is wrong: **fix it, then continue**. Do not publish a failing edge.
+
+- **False or soft order:** drop the edge. Soft "comes after feature X" stays in Further Notes or the body as prose, never as `Blocked by` or a native blocked-by link.
+- **Real need for another feature's unlanded code:** recraft until the checker passes: put the shared seam in the earlier spec, move this work into that feature's ticket set, or tell the user the release must ship that feature first under `/ship-release`. Product order across features is **spec order**, not a cross-spec ticket edge.
+
+Re-run the checker after every repair. Quiz and publish run only on a pass.
+
+Give each ticket its **base**: the branch it is cut from and lands into (see the "branch-lineage" skill for the vocabulary). That base is `spec/<spec-issue>`. If the spec has no issue number yet, stop and tell the user to publish it first. If `spec/<spec-issue>` does not exist, cut it from the spec's `**Base:**` and push it. A ticket is **stacked** (based on its blocker's branch) only when it needs the blocker's unlanded code to even start, and `docs/agents/branching.md` allows stacking; otherwise it waits for the blocker to land and shares `spec/<spec-issue>`. Stacking is only onto a blocker that is also a ticket of this same spec. Do not point a ticket at the release.
 
 Give each ticket its **surfaces**: one `surface:<name>` label per surface it touches, from `docs/agents/surfaces.md`.
 
@@ -58,7 +65,7 @@ Present the proposed breakdown as a numbered list. For each ticket, show:
 Ask the user:
 
 - Does the granularity feel right? (too coarse / too fine)
-- Are the blocking edges correct: does each ticket only depend on tickets that genuinely gate it?
+- Are the blocking edges correct: does each ticket only depend on tickets that genuinely gate it, and only on tickets of this same spec?
 - Should any tickets be merged or split further?
 
 Iterate until the user approves the breakdown.
@@ -68,7 +75,7 @@ Iterate until the user approves the breakdown.
 Publish the approved tickets. **How** depends on the tracker `/setup-z-yami-coding-skills` configured; the tickets are the same either way, only the shape of the blocking edges changes:
 
 - **Local files** → write one file per ticket under `.scratch/<feature-slug>/issues/<NN>-<slug>.md`, numbered from `01` in dependency order (blockers first). Each file's "Blocked by" lists the numbers/titles it depends on. Use the per-ticket file template below: one ticket per file, never a single combined file.
-- **A real issue tracker (GitHub, Linear, …)** → publish one issue per ticket in dependency order (blockers first) so each ticket's blocking edges can reference real identifiers. Use the platform's native blocking relationship where it has one; otherwise set each ticket's "Blocked by" to the blocking issues. If the source was an existing issue, make each ticket its sub-issue (tracker doc's operation). Apply the `ready-for-agent` triage label unless instructed otherwise; the tickets are agent-grabbable by construction. Apply each ticket's `surface:<name>` labels. A stacked ticket's `Base:` names the blocker's branch (`ticket/<n>-<slug>`), which exists once the blocker is started.
+- **A real issue tracker (GitHub, Linear, …)** → publish one issue per ticket in dependency order (blockers first) so each ticket's blocking edges can reference real identifiers. Use the platform's native blocking relationship where it has one; otherwise set each ticket's "Blocked by" to the blocking issues. Run the blocker checker on the set you are about to link; repair until it passes, then link only those same-spec blockers. If the source was an existing issue, make each ticket its sub-issue (tracker doc's operation). Apply the `ready-for-agent` triage label unless instructed otherwise; the tickets are agent-grabbable by construction. Apply each ticket's `surface:<name>` labels. A stacked ticket's `Base:` names the blocker's branch (`ticket/<n>-<slug>`), which exists once the blocker is started.
 
 Each ticket is then worked as `/ship-ticket <n>` (branch, build, review, land), or as the separate doors `/start-work <n>`, `/implement <n>`, review, `/land <pr>`. `/implement-spec` is the other door: one integration branch and one pull request, not one session per ticket.
 

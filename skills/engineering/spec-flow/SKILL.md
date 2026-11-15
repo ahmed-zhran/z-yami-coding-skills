@@ -31,11 +31,23 @@ Cut `spec/<issue-number>` from that base when the branch is missing. Record `bra
 
 ## 2. Tickets
 
-When this spec already has published tickets whose `**Base:**` is `spec/<issue>`, keep that set. Show the list and continue at step 3.
+When this spec already has published tickets whose `**Base:**` is `spec/<issue>`, keep that set. Show the list. Run the **blocker checker** below on every ticket in the set. Repair until it passes, then continue at step 3.
 
-Otherwise draft tracer-bullet tickets. Each ticket is a narrow complete path through every layer, demoable on its own, and small enough for one fresh context window. Prefactor tickets come first. A wide mechanical change across the codebase is expand, then migrate in batches, then contract, each batch its own ticket. Each ticket records `**Base:** spec/<issue>` (or a blocker's branch when it must stack on unlanded code and `docs/agents/branching.md` allows stacking), `**Surfaces:**`, what it delivers, and what blocks it.
+Otherwise draft tracer-bullet tickets. Each ticket is a narrow complete path through every layer, demoable on its own, and small enough for one fresh context window. Prefactor tickets come first. A wide mechanical change across the codebase is expand, then migrate in batches, then contract, each batch its own ticket. Each ticket records `**Base:** spec/<issue>` (or a same-spec blocker's branch when it must stack on unlanded code and `docs/agents/branching.md` allows stacking), `**Surfaces:**`, what it delivers, and what blocks it. Run the **blocker checker** on the draft before publish. Never create a blocking edge that fails it.
 
-Show one numbered list for this spec. For each ticket show the title, what blocks it, the base, the surfaces, and what it delivers. Publish one issue per ticket, blockers first, with native blocking links where the tracker has them, plus `ready-for-agent` and the surface labels. Do not wait for the user to approve the breakdown. On a local tracker, one file per ticket. Leave the spec issue open.
+Show one numbered list for this spec. For each ticket show the title, what blocks it, the base, the surfaces, and what it delivers. Publish one issue per ticket, blockers first, with native blocking links where the tracker has them, plus `ready-for-agent` and the surface labels. Only create blocking links the checker accepts. Do not wait for the user to approve the breakdown. On a local tracker, one file per ticket. Leave the spec issue open.
+
+### Blocker checker
+
+For every ticket of this spec, each blocker is either **none**, or **another ticket of this same spec** (`**Base:** spec/<issue>` for this issue, or already landed into this spec). Anything else fails: a blocker on another `spec/<issue>`, on `release/*`, or on `main`.
+
+A fail means the tickets (and maybe the feature cut or the release's feature order) were crafted wrong. **Fix, then continue.** Do not leave a listed fail and build anyway.
+
+1. For each failing edge, decide whether this ticket needs that other ticket's **unlanded** code to deliver its own demo path.
+2. **No** (false or soft order): remove the native blocked-by link and any body "Blocked by" line. Soft "comes after feature X" stays prose only.
+3. **Yes** (real dependency): the craft is wrong. Recraft until the checker passes: move the shared seam into this spec as ticket(s) of this set, or move this dependent work into the earlier feature's ticket set, or under **release authority** reorder features so the needed spec ships first and re-slice. Feature order across specs is release order, not a cross-spec `blocked_by`.
+4. Escalate to the human in this session only when which feature owns the seam, or which feature ships first, is a product choice the docs and settled conversation do not already decide.
+5. Re-run the checker. Step 3 starts only on a pass.
 
 ## 3. Build the frontier
 
@@ -43,11 +55,11 @@ A ticket is ready when every blocker has landed. Leave a blocked ticket unstarte
 
 `/implement-spec` is a different door: one branch and one pull request. This procedure gives each ticket its own session.
 
-When a ready ticket still needs a session, pick one host from the environment and use it for every ticket of this spec.
+When a ready ticket still needs a session, pick one host from the environment and use it for every ticket of this spec. Open, pack, and retire children only through [`CHILD-SESSIONS.md`](CHILD-SESSIONS.md): parent tab stays alone, children live in sibling tabs (max 6 per tab, 2×3 grid), and a finished child's pane is closed so it does not keep a slot.
 
-**TUI.** `HERDR_ENV` is `1`. Call the Skill tool with "herdr". For each ready ticket, open a pane in the current tab and start an agent in a fresh context window whose only task is: call the Skill tool with "ticket-flow" for that issue, stop when the pull request is open, and wait for this parent to say land.
+**TUI.** `HERDR_ENV` is `1`. Follow the TUI path in `CHILD-SESSIONS.md` (Skill tool "herdr").
 
-**Desktop.** `HC_TERMINAL_ID` is set. Call the Skill tool with "herdr-core", and with "herdr-app" so the person can see the terminal. Run `hc --skill` and `herdr-app --skill` before inventing a flag. For each ready ticket, `herdr-app ls`, then `hc run --bg` in `$PWD`, named `ticket-<issue>` (letters, digits, and hyphens only). Pass `--label herdr.space=<id>` and `--label herdr.tab=<id>` from that listing so the terminal shows in the current tab. Start the same kind of agent this session is, in a fresh context window, with the task in the launch: call the Skill tool with "ticket-flow" for that issue, stop when the pull request is open, report that URL with `hc send` to `$HC_TERMINAL_ID`, and wait for this parent to say land. That agent does not land on its own and does not start further agents. If `first_message.sent` is false, read the terminal and send the task once it is ready.
+**Desktop.** `HC_TERMINAL_ID` is set. Follow the Desktop path in `CHILD-SESSIONS.md` (Skill tools "herdr-core" and "herdr-app").
 
 **Neither** variable is set. Stop. Say this session is not inside Herdr TUI or Herdr Desktop. Parallel sessions exist only inside one of those hosts.
 
@@ -68,7 +80,7 @@ When one ticket lands, start the tickets it was blocking, and steer those the sa
 
 ## 4. Land each ticket
 
-This session owns every ticket land for this spec. When a ticket's pull request is open, wait until CI is green, then tell that session to continue `ticket-flow` from its land step: a message in its Herdr pane, or `hc send` on Desktop. Do not ask the user to approve a ticket pull request. Repeat until every ticket whose base is this `spec/<issue>` has landed.
+This session owns every ticket land for this spec. When a ticket's pull request is open, wait until CI is green, then tell that session to continue `ticket-flow` from its land step: a message in its Herdr pane, or `hc send` on Desktop. Do not ask the user to approve a ticket pull request. After that ticket has landed, retire its child pane (and an empty child tab) per `CHILD-SESSIONS.md`. Repeat until every ticket whose base is this `spec/<issue>` has landed.
 
 ## 5. Land the spec
 
