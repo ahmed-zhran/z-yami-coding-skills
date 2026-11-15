@@ -1,5 +1,11 @@
 # z-yami-coding-skills
 
+## 1.3.1
+
+### Patch Changes
+
+- [`4ff27f9`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/4ff27f987ce1016fbf85388c3e64a08fd9241d51) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - The post-release gate blocks the next release until `/learnings` and `/debt` are done. Learnings confirms every non-obvious fix has a solution note. Debt harvests `shortcut:` comments into `docs/debt.md`.
+
 ## 1.3.0
 
 ### Minor Changes
