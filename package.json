@@ -1,6 +1,6 @@
 {
   "name": "z-yami-coding-skills",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "private": true,
   "description": "Ahmed Zhran's agent skills for shipping software: branch lineage, specs, tickets, releases, review, and monorepo surfaces",
   "repository": {

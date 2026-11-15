@@ -1,5 +1,15 @@
 # z-yami-coding-skills
 
+## 1.5.0
+
+### Minor Changes
+
+- [`9d1b8a5`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/9d1b8a596131af0ea393a09e1b8fddf2edfacba4) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - `/ship-spec` and `/ship-release` keep the shipping session alone in its tab and pack ticket sessions into sibling child tabs (at most six per 2×3 grid). A ticket pane closes after that ticket lands so empty shells do not keep a slot.
+
+### Patch Changes
+
+- [`9d1b8a5`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/9d1b8a596131af0ea393a09e1b8fddf2edfacba4) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - `/to-tickets` and `/ship-spec` run a blocker checker on every ticket: each blocker is none or another ticket of the same spec. A cross-spec edge is fixed before continue (drop a false edge, or recraft the tickets, feature cut, or release feature order), not only listed.
+
 ## 1.4.2
 
 ### Patch Changes
