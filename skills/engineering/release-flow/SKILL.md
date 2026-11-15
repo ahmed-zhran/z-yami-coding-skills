@@ -1,6 +1,6 @@
 ---
 name: release-flow
-description: "Run one release by shipping each feature through spec-flow, then test, tag, and write the gate that blocks the next release. Use when the user runs ship-release. Do not start a release the user did not ask for."
+description: "Run one release by shipping each feature through spec-flow, landing specs under this session's authority, then test, open the release pull request, and after the user approves tag and write the gate that blocks the next release. Use when the user runs ship-release. Do not start a release the user did not ask for."
 ---
 
 # Release flow
@@ -8,6 +8,8 @@ description: "Run one release by shipping each feature through spec-flow, then t
 One release, from an open `release/<N>` branch to a tag on `main`, with a gate that blocks the next release until the human clears it.
 
 `ship-release` is the human door. `/release` is the door onto a single start, finish, or hotfix. If you change a start, finish, or gate step here, change `release` in the same edit. Each feature is `spec-flow`. If you change how one spec is published, sliced, built, or landed, change `spec-flow`, not a second copy here.
+
+**Authority.** `/ship-release` owns the release land. This session lands every ticket and every spec under that authority. The only human land gate is the release pull request into `main`.
 
 Call the Skill tool with "branch-lineage" before any step that creates, lands, or restacks a branch.
 
@@ -33,29 +35,28 @@ Keep this phase in one context window. Publish nothing here, and start no ticket
 
 ## 3. Ship each spec
 
-For each feature, in the order you named them, call the Skill tool with "spec-flow" for that one feature. Wait until that spec's branch has landed into `release/<N>` before the next feature. `spec-flow` publishes or keeps the spec, slices its tickets, starts a fresh session per ready ticket, and lands the spec after the user approves.
+For each feature, in the order you named them, call the Skill tool with "spec-flow" for that one feature under **release authority**: that run lands its tickets and lands `spec/<issue>` into `release/<N>` without asking the user. Wait until that spec's branch has landed into `release/<N>` before the next feature.
 
 The release is not ready to test while one of its spec branches is still open. A bug found while testing is step 4, not another spec.
 
-## 4. Test and review, before the tag
+## 4. Test and review, before the pull request
 
 On `release/<N>`, against `main`:
 
-1. Run the full test suite. A failure becomes a bug ticket whose `**Base:**` is `release/<N>`, or the user explicitly defers it.
+1. Run the full test suite. A failure becomes a bug ticket whose `**Base:**` is `release/<N>`, or an escalate when you cannot choose.
 2. Call the Skill tool with "code-review", fixed point `main`.
 3. Call the Skill tool with "security-review" on the same diff.
-4. Stop for human testing. Ask the user to test the release. Do not continue on your own judgement of "it looks done".
 
-A bug found here is a ticket whose `**Base:**` is `release/<N>`. It does not get a spec branch. It is not a hotfix. Publish that ticket, then start it in a fresh context window running `ticket-flow`, on the same host `spec-flow` uses for a ready ticket (a TUI pane, or a Desktop `hc run` with the current space and tab labels). Stop at the open pull request. After the user approves, tell that session to land. Then return to this step.
+Do not stop for a separate human-testing gate. The release pull request in step 5 is the human review of the release.
+
+A bug found here is a ticket whose `**Base:**` is `release/<N>`. It does not get a spec branch. It is not a hotfix. Publish that ticket, then start it in a fresh context window running `ticket-flow`, on the same host `spec-flow` uses for a ready ticket (a TUI pane, or a Desktop `hc run` with the current space and tab labels). **Steer** that session the same way `spec-flow` steers a ticket. When its pull request is open and CI is green, tell it to land. Then return to this step.
 
 ## 5. Finish
-
-Only after the user approves the release.
 
 1. **Freeze.** Every open issue whose lineage reaches `release/<N>` has landed, or its `Base:` now names a later release. Stop while that list is non-empty.
 2. **Version and changelog.** Call the Skill tool with "changelog" in **compile** mode for `release/<N>`.
 3. **Write the gate** on the release branch, boxes open, by copying `pending-release.md` from the `release` skill's directory. Commit it with the version bump.
-4. **Release pull request** into `main`. Call the Skill tool with "pr". The evidence is the compiled changelog and the green CI run. Tell the user to review it, then stop.
+4. **Release pull request** into `main`. Call the Skill tool with "pr". The evidence is the compiled changelog and the green CI run. Tell the user to review it, then stop. This is the only human land gate for `/ship-release`.
 5. **After approval:** follow **land** from "branch-lineage" with a merge commit. Never squash a release.
 6. **Tag and publish.** Tag the merge commit on `main` (`v<version>`), push the tag, and publish notes from the new `CHANGELOG.md` section. If the project deploys from tags, say so before pushing the tag.
 7. **Retire.** Delete `release/<N>` after the tag exists. Reset the default base in `docs/agents/branching.md` to `main`, or to the next open release.
@@ -66,7 +67,7 @@ Done when the tag is on `main`, the notes are published, the release branch is g
 
 Copy `pending-release.md` from the `release` skill's directory to `docs/agents/pending-release.md`. Fill in the version and tag. Leave every box open. That file is the list, including the learnings and debt boxes.
 
-Security review and human testing are step 4's stops. They are not a second copy of this list.
+Code review and security review run in step 4 before the release pull request. They are not a second copy of this list.
 
 ## Gotchas
 

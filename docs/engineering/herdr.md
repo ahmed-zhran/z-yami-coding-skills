@@ -32,4 +32,4 @@ It does not install the program. If Herdr is running, `herdr --skill` prints the
 
 ## Where it fits
 
-`herdr` is the **control** skill [spec-flow](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/spec-flow.md) calls when a spec's tickets are ready for their own panes. [herdr-guide](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/herdr-guide.md) is the sibling for humans who are stuck or not set up yet. [ask-yami](https://aihero.dev/skills-ask-yami) routes the rest.
+`herdr` is the **control** skill [spec-flow](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/spec-flow.md) calls when a spec's tickets are ready for their own panes. Steering those panes (approvals, child questions) lives in `spec-flow`, not in this pin. [herdr-guide](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/herdr-guide.md) is the sibling for humans who are stuck or not set up yet. [ask-yami](https://aihero.dev/skills-ask-yami) routes the rest.

@@ -1,8 +1,8 @@
 ## What it does
 
-`ship-ticket` takes one [ticket](https://www.aihero.dev/ai-coding-dictionary/ticket) from a branch cut off its base through to a merged pull request. You type it once. It builds, opens the pull request, and waits.
+`ship-ticket` takes one [ticket](https://www.aihero.dev/ai-coding-dictionary/ticket) from its recorded base through a pull request and a merge. You type the issue once.
 
-The review that can still block the merge happens before the merge. After you approve, it lands the pull request, closes the issue, and restacks anything stacked on it. There is no second review of a ticket that has already merged.
+This door owns the ticket land. The session builds in a fresh worktree, reviews before the pull request, and waits for you only on that merge (unless the branch policy says `review: auto` and CI is green).
 
 ## When to reach for it
 
@@ -10,36 +10,30 @@ You invoke this by typing `/ship-ticket`, and the agent won't reach for it on it
 
 | You want | Reach for |
 | --- | --- |
-| One ticket, from branch to merge, including the stop for your approval | `/ship-ticket <n>` |
-| One spec, including every one of its tickets | [ship-spec](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-spec.md) |
-| Only the branch, or only the build, or only the merge | `/start-work`, `/implement`, or `/land` |
-| Every ticket of a spec on one branch and one pull request | [implement-spec](https://aihero.dev/skills-implement-spec) |
-| A whole release, one session per ticket | [ship-release](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-release.md) |
+| One ticket, through its pull request and merge | `/ship-ticket <n>` |
+| One phase only | `/start-work`, `/implement`, or `/land` |
+| One whole spec through its tickets | [ship-spec](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-spec.md) |
+| The whole release | [ship-release](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-release.md) |
 
 ## Prerequisites
 
-[setup-z-yami-coding-skills](https://aihero.dev/skills-setup-z-yami-coding-skills) has configured the issue tracker and `docs/agents/branching.md`. The ticket already exists and names its base. A ticket whose blockers are still open stops here.
+[setup-z-yami-coding-skills](https://aihero.dev/skills-setup-z-yami-coding-skills) has been run. The issue has a `**Base:**`. Open blockers stop the run unless you say to go ahead.
 
-## The approval stop
+## Authority
 
-The skill's leading word is the **approval stop**. Building and opening the pull request are not the end. Landing waits until you approve, unless `docs/agents/branching.md` says `review: auto` for that label and CI is green. The pull request targets `spec/<issue>`. A spec branch and a release branch are never landed here.
+The leading word is **authority**. The ship door you typed owns that level's land gate. Here the door is the ticket, so you approve the ticket pull request. A `/ship-spec` or `/ship-release` session that starts the same procedure lands the ticket itself.
 
 ## Common questions
 
-**Does it review the ticket again after the merge?**
+**Does this land a spec or a release?**
 
-No. [code-review](https://aihero.dev/skills-code-review) runs before the pull request, you approve, then it merges. A review after the merge cannot block anything.
-
-**Can `/ship-spec` start this on its own?**
-
-You type `/ship-ticket`. `/ship-spec` does not type it. It runs the same procedure in a fresh [session](https://www.aihero.dev/ai-coding-dictionary/session), one ticket at a time, and still stops for your approval before each merge. `/ship-release` does that once per feature.
+No. It lands one ticket into its recorded base. Spec and release branches have their own doors.
 
 ## It's working if
 
-- You can see a pull request into the ticket's recorded base, not into `main`, unless `main` is the base.
-- The session stops and asks you to review before anything merges.
-- After you approve, the issue is closed and any stacked branch names a new base.
+- The worktree is cut from the ticket's recorded base.
+- After you approve the pull request (or `review: auto` applies), the issue is closed and the branch is gone.
 
 ## Where it fits
 
-`ship-ticket` is a **chain step**: the whole ticket, where `/start-work`, `/implement`, and `/land` are the phases inside it. [ship-spec](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-spec.md) runs that procedure once per ready ticket, in its own session. [ship-release](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-release.md) does the same, once per feature, then tags. When you are unsure which door you want, [ask-yami](https://aihero.dev/skills-ask-yami) routes the set.
+`ship-ticket` is the **chain step** for one ticket. [ticket-flow](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ticket-flow.md) is the procedure. [ship-spec](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-spec.md) starts that procedure per ready ticket and lands those tickets under spec authority. [ask-yami](https://aihero.dev/skills-ask-yami) routes between them.

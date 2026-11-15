@@ -20,7 +20,7 @@ Herdr Desktop, with `hc` on `PATH`. A session that is already inside a core term
 
 ## The host
 
-The leading word is the **host**. `spec-flow` picks one host and stays there for that spec. On Desktop it calls this skill, labels each ticket terminal with the current space and tab so you can see it, and waits for `hc send` to bring back the pull request URL. On the TUI it calls `herdr` instead. `/ship-spec` and `/ship-release` both reach that procedure.
+The leading word is the **host**. `spec-flow` picks one host and stays there for that spec. On Desktop it calls this skill, labels each ticket terminal with the current space and tab so you can see it, **steers** that terminal until the pull request URL arrives, then lands the ticket under the ship door's authority. On the TUI it calls `herdr` instead. `/ship-spec` and `/ship-release` both reach that procedure.
 
 ## Common questions
 
@@ -30,12 +30,17 @@ The TUI sets `HERDR_ENV=1`. Desktop sets `HC_TERMINAL_ID` and does not set `HERD
 
 **Does this replace `hc --skill`?**
 
-No. This copy tells the agent to run `hc --skill` and follow it. The binary you have installed wins when a flag differs from an older note.
+No. This copy tells the agent to run `hc --skill` and follow it. The binary you have installed wins when a flag differs from an older note. For children the shipping session started, that session is the person for `blocked` approvals; it does not send those prompts to you at the child's keyboard.
+
+**Why is a ticket terminal waiting on a shell approval?**
+
+The parent should clear it (`hc keys <t> y` for a run-once approve). If it left the terminal blocked for you, that run was not steering.
 
 ## It's working if
 
-- Inside Desktop, a ready ticket shows up as its own terminal in the current tab, and the parent waits for that terminal's pull request URL.
-- The parent does not land the ticket. It sends the land step only after you approve.
+- Inside Desktop, a ready ticket shows up as its own terminal in the current tab, and the parent steers it until the pull request URL arrives.
+- Ticket terminals do not wait on you for shell approvals; the parent clears them.
+- The parent lands the ticket when the ship door owns that level (under `/ship-spec` or `/ship-release`).
 - Outside both hosts, the release stops instead of building every ticket in the parent session.
 
 ## Where it fits

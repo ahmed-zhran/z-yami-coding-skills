@@ -9,4 +9,4 @@ Ship the issue the user passed. If they passed none, ask which one. If the refer
 
 Call the Skill tool with "ticket-flow" and follow it for that issue. Do not invent a second procedure.
 
-You are the reviewer between the pull request and the merge, unless `docs/agents/branching.md` says `review: auto` for that ticket and CI is green. There is no second review after the merge.
+**Authority.** This door owns the ticket land. You approve the pull request into the ticket's base, unless `docs/agents/branching.md` says `review: auto` for that ticket and CI is green. There is no second review after the merge.

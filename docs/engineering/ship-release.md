@@ -1,8 +1,8 @@
 ## What it does
 
-`ship-release` runs one release from the idea through a tag on `main`. It names every feature, then ships each one with the same procedure as `/ship-spec`, and waits until that [spec](https://www.aihero.dev/ai-coding-dictionary/spec) has landed before the next. Each ready [ticket](https://www.aihero.dev/ai-coding-dictionary/ticket) is built in its own [session](https://www.aihero.dev/ai-coding-dictionary/session).
+`ship-release` runs one release from the idea through a tag on `main`. It names every feature, then ships each one with the same procedure as `/ship-spec` under release authority, and waits until that [spec](https://www.aihero.dev/ai-coding-dictionary/spec) has landed before the next. Each ready [ticket](https://www.aihero.dev/ai-coding-dictionary/ticket) is built in its own [session](https://www.aihero.dev/ai-coding-dictionary/session).
 
-The tag is not the end of your responsibility. Finishing writes a gate onto `main`. The next release cannot start while a box in that gate is open.
+This door owns the release land. The shipping session lands every ticket and every spec. You approve only the release pull request into `main`. The tag is not the end of your responsibility. Finishing writes a gate onto `main`. The next release cannot start while a box in that gate is open.
 
 ## When to reach for it
 
@@ -25,19 +25,23 @@ A previous release's `docs/agents/pending-release.md` must have no open blocking
 
 ## The gate
 
-The leading word is the **gate**. Before the tag you test the release yourself, and the release diff gets a security review. After the tag, `docs/agents/pending-release.md` is on `main` with open boxes: retro, reflect, learnings, debt, the ADRs the release touched, architecture drift, a risk and repo-scale note, any decision only a human can make, and a skills update. Checking a box means that work is done. The next `/ship-release` or `/release start` refuses while one is open.
+The leading word beside authority is the **gate**. Before the release pull request, the session runs the test suite, a code review, and a security review. After the tag, `docs/agents/pending-release.md` is on `main` with open boxes: retro, reflect, learnings, debt, the ADRs the release touched, architecture drift, a risk and repo-scale note, any decision only a human can make, and a skills update. Checking a box means that work is done. The next `/ship-release` or `/release start` refuses while one is open.
 
-Tickets that are still blocked do not get a session. When one lands, the tickets it was blocking can start.
+Tickets that are still blocked do not get a session. When one lands, the tickets it was blocking can start. The shipping session **steers** every pane it opened and lands lower levels under release authority.
 
 ## Common questions
 
 **Does the whole release land as one pull request?**
 
-No. Each ticket has its own pull request into its spec branch, `spec/<issue>`. You approve those one by one. When that spec's tickets have landed, the spec branch has its own pull request into the release. The release pull request into `main` is a separate approval, after the specs have landed and you have tested.
+The tickets and specs land along the way under this session's authority. The one pull request you approve is the release branch into `main`.
 
 **What if this release is two features?**
 
-It ships two specs, one after the other. Each has its own `spec/<issue>` branch and its own tickets. You approve that spec's ticket list, then its ticket pull requests, then its pull request into the release. The next spec starts after that merge.
+It ships two specs, one after the other. Each has its own `spec/<issue>` branch and its own tickets. This session lands those. You approve the release pull request after both specs have landed and the release has been tested and reviewed.
+
+**Do I approve ticket or spec pull requests during `/ship-release`?**
+
+No. Release authority covers those. You approve the release pull request into `main`.
 
 **What if Herdr is not running?**
 
@@ -46,10 +50,11 @@ It stops. It will not quietly switch to one shared branch. Open the session insi
 ## It's working if
 
 - Ready tickets appear in their own panes, and blocked tickets do not.
-- Each ticket's pane stops at an open pull request until you approve it.
+- Ticket and spec panes do not wait on you for merges; the shipping session lands them.
+- You are asked to approve the release pull request into `main`, then the tag lands.
 - After the tag, `docs/agents/pending-release.md` is on `main` and its boxes are still open.
 - Starting the next release, before those boxes are checked, stops and lists them.
 
 ## Where it fits
 
-`ship-release` is the **chain** for a release: name the features, run [ship-spec](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-spec.md) once per feature, then test, tag, and write the gate. `/release` remains the door for one of those phases, or for a hotfix. [ask-yami](https://aihero.dev/skills-ask-yami) routes between them.
+`ship-release` is the **chain** for a release: name the features, run [ship-spec](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-spec.md) once per feature under release authority, then test, open the release pull request, and write the gate. `/release` remains the door for one of those phases, or for a hotfix. [ask-yami](https://aihero.dev/skills-ask-yami) routes between them.

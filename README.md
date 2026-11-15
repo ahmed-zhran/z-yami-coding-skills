@@ -14,7 +14,7 @@
 
 [Installation](#installation) · [Quick start](#quick-start) · [What it does](#what-it-does) · [Reference](#reference) · [Site](https://ahmed-zhran.github.io/z-yami-coding-skills)
 
-61 skills in the `z-yami-coding-skills` plugin. A release, a spec, and a ticket each record a base when the issue is created, and the agent lands into that base. You approve before a pull request merges and before a release is tagged. The site is [z-yami-coding-skills](https://ahmed-zhran.github.io/z-yami-coding-skills).
+61 skills in the `z-yami-coding-skills` plugin. A release, a spec, and a ticket each record a base when the issue is created, and the agent lands into that base. The ship door you typed owns that level's land gate; everything below lands under that session's authority. The site is [z-yami-coding-skills](https://ahmed-zhran.github.io/z-yami-coding-skills).
 
 ## Requirements
 
@@ -58,7 +58,7 @@ A whole release, after setup, is one command. It needs Herdr, as noted above.
 /ship-release 2
 ```
 
-That names every feature, ships each one with `/ship-spec`, and waits until that spec has landed before the next. Inside a spec you approve the ticket list, each ticket's pull request into `spec/<issue>`, and that spec's pull request into the release. The tag happens after you approve the release itself. The next release waits until you clear `docs/agents/pending-release.md`.
+That names every feature, ships each one with `/ship-spec` under release authority, and waits until that spec has landed before the next. The shipping session steers every ticket pane it opened and lands tickets and specs. You approve only the release pull request into `main`. The next release waits until you clear `docs/agents/pending-release.md`.
 
 The same cycle, one level at a time:
 

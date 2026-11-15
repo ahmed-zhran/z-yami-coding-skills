@@ -1,6 +1,6 @@
 ---
 name: ticket-flow
-description: "Run one ticket from its own worktree through a pull request into its recorded base, and land it only after the user approves. Use when ship-ticket is invoked, or when spec-flow starts a ticket in a fresh session. Do not start a ticket the user did not ask to ship."
+description: "Run one ticket from its own worktree through a pull request into its recorded base, and land it when the door that owns this level approves. Use when ship-ticket is invoked, or when spec-flow starts a ticket in a fresh session. Do not start a ticket the user did not ask to ship."
 ---
 
 # Ticket flow
@@ -8,6 +8,10 @@ description: "Run one ticket from its own worktree through a pull request into i
 One ticket, from a branch cut off its base through a merged pull request. Review happens before the merge. Nothing reviews the ticket again after it lands.
 
 `ship-ticket` is the human door onto this procedure. `spec-flow` starts it in a fresh session per ticket. `start-work`, `implement`, and `land` are the human doors onto single phases. If you change a phase here, change that door in the same edit.
+
+**Authority.** The human door that started the chain owns the land gate for that level. `/ship-ticket` owns the ticket land. A parent (`spec-flow` or `release-flow`) that started this session owns the ticket land instead: stop when the pull request is open, report the URL to that parent, and land only when that parent tells you to.
+
+Call the Skill tool with "branch-lineage" before any step that creates, lands, or restacks a branch.
 
 The issue tracker should have been provided to you. If not, tell the user to run `/setup-z-yami-coding-skills`.
 
@@ -23,7 +27,7 @@ Call the Skill tool with "branch-lineage" and follow its **resolve the base** an
 
 ## 3. Build
 
-Before writing code, read what binds the area: `GLOSSARY.md`, ADRs, `docs/agents/stack.md`, and the architecture doc for each surface the ticket touches (`docs/agents/architecture/<surface>.md`). New code goes where the architecture doc says. A dependency for a slot `stack.md` already fills is not added. If you need to break either, stop and ask. Search `docs/solutions/` for notes on the area (call the Skill tool with "learnings").
+Before writing code, read what binds the area: `GLOSSARY.md`, ADRs, `docs/agents/stack.md`, and the architecture doc for each surface the ticket touches (`docs/agents/architecture/<surface>.md`). New code goes where the architecture doc says. A dependency for a slot `stack.md` already fills is not added. If you need to break either, stop and ask. When a parent session started this one and named a report address (`hc send` to that terminal), send the question there and wait for the reply; do not wait on a human at this pane's keyboard. Search `docs/solutions/` for notes on the area (call the Skill tool with "learnings").
 
 Take the first option that fully works:
 
@@ -49,15 +53,20 @@ Once done, call the Skill tool with "code-review" with the ticket's base as the 
 2. Commit your work to the ticket's branch.
 3. Follow the **open the PR** procedure from "branch-lineage". The pull request goes into the recorded base.
 
-If `docs/agents/branching.md` sets `review: auto` for one of the ticket's labels and CI is green, continue to step 5. Otherwise stop. Tell the user the pull request is ready, and that landing waits for their approval.
+If `docs/agents/branching.md` sets `review: auto` for one of the ticket's labels and CI is green, continue to step 5.
+
+Otherwise:
+
+- **Parent owns this land.** A parent started this session and named a report address: report the pull request URL there (what you skipped, any risk), and wait for that parent to tell you to land. Do not ask the human at this pane.
+- **`/ship-ticket` owns this land.** Tell the user the pull request is ready, and that landing waits for their approval.
 
 End that report with one or two lines: what you skipped or did not check, and any risk the reviewer should know.
 
 ## 5. Land
 
-Only after the user approves, or when `review: auto` applies and CI is green.
+Only after the door that owns this level approves (the user for `/ship-ticket`, the parent for a steered child), or when `review: auto` applies and CI is green.
 
-Do not land a `release/*` branch here. Tell the user that is `/release finish` or `/ship-release`. Do not land a `spec/*` branch here. When every ticket of that spec has landed, the spec pull request into the release is a separate approval.
+Do not land a `release/*` branch here. Tell the user that is `/release finish` or `/ship-release`. Do not land a `spec/*` branch here. When every ticket of that spec has landed, the parent that owns the spec lands that branch.
 
 Call the Skill tool with "branch-lineage" and follow its **land** procedure (merge, close the issue, restack).
 
