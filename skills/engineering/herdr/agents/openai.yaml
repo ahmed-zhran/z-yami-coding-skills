@@ -1,0 +1,3 @@
+interface:
+  display_name: "Herdr"
+  short_description: "Control Herdr panes, tabs, and agents"

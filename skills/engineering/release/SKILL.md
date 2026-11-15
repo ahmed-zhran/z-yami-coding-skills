@@ -27,21 +27,43 @@ Record the decision as an ADR (call the Skill tool with "domain-modeling" for th
 
 ## `start <N>`
 
-1. Confirm no other `release/*` is open, or that the user wants two in flight.
-2. Cut `release/<N>` from `main`, record `branch.release/<N>.base main`, push it.
-3. Set `release/<N>` as the default base in `docs/agents/branching.md`, so `to-spec` and `to-tickets` pick it up.
-4. Report the branch and the next step: `/grill-with-docs` then `/to-spec` for this release.
+1. **Gate.** If `docs/agents/pending-release.md` exists and any blocking box is still open (a line matching `- [ ]`), stop. List the open items. The next release waits until the user clears them. A missing file means no gate is pending. `/ship-release` uses this same check.
+2. Confirm no other `release/*` is open, or that the user wants two in flight.
+3. Cut `release/<N>` from `main`, record `branch.release/<N>.base main`, push it.
+4. Set `release/<N>` as the default base in `docs/agents/branching.md`, so `to-spec` and `to-tickets` pick it up.
+5. Report the branch and the next step: `/grill-with-docs` then `/to-spec` for this release, or `/ship-release <N>` to run the whole cycle.
 
 ## `finish <N>`
 
 1. **Freeze.** List every open issue whose lineage reaches `release/<N>`. Each must land or be re-based onto the next release (update its `Base:`). Stop until that list is empty.
 2. **Version and changelog.** Call the Skill tool with "changelog" in **compile** mode for `release/<N>`. It bumps the version and writes the `CHANGELOG.md` section on the release branch.
-3. **Release PR.** Open a PR from `release/<N>` into `main` (call the Skill tool with "pr"; the evidence section is the compiled changelog and the green CI run). Tell the user to review it, then stop.
-4. **When the user confirms approval:** follow the **land** procedure from "branch-lineage" with a merge commit (never squash a release).
-5. **Tag and publish.** Tag the merge commit `v<version>`, push the tag, and publish release notes from the new `CHANGELOG.md` section (`gh release create v<version> --notes-file <section>`).
-6. **Retire.** Delete `release/<N>` after the tag exists. Reset the default base in `docs/agents/branching.md` to `main` (or the next open release).
+3. **Gate for the next release.** On the release branch, write `docs/agents/pending-release.md` with the checklist below. Fill in the version and tag you are about to cut. Leave every box open. Commit it with the version bump. `/ship-release` writes this same list.
+4. **Release PR.** Open a PR from `release/<N>` into `main` (call the Skill tool with "pr"; the evidence section is the compiled changelog and the green CI run). Tell the user to review it, then stop.
+5. **When the user confirms approval:** follow the **land** procedure from "branch-lineage" with a merge commit (never squash a release).
+6. **Tag and publish.** Tag the merge commit `v<version>`, push the tag, and publish release notes from the new `CHANGELOG.md` section (`gh release create v<version> --notes-file <section>`).
+7. **Retire.** Delete `release/<N>` after the tag exists. Reset the default base in `docs/agents/branching.md` to `main` (or the next open release).
 
-Done when the tag is on `main`, the release notes are published, the release branch is gone, and no issue still has it as a base.
+Done when the tag is on `main`, the release notes are published, the release branch is gone, the gate file is on `main` with its boxes still open, and no issue still has this release as a base. Tell the user the next `/release start` or `/ship-release` refuses until they clear the boxes.
+
+### Pending checklist
+
+Keep this list identical to the one in `release-flow`.
+
+```markdown
+# Pending release actions
+
+Release <version> (<tag>) is on main. The next release cannot start while a blocking box is open. Check a box only after that work is done, in a commit on the default branch.
+
+## Blocking
+
+- [ ] Retro for this release (`/retro`)
+- [ ] Reflect: edits to skills or docs from this release, or a one-line note that there were none (`/reflect`)
+- [ ] ADRs this release touched, re-read. Mark any the code now violates
+- [ ] Architecture drift and deepening (`/improve-codebase-architecture`)
+- [ ] Risk and repo-scale note: what got harder to change, and whether any surface should leave the repo (`/extract-surface` only if one should)
+- [ ] Human decisions still open, written as questions. Write "none" if there are none
+- [ ] Skills update accepted (`/sync-skills`)
+```
 
 ## `hotfix <tag>`
 
@@ -62,4 +84,5 @@ For a bug in a shipped version.
 
 - Tag the merge commit on `main`, never a commit on the release branch: the tag must be reachable from `main`.
 - An unreleased bug (found on `release/<N>` before `finish`) is not a hotfix: it is an ordinary ticket based on `release/<N>`.
-- If the project deploys from tags, `finish` step 5 is the deploy. Say so before pushing the tag; it is a one-way door.
+- If the project deploys from tags, `finish` step 6 is the deploy. Say so before pushing the tag; it is a one-way door.
+- The pending-release gate blocks the next `/release start` and `/ship-release`. It does not block `/release hotfix`. A shipped bug is not the next release. `hotfix finish` does not replace an existing `docs/agents/pending-release.md`. If that file is missing, write the pending checklist for the patch tag so the next release still has a gate.

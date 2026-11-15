@@ -75,7 +75,7 @@ Offer **multi-context** (a root `GLOSSARY-MAP.md` pointing to per-context `GLOSS
 - **Stacking**: allowed (recommended) or not.
 - **Naming**: the patterns in the template, unless the repo already uses others.
 
-Record it in `docs/agents/branching.md`. Add `.worktrees/` and `.guardrails/` to `.gitignore`.
+Record it in `docs/agents/branching.md`. Keep the pending-release gate section from the template: `release finish` and `ship-release` write `docs/agents/pending-release.md`, and the next release cannot start while a blocking box is open. Add `.worktrees/` and `.guardrails/` to `.gitignore`.
 
 **Section E: Surfaces.** Only when exploration found monorepo signals. Call the Skill tool with "surface-map" to write `docs/agents/surfaces.md` (it asks before writing). Then tell the user which surfaces still have no stack or architecture decision, and that `/stack-decision` and `/surface-architecture` record them, one surface at a time.
 

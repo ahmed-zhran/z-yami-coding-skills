@@ -14,13 +14,14 @@ Reach for it once per repo, before the first use of any other engineering skill.
 
 ## Prerequisites
 
-It writes into the repo you run it in:
+It writes into the repo you run it in. `docs/agents/pending-release.md` is not one of those files. `/release finish` and `/ship-release` write it after a tag, and the next release cannot start while a box in it is open.
 
 | It writes | Where |
 | --- | --- |
 | `issue-tracker.md` | `docs/agents/` |
 | `domain.md` | `docs/agents/` |
 | `triage-labels.md` | `docs/agents/`, only when the `triage` skill is installed |
+| `branching.md` | `docs/agents/`, including the pending-release gate |
 | An `## Agent skills` block | `AGENTS.md`, created if missing |
 
 You commit all of it as markdown. There is no user-level or global mode. The config lives in the repo, so every repo gets its own copy.

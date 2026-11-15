@@ -8,6 +8,8 @@ disable-model-invocation: true
 
 Break a plan, spec, or conversation into a set of **tickets**: tracer-bullet vertical slices, each declaring the tickets that **block** it.
 
+`/ship-release` slices tickets by following this process itself, because this skill is user-invoked and another skill cannot call it. If you change the slice rules or the templates, change the publish step in `release-flow` in the same edit.
+
 The issue tracker and triage label vocabulary should have been provided to you. If not, tell the user to run `/setup-z-yami-coding-skills`.
 
 ## Process
@@ -68,7 +70,7 @@ Publish the approved tickets. **How** depends on the tracker `/setup-z-yami-codi
 - **Local files** → write one file per ticket under `.scratch/<feature-slug>/issues/<NN>-<slug>.md`, numbered from `01` in dependency order (blockers first). Each file's "Blocked by" lists the numbers/titles it depends on. Use the per-ticket file template below: one ticket per file, never a single combined file.
 - **A real issue tracker (GitHub, Linear, …)** → publish one issue per ticket in dependency order (blockers first) so each ticket's blocking edges can reference real identifiers. Use the platform's native blocking relationship where it has one; otherwise set each ticket's "Blocked by" to the blocking issues. If the source was an existing issue, make each ticket its sub-issue (tracker doc's operation). Apply the `ready-for-agent` triage label unless instructed otherwise; the tickets are agent-grabbable by construction. Apply each ticket's `surface:<name>` labels. A stacked ticket's `Base:` names the blocker's branch (`ticket/<n>-<slug>`), which exists once the blocker is started.
 
-Each ticket is then worked as `/start-work <n>`, `/implement <n>`, review, `/land <pr>`, or all of them at once with `/implement-spec`.
+Each ticket is then worked as `/ship-ticket <n>` (branch, build, review, land), or as the separate doors `/start-work <n>`, `/implement <n>`, review, `/land <pr>`. `/implement-spec` is the other door: one integration branch and one pull request, not one session per ticket.
 
 Work the **frontier**: any ticket whose blockers are all done. For a purely linear chain that means top to bottom.
 

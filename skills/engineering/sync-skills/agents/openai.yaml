@@ -1,0 +1,5 @@
+interface:
+  display_name: "Sync Skills"
+  short_description: "Update skills from this package, never merge local edits"
+policy:
+  allow_implicit_invocation: false

@@ -43,7 +43,7 @@ grill-with-docs, wayfinder, prototype, research, domain-modeling, codebase-desig
 
 ## Added
 
-branch-lineage, start-work, land, release, changelog, surface-map, extract-surface, stack-decision, surface-architecture, security-review, deep-review, debt, learnings, reflect, mermaid-validator, unslop, caveman, skill-eval. Credits for adapted ones are in each `SKILL.md` frontmatter and the README.
+branch-lineage, start-work, land, release, ship-ticket, ticket-flow, ship-release, release-flow, herdr, herdr-guide, sync-skills, changelog, surface-map, extract-surface, stack-decision, surface-architecture, security-review, deep-review, debt, learnings, reflect, mermaid-validator, unslop, caveman, skill-eval. `herdr` and `herdr-guide` are vendored; the pins and the update check are in `.agents/external-skills.md`. Credits for adapted ones are in each `SKILL.md` frontmatter and the README.
 
 ## Dropped
 

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Ship Ticket"
+  short_description: "Branch, build, review, and land one ticket"
+policy:
+  allow_implicit_invocation: false

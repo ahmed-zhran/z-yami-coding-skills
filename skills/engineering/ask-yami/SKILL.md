@@ -18,20 +18,21 @@ Every spec and ticket carries a `**Base:**` line: the branch its work is cut fro
 
 ## The main flow: idea to shipped release
 
-1. **`/release start <N>`** cuts `release/<N>` from `main` and makes it the default base. Skip it for repos that ship straight from `main`.
-2. **`/grill-with-docs`** sharpens the idea by interview, keeping `GLOSSARY.md` and ADRs current. (No repo under you? `/grill-me`.)
+1. **`/release start <N>`** cuts `release/<N>` from `main` and makes it the default base. It refuses while `docs/agents/pending-release.md` still has an open blocking box from the previous release. Skip the release branch for repos that ship straight from `main`. **`/ship-release <N>`** is the one door for the whole cycle below, including this step.
+2. **`/grill-with-docs`** sharpens the idea by interview, keeping `GLOSSARY.md` and ADRs current. (No repo under you? `/grill-me`.) Where a surface still has no stack or architecture decision, **`/stack-decision`** and **`/surface-architecture`** settle it before tickets exist.
 3. **Branch: can you settle every question in conversation?** If one needs a runnable answer, detour through **`/prototype`**, bridged by **`/handoff`** in both directions.
 4. **Branch: is this a multi-session build?**
-   - **Yes**: **`/to-spec`** (the spec gets the release as its base), then **`/to-tickets`** (each ticket gets blockers, a base, and surface labels). Then work the tickets one of two ways:
-     - **One at a time**, a fresh context per ticket: **`/start-work <n>`** (branch and worktree from the ticket's base), **`/implement <n>`** (builds with `/tdd`, reviews with `/code-review`, writes the changelog entry, opens the PR into the base), **you review the PR**, then **`/land <pr>`**.
-     - **All at once**: **`/implement-spec`** runs implementer subagents across the ready **frontier** on one `feature/<spec>` branch, then opens one PR into the spec's base for you to review and `/land`.
-   - **No**: **`/implement`** right here; it still ends in a PR into the current branch's base.
-5. **`/release finish <N>`** freezes the release, compiles the changelog and version bump, opens the release PR into `main`, lands it after your approval, tags it, and publishes the notes.
-6. **`/retro`** and **`/reflect`** close the loop: `/retro` improves the environment (checks, tooling), `/reflect` turns the session's lessons into edits to skills and docs.
+   - **Yes**: **`/to-spec`** (the spec gets the release as its base), then **`/to-tickets`** (each ticket gets blockers, a base, and surface labels). Then work the tickets one of three ways:
+     - **One command per ticket**, a fresh context each time: **`/ship-ticket <n>`**. It cuts the branch, builds, reviews, opens the pull request, waits for you, then lands. Inside a **`/ship-release`**, each ready ticket gets its own Herdr pane and that same flow.
+     - **One phase at a time**: **`/start-work <n>`**, **`/implement <n>`**, **you review the PR**, then **`/land <pr>`**. Same result as `/ship-ticket`, when you want to stop between phases.
+     - **All at once, one pull request**: **`/implement-spec`** runs implementer subagents across the ready **frontier** on one `feature/<spec>` branch, then opens one PR into the spec's base. This is not how `/ship-release` builds a release.
+   - **No**: **`/implement`** right here; it still ends in a PR into the current branch's base. You review it, then **`/land`**.
+5. **`/release finish <N>`** freezes the release, compiles the changelog and version bump, writes the post-release gate, opens the release PR into `main`, lands it after your approval, tags it, and publishes the notes. Human testing, `code-review`, and `security-review` of the release diff happen before that tag. **`/ship-release`** includes this step.
+6. **The gate blocks the next release.** `docs/agents/pending-release.md` lands on `main` with open boxes: `/retro`, `/reflect`, an ADR pass, `/improve-codebase-architecture`, a risk and repo-scale note, any human decision still open, and `/sync-skills`. Clear them by doing the work. The next `/release start` or `/ship-release` refuses while a box is open.
 
 ### Context hygiene
 
-Keep steps 2 to 4 (up to `/to-tickets`) in **one unbroken context window**. Each `/implement` then starts fresh, working from its ticket. The limit is the **[smart zone](https://www.aihero.dev/ai-coding-dictionary/smart-zone)**; near it, `/compact` at the nearest phase boundary (see Phase boundaries).
+Keep steps 2 to 4 (up to `/to-tickets`) in **one unbroken context window**. Each `/ship-ticket` or `/implement` then starts fresh, working from its ticket. `/ship-release` keeps the shaping phase in one window and puts each ticket in its own Herdr pane. The limit is the **[smart zone](https://www.aihero.dev/ai-coding-dictionary/smart-zone)**; near it, `/compact` at the nearest phase boundary (see Phase boundaries).
 
 ## On-ramps
 
@@ -48,7 +49,7 @@ Keep steps 2 to 4 (up to `/to-tickets`) in **one unbroken context window**. Each
 
 Decide these before the first ticket of a new surface, and revisit when they stop fitting.
 
-- **`/setup-z-yami-coding-skills`** (once per repo) configures the tracker, labels, domain docs, the branching policy, and the surface map.
+- **`/setup-z-yami-coding-skills`** (once per repo) configures the tracker, labels, domain docs, the branching policy (including the pending-release gate), and the surface map.
 - **`/surface-map`** keeps `docs/agents/surfaces.md`: each surface of the monorepo, its contracts, and the minimum context it needs from the others. The model reaches for it when a contract changes.
 - **`/stack-decision`** picks a surface's framework or a library for a slot, and records an ADR and `docs/agents/stack.md`.
 - **`/surface-architecture`** picks how code is organised inside a surface (feature modules, page-based, clean, vertical slices), writes its architecture doc, and enforces the dependency rule with lint (via `/setup-ts-deep-modules` for TypeScript).
@@ -57,17 +58,18 @@ Decide these before the first ticket of a new surface, and revisit when they sto
 
 ## Review
 
-- **`/code-review`** reviews a branch against its base: **Standards** (documented standards, the architecture doc, cross-surface impact) and **Spec**, plus **Security** on risky diffs and **Deep** when you ask. `/implement` runs it for you.
-- **`/security-review`**: the exploit-focused security axis on its own.
+- **`/code-review`** reviews a branch against its base: **Standards** (documented standards, the architecture doc, cross-surface impact) and **Spec**, plus **Security** on risky diffs and **Deep** when you ask. `/implement` and `ticket-flow` run it before the pull request. A release diff gets it again, plus **`/security-review`**, before the tag.
+- **`/security-review`**: the exploit-focused security axis on its own. `/ship-release` runs it on the release diff before the tag.
 - **`/deep-review`**: the strict maintainability audit on its own; big restructurings it finds become follow-up tickets, not scope creep.
 - **`/pr`** shapes every PR body (model-invoked).
 
 ## Codebase health and learning
 
-- **`/improve-codebase-architecture`**: in a spare moment, find deepening opportunities and drift from the architecture docs. Picking one generates an idea for `/grill-with-docs`.
+- **`/improve-codebase-architecture`**: in a spare moment, find deepening opportunities and drift from the architecture docs. Picking one generates an idea for `/grill-with-docs`. Also one box on the post-release gate.
 - **`/debt`**: harvest `shortcut:` comments into a ledger and issues.
 - **`/learnings`**: solution notes in `docs/solutions/`, written after non-obvious fixes and read before work in the same area (model-invoked).
-- **`/reflect`** and **`/retro`**: see step 6 of the main flow.
+- **`/reflect`** and **`/retro`**: boxes on the post-release gate. `/retro` improves the environment (checks, tooling). `/reflect` turns the session's lessons into edits to skills and docs.
+- **`/sync-skills`**: replace installed skills from this package with the published version. It refuses a locally edited skill file and does not touch skills from anywhere else. One box on the post-release gate.
 - **`/skill-eval`**: score a skill and test its trigger before changing it.
 
 ## Vocabulary underneath
@@ -104,6 +106,8 @@ Read [PHASE-BOUNDARIES.md](PHASE-BOUNDARIES.md) for the ordered tree and the rea
 - **`/writing-for-agents`**: how to write skills, AGENTS.md, and docs agents read.
 - **`/mermaid-validator`**: check Mermaid diagrams before committing docs.
 - **`/git-guardrails`**, **`/setup-pre-commit`**: one-time safety and quality hooks.
+- **`herdr`**: control Herdr from inside a pane (layout, commands, other agents). `/ship-release` calls it so each ready ticket gets its own pane. It stops when `HERDR_ENV` is not `1`. The file is a pinned copy; see `.agents/external-skills.md`.
+- **`herdr-guide`**: help a human install, learn, or troubleshoot Herdr. Not the skill that drives panes.
 
 ## Precondition
 

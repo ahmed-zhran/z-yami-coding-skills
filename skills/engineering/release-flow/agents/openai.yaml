@@ -1,0 +1,3 @@
+interface:
+  display_name: "Release Flow"
+  short_description: "One release from shaping to tag, then the gate"

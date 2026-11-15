@@ -7,6 +7,8 @@ disable-model-invocation: true
 
 Start work on the issue the user passed. If they passed none, ask which one; if the reference is ambiguous, ask.
 
+This is the start phase of `ticket-flow`. `/ship-ticket` runs the whole ticket. If you change the steps here, change `ticket-flow` in the same edit.
+
 The issue tracker should have been provided to you. If not, tell the user to run `/setup-z-yami-coding-skills`.
 
 1. Fetch the issue and state its title and its `**Base:**` line. If it has open blockers, list them and stop unless the user says to go ahead (a blocker that is still open means its code may not exist yet).

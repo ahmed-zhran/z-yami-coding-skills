@@ -12,7 +12,8 @@ Where the work currently lives decides whether this is the right skill:
 
 | The work is… | Reach for |
 | --- | --- |
-| A ticket on the tracker | `/implement #42`, one ticket per [session](https://www.aihero.dev/ai-coding-dictionary/session), [clearing](https://www.aihero.dev/ai-coding-dictionary/clearing) context between tickets |
+| A ticket on the tracker, and you want the branch, the build, and the merge as one command | `/ship-ticket #42`, one ticket per [session](https://www.aihero.dev/ai-coding-dictionary/session) |
+| A ticket on the tracker, and you want to stop between phases | `/implement #42`, then review, then `/land` |
 | A spec, not yet split up, and the build spans sessions | [to-tickets](https://aihero.dev/skills-to-tickets) first, then `/implement` per ticket |
 | A spec, and the build is small | `/implement` directly against the spec |
 | Only in the conversation you just had, and it's still small | `/implement` right there, in the same window |

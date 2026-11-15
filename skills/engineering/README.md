@@ -15,9 +15,12 @@ Reachable only when you type them (Claude Code: `disable-model-invocation: true`
 - **[triage](./triage/SKILL.md)**: Move incoming issues through a state machine of triage roles; for bugs, find the affected version and set the base.
 - **[start-work](./start-work/SKILL.md)**: Start a ticket: cut its branch from the recorded base and open it in its own worktree.
 - **[implement](./implement/SKILL.md)**: Build one ticket with the smallest complete change, `/tdd` and `/code-review`, ending in a PR into its base.
+- **[ship-ticket](./ship-ticket/SKILL.md)**: Ship one ticket from branch to merge, stopping for review before it lands.
 - **[implement-spec](./implement-spec/SKILL.md)**: Build a whole spec with parallel implementer subagents on one feature branch, ending in one PR for review.
 - **[land](./land/SKILL.md)**: After you approve a PR, merge it into its recorded base, close the issue, restack children, and clean up.
-- **[release](./release/SKILL.md)**: Start a release branch, finish it with version, changelog and tag, or ship a hotfix from a tag.
+- **[release](./release/SKILL.md)**: Start a release branch, finish it with version, changelog and tag, or ship a hotfix from a tag. Finish writes the gate that blocks the next release.
+- **[ship-release](./ship-release/SKILL.md)**: Run a whole release: shape, one Herdr session per ready ticket, test, tag after you approve, then the post-release gate.
+- **[sync-skills](./sync-skills/SKILL.md)**: Update skills installed from this package. Stop if one was edited locally. Leave every other skill alone.
 - **[stack-decision](./stack-decision/SKILL.md)**: Choose a surface's framework or a library for a slot, recorded as an ADR and in `docs/agents/stack.md`.
 - **[surface-architecture](./surface-architecture/SKILL.md)**: Choose how code is organised inside one surface, write its architecture doc, and enforce it with lint.
 - **[extract-surface](./extract-surface/SKILL.md)**: Plan splitting one monorepo surface into its own repo, carrying exactly the context it needs.
@@ -32,6 +35,10 @@ Reachable only when you type them (Claude Code: `disable-model-invocation: true`
 Model- or user-reachable (rich trigger phrasing so the model can reach for them).
 
 - **[branch-lineage](./branch-lineage/SKILL.md)**: Every branch records its base at any depth; procedures for resolving bases, starting work in worktrees, landing, and restacking.
+- **[ticket-flow](./ticket-flow/SKILL.md)**: One ticket from its worktree through review to a landed pull request. `/ship-ticket` and `/ship-release` call it.
+- **[release-flow](./release-flow/SKILL.md)**: One release from shaping through per-ticket sessions, the tag, and the gate that blocks the next release.
+- **[herdr](./herdr/SKILL.md)**: Control Herdr from inside a pane: layout, commands, and other agents. Pinned from herdrdev/herdr. `/ship-release` calls it for one session per ready ticket.
+- **[herdr-guide](./herdr-guide/SKILL.md)**: Set up Herdr or troubleshoot it with a human. Install, keys, logs, and agent detection. Not the control skill.
 - **[surface-map](./surface-map/SKILL.md)**: Keep the map of monorepo surfaces, their contracts, and each surface's extraction context accurate.
 - **[setup-ts-deep-modules](./setup-ts-deep-modules/SKILL.md)**: Wire dependency-cruiser into a TypeScript repo so each package is a deep module reachable only through its entry files.
 - **[diagnosing-bugs](./diagnosing-bugs/SKILL.md)**: Disciplined diagnosis loop for hard bugs: decide where the fix lands, build a tight feedback loop, minimise, hypothesise, fix with a regression test, ship as a PR, record the cause.

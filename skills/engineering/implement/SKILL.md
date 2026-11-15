@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 Implement the work described by the user in the spec or tickets.
 
+This is the build phase of `ticket-flow`. `/ship-ticket` runs the whole ticket, including this phase and the land after approval. If you change the steps here, change `ticket-flow` in the same edit.
+
 If the user passes a ticket reference, fetch it from the issue tracker and state its title and its `**Base:**` before starting. If the reference is ambiguous, ask.
 
 Call the Skill tool with "branch-lineage". If you are not already on the ticket's branch (`/start-work` normally puts you there), follow its **start work** procedure first. Never implement a ticket on its base branch.

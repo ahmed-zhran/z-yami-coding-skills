@@ -33,3 +33,7 @@ Long-lived branches: `main`, and any open `release/*`. They are never force-push
 ## Worktrees
 
 One worktree per work branch, under `.worktrees/<branch>` when the harness has no native worktree support. `.worktrees/` is gitignored.
+
+## Pending release gate
+
+`/release finish` and `/ship-release` write `docs/agents/pending-release.md` onto `main` when a release is tagged. `/release start` and `/ship-release` refuse to open the next release while any blocking box in that file is open. The file is absent until the first release finished through those skills. Check a box only after that work is done.

@@ -47,11 +47,21 @@ When the installer asks which skills to take, include `setup-z-yami-coding-skill
 ## The main flow
 
 ```text
+/ship-release 2
+```
+
+That one command shapes the release, builds each ready ticket in its own Herdr pane, waits for you to approve each pull request, tests, and tags after you approve the release. The next release waits until you clear `docs/agents/pending-release.md`.
+
+The same cycle, one phase at a time:
+
+```text
 /release start 2
 /grill-with-docs  ->  /to-spec  ->  /to-tickets
-for each ticket:  /start-work <n>  ->  /implement <n>  ->  you review the PR  ->  /land <pr>
+for each ticket:  /ship-ticket <n>     (or /start-work, /implement, you review, /land)
 /release finish 2
 ```
+
+`/ship-ticket` is one ticket from branch to merge. `/implement-spec` is the other build door: every ticket on one branch and one pull request, not a release across panes.
 
 Bugs: `/diagnosing-bugs` on a ticket based on the release branch, or `/release hotfix <tag>` first when the bug shipped.
 
@@ -72,9 +82,12 @@ Bugs: `/diagnosing-bugs` on a ticket based on the release branch, or `/release h
 - **[triage](./skills/engineering/triage/SKILL.md)**: Triage incoming issues; for bugs, find the affected version and base.
 - **[start-work](./skills/engineering/start-work/SKILL.md)**: Cut a ticket's branch from its base, in its own worktree.
 - **[implement](./skills/engineering/implement/SKILL.md)**: Build one ticket and open a PR into its base.
+- **[ship-ticket](./skills/engineering/ship-ticket/SKILL.md)**: Run one ticket from branch to merge, and stop for your review before it lands.
 - **[implement-spec](./skills/engineering/implement-spec/SKILL.md)**: Build a whole spec in parallel, ending in one PR.
 - **[land](./skills/engineering/land/SKILL.md)**: Merge an approved PR into its base, close the issue, restack.
 - **[release](./skills/engineering/release/SKILL.md)**: Start, finish, or hotfix a release, with version, changelog, and tag.
+- **[ship-release](./skills/engineering/ship-release/SKILL.md)**: Run a whole release, one Herdr pane per ticket, and write the gate that blocks the next one.
+- **[sync-skills](./skills/engineering/sync-skills/SKILL.md)**: Update skills installed from this package. Refuse a locally edited skill file. Leave every other skill alone.
 - **[stack-decision](./skills/engineering/stack-decision/SKILL.md)**: Choose and record a surface's stack.
 - **[surface-architecture](./skills/engineering/surface-architecture/SKILL.md)**: Choose, document, and enforce a surface's code architecture.
 - **[extract-surface](./skills/engineering/extract-surface/SKILL.md)**: Plan splitting a surface into its own repo.
@@ -87,6 +100,10 @@ Bugs: `/diagnosing-bugs` on a ticket based on the release branch, or `/release h
 **Model-invoked**
 
 - **[branch-lineage](./skills/engineering/branch-lineage/SKILL.md)**: Bases, worktrees, landing, and restacking.
+- **[ticket-flow](./skills/engineering/ticket-flow/SKILL.md)**: The procedure `/ship-ticket` runs: worktree, build, review, land.
+- **[release-flow](./skills/engineering/release-flow/SKILL.md)**: The procedure `/ship-release` runs, including the post-release gate.
+- **[herdr](./skills/engineering/herdr/SKILL.md)**: Control Herdr from inside a pane (the upstream skill, pinned in `.agents/external-skills.md`).
+- **[herdr-guide](./skills/engineering/herdr-guide/SKILL.md)**: Help a human install, learn, or troubleshoot Herdr. Does not drive panes.
 - **[surface-map](./skills/engineering/surface-map/SKILL.md)**: The map of monorepo surfaces and their contracts.
 - **[setup-ts-deep-modules](./skills/engineering/setup-ts-deep-modules/SKILL.md)**: Enforce deep TypeScript modules with dependency-cruiser.
 - **[diagnosing-bugs](./skills/engineering/diagnosing-bugs/SKILL.md)**: Feedback-loop-first diagnosis, fix, PR, and solution note.
@@ -127,4 +144,4 @@ Bugs: `/diagnosing-bugs` on a ticket based on the release branch, or `/release h
 
 ## Credits
 
-Built on [mattpocock/skills](https://github.com/mattpocock/skills) (MIT). Adapted with credit: [security-specialist](https://github.com/fabricioctelles/skills/tree/main/skills/security-specialist) and [skill-evaluation](https://github.com/fabricioctelles/skills/tree/main/skills/skill-evaluation) by Fabricio Telles (Apache-2.0), [caveman](https://github.com/JuliusBrussee/caveman) by Julius Brussee (Apache-2.0), [ponytail](https://github.com/DietrichGebert/ponytail) by Dietrich Gebert (MIT), [avoid-ai-writing](https://github.com/conorbronsdon/avoid-ai-writing) by Conor Bronsdon (MIT), [mermaid-validator](https://github.com/dt418/mermaid-validator-agent-skill) by dt418 (MIT). `deep-review` is inspired by the thermo-nuclear review in [cursor/plugins](https://github.com/cursor/plugins).
+Built on [mattpocock/skills](https://github.com/mattpocock/skills) (MIT). Adapted with credit: [security-specialist](https://github.com/fabricioctelles/skills/tree/main/skills/security-specialist) and [skill-evaluation](https://github.com/fabricioctelles/skills/tree/main/skills/skill-evaluation) by Fabricio Telles (Apache-2.0), [caveman](https://github.com/JuliusBrussee/caveman) by Julius Brussee (Apache-2.0), [ponytail](https://github.com/DietrichGebert/ponytail) by Dietrich Gebert (MIT), [avoid-ai-writing](https://github.com/conorbronsdon/avoid-ai-writing) by Conor Bronsdon (MIT), [mermaid-validator](https://github.com/dt418/mermaid-validator-agent-skill) by dt418 (MIT), [herdr](https://github.com/herdrdev/herdr/blob/v0.9.5/skills/herdr/SKILL.md) and the [Herdr agent guide](https://herdr.dev/agent-guide.md) (Apache-2.0). Pins for vendored skills are in [`.agents/external-skills.md`](./.agents/external-skills.md). `deep-review` is inspired by the thermo-nuclear review in [cursor/plugins](https://github.com/cursor/plugins).

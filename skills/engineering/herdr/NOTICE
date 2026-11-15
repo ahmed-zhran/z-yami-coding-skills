@@ -1,0 +1,8 @@
+Herdr control skill
+
+Source: https://github.com/herdrdev/herdr/blob/v0.9.5/skills/herdr/SKILL.md
+Blob: 4943e5575e941a7820ea01ca9416e79749c3ddc3
+License: Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+Upstream repository: https://github.com/herdrdev/herdr
+
+SKILL.md in this folder is a byte copy of that tag. The pin and the update check live in `.agents/external-skills.md`.

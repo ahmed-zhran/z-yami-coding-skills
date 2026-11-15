@@ -1,0 +1,5 @@
+interface:
+  display_name: "Ship Release"
+  short_description: "Shape, build, test, and tag one release"
+policy:
+  allow_implicit_invocation: false
