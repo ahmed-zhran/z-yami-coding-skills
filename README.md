@@ -1,15 +1,28 @@
-# Z-Yami Coding Skills
+<p align="center">
+  <img src="docs/brand/header.svg" alt="Yami Coding. Ahmed Zhran. 57 skills for release, spec, and ticket." width="100%">
+</p>
 
-Agent skills for real engineering, not vibe coding. A hard fork of [mattpocock/skills](https://github.com/mattpocock/skills), extended for how I ship. The site is [yami-coding](https://ahmed-zhran.github.io/yami-coding).
+<p align="center">
+  <a href="https://ahmed-zhran.github.io/yami-coding"><img alt="Site" src="https://img.shields.io/badge/site-yami--coding-8eb6ff?style=flat-square"></a>
+  <img alt="57 skills" src="https://img.shields.io/badge/skills-57-11131c?style=flat-square">
+  <img alt="Agentic workflow" src="https://img.shields.io/badge/workflow-agentic%20coding-1c2030?style=flat-square">
+  <img alt="Release, spec, ticket" src="https://img.shields.io/badge/levels-release%20%C2%B7%20spec%20%C2%B7%20ticket-ffd8a8?style=flat-square&labelColor=11131c">
+  <a href="./LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-1c2030?style=flat-square"></a>
+</p>
 
-- **Branch lineage at any depth.** Every spec and ticket records its **base** when it is created. A spec ticket lands into `spec/<issue>`, that spec lands into the release, and the release lands into `main`. A bug ticket lands into the open release, a hotfix cut from the production tag, or `main` when no release is open. `/land` merges into that recorded base. The branch that happens to be checked out is not a base.
-- **Release cycles.** `/release` opens a release branch, compiles changelog entries into a version, tags it, and handles hotfixes from a shipped tag.
-- **Monorepo surfaces.** A surface map records each app, service, and package, the contracts between them, and the minimum context each needs from the others, so agents get the monorepo's full context with precision, and a surface can be split out later.
-- **Design at three levels.** Project (surfaces), stack (`/stack-decision`), and code architecture inside each surface (`/surface-architecture`, enforced by lint).
-- **Review on more axes.** Standards and Spec from upstream, plus an exploit-focused Security axis on risky diffs and a strict Deep axis on request.
-- **Learning loops.** Solution notes after non-obvious fixes, session reflection into skill edits, and a skill evaluator.
+<p align="center">
+  <strong>Ahmed Zhran's agent skills for shipping software.</strong><br>
+  A spec, a ticket, and a release each have a branch. The agent lands into the base written on the issue. The site is <a href="https://ahmed-zhran.github.io/yami-coding">yami-coding</a>.
+</p>
 
-Upstream's philosophy holds: small, composable skills that keep you in control. See [`UPSTREAM.md`](./UPSTREAM.md) for exactly what was kept, changed, added, and dropped.
+| | | |
+| --- | --- | --- |
+| **Lineage** | Every issue records its base when it is created. A spec ticket lands into `spec/<issue>`. That spec lands into `release/<N>`. The release lands on `main`. | `/land` |
+| **Release** | `/ship-release` publishes every spec the release needs, one Herdr pane per ready ticket, and tags only after you approve. | `/ship-release` |
+| **Bugs** | A bug ticket lands into the open release, a hotfix cut from the production tag, or `main` when no release is open. | `/triage` |
+| **Surfaces** | A map of each app, service, and package, the contracts between them, and the context an agent needs. | `/surface-map` |
+| **Review** | Standards, Spec, an exploit-focused Security axis on risky diffs, and a strict Deep axis when you ask. | `/code-review` |
+| **Learning** | Solution notes after non-obvious fixes, a retro after the tag, and a skill evaluator. | `/retro` |
 
 ## Install
 
@@ -102,7 +115,7 @@ Bugs: `/diagnosing-bugs` on a ticket based on the release branch, or `/release h
 - **[branch-lineage](./skills/engineering/branch-lineage/SKILL.md)**: Bases, worktrees, landing, and restacking.
 - **[ticket-flow](./skills/engineering/ticket-flow/SKILL.md)**: The procedure `/ship-ticket` runs: worktree, build, review, land.
 - **[release-flow](./skills/engineering/release-flow/SKILL.md)**: The procedure `/ship-release` runs, including the post-release gate.
-- **[herdr](./skills/engineering/herdr/SKILL.md)**: Control Herdr from inside a pane (the upstream skill, pinned in `.agents/external-skills.md`).
+- **[herdr](./skills/engineering/herdr/SKILL.md)**: Control Herdr from inside a pane (pinned in `.agents/external-skills.md`).
 - **[herdr-guide](./skills/engineering/herdr-guide/SKILL.md)**: Help a human install, learn, or troubleshoot Herdr. Does not drive panes.
 - **[surface-map](./skills/engineering/surface-map/SKILL.md)**: The map of monorepo surfaces and their contracts.
 - **[setup-ts-deep-modules](./skills/engineering/setup-ts-deep-modules/SKILL.md)**: Enforce deep TypeScript modules with dependency-cruiser.
@@ -144,6 +157,6 @@ Bugs: `/diagnosing-bugs` on a ticket based on the release branch, or `/release h
 
 ## Credits
 
-The repository license is MIT (`LICENSE`). `herdr`, `herdr-guide`, `security-review`, `caveman`, and `skill-eval` are Apache-2.0, and each of those folders includes the Apache license text.
+Yami Coding is Ahmed Zhran's package. The repository license is MIT (`LICENSE`). `herdr`, `herdr-guide`, `security-review`, `caveman`, and `skill-eval` are Apache-2.0, and each of those folders includes the Apache license text.
 
-Built on [mattpocock/skills](https://github.com/mattpocock/skills) (MIT). Adapted with credit: [security-specialist](https://github.com/fabricioctelles/skills/tree/main/skills/security-specialist) and [skill-evaluation](https://github.com/fabricioctelles/skills/tree/main/skills/skill-evaluation) by Fabricio Telles (Apache-2.0), [caveman](https://github.com/JuliusBrussee/caveman) by Julius Brussee (Apache-2.0), [ponytail](https://github.com/DietrichGebert/ponytail) by Dietrich Gebert (MIT), [avoid-ai-writing](https://github.com/conorbronsdon/avoid-ai-writing) by Conor Bronsdon (MIT), [mermaid-validator](https://github.com/dt418/mermaid-validator-agent-skill) by dt418 (MIT), [herdr](https://github.com/herdrdev/herdr/blob/v0.9.5/skills/herdr/SKILL.md) and the [Herdr agent guide](https://herdr.dev/agent-guide.md) (Apache-2.0). Pins for vendored skills are in [`.agents/external-skills.md`](./.agents/external-skills.md). `deep-review` is inspired by the thermo-nuclear review in [cursor/plugins](https://github.com/cursor/plugins).
+The agentic workflow uses [mattpocock/skills](https://github.com/mattpocock/skills) (MIT) as a base. [`UPSTREAM.md`](./UPSTREAM.md) lists what was kept, changed, added, and dropped. Also adapted, with credit: [security-specialist](https://github.com/fabricioctelles/skills/tree/main/skills/security-specialist) and [skill-evaluation](https://github.com/fabricioctelles/skills/tree/main/skills/skill-evaluation) by Fabricio Telles (Apache-2.0), [caveman](https://github.com/JuliusBrussee/caveman) by Julius Brussee (Apache-2.0), [ponytail](https://github.com/DietrichGebert/ponytail) by Dietrich Gebert (MIT), [avoid-ai-writing](https://github.com/conorbronsdon/avoid-ai-writing) by Conor Bronsdon (MIT), [mermaid-validator](https://github.com/dt418/mermaid-validator-agent-skill) by dt418 (MIT), [herdr](https://github.com/herdrdev/herdr/blob/v0.9.5/skills/herdr/SKILL.md) and the [Herdr agent guide](https://herdr.dev/agent-guide.md) (Apache-2.0). Pins for vendored skills are in [`.agents/external-skills.md`](./.agents/external-skills.md). `deep-review` is inspired by the thermo-nuclear review in [cursor/plugins](https://github.com/cursor/plugins).

@@ -1,7 +1,7 @@
 {
   "name": "z-yami-coding-skills",
   "version": "1.2.0",
-  "description": "Agent skills for real engineering: grilling, spec/ticket flows with branch lineage, TDD, multi-axis code review, release cycles, monorepo surfaces and code architecture. A fork of mattpocock/skills.",
+  "description": "Ahmed Zhran's agent skills for shipping software: branch lineage, specs, tickets, releases, review, and monorepo surfaces.",
   "author": {
     "name": "Ahmed Zhran",
     "url": "https://github.com/ahmed-zhran"
