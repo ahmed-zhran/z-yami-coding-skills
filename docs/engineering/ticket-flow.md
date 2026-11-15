@@ -26,7 +26,7 @@ The leading idea is **one procedure**. `/start-work`, `/implement`, and `/land` 
 
 ## It's working if
 
-- The worktree's branch is cut from the ticket's recorded base.
+- The worktree's branch is cut from the ticket's recorded base, which is `spec/<issue>` unless the ticket is stacked on a blocker.
 - A review runs before the pull request, and the session waits for you unless that label is allowed to land itself.
 - After approval, the issue is closed and stacked children name the new base.
 

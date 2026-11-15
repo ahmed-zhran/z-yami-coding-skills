@@ -1,19 +1,20 @@
 ---
 name: branch-lineage
-description: "Branch lineage: every ticket, feature, release, and hotfix branch records its base (the branch it was cut from and lands back into), at any depth. Holds the procedures for resolving a base, starting work in a worktree, landing a branch into its base, and restacking children. Use whenever you create, commit to, open a PR from, merge, or rebase a work branch, or when the user mentions base branch, parent branch, stacked branches, worktrees, landing, or restacking."
+description: "Branch lineage: every ticket, spec, release, and hotfix branch records its base (the branch it was cut from and lands back into), at any depth. Holds the procedures for resolving a base, starting work in a worktree, landing a branch into its base, and restacking children. Use whenever you create, commit to, open a PR from, merge, or rebase a work branch, or when the user mentions base branch, parent branch, stacked branches, worktrees, landing, or restacking."
 ---
 
 # Branch Lineage
 
-Work never assumes `main`. Every unit of work has a **base**: the branch it was cut from and the branch it **lands** back into. The base can be `main`, a `release/N`, a `feature/<slug>`, a `hotfix/<slug>`, or another ticket's branch. Following base links upward from any branch reaches `main`; that chain is the branch's **lineage**.
+Work never assumes `main`. Every unit of work has a **base**: the branch it was cut from and the branch it **lands** back into. The ship levels are fixed: a ticket lands into its spec, a spec lands into its release, and a release lands into `main`. A hotfix lands into `main`. A stacked ticket lands into the blocker ticket it needs. Following base links upward from any branch reaches `main`; that chain is the branch's **lineage**.
 
 ```text
 main
-└── release/2                 base: main
-    ├── feature/rooms         base: release/2
-    │   └── ticket/12-...     base: feature/rooms
-    │       └── ticket/14-... base: ticket/12-...   (stacked)
-    └── ticket/13-...         base: release/2
+└── release/1                     base: main
+    ├── spec/4                    base: release/1
+    │   └── ticket/12-rooms       base: spec/4
+    │       └── ticket/14-rates   base: ticket/12-rooms   (stacked)
+    └── spec/9                    base: release/1
+        └── ticket/13-billing     base: spec/9
 ```
 
 The repo's policy lives in `docs/agents/branching.md` (naming patterns, merge strategy, review mode, stacking). If it is missing, tell the user to run `/setup-z-yami-coding-skills`; until then use the defaults written in this skill.
@@ -22,10 +23,10 @@ The repo's policy lives in `docs/agents/branching.md` (naming patterns, merge st
 
 - **Base**: the branch a branch was cut from and lands into. One per branch.
 - **Lineage**: the chain of bases from a branch up to `main`.
-- **Land**: merge a branch into its base after review, close its issue, and clean up. The same verb at every level: ticket into feature, feature into release, release into `main`.
+- **Land**: merge a branch into its base after review, close its issue, and clean up. The same verb at every level: ticket into spec, spec into release, release into `main`.
 - **Restack**: after a branch lands, move each open branch that was based on it onto the landed branch's own base, and retarget its PR.
 - **Stacked**: a branch whose base is another work branch rather than a long-lived one. Allowed only when it needs code that has not landed yet.
-- **Long-lived branch**: `main` and any open `release/*`. Everything else is short-lived and is deleted when it lands.
+- **Long-lived branch**: `main` and any open `release/<N>`. A spec branch and a ticket branch are short-lived and are deleted when they land.
 
 ## Where the base is recorded
 
@@ -38,20 +39,23 @@ When the two disagree, the issue wins: update git config to match and say so.
 
 ## Default naming
 
-Use `docs/agents/branching.md` when it exists. Otherwise:
+`docs/agents/branching.md` holds review mode, update strategy, merge strategy, and stacking. These names are fixed even when that file still lists a feature branch. A feature branch is not a ship level.
+
+Git cannot store a branch whose name is a path prefix of another branch. `release/1` and `release/1/spec/1` cannot both exist. The level is the first path segment. The base is what connects them.
 
 | Kind | Pattern | Base |
 |------|---------|------|
 | Release | `release/<N>` | `main` |
-| Feature (optional grouping) | `feature/<slug>` | a release, or `main` |
-| Ticket | `ticket/<issue-number>-<slug>` | from the issue's `Base:` |
-| Hotfix | `hotfix/<slug>` | the release tag it fixes |
+| Spec | `spec/<issue>` | `release/<N>` (or `main` when no release is open) |
+| Spec ticket | `ticket/<issue>-<slug>` | `spec/<spec-issue>`, or a blocker ticket when stacked |
+| Bug ticket | `ticket/<issue>-<slug>` | the open `release/<N>`, or `hotfix/<slug>` cut from the production tag when it has shipped, or `main` when no release is open |
+| Hotfix | `hotfix/<slug>` | the release tag it fixes, and it lands into `main` |
 
 ## Procedure: resolve the base
 
-1. Read the issue's `**Base:**` line. If the issue has none, use its parent spec's `Base:`. If neither has one, use the default base from `docs/agents/branching.md` (fallback `main`) and write it back to the issue.
+1. Read the issue's `**Base:**` line. If it is missing, stop. Do not use the branch that is checked out, and do not invent a base. A spec's base is written when the spec is published: the open `release/<N>`, or `main` when no release is open. A spec ticket's base is written when the ticket is sliced: `spec/<parent-spec-issue>`, unless it is stacked on a blocker's branch. A bug ticket's base is written when the ticket is created: the open `release/<N>`, or `hotfix/<slug>` cut from the production tag when the bug has shipped, or `main` when no release is open. A bug does not get a spec branch only to hold the fix.
 2. Walk the lineage upward (`git config branch.<b>.base` on each step) until `main`, so you know every ancestor.
-3. Make sure each ancestor exists on the remote, top-down. A missing ancestor is created from its own base and pushed; a missing release branch is a sign to ask the user whether `/release start` was skipped.
+3. Make sure each ancestor exists on the remote, top-down. A missing `spec/<issue>` is cut from the spec's base and pushed. A missing release branch is a sign to ask the user whether `/release start` was skipped.
 
 Done when you can print the full lineage, every branch in it exists on the remote, and git config matches the issue.
 
@@ -76,7 +80,7 @@ Done when the worktree exists, its branch is cut from the current base tip, git 
 Precondition: the PR is approved (or `docs/agents/branching.md` sets `review: auto` for one of its labels) and CI is green. If either fails, stop and report; never merge around a red check or a missing review.
 
 1. Update the branch from its base (rebase or merge, per `docs/agents/branching.md`; default: merge the base into the branch). On conflict, call the Skill tool with "resolving-merge-conflicts". Re-run the checks.
-2. Merge into the base with the configured strategy (default: squash for tickets, merge commit for features and releases, so release history keeps its tickets).
+2. Merge into the base with the configured strategy (default: squash for tickets, merge commit for specs and releases, so the release keeps a merge for each spec). A policy line that still says "features" means specs.
 3. Close the issue the way the tracker doc closes work, with a comment naming the base it landed in.
 4. **Restack** (below).
 5. Remove the worktree (`git worktree remove`) and delete the branch locally and on the remote. Never delete a long-lived branch here; releases are retired by `/release`.

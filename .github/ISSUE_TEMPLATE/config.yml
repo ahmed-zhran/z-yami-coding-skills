@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question or "how do I...?"
+    url: https://github.com/ahmed-zhran/z-yami-coding-skills/discussions/categories/q-a
+    about: Ask in Q&A. Issues are for bugs and for changes that clear SCOPE.md.
+  - name: Support for another harness or issue tracker
+    url: https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/.out-of-scope/mainstream-issue-trackers-only.md
+    about: Read this before asking. Most extra trackers are already ruled out.
+  - name: Is my request out of scope?
+    url: https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/SCOPE.md
+    about: The bar every issue must clear, and the requests this repo has already decided not to take.

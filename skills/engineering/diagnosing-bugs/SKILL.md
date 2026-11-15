@@ -16,11 +16,11 @@ Decide this before touching code, because it decides the branch:
 | The bug is in | The fix |
 |---------------|---------|
 | A PR still under review | Lives on that PR's branch. No new issue. |
-| Landed on an unreleased `release/<N>` (or a feature branch) | An issue with `**Base:**` that branch. No changelog entry: users never saw it. |
-| A shipped version (a tag on `main`) | A hotfix: tell the user to run `/release hotfix <tag>` first, which creates `hotfix/<slug>` and the issue's base. |
-| Only a local experiment | Wherever the user is working. |
+| Landed on an unreleased `release/<N>` | A bug ticket with `**Base:** release/<N>`. No changelog entry: users never saw it. |
+| A shipped version (a tag on `main`) | A hotfix: tell the user to run `/release hotfix <tag>` first. The ticket's base is that `hotfix/<slug>`. |
+| Not shipped, and no release is open | A bug ticket with `**Base:** main`. |
 
-If the user just wants a quick diagnosis with no fix yet, skip this and go straight to Phase 1. Otherwise call the Skill tool with "branch-lineage" and, unless you are already on the right branch, follow its **start work** procedure for the bug's issue.
+If the user just wants a quick diagnosis with no fix yet, skip this and go straight to Phase 1. Otherwise the bug issue must already have a `**Base:**` line. If it does not, stop. Call the Skill tool with "branch-lineage" and follow its **start work** procedure unless the current branch is already that ticket's branch, cut from the recorded base.
 
 ## Redact
 

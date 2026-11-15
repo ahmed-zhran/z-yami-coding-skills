@@ -1,8 +1,8 @@
 # Z-Yami Coding Skills
 
-Agent skills for real engineering, not vibe coding. A hard fork of [mattpocock/skills](https://github.com/mattpocock/skills), extended for how I ship:
+Agent skills for real engineering, not vibe coding. A hard fork of [mattpocock/skills](https://github.com/mattpocock/skills), extended for how I ship. The site is [yami-coding](https://ahmed-zhran.github.io/yami-coding).
 
-- **Branch lineage at any depth.** Every spec and ticket records its **base**, the branch it is cut from and lands back into: ticket into feature, feature into release, release into `main`. Each ticket gets its own worktree and its own PR, you review it, and `/land` merges it and restacks whatever was stacked on it.
+- **Branch lineage at any depth.** Every spec and ticket records its **base** when it is created. A spec ticket lands into `spec/<issue>`, that spec lands into the release, and the release lands into `main`. A bug ticket lands into the open release, a hotfix cut from the production tag, or `main` when no release is open. `/land` merges into that recorded base. The branch that happens to be checked out is not a base.
 - **Release cycles.** `/release` opens a release branch, compiles changelog entries into a version, tags it, and handles hotfixes from a shipped tag.
 - **Monorepo surfaces.** A surface map records each app, service, and package, the contracts between them, and the minimum context each needs from the others, so agents get the monorepo's full context with precision, and a surface can be split out later.
 - **Design at three levels.** Project (surfaces), stack (`/stack-decision`), and code architecture inside each surface (`/surface-architecture`, enforced by lint).
@@ -143,5 +143,7 @@ Bugs: `/diagnosing-bugs` on a ticket based on the release branch, or `/release h
 - **[skill-eval](./skills/productivity/skill-eval/SKILL.md)**: Score a skill and test its trigger.
 
 ## Credits
+
+The repository license is MIT (`LICENSE`). `herdr`, `herdr-guide`, `security-review`, `caveman`, and `skill-eval` are Apache-2.0, and each of those folders includes the Apache license text.
 
 Built on [mattpocock/skills](https://github.com/mattpocock/skills) (MIT). Adapted with credit: [security-specialist](https://github.com/fabricioctelles/skills/tree/main/skills/security-specialist) and [skill-evaluation](https://github.com/fabricioctelles/skills/tree/main/skills/skill-evaluation) by Fabricio Telles (Apache-2.0), [caveman](https://github.com/JuliusBrussee/caveman) by Julius Brussee (Apache-2.0), [ponytail](https://github.com/DietrichGebert/ponytail) by Dietrich Gebert (MIT), [avoid-ai-writing](https://github.com/conorbronsdon/avoid-ai-writing) by Conor Bronsdon (MIT), [mermaid-validator](https://github.com/dt418/mermaid-validator-agent-skill) by dt418 (MIT), [herdr](https://github.com/herdrdev/herdr/blob/v0.9.5/skills/herdr/SKILL.md) and the [Herdr agent guide](https://herdr.dev/agent-guide.md) (Apache-2.0). Pins for vendored skills are in [`.agents/external-skills.md`](./.agents/external-skills.md). `deep-review` is inspired by the thermo-nuclear review in [cursor/plugins](https://github.com/cursor/plugins).

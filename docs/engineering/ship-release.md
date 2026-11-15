@@ -32,7 +32,11 @@ Tickets that are still blocked do not get a session. When one lands, the tickets
 
 **Does the whole release land as one pull request?**
 
-No. Each ticket has its own pull request into the release branch. You approve those one by one. The release pull request into `main` is a separate approval, after the tickets have landed and you have tested.
+No. Each ticket has its own pull request into its spec branch, `spec/<issue>`. You approve those one by one. When that spec's tickets have landed, the spec branch has its own pull request into the release. The release pull request into `main` is a separate approval, after the specs have landed and you have tested.
+
+**What if this release is two features?**
+
+It publishes two specs, each with its own `spec/<issue>` branch and its own tickets. It does not fold them into one spec, and it does not stop after the first. You approve the whole breakdown once.
 
 **What if Herdr is not running?**
 

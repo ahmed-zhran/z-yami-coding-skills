@@ -66,14 +66,14 @@ The defaults are the five canonical roles, each label string equal to its name: 
 
 Offer **multi-context** (a root `GLOSSARY-MAP.md` pointing to per-context `GLOSSARY.md` files) only when exploration found monorepo signals. Then confirm which layout they want.
 
-**Section D: Branching.** Every work branch records the branch it lands into (its **base**), at any depth: ticket into feature, feature into release, release into `main`. Propose the defaults from [branching.md](./branching.md) and ask one question per field only where exploration suggests the default is wrong:
+**Section D: Branching.** Every work branch records the branch it lands into (its **base**): ticket into spec, spec into release, release into `main`. Propose the defaults from [branching.md](./branching.md) and ask one question per field only where exploration suggests the default is wrong:
 
 - **Default base**: the open `release/*` if there is one, else `main`.
 - **Review mode**: `required` (every PR waits for the user's approval; recommended), optionally `auto` for named labels such as `docs`.
-- **Merge strategy**: squash for tickets, merge commit for features, releases, and hotfixes. Match what the repo's merge settings allow.
+- **Merge strategy**: squash for tickets, merge commit for specs, releases, and hotfixes. Match what the repo's merge settings allow.
 - **Update strategy**: merge the base into the branch before landing (recommended), or rebase.
 - **Stacking**: allowed (recommended) or not.
-- **Naming**: the patterns in the template, unless the repo already uses others.
+- **Naming**: `release/<N>`, `spec/<issue>`, `ticket/<issue>-<slug>`. A spec ticket's base is the spec. A bug ticket's base is the open release, a hotfix from the production tag, or `main` when no release is open. Do not record a feature branch. A repo file that still lists one is stale.
 
 Record it in `docs/agents/branching.md`. Keep the pending-release gate section from the template: `release finish` and `ship-release` write `docs/agents/pending-release.md`, and the next release cannot start while a blocking box is open. Add `.worktrees/` and `.guardrails/` to `.gitignore`.
 

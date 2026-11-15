@@ -13,7 +13,7 @@ The issue tracker should have been provided to you. If not, tell the user to run
 
 ## 1. Fetch
 
-Fetch the issue the caller named. State its title and its `**Base:**` line. If the reference is ambiguous, ask. If blockers are still open, list them and stop, unless the user says to go ahead.
+Fetch the issue the caller named. State its title and its `**Base:**` line. If the line is missing, stop. Do not start from the branch that happens to be checked out. If the reference is ambiguous, ask. If blockers are still open, list them and stop, unless the user says to go ahead.
 
 A bug takes the diagnosis path in step 3. The gates after that are the same.
 
@@ -57,7 +57,7 @@ End that report with one or two lines: what you skipped or did not check, and an
 
 Only after the user approves, or when `review: auto` applies and CI is green.
 
-Do not land a `release/*` branch here. Tell the user that is `/release finish` or `/ship-release`.
+Do not land a `release/*` branch here. Tell the user that is `/release finish` or `/ship-release`. Do not land a `spec/*` branch here. When every ticket of that spec has landed, the spec pull request into the release is a separate approval.
 
 Call the Skill tool with "branch-lineage" and follow its **land** procedure (merge, close the issue, restack).
 

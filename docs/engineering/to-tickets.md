@@ -51,7 +51,7 @@ One shape breaks the tracer-bullet rule. A **wide refactor** is a single mechani
 - **Migrate**: move call sites over in batches sized by blast radius (per package, per directory), one ticket per batch, each blocked by the expand. CI stays green because the old form still exists.
 - **Contract**: delete the old form once no caller remains, in a ticket blocked by every migrate batch.
 
-Where even the batches can't stay green alone, they share an integration branch and all block a final integrate-and-verify ticket. CI only has to be green at that ticket.
+Where even the batches can't stay green alone, they share `spec/<issue>` and all block a final integrate-and-verify ticket. CI only has to be green at that ticket.
 
 ## Common questions
 

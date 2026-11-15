@@ -16,7 +16,7 @@ Reachable only when you type them (Claude Code: `disable-model-invocation: true`
 - **[start-work](./start-work/SKILL.md)**: Start a ticket: cut its branch from the recorded base and open it in its own worktree.
 - **[implement](./implement/SKILL.md)**: Build one ticket with the smallest complete change, `/tdd` and `/code-review`, ending in a PR into its base.
 - **[ship-ticket](./ship-ticket/SKILL.md)**: Ship one ticket from branch to merge, stopping for review before it lands.
-- **[implement-spec](./implement-spec/SKILL.md)**: Build a whole spec with parallel implementer subagents on one feature branch, ending in one PR for review.
+- **[implement-spec](./implement-spec/SKILL.md)**: Build a whole spec with parallel implementer subagents on `spec/<issue>`, ending in one PR into the release.
 - **[land](./land/SKILL.md)**: After you approve a PR, merge it into its recorded base, close the issue, restack children, and clean up.
 - **[release](./release/SKILL.md)**: Start a release branch, finish it with version, changelog and tag, or ship a hotfix from a tag. Finish writes the gate that blocks the next release.
 - **[ship-release](./ship-release/SKILL.md)**: Run a whole release: shape, one Herdr session per ready ticket, test, tag after you approve, then the post-release gate.

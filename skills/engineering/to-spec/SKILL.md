@@ -80,3 +80,5 @@ A description of the things that are out of scope for this spec.
 Any further notes about the feature.
 
 </spec-template>
+
+4. Cut `spec/<issue-number>` from the spec's base and record `branch.spec/<issue-number>.base` as that base. Push it. Do not open a pull request yet: the branch matches its base until a ticket lands. Tickets use this branch as their base. The spec issue's `**Base:**` stays the release, because that is where `spec/<issue-number>` lands.

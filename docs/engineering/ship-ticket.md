@@ -21,7 +21,7 @@ You invoke this by typing `/ship-ticket`, and the agent won't reach for it on it
 
 ## The approval stop
 
-The skill's leading word is the **approval stop**. Building and opening the pull request are not the end. Landing waits until you approve, unless `docs/agents/branching.md` says `review: auto` for that label and CI is green. A release branch is never landed here.
+The skill's leading word is the **approval stop**. Building and opening the pull request are not the end. Landing waits until you approve, unless `docs/agents/branching.md` says `review: auto` for that label and CI is green. The pull request targets `spec/<issue>`. A spec branch and a release branch are never landed here.
 
 ## Common questions
 

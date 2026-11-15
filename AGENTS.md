@@ -36,4 +36,4 @@ Canonical names, unchanged. See `docs/agents/triage-labels.md`. Issues are judge
 
 ### Releases
 
-Changesets. Every user-visible change to a promoted skill adds a `.changeset/*.md` entry (call the Skill tool with "changelog"). The Release workflow opens the "chore: version skills" PR; merging it bumps `package.json`, syncs `plugin.json` through `scripts/sync-plugin-version.mjs`, and writes `CHANGELOG.md`.
+Changesets. Every user-visible change to a promoted skill adds a `.changeset/*.md` entry (call the Skill tool with "changelog"). A change that alters a file a consumer repo keeps (anything setup or another skill writes under `docs/agents/`) also adds a migration record under `skills/engineering/sync-skills/migrations/` in that same change. The Release workflow opens the "chore: version skills" PR; merging it bumps `package.json`, syncs `plugin.json` through `scripts/sync-plugin-version.mjs`, and writes `CHANGELOG.md`.

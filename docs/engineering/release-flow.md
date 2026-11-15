@@ -28,7 +28,7 @@ Those are commands only you can invoke. This procedure contains the same publish
 
 ## It's working if
 
-- The spec and the tickets exist before any pane starts building.
+- Every spec this release needs exists, each with a `spec/<issue>` branch, before any pane starts building. A spec ticket's pull request targets that spec branch.
 - A ticket with an open blocker has no pane yet.
 - The tag is on `main`, and the pending-release file on `main` still has open boxes.
 

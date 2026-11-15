@@ -8,7 +8,7 @@ Implement the work described by the user in the spec or tickets.
 
 This is the build phase of `ticket-flow`. `/ship-ticket` runs the whole ticket, including this phase and the land after approval. If you change the steps here, change `ticket-flow` in the same edit.
 
-If the user passes a ticket reference, fetch it from the issue tracker and state its title and its `**Base:**` before starting. If the reference is ambiguous, ask.
+Fetch the ticket the user named and state its title and its `**Base:**` before starting. If they named none, ask which ticket. If the reference is ambiguous, ask. If the issue has no `**Base:**` line, stop. Do not build on the branch that happens to be checked out, and do not pick a base during this skill. The base was written when the ticket was created.
 
 Call the Skill tool with "branch-lineage". If you are not already on the ticket's branch (`/start-work` normally puts you there), follow its **start work** procedure first. Never implement a ticket on its base branch.
 

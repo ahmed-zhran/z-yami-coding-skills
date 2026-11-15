@@ -14,7 +14,7 @@ A **flow** is a path through the skills. Most work travels the **main flow**, in
 
 ## Branch lineage, in one paragraph
 
-Every spec and ticket carries a `**Base:**` line: the branch its work is cut from and **lands** back into. Tickets land into a release (or a feature branch inside it), the release lands into `main`. Each ticket is a PR into its base that you review; `/land` merges it, closes the issue, and **restacks** any branch stacked on it. `/branch-lineage` holds the vocabulary and the procedures; the skills below call it.
+Every spec and ticket carries a `**Base:**` line, written when that issue is created. A spec ticket lands into `spec/<issue>`. That spec lands into the release. The release lands into `main`. A bug ticket lands into the open release, into a hotfix cut from the production tag when the bug has shipped, or into `main` when no release is open. Nothing lands into whatever branch happens to be checked out. `/land` merges into the recorded base, closes the issue, and **restacks** any branch stacked on it. `/branch-lineage` holds the vocabulary and the procedures; the skills below call it.
 
 ## The main flow: idea to shipped release
 
@@ -22,11 +22,11 @@ Every spec and ticket carries a `**Base:**` line: the branch its work is cut fro
 2. **`/grill-with-docs`** sharpens the idea by interview, keeping `GLOSSARY.md` and ADRs current. (No repo under you? `/grill-me`.) Where a surface still has no stack or architecture decision, **`/stack-decision`** and **`/surface-architecture`** settle it before tickets exist.
 3. **Branch: can you settle every question in conversation?** If one needs a runnable answer, detour through **`/prototype`**, bridged by **`/handoff`** in both directions.
 4. **Branch: is this a multi-session build?**
-   - **Yes**: **`/to-spec`** (the spec gets the release as its base), then **`/to-tickets`** (each ticket gets blockers, a base, and surface labels). Then work the tickets one of three ways:
+   - **Yes**: one spec per feature. **`/ship-release <N>`** publishes every spec this release needs, then the tickets. **`/to-spec`** publishes one spec (its base is the release), then **`/to-tickets`** (each ticket gets blockers, a base, and surface labels). Then work the tickets one of three ways:
      - **One command per ticket**, a fresh context each time: **`/ship-ticket <n>`**. It cuts the branch, builds, reviews, opens the pull request, waits for you, then lands. Inside a **`/ship-release`**, each ready ticket gets its own Herdr pane and that same flow.
      - **One phase at a time**: **`/start-work <n>`**, **`/implement <n>`**, **you review the PR**, then **`/land <pr>`**. Same result as `/ship-ticket`, when you want to stop between phases.
-     - **All at once, one pull request**: **`/implement-spec`** runs implementer subagents across the ready **frontier** on one `feature/<spec>` branch, then opens one PR into the spec's base. This is not how `/ship-release` builds a release.
-   - **No**: **`/implement`** right here; it still ends in a PR into the current branch's base. You review it, then **`/land`**.
+     - **All at once, one pull request**: **`/implement-spec`** runs implementer subagents across the ready **frontier** on `spec/<issue>`, then opens one PR into the release. This is not how `/ship-release` builds a release. `/ship-release` gives each ticket its own pull request into the spec branch, then lands the spec.
+   - **No**: it is still one ticket, and the ticket already has a `**Base:**`. **`/implement`** builds that ticket and opens the PR into the recorded base. It stops when the issue has no base. You review it, then **`/land`**.
 5. **`/release finish <N>`** freezes the release, compiles the changelog and version bump, writes the post-release gate, opens the release PR into `main`, lands it after your approval, tags it, and publishes the notes. Human testing, `code-review`, and `security-review` of the release diff happen before that tag. **`/ship-release`** includes this step.
 6. **The gate blocks the next release.** `docs/agents/pending-release.md` lands on `main` with open boxes: `/retro`, `/reflect`, an ADR pass, `/improve-codebase-architecture`, a risk and repo-scale note, any human decision still open, and `/sync-skills`. Clear them by doing the work. The next `/release start` or `/ship-release` refuses while a box is open.
 

@@ -73,7 +73,7 @@ Show counts and a one-line summary per item. Let the maintainer pick.
 
 3. **Verify the claim.** Before any grilling, check that the claim holds up. For a bug, reproduce it from the reporter's steps. For a PR, confirm the diff does what it claims: check it out, run the relevant tests or commands. Report what happened: confirmed (with code path), failed, or insufficient detail (a strong `needs-info` signal). A confirmed verification makes a much stronger agent brief.
 
-   **For a bug, find where it lives**, because that sets the issue's base (see the "branch-lineage" skill). Check the latest release tag and any open `release/*` or feature branch: is the bug in a shipped version, or only on unreleased work? Recommend the base: `hotfix/<slug>` via `/release hotfix <tag>` for a shipped bug, the open `release/<N>` for an unreleased one. Add the surface labels from `docs/agents/surfaces.md`.
+   **For a bug, find where it lives**, because that sets the issue's base (see the "branch-lineage" skill). Check the latest release tag and any open `release/<N>`. A shipped bug is a hotfix: tell the user to run `/release hotfix <tag>`, and the ticket's base is that `hotfix/<slug>`. An unreleased bug's base is the open `release/<N>`. When no release is open, the base is `main`. Write that `**Base:**` on the issue before it is ready. A bug does not get a spec branch only to hold the fix. Add the surface labels from `docs/agents/surfaces.md`.
 
 4. **Grill (if needed).** If the request needs fleshing out, call the Skill tool twice, for "grilling" and "domain-modeling", and grill it into shape a round of questions at a time, sharpening domain terms and updating `GLOSSARY.md`/ADRs inline as decisions land.
 

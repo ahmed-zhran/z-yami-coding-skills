@@ -1,18 +1,18 @@
 ---
 name: sync-skills
-description: "Update the skills installed from z-yami-coding-skills. Show the changelog, refuse to overwrite a locally edited skill, and leave every other skill alone."
+description: "Update the skills installed from z-yami-coding-skills. Show the changelog, refuse to overwrite a locally edited skill, and apply the consumer-file migrations that shipped with it."
 disable-model-invocation: true
 ---
 
 # Sync skills
 
-Replace the installed copies of skills that came from `ahmed-zhran/z-yami-coding-skills` with the published version. Then stop.
+Replace the installed copies of skills that came from `ahmed-zhran/z-yami-coding-skills` with the published version. Then apply every consumer-file migration that shipped after the version they had.
 
 Installed skill files from this package are read-only outside that repo. Change a shared skill in the coding-skills repo, publish it, and run this skill again to pick it up. Do not edit those files in a consumer repo. This skill does not merge a local edit with the published skill. You do not get both in one `SKILL.md`.
 
 Skills that did not come from this package are not yours to touch. Do not list them, diff them, update them, or delete them.
 
-Do not run `npx autoskills`. Do not re-run `/setup-z-yami-coding-skills` unless the user asks. Repo-specific behaviour belongs in that repo's `AGENTS.md`, `GLOSSARY.md`, `docs/agents/*`, and ADRs, or in a skill whose name this package does not publish.
+Do not run `npx autoskills`. Do not re-run `/setup-z-yami-coding-skills` unless the user asks. Repo-specific behaviour belongs in that repo's `AGENTS.md`, `GLOSSARY.md`, and ADRs, or in a skill whose name this package does not publish. A file under `docs/agents/` changes only when a migration record names it. Do not infer a file edit from changelog prose.
 
 ## 1. Find the install
 
@@ -35,9 +35,11 @@ A clean install has nothing to restore. Continue.
 
 ## 3. Show the changelog
 
-Read the installed version (plugin manifest, or the lock entry) and the published changelog since that version (`CHANGELOG.md` on `ahmed-zhran/z-yami-coding-skills`, or `gh release list` for that repo). Show the user what would change, including any skill that is new since they last ran `add`.
+Remember the installed version before you change anything. Read the published changelog since that version (`CHANGELOG.md` on `ahmed-zhran/z-yami-coding-skills`, or `gh release list` for that repo). Show what would change, including any skill that is new since they last ran `add`.
 
-Stop and wait. Update only after they accept.
+Read `migrations/*.md` from the version you would install, not from the consumer's old skill copy. On a published tag, fetch that directory from the tag. On a symlink checkout, read it from `origin/main` after `git fetch`, and do not merge yet. A record is due when its `after` version is greater than or equal to the installed version, and the version you would install is greater than `after`. Compare versions as semver. Skip a record whose "Already applied" test already passes.
+
+Show the diff each due record would make. Stop and wait. Update skills and apply records only after they accept.
 
 ## 4. Update
 
@@ -46,11 +48,33 @@ Stop and wait. Update only after they accept.
 - Codex: `codex plugin update z-yami-coding-skills@z-yami`.
 - skills.sh: `npx skills@latest update`. If the changelog contains a skill they do not have installed, tell them to run `npx skills@latest add ahmed-zhran/z-yami-coding-skills` again and take the new names. `update` does not install skills added since `add`.
 
-## 5. Report setup drift
+## 5. Apply due migrations
 
-Re-read `docs/agents/` in the consumer repo. If a section the current setup skill writes is missing (issue tracker, branching, the pending-release rule, domain docs, surfaces in a monorepo), name the gap. Do not rewrite those files. The user edits them, or re-runs setup when they want to.
+Apply the records you showed, in filename order. Each record names one consumer path, the template to copy from, the repo choices to keep, and how to tell it is already applied. Keep every listed choice. Replace only what the record says to replace. If the file is missing, write it the way the record says.
 
-Tell them the installed version after the update, and that consumer skill files from this package were not merged with anything local.
+Do not rewrite `AGENTS.md`, `GLOSSARY.md`, or ADRs unless a record names that path. If some other file setup writes is missing a section, name the gap and leave the file.
+
+A record that already passes its "Already applied" test is a no-op. Running this command again does not edit that file a second time.
+
+Tell them the installed version after the update, each file you changed, and that consumer skill files from this package were not merged with anything local.
+
+## Adding a migration
+
+A change that alters a file a consumer repo keeps (anything setup or another skill writes under `docs/agents/`) adds one record in `migrations/` in the same change as its changeset. The next edit does not add a new section to this skill.
+
+Name the file `NNN-slug.md` so filename order is apply order. Frontmatter:
+
+```yaml
+after: 1.1.0
+path: docs/agents/branching.md
+template: skills/engineering/setup-z-yami-coding-skills/branching.md
+keep:
+  - default base branch
+```
+
+`after` is the last published version that does not include the change. `path` is the consumer file. `template` is the file in this package the consumer copy must match. `keep` is the list of repo choices the apply step must not overwrite.
+
+The body says what to replace, what to do when the file is missing, and a line that starts `Already applied when` so a second run can stop. Do not describe the edit only in changelog prose.
 
 ## Vendored upstream skills
 

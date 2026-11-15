@@ -9,10 +9,10 @@ A pin is the version this repo last reviewed. Newer upstream work does not enter
 Do this in the coding-skills repo when you want to know if a vendored skill has moved, or before a release of this package.
 
 1. Read the table below. Ignore preview tags.
-2. For a Git tag pin, list stable releases and compare the newest tag to the pin. For Herdr: `gh release list --repo herdrdev/herdr`. A tag that sorts newer than the pin is a candidate. The pin stays until the diff is reviewed.
+2. For a Git tag pin, list stable releases and compare the newest tag to the pin. For Herdr: `gh release list --repo herdrdev/herdr`. A tag that sorts newer than the pin is a candidate.
 3. Download the source URL at the candidate tag (or re-fetch a live URL) and diff it against the vendored file.
-4. Report the pin, the candidate, and the diff. Do not edit the vendored file until the maintainer accepts.
-5. On accept: replace the vendored file, bump the pin and the content hash in this file, re-apply the recorded divergences, and say so in the changelog.
+4. A byte-identical pin is fast-forwarded by the weekly job in `/data/projects/aurora/aura-space` (`scripts/update-external-skills.py`). That job updates the vendored file and the pin below. It does not touch a file that has diverged.
+5. For a diverged file, re-apply the recorded divergences by hand, then bump the pin and say so in the changelog.
 
 A live URL with no tag (the agent guide) is checked by re-fetching it and diffing. The content hash is how you know the fetched bytes changed.
 
@@ -22,7 +22,7 @@ A live URL with no tag (the agent guide) is checked by re-fetching it and diffin
 
 - **Vendored:** `skills/engineering/herdr/SKILL.md`
 - **Upstream:** https://github.com/herdrdev/herdr
-- **License:** Apache-2.0. See `skills/engineering/herdr/NOTICE`.
+- **License:** Apache-2.0. The text is `skills/engineering/herdr/LICENSE`. See `skills/engineering/herdr/NOTICE`.
 - **Pin:** tag `v0.9.5` (latest stable release as of 2026-11-15)
 - **Source:** https://raw.githubusercontent.com/herdrdev/herdr/v0.9.5/skills/herdr/SKILL.md
 - **Blob:** `4943e5575e941a7820ea01ca9416e79749c3ddc3`
@@ -33,7 +33,7 @@ A live URL with no tag (the agent guide) is checked by re-fetching it and diffin
 
 - **Vendored:** `skills/engineering/herdr-guide/SKILL.md`
 - **Upstream:** https://herdr.dev/agent-guide.md
-- **License:** Apache-2.0, same project as `herdr`
+- **License:** Apache-2.0, same project as `herdr`. The text is `skills/engineering/herdr-guide/LICENSE`.
 - **Pin:** fetched 2026-11-15. No release tag. The page is the source.
 - **Content hash (sha256) of the fetched page:** `74a5212e3f99cc02ef8553238de4aebf1d9598d10b98c2050ef5d2216bbc0e5f`
 - **Divergence:** em dashes in the page are rewritten to colons. The section that tells an agent to `npx skills add herdrdev/herdr` is replaced: this package already ships `herdr`, and a second install is refused. Re-apply both when the page changes.

@@ -19,14 +19,14 @@ A `wayfinder` unit: a child **Issue** of a `wayfinder:map` holding a *question* 
 A canonical state-machine label applied to an **Issue** during triage (e.g. `needs-triage`, `ready-for-afk`). Each role maps to a real label string in the **Issue tracker** via `docs/agents/triage-labels.md`.
 
 **Base**:
-The branch a piece of work is cut from and lands back into. Recorded on the **Issue** as a `**Base:**` line (canonical) and mirrored in `git config branch.<name>.base`. Any branch can be a base: `main`, a release, a feature, or another ticket.
+The branch a piece of work is cut from and lands back into. Recorded on the **Issue** as a `**Base:**` line (canonical) and mirrored in `git config branch.<name>.base`. A ticket's base is its spec branch, a spec's base is its release, and a release's base is `main`. A stacked ticket's base is another ticket.
 _Avoid_: parent branch, target branch, upstream (upstream means the tracking remote branch)
 
 **Lineage**:
-The chain of **Bases** from a branch down to the default branch, e.g. `ticket/42-x` → `feature/login` → `release/2` → `main`. Owned by `branch-lineage`.
+The chain of **Bases** from a branch down to the default branch, e.g. `ticket/42-x` → `spec/7` → `release/2` → `main`. Owned by `branch-lineage`.
 
 **Long-lived branch**:
-The default branch and every open `release/*`. Never pushed to directly; only **Landed** into.
+The default branch and every open `release/<N>`. Never pushed to directly; only **Landed** into. Spec branches and ticket branches are not long-lived.
 
 **Land**:
 Merge an approved PR into its **Base**, close its **Issue**, **Restack** its children, and remove its worktree and branch. Done by `/land`, or by `/release finish` for a release branch. Opening a PR is not landing.
@@ -66,7 +66,7 @@ A short record in `docs/solutions/` of a non-obvious problem, its root cause, an
 - An **Issue** carries one **Triage role** at a time
 - A **Decision ticket** is an **Issue** (a child of a `wayfinder:map`)
 - Every work branch has exactly one **Base**; a **Base** can have many children
-- A spec's tickets usually share a feature branch as their **Base**; a stacked ticket's **Base** is another ticket
+- A spec's tickets share `spec/<issue>` as their **Base**; a stacked ticket's **Base** is another ticket. The spec's own **Base** is the release it lands into. A bug ticket's **Base** is the open release, a hotfix cut from the production tag, or `main` when no release is open
 - A **Surface** exposes zero or more **Contracts** and has one **Surface architecture**
 
 ## Flagged ambiguities

@@ -12,8 +12,6 @@ Plugin-capable agents install from this repo's own marketplace, `.claude-plugin/
 | Codex         | `@z-yami` marketplace     | Yes, at startup                                              |
 | Everyone else | skills.sh                 | No. Run `npx skills update`, and re-run `add` for new skills |
 
-The repo is private by default. Plugin and skills.sh installs need GitHub access to it (an authenticated `gh` or git credential helper) until it is made public.
-
 ## Claude Code
 
 <canonical-block name="claude-code">

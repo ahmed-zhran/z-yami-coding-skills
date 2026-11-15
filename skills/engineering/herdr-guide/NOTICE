@@ -1,0 +1,8 @@
+Herdr agent guide
+
+Source: https://herdr.dev/agent-guide.md
+Fetched: 2026-11-15
+License: Apache License 2.0. The license text is LICENSE in this folder.
+Upstream project: https://github.com/herdrdev/herdr
+
+SKILL.md in this folder is a modified version of that page. Em dashes in the page are rewritten to colons. The instruction to install a second herdr skill with `npx skills add herdrdev/herdr` is removed, because this package already ships herdr. The pin, the content hash, and the update check live in `.agents/external-skills.md`.

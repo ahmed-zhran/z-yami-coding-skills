@@ -28,10 +28,10 @@ If `release/<N>` does not exist yet, do what `/release start <N>` does:
 
 Keep this phase in one context window. Do not start a ticket here.
 
-1. Interview the idea. Call the Skill tool twice, for "grilling" and "domain-modeling", so the interview also keeps `GLOSSARY.md` and ADRs current. When a question needs a runnable answer, stop and tell the user to detour through `/prototype`.
+1. Interview until you can name every feature this release ships. Call the Skill tool twice, for "grilling" and "domain-modeling", so the interview also keeps `GLOSSARY.md` and ADRs current. When a question needs a runnable answer, stop and tell the user to detour through `/prototype`. A release that ships two features gets two specs. Do not fold them into one spec, and do not stop after the first.
 2. For each surface this release touches, read `docs/agents/stack.md` and `docs/agents/architecture/<surface>.md`. Where either is missing, stop and tell the user to run `/stack-decision` or `/surface-architecture` for that surface. Do not invent the choice inside this session. Continue when those docs exist.
-3. Publish a spec. Do not interview again. Synthesise what is already settled. Base is `release/<N>` unless the user names another. Seams: prefer an existing seam, at the highest point you can, and check that choice with the user before publishing. Publish to the tracker with `ready-for-agent` and a `surface:<name>` label per surface. The body has these sections, in order: `**Base:**`, `**Surfaces:**`, Problem Statement, Solution, User Stories (as an actor, I want, so that), Implementation Decisions (no file paths), Testing Decisions, Out of Scope, Further Notes.
-4. Publish tracer-bullet tickets from that spec. Each ticket is a narrow complete path through every layer, demoable on its own, and small enough for one fresh context window. Prefactor tickets come first. Each ticket records `**Base:**` (the spec's base, unless it must stack on a blocker's unlanded branch and `docs/agents/branching.md` allows stacking), `**Surfaces:**`, what it delivers, and what blocks it. Show the numbered list and wait for the user to approve the breakdown before publishing. Publish one issue per ticket, blockers first, with native blocking links where the tracker has them, plus `ready-for-agent` and the surface labels. Do not close the spec issue.
+3. For each feature, one spec. Keep an existing open spec when it is that feature, it has the spec sections, its `**Base:**` is `release/<N>`, and its decisions are concrete enough to slice. If it is not usable, say what is missing and stop. Otherwise publish it. Do not interview again: synthesise what is already settled. Seams: prefer an existing seam, at the highest point you can, and check that choice with the user before publishing. Publish to the tracker with `ready-for-agent` and a `surface:<name>` label per surface. The body has these sections, in order: `**Base:**`, `**Surfaces:**`, Problem Statement, Solution, User Stories (as an actor, I want, so that), Implementation Decisions (no file paths), Testing Decisions, Out of Scope, Further Notes. Cut `spec/<issue-number>` from `release/<N>` when that branch is missing, record the base, and push it. Do not open a pull request for the spec yet.
+4. Draft tracer-bullet tickets for every spec. Each ticket is a narrow complete path through every layer, demoable on its own, and small enough for one fresh context window. Prefactor tickets come first. Each ticket records `**Base:** spec/<issue-number>` (or a blocker's branch when it must stack on unlanded code and `docs/agents/branching.md` allows stacking), `**Surfaces:**`, what it delivers, and what blocks it. Show one numbered list grouped by spec, and wait for the user to approve the whole release before publishing. Then publish one issue per ticket, blockers first, with native blocking links where the tracker has them, plus `ready-for-agent` and the surface labels. Do not close the spec issues.
 
 ## 3. Build the frontier
 
@@ -45,18 +45,22 @@ For each ready ticket, open a pane in the current tab and start an agent whose o
 
 The parent does not land a pane's pull request. Tell the user the pull request URL and wait. After they approve, tell that pane's agent to continue `ticket-flow` from its land step. Repeat until every ticket whose lineage reaches `release/<N>` has landed or been re-based onto a later release.
 
-## 5. Test and review, before the tag
+## 5. Land each spec
+
+When every ticket whose base is `spec/<issue>` has landed, open a pull request from that branch into `release/<N>`. Tell the user and wait. After they approve, land it with a merge commit. A ticket session never lands the spec. Repeat for each spec whose tickets are done. The release is not ready to test while one of its spec branches is still open.
+
+## 6. Test and review, before the tag
 
 On `release/<N>`, against `main`:
 
-1. Run the full test suite. Failures become tickets based on this release, or the user explicitly defers them.
+1. Run the full test suite. A failure becomes a bug ticket whose `**Base:**` is `release/<N>`, or the user explicitly defers it.
 2. Call the Skill tool with "code-review", fixed point `main`.
 3. Call the Skill tool with "security-review" on the same diff.
 4. Stop for human testing. Ask the user to test the release. Do not continue on your own judgement of "it looks done".
 
-A bug found here is an ordinary ticket on `release/<N>`, not a hotfix. Go back to step 3 for it.
+A bug found here is a ticket whose `**Base:**` is `release/<N>`. It does not get a spec branch. It is not a hotfix. Go back to step 3 for that ticket.
 
-## 6. Finish
+## 7. Finish
 
 Only after the user approves the release.
 
@@ -90,7 +94,7 @@ Release <version> (<tag>) is on main. The next release cannot start while a bloc
 - [ ] Skills update accepted (`/sync-skills`)
 ```
 
-Security review and human testing are steps 5's stops. They are not a second copy of this list.
+Security review and human testing are step 6's stops. They are not a second copy of this list.
 
 ## Gotchas
 
