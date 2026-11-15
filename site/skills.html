@@ -4,27 +4,35 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Skills · Yami Coding</title>
-    <meta name="description" content="The engineering and productivity skills in Yami Coding." />
+    <meta
+      name="description"
+      content="Engineering and productivity skills in Yami Coding: ship doors, lineage, review, and Herdr."
+    />
     <link rel="icon" href="%BASE_URL%favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;600;700&family=Unbounded:wght@600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@400;500;600&family=Syne:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./src/styles.css" />
   </head>
-  <body>
+  <body class="page-skills">
+    <div class="sky sky-dim" aria-hidden="true">
+      <canvas data-rift></canvas>
+      <div class="sky-veil"></div>
+    </div>
+
     <header class="site-header">
       <a class="brand" href="./index.html">
         <img class="mark" src="%BASE_URL%favicon.svg" alt="" />
         Yami
       </a>
       <nav class="nav">
-        <a href="./index.html#compare">Compare</a>
-        <a href="./index.html#stops">Stops</a>
-        <a href="./index.html#panes">Panes</a>
-        <a href="./skills.html">Skills</a>
+        <a href="./index.html#lineage">Lineage</a>
+        <a href="./index.html#authority">Authority</a>
+        <a href="./index.html#steer">Steer</a>
+        <a href="./skills.html" aria-current="page">Skills</a>
         <a href="https://github.com/ahmed-zhran/z-yami-coding-skills">GitHub</a>
       </nav>
     </header>
@@ -34,36 +42,36 @@
         <p class="kicker">The set</p>
         <h1>Skills</h1>
         <p class="lede">
-          You type the user-invoked skills. The model can also reach the others when the task fits.
+          You type the ship doors and the setup commands. The model can also reach the procedures when the task fits.
           A user-invoked skill never calls another user-invoked skill.
         </p>
       </section>
 
       <section class="catalog">
-        <div>
+        <div class="reveal">
           <h2>Engineering · you type</h2>
           <ul>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/ask-yami/SKILL.md">ask-yami</a><span>Which skill or flow fits.</span></li>
+            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/ask-yami/SKILL.md">ask-yami</a><span>Which skill or flow fits this moment.</span></li>
             <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/setup-z-yami-coding-skills/SKILL.md">setup-z-yami-coding-skills</a><span>Tracker, labels, branching, surfaces. Once per repo.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/grill-with-docs/SKILL.md">grill-with-docs</a><span>Interview that also updates the glossary and ADRs.</span></li>
+            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/grill-with-docs/SKILL.md">grill-with-docs</a><span>Interview that keeps the glossary and ADRs current.</span></li>
             <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/wayfinder/SKILL.md">wayfinder</a><span>A foggy effort, charted as decision tickets.</span></li>
             <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/to-spec/SKILL.md">to-spec</a><span>One spec, with its base recorded.</span></li>
             <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/to-tickets/SKILL.md">to-tickets</a><span>Tracer bullets, blockers, and bases.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/ship-ticket/SKILL.md">ship-ticket</a><span>One ticket, from branch to merge.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/ship-spec/SKILL.md">ship-spec</a><span>One spec, through its tickets, into the release.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/ship-release/SKILL.md">ship-release</a><span>Every feature, one spec at a time, then the tag.</span></li>
+            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/ship-ticket/SKILL.md">ship-ticket</a><span>One ticket. You approve the land.</span></li>
+            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/ship-spec/SKILL.md">ship-spec</a><span>One spec. Session lands tickets. You approve the spec.</span></li>
+            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/ship-release/SKILL.md">ship-release</a><span>The whole release. You approve the PR into main.</span></li>
             <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/implement-spec/SKILL.md">implement-spec</a><span>Every ticket of one spec, one pull request.</span></li>
             <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/land/SKILL.md">land</a><span>Merge into the recorded base and restack.</span></li>
             <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/sync-skills/SKILL.md">sync-skills</a><span>Update this package, then apply its file migrations.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/release/SKILL.md">release</a><span>Start, finish, or hotfix.</span></li>
+            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/release/SKILL.md">release</a><span>Start, finish, or hotfix one phase.</span></li>
           </ul>
         </div>
-        <div>
+        <div class="reveal">
           <h2>Engineering · the model can reach</h2>
           <ul>
             <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/branch-lineage/SKILL.md">branch-lineage</a><span>Bases, worktrees, landing, restack.</span></li>
             <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/ticket-flow/SKILL.md">ticket-flow</a><span>The procedure behind ship-ticket.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/spec-flow/SKILL.md">spec-flow</a><span>The procedure behind ship-spec.</span></li>
+            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/spec-flow/SKILL.md">spec-flow</a><span>The procedure behind ship-spec. Steers and lands tickets.</span></li>
             <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/release-flow/SKILL.md">release-flow</a><span>The procedure behind ship-release.</span></li>
             <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/code-review/SKILL.md">code-review</a><span>Standards and spec, plus security and deep on request.</span></li>
             <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/security-review/SKILL.md">security-review</a><span>Only findings you can exploit.</span></li>

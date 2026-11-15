@@ -6,392 +6,275 @@
     <title>Yami Coding</title>
     <meta
       name="description"
-      content="Ahmed Zhran's agent skills for shipping software: branch lineage, specs, releases, and review."
+      content="Agent skills that ship software through recorded bases: ticket, spec, release. You approve the door you opened."
     />
     <link rel="icon" href="%BASE_URL%favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;600;700&family=Unbounded:wght@600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@400;500;600&family=Syne:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./src/styles.css" />
   </head>
   <body>
+    <div class="sky" aria-hidden="true">
+      <canvas data-rift></canvas>
+      <div class="sky-veil"></div>
+    </div>
+
     <header class="site-header">
       <a class="brand" href="./index.html">
         <img class="mark" src="%BASE_URL%favicon.svg" alt="" />
         Yami
       </a>
       <nav class="nav">
-        <a href="#compare">Compare</a>
-        <a href="#stops">Stops</a>
-        <a href="#panes">Panes</a>
-        <a href="#cycle">Cycle</a>
-        <a href="#how">How</a>
+        <a href="#lineage">Lineage</a>
+        <a href="#authority">Authority</a>
+        <a href="#steer">Steer</a>
+        <a href="#install">Install</a>
         <a href="./skills.html">Skills</a>
         <a href="https://github.com/ahmed-zhran/z-yami-coding-skills">GitHub</a>
       </nav>
     </header>
 
-    <main class="wrap">
+    <main>
       <section class="hero">
-        <div class="stage" aria-hidden="true">
-          <canvas data-rift></canvas>
-        </div>
-        <div>
-          <p class="kicker">Ahmed Zhran · agent skills</p>
+        <div class="hero-copy">
+          <p class="brand-mark">
+            <img class="brand-mark-logo" src="%BASE_URL%favicon.svg" alt="" width="52" height="52" />
+            Yami Coding
+          </p>
           <h1>Ship in the dark.</h1>
           <p class="lede">
-            Sixty-one skills that take an idea through a spec, a ticket, and a tagged release.
-            You approve the breaks. The agent does not guess which branch to land on.
+            Sixty-one agent skills that cut work from a recorded base and land it back there.
+            You approve the door you typed. The session steers everything below.
           </p>
           <div class="hero-actions">
             <a class="button solid" href="#install">Install</a>
-            <a class="button" href="./skills.html">See the skills</a>
-          </div>
-          <div class="stats">
-            <div class="stat"><b>61</b><span>skills in the plugin</span></div>
-            <div class="stat"><b>3</b><span>levels: release, spec, ticket</span></div>
-            <div class="stat"><b>1</b><span>command for a whole release</span></div>
+            <a class="button" href="./skills.html">Browse skills</a>
           </div>
         </div>
-      </section>
-
-      <section class="section" id="adds">
-        <h2>What this package adds</h2>
-        <p class="lede">A skill is a procedure the agent follows. These are the ones that change how code actually ships.</p>
-        <div class="grid">
-          <article class="card reveal" data-tilt>
-            <svg class="glyph" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 36 L18 14 H26 L36 36 M14 28 H30" fill="none" stroke="#8eb6ff" stroke-width="3"/></svg>
-            <h3>Branch lineage</h3>
-            <p>Every issue records the branch it lands into when it is created. A spec ticket lands in <code>spec/&lt;issue&gt;</code>. That spec lands in <code>release/&lt;N&gt;</code>. The release lands on <code>main</code>.</p>
-          </article>
-          <article class="card reveal" data-tilt>
-            <svg class="glyph" viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="10" width="14" height="28" rx="2" fill="none" stroke="#ffd8a8" stroke-width="3"/><rect x="26" y="10" width="14" height="28" rx="2" fill="none" stroke="#8eb6ff" stroke-width="3"/></svg>
-            <h3>More than one spec</h3>
-            <p><code>/ship-release</code> asks what the release actually ships. Two features become two specs. It runs <code>/ship-spec</code> once per feature and waits until that spec has landed before the next.</p>
-          </article>
-          <article class="card reveal" data-tilt>
-            <svg class="glyph" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 14 H38 M10 24 H30 M10 34 H22" fill="none" stroke="#c9d8ff" stroke-width="3" stroke-linecap="round"/></svg>
-            <h3>One session per ticket</h3>
-            <p>Inside Herdr, each ready ticket gets its own session. On the TUI that is a pane. On Desktop it is a terminal in the current tab. The session stops when the pull request is open. You approve it. Blocked tickets wait.</p>
-          </article>
-          <article class="card reveal" data-tilt>
-            <svg class="glyph" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 8 L38 14 V26 C38 34 24 40 24 40 C24 40 10 34 10 26 V14 Z" fill="none" stroke="#8eb6ff" stroke-width="3"/></svg>
-            <h3>Review before the tag</h3>
-            <p>The release diff gets a standards review and an exploit-focused security review. You test it yourself. The tag happens after that approval, not when the agent feels done.</p>
-          </article>
-          <article class="card reveal" data-tilt>
-            <svg class="glyph" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="12" fill="none" stroke="#ffd8a8" stroke-width="3"/><path d="M24 8 V14 M24 34 V40 M8 24 H14 M34 24 H40" stroke="#8eb6ff" stroke-width="3"/></svg>
-            <h3>A gate after the tag</h3>
-            <p>Retro, learnings, debt, architecture, risk, and a skills update sit in <code>docs/agents/pending-release.md</code>. The next release refuses to start while a box is open.</p>
-          </article>
-          <article class="card reveal" data-tilt>
-            <svg class="glyph" viewBox="0 0 48 48" aria-hidden="true"><path d="M12 32 L20 16 L28 28 L36 12" fill="none" stroke="#c9d8ff" stroke-width="3" stroke-linejoin="round"/></svg>
-            <h3>Updates that rewrite policy</h3>
-            <p><code>/sync-skills</code> replaces this package's skills, then applies migration records to files like <code>docs/agents/branching.md</code>. Your review mode and default base stay.</p>
-          </article>
+        <div class="hero-scroll" aria-hidden="true">
+          <span></span>
+          Scroll
         </div>
       </section>
 
-      <section class="section" id="how">
-        <h2>Where a change lands</h2>
-        <p class="lede">The base is a line on the issue, written before any branch is cut. The checkout you happen to have open is not a base.</p>
-        <div class="steps">
-          <article class="step reveal">
-            <em>01</em>
-            <div>
-              <strong>Release</strong>
-              <p><code>release/&lt;N&gt;</code> is cut from <code>main</code>. It is the branch that eventually gets the version tag. A release can contain several specs.</p>
-            </div>
-          </article>
-          <article class="step reveal">
-            <em>02</em>
-            <div>
-              <strong>Spec</strong>
-              <p>One feature, one spec issue, one branch named <code>spec/&lt;issue&gt;</code>. Git cannot hold both <code>release/1</code> and <code>release/1/spec/1</code>, so the name shows the level and the base shows the parent.</p>
-            </div>
-          </article>
-          <article class="step reveal">
-            <em>03</em>
-            <div>
-              <strong>Ticket</strong>
-              <p>A ticket cut from a spec lands back into that spec. A bug lands into the open release, into a hotfix cut from the production tag, or into <code>main</code> when nothing is open.</p>
-            </div>
-          </article>
-          <article class="step reveal">
-            <em>04</em>
-            <div>
-              <strong>You</strong>
-              <p>Four approvals: the ticket list, each ticket's pull request into the spec, that spec's pull request into the release, and the release itself. <code>/land</code> merges into the recorded base and restacks whatever was stacked on it.</p>
-            </div>
-          </article>
-        </div>
-      </section>
+      <div class="wrap">
+        <section class="section" id="lineage">
+          <p class="kicker">Branch lineage</p>
+          <h2>Every issue already knows where it lands</h2>
+          <p class="lede">
+            The base is written on the issue before any branch is cut. The checkout you happen to have open is never the destination.
+          </p>
+          <ol class="lineage">
+            <li class="reveal">
+              <span class="lineage-level">01</span>
+              <div>
+                <strong>Release</strong>
+                <code>release/&lt;N&gt;</code>
+                <p>Cut from <code>main</code>. Holds every feature of the cycle. The version tag lands on the merge into <code>main</code>.</p>
+              </div>
+            </li>
+            <li class="reveal">
+              <span class="lineage-level">02</span>
+              <div>
+                <strong>Spec</strong>
+                <code>spec/&lt;issue&gt;</code>
+                <p>One feature, one branch. Lands into the open release. Git cannot nest branch names, so the level lives in the name and the parent lives in the base.</p>
+              </div>
+            </li>
+            <li class="reveal">
+              <span class="lineage-level">03</span>
+              <div>
+                <strong>Ticket</strong>
+                <code>ticket/&lt;issue&gt;-&lt;slug&gt;</code>
+                <p>A tracer path through the stack. Lands into its spec. A bug lands into the open release, a hotfix from the production tag, or <code>main</code>.</p>
+              </div>
+            </li>
+          </ol>
+        </section>
 
-      <section class="section" id="compare">
-        <h2>With a base, and without one</h2>
-        <p class="lede">A base is the branch an issue lands into, written on the issue before any branch is cut. If that line is missing, the work stops.</p>
-        <div class="split">
-          <article class="board reveal">
-            <p class="kicker">No recorded base</p>
-            <h3>The open checkout decides</h3>
-            <ul class="plain">
-              <li>The agent builds on whatever branch is checked out.</li>
-              <li>A ticket can merge into <code>main</code>, a release, or a branch that happened to be open.</li>
-              <li>Two features share one branch and one pull request.</li>
-              <li>A fix for a shipped bug can land on an unreleased branch and never reach production.</li>
-            </ul>
-            <div class="tangle" aria-hidden="true">
-              <span></span><span></span><span></span><span></span>
+        <section class="section" id="authority">
+          <p class="kicker">Ship doors</p>
+          <h2>The door you type owns the land gate</h2>
+          <p class="lede">
+            Higher doors land everything beneath them. You only approve the level you invoked.
+          </p>
+          <div class="authority">
+            <div class="stop-list" role="tablist" aria-label="Ship doors">
+              <button class="is-on" type="button" data-stop="ticket" aria-selected="true">/ship-ticket</button>
+              <button type="button" data-stop="spec" aria-selected="false">/ship-spec</button>
+              <button type="button" data-stop="release" aria-selected="false">/ship-release</button>
+              <button type="button" data-stop="gate" aria-selected="false">After the tag</button>
             </div>
-          </article>
-          <article class="board board-live reveal">
-            <p class="kicker">Yami Coding</p>
-            <h3>The issue decides</h3>
-            <ul class="plain">
-              <li>The base is written when the issue is created.</li>
-              <li>A spec ticket lands into <code>spec/&lt;issue&gt;</code>. That spec lands into <code>release/&lt;N&gt;</code>. The release lands on <code>main</code>.</li>
-              <li>One release holds every spec it needs. Each spec keeps its own branch.</li>
-              <li>A bug lands into the open release, a hotfix cut from the production tag, or <code>main</code> when nothing is open.</li>
-            </ul>
-            <div class="stack" aria-hidden="true">
-              <span>release</span><span>spec</span><span>ticket</span>
+            <div class="stop-stage">
+              <article class="stop-card" data-stop-panel="ticket">
+                <p class="kicker">Ticket door</p>
+                <h3>You approve the ticket merge</h3>
+                <p>
+                  One issue, one worktree, one pull request into the recorded base.
+                  Review runs before the PR opens. Landing waits on you, unless the branch policy says <code>review: auto</code> and CI is green.
+                </p>
+                <p class="mono">You · ticket PR → base</p>
+              </article>
+              <article class="stop-card" data-stop-panel="spec" hidden>
+                <p class="kicker">Spec door</p>
+                <h3>The session lands every ticket</h3>
+                <p>
+                  Ready tickets run in their own Herdr sessions. The parent steers them, waits for green CI, and merges each ticket into <code>spec/&lt;issue&gt;</code>.
+                  You approve only the spec pull request into the release.
+                </p>
+                <p class="mono">Session · tickets · You · spec PR → release</p>
+              </article>
+              <article class="stop-card" data-stop-panel="release" hidden>
+                <p class="kicker">Release door</p>
+                <h3>The session lands tickets and specs</h3>
+                <p>
+                  Features ship one after another. Each spec's tickets and the spec itself merge under release authority.
+                  Tests, code review, and security review run before the release pull request. You approve only that PR into <code>main</code>. Then the tag.
+                </p>
+                <p class="mono">Session · tickets + specs · You · release PR → main</p>
+              </article>
+              <article class="stop-card" data-stop-panel="gate" hidden>
+                <p class="kicker">The gate</p>
+                <h3>The next release waits on open boxes</h3>
+                <p>
+                  <code>docs/agents/pending-release.md</code> lands on <code>main</code> with every box open: retro, reflect, learnings, debt, ADRs, architecture, risk, open decisions, and a skills update.
+                  The agent does not check those boxes. A hotfix from a production tag skips this gate.
+                </p>
+                <p class="mono">Next /ship-release refuses while a box is open</p>
+              </article>
             </div>
-          </article>
-        </div>
-
-        <h2 class="subhead">Against the forked workflow</h2>
-        <p class="lede">This package was forked from <a href="https://github.com/mattpocock/skills">mattpocock/skills</a> at v1.3.2. The grill, the spec, and the tickets stayed. The rows below are what the fork adds on top of that tree. <a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/UPSTREAM.md">UPSTREAM.md</a> is the full list.</p>
-        <div class="table-wrap reveal">
-          <table class="compare">
-            <thead>
-              <tr><th></th><th>Forked workflow</th><th>Yami Coding</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>Where work lands</th>
-                <td>Implement and review. The branch in play is the one that receives the merge.</td>
-                <td>A <code>Base</code> line on the issue. Missing base, the agent stops.</td>
-              </tr>
-              <tr>
-                <th>A release</th>
-                <td>You decide when the work is ready to ship.</td>
-                <td><code>release/&lt;N&gt;</code> holds the specs. The tag happens after you approve the release pull request.</td>
-              </tr>
-              <tr>
-                <th>Several features</th>
-                <td>Each spec is its own conversation.</td>
-                <td><code>/ship-spec</code> ships one spec through its tickets until that branch lands in the release. <code>/ship-release</code> runs that once per feature, then tags.</td>
-              </tr>
-              <tr>
-                <th>After the tag</th>
-                <td><code>/retro</code> can improve the agent's environment.</td>
-                <td>A gate file blocks the next release until retro, reflect, learnings, debt, ADRs, architecture, risk, open decisions, and <code>/sync-skills</code> are done. A hotfix from a shipped tag is not blocked.</td>
-              </tr>
-              <tr>
-                <th>Review</th>
-                <td>Standards and Spec.</td>
-                <td>Those two, plus Security on a risky diff and Deep when you ask.</td>
-              </tr>
-              <tr>
-                <th>Docs</th>
-                <td>Glossary and ADRs from a grilling session.</td>
-                <td>Those, plus branching policy, a surface map, solution notes, and a changelog entry per change users will notice.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="section" id="stops">
-        <h2>You hold every stop</h2>
-        <p class="lede">From the release down to a single ticket, the agent waits. You can run the whole release with <code>/ship-release</code>, or drive one level yourself.</p>
-        <div class="stop-layout">
-          <div class="stop-list" role="tablist">
-            <button class="is-on" type="button" data-stop="list">1 · Ticket list</button>
-            <button type="button" data-stop="ticket">2 · Ticket pull request</button>
-            <button type="button" data-stop="spec">3 · Spec pull request</button>
-            <button type="button" data-stop="release">4 · Release pull request</button>
-            <button type="button" data-stop="gate">After · The gate</button>
           </div>
-          <div class="stop-stage">
-            <article class="stop-card" data-stop-panel="list">
-              <p class="kicker">Before branches</p>
-              <h3>You approve the breakdown</h3>
-              <p>Each feature becomes one spec, and you approve that spec's tickets before they are published. A release with two features approves two lists, one spec at a time.</p>
-              <p class="mono">/ship-spec · or /to-tickets on one spec</p>
+        </section>
+
+        <section class="section" id="steer">
+          <p class="kicker">Orchestration</p>
+          <h2>The parent steers every pane it opened</h2>
+          <p class="lede">
+            You stay in the session where you typed the ship command. Child panes do not wait on your keyboard.
+          </p>
+          <div class="desk" aria-hidden="true">
+            <article class="pane pane-parent">
+              <header><span class="dot"></span> ship-release</header>
+              <p>Parent. Steers children. Lands under its authority.</p>
+              <p class="pane-note">Reads the screen every few seconds</p>
             </article>
-            <article class="stop-card" data-stop-panel="ticket" hidden>
-              <p class="kicker">Ticket level</p>
-              <h3>The pane stops at the pull request</h3>
-              <p>Each ready ticket gets its own Herdr session. The pull request targets <code>spec/&lt;issue&gt;</code>. You review it. <code>/land</code> merges only after that approval, then restacks anything stacked on it.</p>
-              <p class="mono">/ship-ticket · or /start-work, /implement, /land</p>
+            <article class="pane pane-a">
+              <header><span class="dot"></span> ticket-9</header>
+              <p>ticket-flow. Stops at the open PR.</p>
+              <p class="status"><i>working</i><i>allowlist · y</i><i>PR open · land</i></p>
             </article>
-            <article class="stop-card" data-stop-panel="spec" hidden>
-              <p class="kicker">Spec level</p>
-              <h3>The spec lands into the release</h3>
-              <p>When that spec's tickets have landed, <code>spec/&lt;issue&gt;</code> opens one pull request into <code>release/&lt;N&gt;</code>. A ticket session never does this merge. You approve it.</p>
-              <p class="mono">/ship-spec lands the spec · /implement-spec is one pull request</p>
+            <article class="pane pane-b">
+              <header><span class="dot"></span> ticket-10</header>
+              <p>Blocked until 9 lands. Then its own session.</p>
+              <p class="status"><i>waiting</i><i>pane opens</i><i>working</i></p>
             </article>
-            <article class="stop-card" data-stop-panel="release" hidden>
-              <p class="kicker">Release level</p>
-              <h3>Tests, security, then your testing</h3>
-              <p>The release diff is reviewed for standards and for exploits. You test it. The pull request into <code>main</code> uses a merge commit. The tag is the merge commit on <code>main</code>, after you approve.</p>
-              <p class="mono">/release finish · the last stop inside /ship-release</p>
-            </article>
-            <article class="stop-card" data-stop-panel="gate" hidden>
-              <p class="kicker">After the tag</p>
-              <h3>The next release waits on you</h3>
-              <p><code>docs/agents/pending-release.md</code> lands on <code>main</code> with every box open: retro, reflect, learnings, debt, ADRs, architecture, risk, open decisions, and a skills update. Checking a box is a later commit. The agent does not check them.</p>
-              <p class="mono">A hotfix from a production tag skips this gate</p>
+            <article class="pane pane-c">
+              <header><span class="dot"></span> ticket-11</header>
+              <p>Parallel when unblocked. Same parent steers.</p>
+              <p class="status"><i>working</i><i>allowlist · y</i><i>PR open</i></p>
             </article>
           </div>
-        </div>
-      </section>
+          <ul class="plain desk-notes">
+            <li>Cursor allowlist dialogs often leave status as <code>working</code>. The parent polls the screen and clears each with a run-once <code>y</code>.</li>
+            <li>Questions the ticket already answers get answered in the child. Doc breaks and unsettled breaking changes escalate in the parent session.</li>
+            <li>Needs Herdr: TUI sets <code>HERDR_ENV=1</code>, Desktop sets <code>HC_TERMINAL_ID</code>. Without either, shipping stops instead of collapsing onto one branch.</li>
+          </ul>
+        </section>
 
-      <section class="section" id="panes">
-        <h2>Shipping skills open the sessions</h2>
-        <p class="lede"><code>/ship-spec</code> and <code>/ship-release</code> orchestrate. They do not build the ticket in the parent session. On the Herdr TUI the parent opens a pane. On Herdr Desktop it starts a terminal with <code>hc</code> and shows it in the current tab. Either way it waits for you.</p>
-        <div class="desk" aria-hidden="true">
-          <article class="pane pane-parent">
-            <header><span class="dot"></span> ship-spec</header>
-            <p>Parent session. Ready tickets only. Blocked ones wait.</p>
-            <p class="pane-note">TUI or Desktop</p>
-          </article>
-          <article class="pane pane-a">
-            <header><span class="dot"></span> ticket 12</header>
-            <p>ticket-flow. Stops when the pull request is open.</p>
-            <p class="status"><i>working</i><i>pull request open</i><i>you approve, then land</i></p>
-          </article>
-          <article class="pane pane-b">
-            <header><span class="dot"></span> ticket 13</header>
-            <p>Its own session. It does not land the spec.</p>
-            <p class="status"><i>working</i><i>pull request open</i><i>waiting on you</i></p>
-          </article>
-          <article class="pane pane-c">
-            <header><span class="dot"></span> ticket 14</header>
-            <p>Blocked. Starts when ticket 12 lands.</p>
-            <p class="status"><i>waiting</i><i>pane opens</i><i>working</i></p>
-          </article>
-        </div>
-        <ul class="plain desk-notes">
-          <li>The session is already inside one host. The TUI sets <code>HERDR_ENV=1</code>. Desktop sets <code>HC_TERMINAL_ID</code>. If neither is set, the skill stops.</li>
-          <li>Each pane's only job is <code>ticket-flow</code> for that issue, up to the open pull request. The parent tells you the URL and waits.</li>
-          <li>After you approve, the parent tells that pane to continue from land. Then it starts whatever that ticket was blocking.</li>
-          <li><code>/ship-spec</code> is this picture for one spec. <code>/ship-release</code> runs it once per feature, then tests and tags. <code>/ship-ticket</code> is one ticket, in the session you are already in.</li>
-        </ul>
-      </section>
+        <section class="section" id="compare">
+          <p class="kicker">Why a base</p>
+          <h2>With a recorded base, and without one</h2>
+          <p class="lede">If the base line is missing, the work stops. Guessing from the open checkout is how releases get tangled.</p>
+          <div class="split">
+            <article class="board reveal">
+              <p class="kicker">No recorded base</p>
+              <h3>The open checkout decides</h3>
+              <ul class="plain">
+                <li>The agent builds on whatever branch is checked out.</li>
+                <li>A ticket can merge into <code>main</code>, a release, or a branch that happened to be open.</li>
+                <li>Two features share one branch and one pull request.</li>
+                <li>A fix for a shipped bug can land on an unreleased branch and never reach production.</li>
+              </ul>
+              <div class="tangle" aria-hidden="true">
+                <span></span><span></span><span></span><span></span>
+              </div>
+            </article>
+            <article class="board board-live reveal">
+              <p class="kicker">Yami Coding</p>
+              <h3>The issue decides</h3>
+              <ul class="plain">
+                <li>The base is written when the issue is created.</li>
+                <li>A ticket lands into <code>spec/&lt;issue&gt;</code>. That spec lands into <code>release/&lt;N&gt;</code>. The release lands on <code>main</code>.</li>
+                <li>One release holds every feature. Each feature keeps its own spec branch.</li>
+                <li>A bug lands into the open release, a hotfix from the production tag, or <code>main</code>.</li>
+              </ul>
+              <div class="stack" aria-hidden="true">
+                <span>release</span><span>spec</span><span>ticket</span>
+              </div>
+            </article>
+          </div>
+        </section>
 
-      <section class="section" id="cycle">
-        <h2>The release cycle</h2>
-        <p class="lede">A release branch is long-lived until the tag. Spec branches and ticket branches are deleted when they land. The changelog is compiled at the tag, from entries written as the work landed.</p>
-        <ol class="cycle">
-          <li class="reveal"><b>01</b><strong>Open</strong><span><code>/release start</code> cuts <code>release/&lt;N&gt;</code> from <code>main</code>. An open gate box stops this.</span></li>
-          <li class="reveal"><b>02</b><strong>Fill</strong><span>Specs and tickets land into it. An unreleased bug found here is a ticket whose base is the release, with no changelog entry.</span></li>
-          <li class="reveal"><b>03</b><strong>Notes</strong><span>Each change users will notice already has a changelog entry. Finish compiles them into a version and a <code>CHANGELOG.md</code> section.</span></li>
-          <li class="reveal"><b>04</b><strong>Tag</strong><span>You approve the release pull request. The tag goes on the merge commit on <code>main</code>. The release branch is then deleted.</span></li>
-          <li class="reveal"><b>05</b><strong>Hold</strong><span>The gate file is on <code>main</code> with open boxes. The next release waits. A shipped bug uses <code>/release hotfix &lt;tag&gt;</code> instead.</span></li>
-        </ol>
-      </section>
+        <section class="section" id="cycle">
+          <p class="kicker">Release cycle</p>
+          <h2>Open, fill, review, tag, hold</h2>
+          <p class="lede">
+            Spec and ticket branches die when they land. The release branch lives until the tag. Changelog entries compile at finish.
+          </p>
+          <ol class="cycle">
+            <li class="reveal"><b>01</b><strong>Open</strong><span><code>/release start</code> cuts <code>release/&lt;N&gt;</code>. An open gate box stops this.</span></li>
+            <li class="reveal"><b>02</b><strong>Fill</strong><span><code>/ship-release</code> ships each feature through its tickets and lands the specs.</span></li>
+            <li class="reveal"><b>03</b><strong>Review</strong><span>Full tests, code review, and security review on the release diff against <code>main</code>.</span></li>
+            <li class="reveal"><b>04</b><strong>Tag</strong><span>You approve the release PR. The tag is the merge commit on <code>main</code>.</span></li>
+            <li class="reveal"><b>05</b><strong>Hold</strong><span>The gate file stays open on <code>main</code>. A shipped bug uses <code>/release hotfix</code>.</span></li>
+          </ol>
+        </section>
 
-      <section class="section" id="docs">
-        <h2>Documentation the agent maintains</h2>
-        <p class="lede">The glossary and ADRs come from the forked grilling flow. These are the files this package adds around them.</p>
-        <div class="grid">
-          <article class="card reveal" data-tilt>
-            <h3>Policy, once</h3>
-            <p><code>/setup-z-yami-coding-skills</code> writes <code>docs/agents/</code>: the issue tracker, labels, <code>branching.md</code>, and, in a monorepo, the surface map.</p>
-          </article>
-          <article class="card reveal" data-tilt>
-            <h3>While you shape</h3>
-            <p><code>/grill-with-docs</code> and domain modeling keep <code>GLOSSARY.md</code> and ADRs current. <code>/stack-decision</code> and <code>/surface-architecture</code> record the stack and the code architecture for a surface.</p>
-          </article>
-          <article class="card reveal" data-tilt>
-            <h3>While you build</h3>
-            <p>A user-visible change gets a changelog entry. A non-obvious fix gets a solution note in <code>docs/solutions/</code>. Mermaid diagrams are validated before they are committed.</p>
-          </article>
-          <article class="card reveal" data-tilt>
-            <h3>After a session</h3>
-            <p><code>/reflect</code> turns lessons into edits of skills and docs. <code>/retro</code> is one of the boxes that blocks the next release.</p>
-          </article>
-          <article class="card reveal" data-tilt>
-            <h3>When this package changes a file you keep</h3>
-            <p><code>/sync-skills</code> shows the changelog, then applies a migration record. Your review mode, default base, and stacking choices stay. A dirty copy of a skill from this package stops the update.</p>
-          </article>
-          <article class="card reveal" data-tilt>
-            <h3>Prose people read</h3>
-            <p><code>unslop</code> strips AI tells from pull requests, changelogs, and docs. <code>writing-for-agents</code>, kept from the fork, is how docs for the agent are written.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="brought">
-        <h2>What was brought in, and what was rewritten</h2>
-        <p class="lede">Some skills are vendored from other authors and adapted. Some forked skills were rewritten so they obey the base line. Licenses stay with the folders.</p>
-        <div class="split">
-          <article class="board reveal">
-            <p class="kicker">Brought in</p>
-            <ul class="plain">
-              <li><strong>Herdr</strong>, <strong>herdr-core</strong>, and <strong>herdr-app</strong>, Apache-2.0. <code>/ship-spec</code> opens one session per ready ticket on the TUI or on Desktop. The guide only helps a human install it.</li>
-              <li><strong>security-review</strong>, adapted from Fabricio Telles, Apache-2.0. Findings need an attacker, an action, and a result.</li>
-              <li><strong>skill-eval</strong>, adapted from Fabricio Telles, Apache-2.0. Scores a skill and its trigger.</li>
-              <li><strong>caveman</strong>, Julius Brussee, Apache-2.0. Terse chat. Files stay full prose.</li>
-              <li><strong>unslop</strong>, from Conor Bronsdon's avoid-ai-writing, MIT.</li>
-              <li><strong>mermaid-validator</strong>, dt418, MIT.</li>
-              <li><strong>deep-review</strong> follows the thermo-nuclear review in cursor/plugins. <strong>implement</strong> absorbed ponytail's smallest-complete-change ladder. Ponytail is not its own skill.</li>
-            </ul>
-          </article>
-          <article class="board reveal">
-            <p class="kicker">Rewritten from the fork</p>
-            <ul class="plain">
-              <li><strong>ask-yami</strong> routes the lineage, release, surface, review, and learning flows.</li>
-              <li><strong>setup</strong> also writes branching and surfaces.</li>
-              <li><strong>to-spec</strong> and <strong>to-tickets</strong> record the base, then cut the branch from it.</li>
-              <li><strong>implement</strong> opens a pull request into that base and writes a changelog entry.</li>
-              <li><strong>code-review</strong> uses the recorded base as the fixed point and can add Security and Deep.</li>
-              <li><strong>triage</strong> and <strong>diagnosing-bugs</strong> set a bug's base from where it shipped: the open release, a hotfix cut from the production tag, or <code>main</code>.</li>
-            </ul>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="install">
-        <h2>Install one route</h2>
-        <p class="lede">The plugin and skills.sh both install this package. Using both leaves every skill twice. Pick one.</p>
-        <div class="tabs" role="tablist">
-          <button class="is-on" type="button" role="tab" aria-selected="true" data-install-tab="claude">Claude Code</button>
-          <button type="button" role="tab" aria-selected="false" data-install-tab="codex">Codex</button>
-          <button type="button" role="tab" aria-selected="false" data-install-tab="other">Cursor and others</button>
-        </div>
-        <div class="panel" data-install-panel="claude">
-          <button class="copy" type="button" data-copy="#install-claude">Copy</button>
-          <pre id="install-claude"><code>claude plugin marketplace add ahmed-zhran/z-yami-coding-skills
+        <section class="section" id="install">
+          <p class="kicker">Get it</p>
+          <h2>Install one route</h2>
+          <p class="lede">The plugin and skills.sh both install this package. Using both leaves every skill twice. Pick one.</p>
+          <div class="tabs" role="tablist">
+            <button class="is-on" type="button" role="tab" aria-selected="true" data-install-tab="claude">Claude Code</button>
+            <button type="button" role="tab" aria-selected="false" data-install-tab="codex">Codex</button>
+            <button type="button" role="tab" aria-selected="false" data-install-tab="other">Cursor and others</button>
+          </div>
+          <div class="panel" data-install-panel="claude">
+            <button class="copy" type="button" data-copy="#install-claude">Copy</button>
+            <pre id="install-claude"><code>claude plugin marketplace add ahmed-zhran/z-yami-coding-skills
 claude plugin install z-yami-coding-skills@z-yami</code></pre>
-        </div>
-        <div class="panel" data-install-panel="codex" hidden>
-          <button class="copy" type="button" data-copy="#install-codex">Copy</button>
-          <pre id="install-codex"><code>codex plugin marketplace add ahmed-zhran/z-yami-coding-skills
+          </div>
+          <div class="panel" data-install-panel="codex" hidden>
+            <button class="copy" type="button" data-copy="#install-codex">Copy</button>
+            <pre id="install-codex"><code>codex plugin marketplace add ahmed-zhran/z-yami-coding-skills
 codex plugin add z-yami-coding-skills@z-yami</code></pre>
-        </div>
-        <div class="panel" data-install-panel="other" hidden>
-          <button class="copy" type="button" data-copy="#install-other">Copy</button>
-          <pre id="install-other"><code>npx skills@latest add ahmed-zhran/z-yami-coding-skills -a &lt;agent&gt;</code></pre>
-        </div>
-        <p class="note">Run <code>/setup-z-yami-coding-skills</code> once in the project. When you are unsure which skill fits, run <code>/ask-yami</code>. When skills.sh asks which skills to take, include <code>setup-z-yami-coding-skills</code>.</p>
-      </section>
+          </div>
+          <div class="panel" data-install-panel="other" hidden>
+            <button class="copy" type="button" data-copy="#install-other">Copy</button>
+            <pre id="install-other"><code>npx skills@latest add ahmed-zhran/z-yami-coding-skills -a &lt;agent&gt;</code></pre>
+          </div>
+          <p class="note">
+            Run <code>/setup-z-yami-coding-skills</code> once in the project.
+            When you are unsure which skill fits, run <code>/ask-yami</code>.
+          </p>
+        </section>
 
-      <section class="section credits">
-        <h2>Credits</h2>
-        <p>
-          Yami Coding is Ahmed Zhran's package. The agentic workflow uses
-          <a href="https://github.com/mattpocock/skills">mattpocock/skills</a>
-          as a base. Herdr, security-review, caveman, and skill-eval stay under Apache-2.0.
-          The full list is in the
-          <a href="https://github.com/ahmed-zhran/z-yami-coding-skills#credits">repository credits</a>.
-        </p>
-      </section>
+        <section class="section credits">
+          <p class="kicker">Credits</p>
+          <h2>Built on a hard fork</h2>
+          <p>
+            Yami Coding is Ahmed Zhran's package. The agentic workflow uses
+            <a href="https://github.com/mattpocock/skills">mattpocock/skills</a>
+            as a base. Herdr, security-review, caveman, and skill-eval stay under Apache-2.0.
+            The full list is in the
+            <a href="https://github.com/ahmed-zhran/z-yami-coding-skills#credits">repository credits</a>.
+          </p>
+        </section>
+      </div>
     </main>
 
     <footer class="wrap site-footer">
