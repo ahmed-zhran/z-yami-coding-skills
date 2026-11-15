@@ -1,5 +1,11 @@
 # z-yami-coding-skills
 
+## 1.4.2
+
+### Patch Changes
+
+- [`37fa807`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/37fa8077181def0c01c569efa6d15b2d3d0c4fe4) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - The package site gets a night-ops redesign: full-bleed starfield hero, sharper copy for ship-door authority and pane steering, and Syne/Sora typography. The slogan stays "Ship in the dark."
+
 ## 1.4.1
 
 ### Patch Changes
