@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/brand/header.svg" alt="Yami Coding. Ahmed Zhran. 59 skills for release, spec, and ticket." width="880">
+<img src="docs/brand/header.svg" alt="Yami Coding. Ahmed Zhran. 61 skills for release, spec, and ticket." width="880">
 
 # Yami Coding
 
@@ -14,12 +14,12 @@
 
 [Installation](#installation) · [Quick start](#quick-start) · [What it does](#what-it-does) · [Reference](#reference) · [Site](https://ahmed-zhran.github.io/yami-coding)
 
-59 skills in the `z-yami-coding-skills` plugin. A release, a spec, and a ticket each record a base when the issue is created, and the agent lands into that base. You approve before a pull request merges and before a release is tagged. The site is [yami-coding](https://ahmed-zhran.github.io/yami-coding).
+61 skills in the `z-yami-coding-skills` plugin. A release, a spec, and a ticket each record a base when the issue is created, and the agent lands into that base. You approve before a pull request merges and before a release is tagged. The site is [yami-coding](https://ahmed-zhran.github.io/yami-coding).
 
 ## Requirements
 
 - Claude Code, Codex, or another agent that [skills.sh](https://skills.sh) can install into (Cursor, OpenCode, Windsurf, Devin, Amp, Pi).
-- `/ship-release` runs inside [Herdr](https://herdr.dev). The TUI sets `HERDR_ENV=1`. Herdr Desktop sets `HC_TERMINAL_ID`. The other skills do not need Herdr.
+- `/ship-spec` and `/ship-release` run inside [Herdr](https://herdr.dev) once a spec's tickets are ready to build. The TUI sets `HERDR_ENV=1`. Herdr Desktop sets `HC_TERMINAL_ID`. The other skills do not need Herdr.
 
 ## Installation
 
@@ -58,15 +58,23 @@ A whole release, after setup, is one command. It needs Herdr, as noted above.
 /ship-release 2
 ```
 
-That shapes the release, builds each ready ticket in its own pane, and waits at four stops: the ticket list, each ticket's pull request into `spec/<issue>`, that spec's pull request into the release, and the release itself. The tag happens after you approve the last stop. The next release waits until you clear `docs/agents/pending-release.md`.
+That names every feature, ships each one with `/ship-spec`, and waits until that spec has landed before the next. Inside a spec you approve the ticket list, each ticket's pull request into `spec/<issue>`, and that spec's pull request into the release. The tag happens after you approve the release itself. The next release waits until you clear `docs/agents/pending-release.md`.
 
-The same cycle, one phase at a time:
+The same cycle, one level at a time:
 
 ```text
 /release start 2
-/grill-with-docs  ->  /to-spec  ->  /to-tickets
-for each ticket:  /ship-ticket <n>     (or /start-work, /implement, you review, /land)
+/grill-with-docs
+/ship-spec                 (one feature; repeat for the next feature)
 /release finish 2
+```
+
+The phases inside one spec, when you want them separate:
+
+```text
+/to-spec  ->  /to-tickets
+for each ticket:  /ship-ticket <n>     (or /start-work, /implement, you review, /land)
+/ship-spec <issue>         (lands the spec once its tickets have landed)
 ```
 
 `/ship-ticket` is one ticket from branch to merge. `/implement-spec` builds every ticket of one spec on that spec's branch and opens one pull request. A bug uses `/diagnosing-bugs`. If the bug already shipped, `/release hotfix <tag>` comes first.
@@ -78,8 +86,9 @@ for each ticket:  /ship-ticket <n>     (or /start-work, /implement, you review, 
 | Setup | `/setup-z-yami-coding-skills` | Tracker, labels, branching, and a surface map in a monorepo |
 | Shape | `/grill-with-docs`, `/to-spec`, `/to-tickets` | One spec per feature, then tickets, each with a recorded base |
 | One ticket | `/ship-ticket` | A branch cut from that base, through an approved merge |
-| One spec | `/implement-spec` | Every ticket of one spec, one pull request into the release |
-| Release | `/ship-release` | Every spec the release needs, then a tag after you approve |
+| One spec | `/ship-spec` | That spec's tickets, each in its own session, then the spec lands in the release |
+| One spec, one pull request | `/implement-spec` | Every ticket of one spec, one pull request into the release |
+| Release | `/ship-release` | `/ship-spec` once per feature, then a tag after you approve |
 | After the tag | `/sync-skills` | This package's skills updated, plus migration records for files the package writes |
 
 | | |
@@ -108,10 +117,11 @@ for each ticket:  /ship-ticket <n>     (or /start-work, /implement, you review, 
 - **[start-work](./skills/engineering/start-work/SKILL.md)**: Cut a ticket's branch from its base, in its own worktree.
 - **[implement](./skills/engineering/implement/SKILL.md)**: Build one ticket and open a PR into its base.
 - **[ship-ticket](./skills/engineering/ship-ticket/SKILL.md)**: Run one ticket from branch to merge, and stop for your review before it lands.
+- **[ship-spec](./skills/engineering/ship-spec/SKILL.md)**: Run one spec through its tickets until that branch lands in the release.
 - **[implement-spec](./skills/engineering/implement-spec/SKILL.md)**: Build a whole spec in parallel, ending in one PR.
 - **[land](./skills/engineering/land/SKILL.md)**: Merge an approved PR into its base, close the issue, restack.
 - **[release](./skills/engineering/release/SKILL.md)**: Start, finish, or hotfix a release, with version, changelog, and tag.
-- **[ship-release](./skills/engineering/ship-release/SKILL.md)**: Run a whole release, one Herdr pane per ticket, and write the gate that blocks the next one.
+- **[ship-release](./skills/engineering/ship-release/SKILL.md)**: Run a whole release, one spec at a time, and write the gate that blocks the next one.
 - **[sync-skills](./skills/engineering/sync-skills/SKILL.md)**: Update skills installed from this package. Refuse a locally edited skill file. Leave every other skill alone.
 - **[stack-decision](./skills/engineering/stack-decision/SKILL.md)**: Choose and record a surface's stack.
 - **[surface-architecture](./skills/engineering/surface-architecture/SKILL.md)**: Choose, document, and enforce a surface's code architecture.
@@ -126,6 +136,7 @@ for each ticket:  /ship-ticket <n>     (or /start-work, /implement, you review, 
 
 - **[branch-lineage](./skills/engineering/branch-lineage/SKILL.md)**: Bases, worktrees, landing, and restacking.
 - **[ticket-flow](./skills/engineering/ticket-flow/SKILL.md)**: The procedure `/ship-ticket` runs: worktree, build, review, land.
+- **[spec-flow](./skills/engineering/spec-flow/SKILL.md)**: The procedure `/ship-spec` runs, and `/ship-release` runs once per feature.
 - **[release-flow](./skills/engineering/release-flow/SKILL.md)**: The procedure `/ship-release` runs, including the post-release gate.
 - **[herdr](./skills/engineering/herdr/SKILL.md)**: Control the Herdr TUI from inside a pane (pinned in `.agents/external-skills.md`).
 - **[herdr-core](./skills/engineering/herdr-core/SKILL.md)**: Control Herdr Desktop terminals with `hc`.

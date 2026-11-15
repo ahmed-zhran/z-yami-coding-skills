@@ -16,10 +16,11 @@ Reachable only when you type them (Claude Code: `disable-model-invocation: true`
 - **[start-work](./start-work/SKILL.md)**: Start a ticket: cut its branch from the recorded base and open it in its own worktree.
 - **[implement](./implement/SKILL.md)**: Build one ticket with the smallest complete change, `/tdd` and `/code-review`, ending in a PR into its base.
 - **[ship-ticket](./ship-ticket/SKILL.md)**: Ship one ticket from branch to merge, stopping for review before it lands.
+- **[ship-spec](./ship-spec/SKILL.md)**: Ship one spec through its tickets until `spec/<issue>` lands in the release.
 - **[implement-spec](./implement-spec/SKILL.md)**: Build a whole spec with parallel implementer subagents on `spec/<issue>`, ending in one PR into the release.
 - **[land](./land/SKILL.md)**: After you approve a PR, merge it into its recorded base, close the issue, restack children, and clean up.
 - **[release](./release/SKILL.md)**: Start a release branch, finish it with version, changelog and tag, or ship a hotfix from a tag. Finish writes the gate that blocks the next release.
-- **[ship-release](./ship-release/SKILL.md)**: Run a whole release: shape, one Herdr session per ready ticket, test, tag after you approve, then the post-release gate.
+- **[ship-release](./ship-release/SKILL.md)**: Run a whole release: name the features, ship each with the spec procedure, test, tag after you approve, then the post-release gate.
 - **[sync-skills](./sync-skills/SKILL.md)**: Update skills installed from this package. Stop if one was edited locally. Leave every other skill alone.
 - **[stack-decision](./stack-decision/SKILL.md)**: Choose a surface's framework or a library for a slot, recorded as an ADR and in `docs/agents/stack.md`.
 - **[surface-architecture](./surface-architecture/SKILL.md)**: Choose how code is organised inside one surface, write its architecture doc, and enforce it with lint.
@@ -35,10 +36,11 @@ Reachable only when you type them (Claude Code: `disable-model-invocation: true`
 Model- or user-reachable (rich trigger phrasing so the model can reach for them).
 
 - **[branch-lineage](./branch-lineage/SKILL.md)**: Every branch records its base at any depth; procedures for resolving bases, starting work in worktrees, landing, and restacking.
-- **[ticket-flow](./ticket-flow/SKILL.md)**: One ticket from its worktree through review to a landed pull request. `/ship-ticket` and `/ship-release` call it.
-- **[release-flow](./release-flow/SKILL.md)**: One release from shaping through per-ticket sessions, the tag, and the gate that blocks the next release.
-- **[herdr](./herdr/SKILL.md)**: Control the Herdr TUI from inside a pane. Pinned from herdrdev/herdr. `/ship-release` calls it when `HERDR_ENV=1`.
-- **[herdr-core](./herdr-core/SKILL.md)**: Control Herdr Desktop terminals with `hc`. Pinned from herdrdev/herdr-core. `/ship-release` calls it when `HC_TERMINAL_ID` is set.
+- **[ticket-flow](./ticket-flow/SKILL.md)**: One ticket from its worktree through review to a landed pull request. `/ship-ticket` and `spec-flow` call it.
+- **[spec-flow](./spec-flow/SKILL.md)**: One spec from publish or keep, through its tickets, to a landed spec branch. `/ship-spec` and `release-flow` call it.
+- **[release-flow](./release-flow/SKILL.md)**: One release: each feature through `spec-flow`, then the tag and the gate that blocks the next release.
+- **[herdr](./herdr/SKILL.md)**: Control the Herdr TUI from inside a pane. Pinned from herdrdev/herdr. `spec-flow` calls it when `HERDR_ENV=1`.
+- **[herdr-core](./herdr-core/SKILL.md)**: Control Herdr Desktop terminals with `hc`. Pinned from herdrdev/herdr-core. `spec-flow` calls it when `HC_TERMINAL_ID` is set.
 - **[herdr-app](./herdr-app/SKILL.md)**: Show spaces, tabs, and panes in the Herdr Desktop window. Pinned from herdrdev/herdr-app.
 - **[herdr-guide](./herdr-guide/SKILL.md)**: Set up Herdr or troubleshoot it with a human. Install, keys, logs, and agent detection. Not a control skill.
 - **[surface-map](./surface-map/SKILL.md)**: Keep the map of monorepo surfaces, their contracts, and each surface's extraction context accurate.

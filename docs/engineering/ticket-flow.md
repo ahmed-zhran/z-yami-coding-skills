@@ -2,11 +2,11 @@
 
 `ticket-flow` is the procedure behind `/ship-ticket`: one [ticket](https://www.aihero.dev/ai-coding-dictionary/ticket), from its own worktree, through tests and review, to a pull request that lands only after approval.
 
-You can type it, and a release session reaches for it when it starts one ticket. It does not decide that a ticket should start. Something has to name the issue first.
+You can type it, and a spec session reaches for it when it starts one ticket. It does not decide that a ticket should start. Something has to name the issue first.
 
 ## When to reach for it
 
-Type `/ticket-flow`, or the agent reaches for it when `/ship-ticket` or a release session is shipping one issue.
+Type `/ticket-flow`, or the agent reaches for it when `/ship-ticket` or a spec session is shipping one issue.
 
 Reach for `/ship-ticket` when you are the one starting the ticket. This skill is the procedure that command runs, not a second way to plan the work.
 
@@ -22,7 +22,7 @@ The leading idea is **one procedure**. `/start-work`, `/implement`, and `/land` 
 
 **Why is this a separate skill from `/ship-ticket`?**
 
-`/ship-ticket` is only for you to type. Another skill is not allowed to invoke it. The release orchestrator has to call a procedure the model is allowed to reach, and this is that procedure. The steps are not a second copy you maintain by hand in the session.
+`/ship-ticket` is only for you to type. Another skill is not allowed to invoke it. `spec-flow` has to call a procedure the model is allowed to reach, and this is that procedure. The steps are not a second copy you maintain by hand in the session.
 
 ## It's working if
 
@@ -32,4 +32,4 @@ The leading idea is **one procedure**. `/start-work`, `/implement`, and `/land` 
 
 ## Where it fits
 
-`ticket-flow` is the **procedure** inside the ticket chain step. [ship-ticket](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-ticket.md) is the door you type. [ship-release](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-release.md) starts this procedure in a fresh session per ready ticket. [ask-yami](https://aihero.dev/skills-ask-yami) is the map.
+`ticket-flow` is the **procedure** inside the ticket chain step. [ship-ticket](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-ticket.md) is the door you type. [spec-flow](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/spec-flow.md) starts this procedure in a fresh session per ready ticket. [ask-yami](https://aihero.dev/skills-ask-yami) is the map.

@@ -1,13 +1,13 @@
 ---
 name: release-flow
-description: "Run one release from shaping through tickets in separate sessions, human testing, and a tagged merge to main, then write the gate that blocks the next release. Use when the user runs ship-release. Do not start a release the user did not ask for."
+description: "Run one release by shipping each feature through spec-flow, then test, tag, and write the gate that blocks the next release. Use when the user runs ship-release. Do not start a release the user did not ask for."
 ---
 
 # Release flow
 
 One release, from an open `release/<N>` branch to a tag on `main`, with a gate that blocks the next release until the human clears it.
 
-`ship-release` is the human door. `/release` is the door onto a single start, finish, or hotfix. If you change a start, finish, or gate step here, change `release` in the same edit. `to-spec` and `to-tickets` are user-invoked, so this skill contains their procedures instead of calling them. If you change those templates, change the publish steps below in the same edit.
+`ship-release` is the human door. `/release` is the door onto a single start, finish, or hotfix. If you change a start, finish, or gate step here, change `release` in the same edit. Each feature is `spec-flow`. If you change how one spec is published, sliced, built, or landed, change `spec-flow`, not a second copy here.
 
 Call the Skill tool with "branch-lineage" before any step that creates, lands, or restacks a branch.
 
@@ -24,38 +24,20 @@ If `release/<N>` does not exist yet, do what `/release start <N>` does:
 3. Cut `release/<N>` from `main`, record `branch.release/<N>.base main`, push it.
 4. Set `release/<N>` as the default base in `docs/agents/branching.md`.
 
-## 2. Shape the release
+## 2. Name the features
 
-Keep this phase in one context window. Do not start a ticket here.
+Keep this phase in one context window. Publish nothing here, and start no ticket here.
 
-1. Interview until you can name every feature this release ships. Call the Skill tool twice, for "grilling" and "domain-modeling", so the interview also keeps `GLOSSARY.md` and ADRs current. When a question needs a runnable answer, stop and tell the user to detour through `/prototype`. A release that ships two features gets two specs. Do not fold them into one spec, and do not stop after the first.
+1. Interview until you can name every feature this release ships. Call the Skill tool twice, for "grilling" and "domain-modeling", so the interview also keeps `GLOSSARY.md` and ADRs current. When a question needs a runnable answer, stop and tell the user to detour through `/prototype`. A release that ships two features gets two specs. Keep each feature its own spec, and continue until every named feature has been handed to step 3.
 2. For each surface this release touches, read `docs/agents/stack.md` and `docs/agents/architecture/<surface>.md`. Where either is missing, stop and tell the user to run `/stack-decision` or `/surface-architecture` for that surface. Do not invent the choice inside this session. Continue when those docs exist.
-3. For each feature, one spec. Keep an existing open spec when it is that feature, it has the spec sections, its `**Base:**` is `release/<N>`, and its decisions are concrete enough to slice. If it is not usable, say what is missing and stop. Otherwise publish it. Do not interview again: synthesise what is already settled. Seams: prefer an existing seam, at the highest point you can, and check that choice with the user before publishing. Publish to the tracker with `ready-for-agent` and a `surface:<name>` label per surface. The body has these sections, in order: `**Base:**`, `**Surfaces:**`, Problem Statement, Solution, User Stories (as an actor, I want, so that), Implementation Decisions (no file paths), Testing Decisions, Out of Scope, Further Notes. Cut `spec/<issue-number>` from `release/<N>` when that branch is missing, record the base, and push it. Do not open a pull request for the spec yet.
-4. Draft tracer-bullet tickets for every spec. Each ticket is a narrow complete path through every layer, demoable on its own, and small enough for one fresh context window. Prefactor tickets come first. Each ticket records `**Base:** spec/<issue-number>` (or a blocker's branch when it must stack on unlanded code and `docs/agents/branching.md` allows stacking), `**Surfaces:**`, what it delivers, and what blocks it. Show one numbered list grouped by spec, and wait for the user to approve the whole release before publishing. Then publish one issue per ticket, blockers first, with native blocking links where the tracker has them, plus `ready-for-agent` and the surface labels. Do not close the spec issues.
 
-## 3. Build the frontier
+## 3. Ship each spec
 
-A ticket is ready when every blocker has landed. Do not start a blocked ticket. Do not put the tickets on one integration branch. `/implement-spec` is a different door.
+For each feature, in the order you named them, call the Skill tool with "spec-flow" for that one feature. Wait until that spec's branch has landed into `release/<N>` before the next feature. `spec-flow` publishes or keeps the spec, slices its tickets, starts a fresh session per ready ticket, and lands the spec after the user approves.
 
-Pick one host from the environment and use it for the whole release.
+The release is not ready to test while one of its spec branches is still open. A bug found while testing is step 4, not another spec.
 
-**TUI.** `HERDR_ENV` is `1`. Call the Skill tool with "herdr". For each ready ticket, open a pane in the current tab and start an agent whose only task is: call the Skill tool with "ticket-flow" for that issue, and stop when the pull request is open.
-
-**Desktop.** `HC_TERMINAL_ID` is set. Call the Skill tool with "herdr-core", and with "herdr-app" so the person can see the terminal. Run `hc --skill` and `herdr-app --skill` before inventing a flag. For each ready ticket, `herdr-app ls`, then `hc run --bg` in `$PWD`, named `ticket-<issue>` (letters, digits, and hyphens only). Pass `--label herdr.space=<id>` and `--label herdr.tab=<id>` from that listing so the terminal shows in the current tab. Start the same kind of agent this session is, with the task in the launch: call the Skill tool with "ticket-flow" for that issue, stop when the pull request is open, and report that URL with `hc send` to `$HC_TERMINAL_ID`. That agent does not land and does not start further agents. If `first_message.sent` is false, read the terminal and send the task once it is ready.
-
-**Neither** variable is set. Stop. Say this session is not inside Herdr TUI or Herdr Desktop. Parallel sessions exist only inside one of those hosts.
-
-Do not tell a ticket agent to land. When one ticket lands, start the tickets it was blocking.
-
-## 4. You approve each ticket
-
-The parent does not land a ticket's pull request. Tell the user the pull request URL and wait. After they approve, tell that session to continue `ticket-flow` from its land step: a message in its Herdr pane, or `hc send` on Desktop. Repeat until every ticket whose lineage reaches `release/<N>` has landed or been re-based onto a later release.
-
-## 5. Land each spec
-
-When every ticket whose base is `spec/<issue>` has landed, open a pull request from that branch into `release/<N>`. Tell the user and wait. After they approve, land it with a merge commit. A ticket session never lands the spec. Repeat for each spec whose tickets are done. The release is not ready to test while one of its spec branches is still open.
-
-## 6. Test and review, before the tag
+## 4. Test and review, before the tag
 
 On `release/<N>`, against `main`:
 
@@ -64,9 +46,9 @@ On `release/<N>`, against `main`:
 3. Call the Skill tool with "security-review" on the same diff.
 4. Stop for human testing. Ask the user to test the release. Do not continue on your own judgement of "it looks done".
 
-A bug found here is a ticket whose `**Base:**` is `release/<N>`. It does not get a spec branch. It is not a hotfix. Go back to step 3 for that ticket.
+A bug found here is a ticket whose `**Base:**` is `release/<N>`. It does not get a spec branch. It is not a hotfix. Publish that ticket, then start it in a fresh context window running `ticket-flow`, on the same host `spec-flow` uses for a ready ticket (a TUI pane, or a Desktop `hc run` with the current space and tab labels). Stop at the open pull request. After the user approves, tell that session to land. Then return to this step.
 
-## 7. Finish
+## 5. Finish
 
 Only after the user approves the release.
 
@@ -100,7 +82,7 @@ Release <version> (<tag>) is on main. The next release cannot start while a bloc
 - [ ] Skills update accepted (`/sync-skills`)
 ```
 
-Security review and human testing are step 6's stops. They are not a second copy of this list.
+Security review and human testing are step 4's stops. They are not a second copy of this list.
 
 ## Gotchas
 

@@ -1,13 +1,13 @@
 ---
 name: ticket-flow
-description: "Run one ticket from its own worktree through a pull request into its recorded base, and land it only after the user approves. Use when ship-ticket is invoked, or when release-flow starts a ticket in a fresh session. Do not start a ticket the user did not ask to ship."
+description: "Run one ticket from its own worktree through a pull request into its recorded base, and land it only after the user approves. Use when ship-ticket is invoked, or when spec-flow starts a ticket in a fresh session. Do not start a ticket the user did not ask to ship."
 ---
 
 # Ticket flow
 
 One ticket, from a branch cut off its base through a merged pull request. Review happens before the merge. Nothing reviews the ticket again after it lands.
 
-`ship-ticket` is the human door onto this procedure. `release-flow` starts it in a fresh session per ticket. `start-work`, `implement`, and `land` are the human doors onto single phases. If you change a phase here, change that door in the same edit.
+`ship-ticket` is the human door onto this procedure. `spec-flow` starts it in a fresh session per ticket. `start-work`, `implement`, and `land` are the human doors onto single phases. If you change a phase here, change that door in the same edit.
 
 The issue tracker should have been provided to you. If not, tell the user to run `/setup-z-yami-coding-skills`.
 

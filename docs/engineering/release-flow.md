@@ -1,6 +1,6 @@
 ## What it does
 
-`release-flow` is the procedure behind `/ship-release`. It opens the release branch, shapes the [spec](https://www.aihero.dev/ai-coding-dictionary/spec) and [tickets](https://www.aihero.dev/ai-coding-dictionary/ticket) in one [session](https://www.aihero.dev/ai-coding-dictionary/session), builds each ready ticket in its own session, and tags only after you approve.
+`release-flow` is the procedure behind `/ship-release`. It opens the release branch, names every feature, and calls [spec-flow](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/spec-flow.md) once per feature. That procedure publishes the [spec](https://www.aihero.dev/ai-coding-dictionary/spec), slices its [tickets](https://www.aihero.dev/ai-coding-dictionary/ticket), and builds each ready ticket in its own [session](https://www.aihero.dev/ai-coding-dictionary/session). The tag happens after every spec has landed and you approve.
 
 You can type it. A release you did not ask for is not a reason for the agent to start it. `/ship-release` is the door you type. This skill is what that door runs, and what has to be callable from that door.
 
@@ -12,26 +12,26 @@ Reach for `/release` when you want only to open the branch, only to finish, or a
 
 ## Prerequisites
 
-The tracker and branching policy from [setup-z-yami-coding-skills](https://aihero.dev/skills-setup-z-yami-coding-skills). Herdr, once tickets are ready: the TUI (`HERDR_ENV=1`) or Desktop (`HC_TERMINAL_ID`). No open blocking box in `docs/agents/pending-release.md`.
+The tracker and branching policy from [setup-z-yami-coding-skills](https://aihero.dev/skills-setup-z-yami-coding-skills). Herdr, once a spec's tickets are ready: the TUI (`HERDR_ENV=1`) or Desktop (`HC_TERMINAL_ID`). No open blocking box in `docs/agents/pending-release.md`.
 
-## Fresh session per ticket
+## One procedure per feature
 
-The leading idea is a **fresh session per ticket**. Shaping stays in the session you started. Building does not. Each ready ticket gets its own context: a TUI pane, or a Desktop terminal shown in the current tab. That context knows the ticket, not the whole release conversation. The orchestrator does not land those pull requests. You do, by approving them.
+The leading idea is **one procedure per feature**. Naming the features stays in the session you started. Each feature is then `spec-flow`: its own ticket list, its own fresh session per ready ticket, and its own landing into the release. The next feature starts after that merge. Those ticket sessions know the ticket, not the whole release conversation.
 
 Stack and architecture docs that are missing stop the run. The skill tells you which command to type. It does not pick a framework or a folder layout for you.
 
 ## Common questions
 
-**Why doesn't it just call `/to-spec` and `/to-tickets`?**
+**Why doesn't it just call `/to-spec`, `/to-tickets`, and `/ship-spec`?**
 
-Those are commands only you can invoke. This procedure contains the same publish steps so a release can run them without pretending another command fired. If those templates change, this procedure changes in the same edit.
+`/to-spec`, `/to-tickets`, and `/ship-spec` are commands only you can invoke. This procedure calls `spec-flow`, which holds the same publish, slice, and land steps. If those templates change, `spec-flow` changes in the same edit.
 
 ## It's working if
 
-- Every spec this release needs exists, each with a `spec/<issue>` branch, before any pane starts building. A spec ticket's pull request targets that spec branch.
+- Features ship one at a time. The next spec starts after `spec/<issue>` has merged into the release.
 - A ticket with an open blocker has no pane yet.
 - The tag is on `main`, and the pending-release file on `main` still has open boxes.
 
 ## Where it fits
 
-`release-flow` is the **procedure** for the release chain. [ship-release](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-release.md) is the door. [ticket-flow](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ticket-flow.md) is what each pane runs. [ask-yami](https://aihero.dev/skills-ask-yami) is the map.
+`release-flow` is the **procedure** for the release chain. [ship-release](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-release.md) is the door. [spec-flow](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/spec-flow.md) is what each feature runs. [ask-yami](https://aihero.dev/skills-ask-yami) is the map.

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Ship Spec"
+  short_description: "One spec through its tickets, then into the release"
+policy:
+  allow_implicit_invocation: false

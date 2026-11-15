@@ -1,0 +1,3 @@
+interface:
+  display_name: "Spec Flow"
+  short_description: "One spec from publish through its landed branch"

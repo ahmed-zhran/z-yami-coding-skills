@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Break a plan, spec, or conversation into a set of **tickets**: tracer-bullet vertical slices, each declaring the tickets that **block** it.
 
-`/ship-release` slices tickets by following this process itself, because this skill is user-invoked and another skill cannot call it. If you change the slice rules or the templates, change the publish step in `release-flow` in the same edit.
+`spec-flow` slices tickets by following this process itself, because this skill is user-invoked and another skill cannot call it. `/ship-spec` and `/ship-release` both reach `spec-flow`. If you change the slice rules or the templates, change the ticket step in `spec-flow` in the same edit.
 
 The issue tracker and triage label vocabulary should have been provided to you. If not, tell the user to run `/setup-z-yami-coding-skills`.
 

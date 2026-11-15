@@ -13,7 +13,7 @@ Type `/herdr-guide`, or the agent reaches for it when you ask what Herdr is, how
 | Set up Herdr, or work out why it misbehaved | `/herdr-guide` |
 | Split panes, run a command, or start an agent in a TUI pane | [herdr](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/herdr.md) |
 | Run a terminal or show it in Herdr Desktop | [herdr-core](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/herdr-core.md) and [herdr-app](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/herdr-app.md) |
-| A release that opens one pane per ticket | [ship-release](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-release.md) |
+| One spec, or a release, that opens one session per ready ticket | [ship-spec](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-spec.md) or [ship-release](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-release.md) |
 
 ## Prerequisites
 

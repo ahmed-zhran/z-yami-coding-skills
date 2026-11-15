@@ -20,7 +20,7 @@ Herdr Desktop, with `hc` on `PATH`. A session that is already inside a core term
 
 ## The host
 
-The leading word is the **host**. `/ship-release` picks one host and stays there. On Desktop it calls this skill, labels each ticket terminal with the current space and tab so you can see it, and waits for `hc send` to bring back the pull request URL. On the TUI it calls `herdr` instead.
+The leading word is the **host**. `spec-flow` picks one host and stays there for that spec. On Desktop it calls this skill, labels each ticket terminal with the current space and tab so you can see it, and waits for `hc send` to bring back the pull request URL. On the TUI it calls `herdr` instead. `/ship-spec` and `/ship-release` both reach that procedure.
 
 ## Common questions
 
@@ -40,4 +40,4 @@ No. This copy tells the agent to run `hc --skill` and follow it. The binary you 
 
 ## Where it fits
 
-`herdr-core` is the Desktop control skill [ship-release](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-release.md) calls when `HC_TERMINAL_ID` is set. [herdr-app](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/herdr-app.md) only changes what the window shows. [herdr](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/herdr.md) is the TUI sibling.
+`herdr-core` is the Desktop control skill [spec-flow](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/spec-flow.md) calls when `HC_TERMINAL_ID` is set. [herdr-app](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/herdr-app.md) only changes what the window shows. [herdr](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/herdr.md) is the TUI sibling.

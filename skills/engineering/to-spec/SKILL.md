@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 This skill takes the current conversation context and codebase understanding and produces a spec. Do NOT interview the user; just synthesize what you already know.
 
-`/ship-release` publishes a spec by following this process itself, because this skill is user-invoked and another skill cannot call it. If you change the template or the steps, change the publish step in `release-flow` in the same edit.
+`spec-flow` publishes a spec by following this process itself, because this skill is user-invoked and another skill cannot call it. `/ship-spec` and `/ship-release` both reach `spec-flow`. If you change the template or the steps, change the publish step in `spec-flow` in the same edit.
 
 The issue tracker and triage label vocabulary should have been provided to you. If not, tell the user to run `/setup-z-yami-coding-skills`.
 

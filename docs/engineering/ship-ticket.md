@@ -11,6 +11,7 @@ You invoke this by typing `/ship-ticket`, and the agent won't reach for it on it
 | You want | Reach for |
 | --- | --- |
 | One ticket, from branch to merge, including the stop for your approval | `/ship-ticket <n>` |
+| One spec, including every one of its tickets | [ship-spec](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-spec.md) |
 | Only the branch, or only the build, or only the merge | `/start-work`, `/implement`, or `/land` |
 | Every ticket of a spec on one branch and one pull request | [implement-spec](https://aihero.dev/skills-implement-spec) |
 | A whole release, one session per ticket | [ship-release](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-release.md) |
@@ -29,9 +30,9 @@ The skill's leading word is the **approval stop**. Building and opening the pull
 
 No. [code-review](https://aihero.dev/skills-code-review) runs before the pull request, you approve, then it merges. A review after the merge cannot block anything.
 
-**Can the release command start this on its own?**
+**Can `/ship-spec` start this on its own?**
 
-You type `/ship-ticket`. The release orchestrator does not type it. It runs the same procedure in a fresh [session](https://www.aihero.dev/ai-coding-dictionary/session), one ticket at a time, and still stops for your approval before each merge.
+You type `/ship-ticket`. `/ship-spec` does not type it. It runs the same procedure in a fresh [session](https://www.aihero.dev/ai-coding-dictionary/session), one ticket at a time, and still stops for your approval before each merge. `/ship-release` does that once per feature.
 
 ## It's working if
 
@@ -41,4 +42,4 @@ You type `/ship-ticket`. The release orchestrator does not type it. It runs the 
 
 ## Where it fits
 
-`ship-ticket` is a **chain step**: the whole ticket, where `/start-work`, `/implement`, and `/land` are the phases inside it. [ship-release](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-release.md) runs that step once per ready ticket, in its own session. When you are unsure which door you want, [ask-yami](https://aihero.dev/skills-ask-yami) routes the set.
+`ship-ticket` is a **chain step**: the whole ticket, where `/start-work`, `/implement`, and `/land` are the phases inside it. [ship-spec](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-spec.md) runs that procedure once per ready ticket, in its own session. [ship-release](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-release.md) does the same, once per feature, then tags. When you are unsure which door you want, [ask-yami](https://aihero.dev/skills-ask-yami) routes the set.

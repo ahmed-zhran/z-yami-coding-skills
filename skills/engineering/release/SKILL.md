@@ -31,7 +31,7 @@ Record the decision as an ADR (call the Skill tool with "domain-modeling" for th
 2. Confirm no other `release/*` is open, or that the user wants two in flight.
 3. Cut `release/<N>` from `main`, record `branch.release/<N>.base main`, push it.
 4. Set `release/<N>` as the default base in `docs/agents/branching.md`, so `to-spec` and `to-tickets` pick it up.
-5. Report the branch and the next step: `/grill-with-docs` then `/to-spec` for this release, or `/ship-release <N>` to run the whole cycle.
+5. Report the branch and the next step: `/grill-with-docs`, then `/ship-spec` for one feature or `/ship-release <N>` for the whole cycle. `/to-spec` publishes one spec when that step is wanted on its own.
 
 ## `finish <N>`
 

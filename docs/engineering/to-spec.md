@@ -14,7 +14,7 @@ Reach for it when the build is too big for one agent [session](https://www.aiher
 | --- | --- |
 | You haven't decided anything yet | [grill-with-docs](https://aihero.dev/skills-grill-with-docs) first |
 | Decided, and the work fits one [context window](https://www.aihero.dev/ai-coding-dictionary/context-window) | [implement](https://aihero.dev/skills-implement): skip the spec |
-| Decided, and the work spans several sessions | `/to-spec`, then [to-tickets](https://aihero.dev/skills-to-tickets) |
+| Decided, and the work spans several sessions | `/to-spec`, then [to-tickets](https://aihero.dev/skills-to-tickets), or [ship-spec](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-spec.md) for the whole spec |
 | A [wayfinder](https://aihero.dev/skills-wayfinder) map has cleared | `/to-spec #<map_issue>` |
 
 ## Prerequisites
@@ -78,4 +78,4 @@ A tracker issue may not return a very large spec in full, and there is no local 
 grill-with-docs → to-spec → to-tickets → implement → code-review → retro
 ```
 
-Upstream, [grill-with-docs](https://aihero.dev/skills-grill-with-docs) makes the decisions that this skill only records, and a finished [wayfinder](https://aihero.dev/skills-wayfinder) map joins the chain here. Downstream, [to-tickets](https://aihero.dev/skills-to-tickets) cuts the spec into tracer-bullet tickets for [implement](https://aihero.dev/skills-implement) to build. When you're unsure which skill or flow fits, [ask-yami](https://aihero.dev/skills-ask-yami) routes you.
+Upstream, [grill-with-docs](https://aihero.dev/skills-grill-with-docs) makes the decisions that this skill only records, and a finished [wayfinder](https://aihero.dev/skills-wayfinder) map joins the chain here. Downstream, [to-tickets](https://aihero.dev/skills-to-tickets) cuts the spec into tracer-bullet tickets for [implement](https://aihero.dev/skills-implement) to build. [ship-spec](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-spec.md) runs this publish step when the spec does not exist yet, then those tickets, then lands the spec. When you're unsure which skill or flow fits, [ask-yami](https://aihero.dev/skills-ask-yami) routes you.

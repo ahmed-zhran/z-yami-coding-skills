@@ -22,17 +22,19 @@ Every spec and ticket carries a `**Base:**` line, written when that issue is cre
 2. **`/grill-with-docs`** sharpens the idea by interview, keeping `GLOSSARY.md` and ADRs current. (No repo under you? `/grill-me`.) Where a surface still has no stack or architecture decision, **`/stack-decision`** and **`/surface-architecture`** settle it before tickets exist.
 3. **Branch: can you settle every question in conversation?** If one needs a runnable answer, detour through **`/prototype`**, bridged by **`/handoff`** in both directions.
 4. **Branch: is this a multi-session build?**
-   - **Yes**: one spec per feature. **`/ship-release <N>`** publishes every spec this release needs, then the tickets. **`/to-spec`** publishes one spec (its base is the release), then **`/to-tickets`** (each ticket gets blockers, a base, and surface labels). Then work the tickets one of three ways:
-     - **One command per ticket**, a fresh context each time: **`/ship-ticket <n>`**. It cuts the branch, builds, reviews, opens the pull request, waits for you, then lands. Inside a **`/ship-release`**, each ready ticket gets its own Herdr pane and that same flow.
-     - **One phase at a time**: **`/start-work <n>`**, **`/implement <n>`**, **you review the PR**, then **`/land <pr>`**. Same result as `/ship-ticket`, when you want to stop between phases.
-     - **All at once, one pull request**: **`/implement-spec`** runs implementer subagents across the ready **frontier** on `spec/<issue>`, then opens one PR into the release. This is not how `/ship-release` builds a release. `/ship-release` gives each ticket its own pull request into the spec branch, then lands the spec.
-   - **No**: it is still one ticket, and the ticket already has a `**Base:**`. **`/implement`** builds that ticket and opens the PR into the recorded base. It stops when the issue has no base. You review it, then **`/land`**.
-5. **`/release finish <N>`** freezes the release, compiles the changelog and version bump, writes the post-release gate, opens the release PR into `main`, lands it after your approval, tags it, and publishes the notes. Human testing, `code-review`, and `security-review` of the release diff happen before that tag. **`/ship-release`** includes this step.
+   - **Yes.** One spec per feature. The doors are the same ones you would type by hand:
+     - **One spec**, through its tickets, until `spec/<issue>` lands in the release: **`/ship-spec`**. It keeps an existing usable spec, or publishes one with the `/to-spec` template. It keeps existing tickets, or slices them with the `/to-tickets` rules. Each ready ticket then runs in a fresh session, the same procedure as **`/ship-ticket`**. You approve the breakdown, each ticket pull request, and the spec pull request.
+     - **The phases, by hand**: **`/to-spec`** (this conversation, one feature), then **`/to-tickets`**, then **`/ship-ticket <n>`** per ticket. When those tickets have landed, **`/ship-spec <issue>`** lands the spec. Repeat `/ship-spec` once per feature.
+     - **One ticket's phases**: **`/start-work <n>`**, **`/implement <n>`**, **you review the PR**, then **`/land <pr>`**.
+     - **All of one spec's tickets in one pull request**: **`/implement-spec`**. That is a different door. `/ship-spec` and `/ship-release` give each ticket its own pull request into the spec branch, then land the spec.
+     - **The whole release**: **`/ship-release <N>`** names every feature, runs the `/ship-spec` procedure once per feature, then tests and tags. Two features are two specs, finished one after the other.
+   - **No.** It is still one ticket, and the ticket already has a `**Base:**`. **`/implement`** builds that ticket and opens the PR into the recorded base. It stops when the issue has no base. You review it, then **`/land`**.
+5. **`/release finish <N>`** freezes the release, compiles the changelog and version bump, writes the post-release gate, opens the release PR into `main`, lands it after your approval, tags it, and publishes the notes. Human testing, `code-review`, and `security-review` of the release diff happen before that tag. **`/ship-release`** includes this step. Skip it when `/ship-release` already tagged.
 6. **The gate blocks the next release.** `docs/agents/pending-release.md` lands on `main` with open boxes: `/retro`, `/reflect`, an ADR pass, `/improve-codebase-architecture`, a risk and repo-scale note, any human decision still open, and `/sync-skills`. Clear them by doing the work. The next `/release start` or `/ship-release` refuses while a box is open.
 
 ### Context hygiene
 
-Keep steps 2 to 4 (up to `/to-tickets`) in **one unbroken context window**. Each `/ship-ticket` or `/implement` then starts fresh, working from its ticket. `/ship-release` keeps the shaping phase in one window and puts each ticket in its own Herdr pane. The limit is the **[smart zone](https://www.aihero.dev/ai-coding-dictionary/smart-zone)**; near it, `/compact` at the nearest phase boundary (see Phase boundaries).
+Keep steps 2 to 4 (through `/to-spec` and `/to-tickets` for one feature) in **one unbroken context window**. Each `/ship-ticket` or `/implement` then starts fresh, working from its ticket. `/ship-spec` and `/ship-release` keep shaping in one window and put each ready ticket in its own Herdr session. The limit is the **[smart zone](https://www.aihero.dev/ai-coding-dictionary/smart-zone)**; near it, `/compact` at the nearest phase boundary (see Phase boundaries).
 
 ## On-ramps
 
@@ -106,9 +108,9 @@ Read [PHASE-BOUNDARIES.md](PHASE-BOUNDARIES.md) for the ordered tree and the rea
 - **`/writing-for-agents`**: how to write skills, AGENTS.md, and docs agents read.
 - **`/mermaid-validator`**: check Mermaid diagrams before committing docs.
 - **`/git-guardrails`**, **`/setup-pre-commit`**: one-time safety and quality hooks.
-- **`herdr`**: control the Herdr TUI from inside a pane (`HERDR_ENV=1`). `/ship-release` calls it on the TUI so each ready ticket gets its own pane. The file is a pinned copy; see `.agents/external-skills.md`.
-- **`herdr-core`**: control Herdr Desktop terminals with `hc` (`HC_TERMINAL_ID` is set). `/ship-release` calls it on Desktop so each ready ticket gets its own terminal. Run `hc --skill` for the live flags.
-- **`herdr-app`**: show and arrange the Herdr Desktop window. `/ship-release` calls it so those terminals appear in the current tab.
+- **`herdr`**: control the Herdr TUI from inside a pane (`HERDR_ENV=1`). `spec-flow` calls it on the TUI so each ready ticket of a spec gets its own pane. `/ship-spec` and `/ship-release` both reach that procedure. The file is a pinned copy; see `.agents/external-skills.md`.
+- **`herdr-core`**: control Herdr Desktop terminals with `hc` (`HC_TERMINAL_ID` is set). `spec-flow` calls it on Desktop so each ready ticket gets its own terminal. Run `hc --skill` for the live flags.
+- **`herdr-app`**: show and arrange the Herdr Desktop window. `spec-flow` calls it so those terminals appear in the current tab.
 - **`herdr-guide`**: help a human install, learn, or troubleshoot Herdr. Not the skill that drives panes or terminals.
 
 ## Precondition

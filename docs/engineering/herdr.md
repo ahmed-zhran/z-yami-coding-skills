@@ -6,7 +6,7 @@ It refuses to run unless `HERDR_ENV=1`. The installed binary is the authority fo
 
 ## When to reach for it
 
-Type `/herdr`, or the agent reaches for it when you ask to control TUI panes, tabs, workspaces, or another agent, or when [ship-release](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-release.md) starts one session per ready ticket and `HERDR_ENV=1`. On Herdr Desktop (`HC_TERMINAL_ID`), that release calls [herdr-core](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/herdr-core.md) and [herdr-app](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/herdr-app.md) instead.
+Type `/herdr`, or the agent reaches for it when you ask to control TUI panes, tabs, workspaces, or another agent, or when [spec-flow](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/spec-flow.md) starts one session per ready ticket and `HERDR_ENV=1`. On Herdr Desktop (`HC_TERMINAL_ID`), that spec calls [herdr-core](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/herdr-core.md) and [herdr-app](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/herdr-app.md) instead. `/ship-spec` and `/ship-release` both reach `spec-flow`.
 
 For install help, a key that does nothing, or an agent Herdr did not detect, use [herdr-guide](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/herdr-guide.md). This skill does not teach Herdr. It operates it.
 
@@ -32,4 +32,4 @@ It does not install the program. If Herdr is running, `herdr --skill` prints the
 
 ## Where it fits
 
-`herdr` is the **control** skill [ship-release](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-release.md) calls when tickets are ready for their own panes. [herdr-guide](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/herdr-guide.md) is the sibling for humans who are stuck or not set up yet. [ask-yami](https://aihero.dev/skills-ask-yami) routes the rest.
+`herdr` is the **control** skill [spec-flow](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/spec-flow.md) calls when a spec's tickets are ready for their own panes. [herdr-guide](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/herdr-guide.md) is the sibling for humans who are stuck or not set up yet. [ask-yami](https://aihero.dev/skills-ask-yami) routes the rest.
