@@ -1,0 +1,8 @@
+Herdr Desktop window skill
+
+Source: https://github.com/herdrdev/herdr-app/blob/5216e6f9f8c0c281a65e09816c66e4319e671784/src/SKILL.md
+Blob: 9e940ff83f1bd547698bacca2d057d007eb5819b
+License: Apache License 2.0. The license text is LICENSE in this folder.
+Upstream repository: https://github.com/herdrdev/herdr-app
+
+The body of SKILL.md is that file. This copy adds YAML frontmatter so agents can load it. The pin and the divergence live in `.agents/external-skills.md`.

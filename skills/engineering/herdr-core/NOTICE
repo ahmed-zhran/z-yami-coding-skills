@@ -1,0 +1,8 @@
+Herdr Desktop core skill
+
+Source: https://github.com/herdrdev/herdr-core/blob/c84d6e76156a6c2aac1da20efbe800f10acfe897/skills/herdr-core/SKILL.md
+Blob: 864a6e4681d629d1c46fa2f2c5a24fb4028e76d3
+License: Apache License 2.0. The license text is LICENSE in this folder.
+Upstream repository: https://github.com/herdrdev/herdr-core
+
+SKILL.md in this folder is a byte copy of that commit. The pin and the update check live in `.agents/external-skills.md`.

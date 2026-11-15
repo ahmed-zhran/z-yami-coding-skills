@@ -12,11 +12,11 @@ Reach for `/release` when you want only to open the branch, only to finish, or a
 
 ## Prerequisites
 
-The tracker and branching policy from [setup-z-yami-coding-skills](https://aihero.dev/skills-setup-z-yami-coding-skills). Herdr, once tickets are ready. No open blocking box in `docs/agents/pending-release.md`.
+The tracker and branching policy from [setup-z-yami-coding-skills](https://aihero.dev/skills-setup-z-yami-coding-skills). Herdr, once tickets are ready: the TUI (`HERDR_ENV=1`) or Desktop (`HC_TERMINAL_ID`). No open blocking box in `docs/agents/pending-release.md`.
 
 ## Fresh session per ticket
 
-The leading idea is a **fresh session per ticket**. Shaping stays in the session you started. Building does not. Each ready ticket gets a pane and a context that knows the ticket, not the whole release conversation. The orchestrator does not land those pull requests. You do, by approving them.
+The leading idea is a **fresh session per ticket**. Shaping stays in the session you started. Building does not. Each ready ticket gets its own context: a TUI pane, or a Desktop terminal shown in the current tab. That context knows the ticket, not the whole release conversation. The orchestrator does not land those pull requests. You do, by approving them.
 
 Stack and architecture docs that are missing stop the run. The skill tells you which command to type. It does not pick a framework or a folder layout for you.
 

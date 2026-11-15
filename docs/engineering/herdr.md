@@ -6,7 +6,7 @@ It refuses to run unless `HERDR_ENV=1`. The installed binary is the authority fo
 
 ## When to reach for it
 
-Type `/herdr`, or the agent reaches for it when you ask to control panes, tabs, workspaces, or another agent, or when [ship-release](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-release.md) starts one session per ready ticket.
+Type `/herdr`, or the agent reaches for it when you ask to control TUI panes, tabs, workspaces, or another agent, or when [ship-release](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-release.md) starts one session per ready ticket and `HERDR_ENV=1`. On Herdr Desktop (`HC_TERMINAL_ID`), that release calls [herdr-core](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/herdr-core.md) and [herdr-app](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/herdr-app.md) instead.
 
 For install help, a key that does nothing, or an agent Herdr did not detect, use [herdr-guide](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/herdr-guide.md). This skill does not teach Herdr. It operates it.
 

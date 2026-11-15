@@ -37,8 +37,10 @@ Model- or user-reachable (rich trigger phrasing so the model can reach for them)
 - **[branch-lineage](./branch-lineage/SKILL.md)**: Every branch records its base at any depth; procedures for resolving bases, starting work in worktrees, landing, and restacking.
 - **[ticket-flow](./ticket-flow/SKILL.md)**: One ticket from its worktree through review to a landed pull request. `/ship-ticket` and `/ship-release` call it.
 - **[release-flow](./release-flow/SKILL.md)**: One release from shaping through per-ticket sessions, the tag, and the gate that blocks the next release.
-- **[herdr](./herdr/SKILL.md)**: Control Herdr from inside a pane: layout, commands, and other agents. Pinned from herdrdev/herdr. `/ship-release` calls it for one session per ready ticket.
-- **[herdr-guide](./herdr-guide/SKILL.md)**: Set up Herdr or troubleshoot it with a human. Install, keys, logs, and agent detection. Not the control skill.
+- **[herdr](./herdr/SKILL.md)**: Control the Herdr TUI from inside a pane. Pinned from herdrdev/herdr. `/ship-release` calls it when `HERDR_ENV=1`.
+- **[herdr-core](./herdr-core/SKILL.md)**: Control Herdr Desktop terminals with `hc`. Pinned from herdrdev/herdr-core. `/ship-release` calls it when `HC_TERMINAL_ID` is set.
+- **[herdr-app](./herdr-app/SKILL.md)**: Show spaces, tabs, and panes in the Herdr Desktop window. Pinned from herdrdev/herdr-app.
+- **[herdr-guide](./herdr-guide/SKILL.md)**: Set up Herdr or troubleshoot it with a human. Install, keys, logs, and agent detection. Not a control skill.
 - **[surface-map](./surface-map/SKILL.md)**: Keep the map of monorepo surfaces, their contracts, and each surface's extraction context accurate.
 - **[setup-ts-deep-modules](./setup-ts-deep-modules/SKILL.md)**: Wire dependency-cruiser into a TypeScript repo so each package is a deep module reachable only through its entry files.
 - **[diagnosing-bugs](./diagnosing-bugs/SKILL.md)**: Disciplined diagnosis loop for hard bugs: decide where the fix lands, build a tight feedback loop, minimise, hypothesise, fix with a regression test, ship as a PR, record the cause.

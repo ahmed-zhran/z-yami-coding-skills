@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/brand/header.svg" alt="Yami Coding. Ahmed Zhran. 57 skills for release, spec, and ticket." width="880">
+<img src="docs/brand/header.svg" alt="Yami Coding. Ahmed Zhran. 59 skills for release, spec, and ticket." width="880">
 
 # Yami Coding
 
@@ -14,12 +14,12 @@
 
 [Installation](#installation) · [Quick start](#quick-start) · [What it does](#what-it-does) · [Reference](#reference) · [Site](https://ahmed-zhran.github.io/yami-coding)
 
-57 skills in the `z-yami-coding-skills` plugin. A release, a spec, and a ticket each record a base when the issue is created, and the agent lands into that base. You approve before a pull request merges and before a release is tagged. The site is [yami-coding](https://ahmed-zhran.github.io/yami-coding).
+59 skills in the `z-yami-coding-skills` plugin. A release, a spec, and a ticket each record a base when the issue is created, and the agent lands into that base. You approve before a pull request merges and before a release is tagged. The site is [yami-coding](https://ahmed-zhran.github.io/yami-coding).
 
 ## Requirements
 
 - Claude Code, Codex, or another agent that [skills.sh](https://skills.sh) can install into (Cursor, OpenCode, Windsurf, Devin, Amp, Pi).
-- `/ship-release` runs inside [Herdr](https://herdr.dev). The session must have `HERDR_ENV=1`. The other skills do not need Herdr.
+- `/ship-release` runs inside [Herdr](https://herdr.dev). The TUI sets `HERDR_ENV=1`. Herdr Desktop sets `HC_TERMINAL_ID`. The other skills do not need Herdr.
 
 ## Installation
 
@@ -127,8 +127,10 @@ for each ticket:  /ship-ticket <n>     (or /start-work, /implement, you review, 
 - **[branch-lineage](./skills/engineering/branch-lineage/SKILL.md)**: Bases, worktrees, landing, and restacking.
 - **[ticket-flow](./skills/engineering/ticket-flow/SKILL.md)**: The procedure `/ship-ticket` runs: worktree, build, review, land.
 - **[release-flow](./skills/engineering/release-flow/SKILL.md)**: The procedure `/ship-release` runs, including the post-release gate.
-- **[herdr](./skills/engineering/herdr/SKILL.md)**: Control Herdr from inside a pane (pinned in `.agents/external-skills.md`).
-- **[herdr-guide](./skills/engineering/herdr-guide/SKILL.md)**: Help a human install, learn, or troubleshoot Herdr. Does not drive panes.
+- **[herdr](./skills/engineering/herdr/SKILL.md)**: Control the Herdr TUI from inside a pane (pinned in `.agents/external-skills.md`).
+- **[herdr-core](./skills/engineering/herdr-core/SKILL.md)**: Control Herdr Desktop terminals with `hc`.
+- **[herdr-app](./skills/engineering/herdr-app/SKILL.md)**: Show and arrange the Herdr Desktop window.
+- **[herdr-guide](./skills/engineering/herdr-guide/SKILL.md)**: Help a human install, learn, or troubleshoot Herdr. Does not drive panes or terminals.
 - **[surface-map](./skills/engineering/surface-map/SKILL.md)**: The map of monorepo surfaces and their contracts.
 - **[setup-ts-deep-modules](./skills/engineering/setup-ts-deep-modules/SKILL.md)**: Enforce deep TypeScript modules with dependency-cruiser.
 - **[diagnosing-bugs](./skills/engineering/diagnosing-bugs/SKILL.md)**: Feedback-loop-first diagnosis, fix, PR, and solution note.
@@ -187,9 +189,9 @@ To work on these skills locally, `scripts/link-skills.sh` symlinks every skill i
 
 ## Credits
 
-Yami Coding is Ahmed Zhran's package. `herdr`, `herdr-guide`, `security-review`, `caveman`, and `skill-eval` are Apache-2.0, and each of those folders includes the Apache license text.
+Yami Coding is Ahmed Zhran's package. `herdr`, `herdr-core`, `herdr-app`, `herdr-guide`, `security-review`, `caveman`, and `skill-eval` are Apache-2.0, and each of those folders includes the Apache license text.
 
-The agentic workflow uses [mattpocock/skills](https://github.com/mattpocock/skills) (MIT) as a base. [`UPSTREAM.md`](./UPSTREAM.md) lists what was kept, changed, added, and dropped. Also adapted, with credit: [security-specialist](https://github.com/fabricioctelles/skills/tree/main/skills/security-specialist) and [skill-evaluation](https://github.com/fabricioctelles/skills/tree/main/skills/skill-evaluation) by Fabricio Telles (Apache-2.0), [caveman](https://github.com/JuliusBrussee/caveman) by Julius Brussee (Apache-2.0), [ponytail](https://github.com/DietrichGebert/ponytail) by Dietrich Gebert (MIT), [avoid-ai-writing](https://github.com/conorbronsdon/avoid-ai-writing) by Conor Bronsdon (MIT), [mermaid-validator](https://github.com/dt418/mermaid-validator-agent-skill) by dt418 (MIT), [herdr](https://github.com/herdrdev/herdr/blob/v0.9.5/skills/herdr/SKILL.md) and the [Herdr agent guide](https://herdr.dev/agent-guide.md) (Apache-2.0). Pins for vendored skills are in [`.agents/external-skills.md`](./.agents/external-skills.md). `deep-review` is inspired by the thermo-nuclear review in [cursor/plugins](https://github.com/cursor/plugins).
+The agentic workflow uses [mattpocock/skills](https://github.com/mattpocock/skills) (MIT) as a base. [`UPSTREAM.md`](./UPSTREAM.md) lists what was kept, changed, added, and dropped. Also adapted, with credit: [security-specialist](https://github.com/fabricioctelles/skills/tree/main/skills/security-specialist) and [skill-evaluation](https://github.com/fabricioctelles/skills/tree/main/skills/skill-evaluation) by Fabricio Telles (Apache-2.0), [caveman](https://github.com/JuliusBrussee/caveman) by Julius Brussee (Apache-2.0), [ponytail](https://github.com/DietrichGebert/ponytail) by Dietrich Gebert (MIT), [avoid-ai-writing](https://github.com/conorbronsdon/avoid-ai-writing) by Conor Bronsdon (MIT), [mermaid-validator](https://github.com/dt418/mermaid-validator-agent-skill) by dt418 (MIT), [herdr](https://github.com/herdrdev/herdr/blob/v0.9.5/skills/herdr/SKILL.md), [herdr-core](https://github.com/herdrdev/herdr-core/blob/c84d6e76156a6c2aac1da20efbe800f10acfe897/skills/herdr-core/SKILL.md), [herdr-app](https://github.com/herdrdev/herdr-app/blob/5216e6f9f8c0c281a65e09816c66e4319e671784/src/SKILL.md), and the [Herdr agent guide](https://herdr.dev/agent-guide.md) (Apache-2.0). Pins for vendored skills are in [`.agents/external-skills.md`](./.agents/external-skills.md). `deep-review` is inspired by the thermo-nuclear review in [cursor/plugins](https://github.com/cursor/plugins).
 
 ## License
 

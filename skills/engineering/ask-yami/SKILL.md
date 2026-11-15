@@ -106,8 +106,10 @@ Read [PHASE-BOUNDARIES.md](PHASE-BOUNDARIES.md) for the ordered tree and the rea
 - **`/writing-for-agents`**: how to write skills, AGENTS.md, and docs agents read.
 - **`/mermaid-validator`**: check Mermaid diagrams before committing docs.
 - **`/git-guardrails`**, **`/setup-pre-commit`**: one-time safety and quality hooks.
-- **`herdr`**: control Herdr from inside a pane (layout, commands, other agents). `/ship-release` calls it so each ready ticket gets its own pane. It stops when `HERDR_ENV` is not `1`. The file is a pinned copy; see `.agents/external-skills.md`.
-- **`herdr-guide`**: help a human install, learn, or troubleshoot Herdr. Not the skill that drives panes.
+- **`herdr`**: control the Herdr TUI from inside a pane (`HERDR_ENV=1`). `/ship-release` calls it on the TUI so each ready ticket gets its own pane. The file is a pinned copy; see `.agents/external-skills.md`.
+- **`herdr-core`**: control Herdr Desktop terminals with `hc` (`HC_TERMINAL_ID` is set). `/ship-release` calls it on Desktop so each ready ticket gets its own terminal. Run `hc --skill` for the live flags.
+- **`herdr-app`**: show and arrange the Herdr Desktop window. `/ship-release` calls it so those terminals appear in the current tab.
+- **`herdr-guide`**: help a human install, learn, or troubleshoot Herdr. Not the skill that drives panes or terminals.
 
 ## Precondition
 

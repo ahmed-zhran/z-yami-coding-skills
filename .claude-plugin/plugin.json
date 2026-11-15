@@ -49,6 +49,8 @@
     "./skills/engineering/ticket-flow",
     "./skills/engineering/release-flow",
     "./skills/engineering/herdr",
+    "./skills/engineering/herdr-core",
+    "./skills/engineering/herdr-app",
     "./skills/engineering/herdr-guide",
     "./skills/engineering/surface-map",
     "./skills/engineering/setup-ts-deep-modules",

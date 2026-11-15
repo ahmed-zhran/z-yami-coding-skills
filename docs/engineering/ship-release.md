@@ -18,7 +18,7 @@ You invoke this by typing `/ship-release`, and the agent won't reach for it on i
 
 ## Prerequisites
 
-[setup-z-yami-coding-skills](https://aihero.dev/skills-setup-z-yami-coding-skills) has been run in the repo. This session is inside Herdr (`HERDR_ENV=1`) once tickets are ready to build. If it is not, the skill stops rather than collapsing the tickets onto one branch.
+[setup-z-yami-coding-skills](https://aihero.dev/skills-setup-z-yami-coding-skills) has been run in the repo. Once tickets are ready to build, this session is inside Herdr: the TUI (`HERDR_ENV=1`) or Herdr Desktop (`HC_TERMINAL_ID` set). If it is neither, the skill stops rather than collapsing the tickets onto one branch.
 
 A previous release's `docs/agents/pending-release.md` must have no open blocking box. The first release has no such file, and that is fine.
 

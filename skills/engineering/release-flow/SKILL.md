@@ -37,13 +37,19 @@ Keep this phase in one context window. Do not start a ticket here.
 
 A ticket is ready when every blocker has landed. Do not start a blocked ticket. Do not put the tickets on one integration branch. `/implement-spec` is a different door.
 
-Call the Skill tool with "herdr". If this session is not inside Herdr (`HERDR_ENV` is not `1`), stop and say so. Do not fake parallel sessions another way.
+Pick one host from the environment and use it for the whole release.
 
-For each ready ticket, open a pane in the current tab and start an agent whose only task is: call the Skill tool with "ticket-flow" for that issue, and stop when the pull request is open. Do not tell that agent to land. When one ticket lands, start the tickets it was blocking.
+**TUI.** `HERDR_ENV` is `1`. Call the Skill tool with "herdr". For each ready ticket, open a pane in the current tab and start an agent whose only task is: call the Skill tool with "ticket-flow" for that issue, and stop when the pull request is open.
+
+**Desktop.** `HC_TERMINAL_ID` is set. Call the Skill tool with "herdr-core", and with "herdr-app" so the person can see the terminal. Run `hc --skill` and `herdr-app --skill` before inventing a flag. For each ready ticket, `herdr-app ls`, then `hc run --bg` in `$PWD`, named `ticket-<issue>` (letters, digits, and hyphens only). Pass `--label herdr.space=<id>` and `--label herdr.tab=<id>` from that listing so the terminal shows in the current tab. Start the same kind of agent this session is, with the task in the launch: call the Skill tool with "ticket-flow" for that issue, stop when the pull request is open, and report that URL with `hc send` to `$HC_TERMINAL_ID`. That agent does not land and does not start further agents. If `first_message.sent` is false, read the terminal and send the task once it is ready.
+
+**Neither** variable is set. Stop. Say this session is not inside Herdr TUI or Herdr Desktop. Parallel sessions exist only inside one of those hosts.
+
+Do not tell a ticket agent to land. When one ticket lands, start the tickets it was blocking.
 
 ## 4. You approve each ticket
 
-The parent does not land a pane's pull request. Tell the user the pull request URL and wait. After they approve, tell that pane's agent to continue `ticket-flow` from its land step. Repeat until every ticket whose lineage reaches `release/<N>` has landed or been re-based onto a later release.
+The parent does not land a ticket's pull request. Tell the user the pull request URL and wait. After they approve, tell that session to continue `ticket-flow` from its land step: a message in its Herdr pane, or `hc send` on Desktop. Repeat until every ticket whose lineage reaches `release/<N>` has landed or been re-based onto a later release.
 
 ## 5. Land each spec
 

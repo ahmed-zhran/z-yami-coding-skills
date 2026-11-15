@@ -13,7 +13,7 @@ metadata:
 
 Use this guide to help a human understand, set up, or troubleshoot Herdr. It covers Herdr's concept model, setup path, and diagnosis recipes. Canonical documentation lives at https://herdr.dev/tui/docs/. Point the human there for more detail, and verify any command you are unsure about against those pages instead of guessing.
 
-If you are running inside a Herdr pane (`HERDR_ENV=1`), the `herdr` skill in this package is what operates the CLI. This skill only guides a human. Do not install a second copy from `herdrdev/herdr`.
+If you are running inside a Herdr pane (`HERDR_ENV=1`), the `herdr` skill in this package operates the TUI. If `HC_TERMINAL_ID` is set, `herdr-core` and `herdr-app` operate Desktop. This skill only guides a human. Do not install a second copy from `herdrdev/herdr`.
 
 ## What Herdr is
 
@@ -61,7 +61,7 @@ Homebrew, mise, and Nix installs, verification, and manual downloads: https://he
 
 ## First-run walkthrough
 
-Check your environment first. If `HERDR_ENV=1` is set, you are already running inside a Herdr pane. The human is already attached, so skip step 1 and never tell them to run `herdr` from your pane; Herdr blocks nested launches by design. Start with step 2. The control skill is already in this package.
+Check your environment first. If `HERDR_ENV=1` is set, you are already running inside a Herdr pane. The human is already attached, so skip step 1 and never tell them to run `herdr` from your pane; Herdr blocks nested launches by design. Start with step 2. The TUI control skill is already in this package. If `HC_TERMINAL_ID` is set, this session is Herdr Desktop: `herdr-core` runs terminals and `herdr-app` changes the window. Do not tell the human to launch bare `herdr` from that terminal.
 
 Walk the human through this sequence:
 
