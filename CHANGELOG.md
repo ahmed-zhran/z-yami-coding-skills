@@ -1,5 +1,11 @@
 # z-yami-coding-skills
 
+## 1.6.1
+
+### Patch Changes
+
+- [`3f40cf5`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/3f40cf57046d4d7afb80f813ca3c35cb9a81f77f) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - Herdr control skills (`herdr`, `herdr-app`, `herdr-core`, `herdr-guide`) and `spec-flow` child sessions now default to Focus etiquette: stay in the agent's own space or workspace, prefer non-focusing creates, and never steal the human's window focus for convenience.
+
 ## 1.6.0
 
 ### Minor Changes
