@@ -85,6 +85,8 @@ New users do not need to learn keybindings; the mouse covers everything. When th
 
 This package ships `herdr` for operating Herdr from inside a pane: splitting panes, running commands without stealing focus, reading output, and waiting on other agents. The pin is in `.agents/external-skills.md`. Do not run `npx skills add herdrdev/herdr`. A second skill with the same name hides this copy.
 
+Agents that drive Herdr (TUI `herdr`, or Desktop `herdr-core` / `herdr-app`) follow **Focus etiquette**: stay in their own current workspace or space; never `space.select` or steal focus for convenience; prefer `--no-focus` / `--focus false` for background tabs and panes; do not run shots or UI experiments in the space the human is focused on. Teach that default when someone asks how agents should behave in a shared window.
+
 ## Configuration
 
 - Config file: `~/.config/herdr/config.toml` on Linux and macOS; `%APPDATA%\herdr\config.toml` on Windows. Herdr works without one.
@@ -106,4 +108,5 @@ This package ships `herdr` for operating Herdr from inside a pane: splitting pan
 - Do not invent keybindings, config keys, or CLI flags. The ones in this file are accurate as of the pin in `.agents/external-skills.md`. For anything else, read the linked docs page first.
 - Teach mouse before keyboard for humans new to multiplexers.
 - Herdr is not tmux: do not give tmux commands, tmux config syntax, or `.tmux.conf` advice for Herdr questions.
-- For automation, scripting, or controlling Herdr from code, use the `herdr` skill in this package. The CLI reference is https://herdr.dev/tui/docs/cli-reference/ and the socket API is https://herdr.dev/tui/docs/socket-api/.
+- For automation, scripting, or controlling Herdr from code, use the `herdr` skill in this package (and `herdr-core` / `herdr-app` on Desktop). Point agents at Focus etiquette in those skills: own space only, no focus theft, non-focusing create flags by default.
+- The CLI reference is https://herdr.dev/tui/docs/cli-reference/ and the socket API is https://herdr.dev/tui/docs/socket-api/.

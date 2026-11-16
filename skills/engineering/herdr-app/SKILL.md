@@ -11,6 +11,19 @@ what the person sees. For starting, reading, messaging, waiting on or cleaning
 up agents and programs, read `hc --skill` and use hc.
 Your terminal address is `$HC_TERMINAL_ID`; it is not a pane ID.
 
+## Focus etiquette
+
+Stay in your own current space. Unless the user explicitly asks, or the task
+cannot be done without another space (say so in one short line first):
+
+1. Do all `herdr-app` / `hc` inspection and testing only in that space.
+2. Never call `space.select`, steal window focus, or focus another space or
+   pane just for convenience.
+3. Prefer non-focusing options (`--focus false` and equivalents) when creating
+   tabs or panes for background checks.
+4. Do not drive the focused space the human is using for your own experiments
+   (shots, panel toggles, layout trials).
+
 ## Inspect before acting
 
 ```sh
@@ -34,28 +47,30 @@ it stays dismissed until the error changes or the update recovers.
 ## Show something when asked
 
 New spaces and tabs are shown immediately: only create them when asked.
-To start one the person will look at later without moving them there, pass
-`--focus false`:
+Default to the current space. Create a sibling tab there with `--focus false`
+so the human's view does not jump. Only call `space.new` when the user asked
+for a new space, or when the task cannot use the current one (say so first),
+and still pass `--focus false` unless they asked to move there:
 
 ```sh
+herdr-app do tab.new --name tickets --space <current-space-id> --folder "$PWD" --focus false
 herdr-app do space.new --name eng-123 --folder ~/code/app/eng-123 --argv '["claude"]' --task "Implement ENG-123" --focus false
 ```
 
 Pick an explicit, useful name for every new space and tab; don't rely on
 default names. Use IDs from `ls` rather than guessing or acting on the wrong
-focused pane.
+focused pane. Call `agent.focus` or `space.select` only when the user asked
+to move the window there.
 
 ```sh
-herdr-app do space.new --name api --folder /path/to/api
-herdr-app do tab.new --name "fix login" --argv '["claude"]' --task "Look at the login bug"
 herdr-app do pane.split --direction right --pane p12
-herdr-app do agent.focus --terminal t7
+herdr-app do tab.new --name "fix login" --space <current-space-id> --argv '["claude"]' --task "Look at the login bug" --focus false
 ```
 
-For a remote space:
+For a remote space (only when asked, or when the work cannot stay local):
 
 ```sh
-herdr-app do space.new --name "remote api" --machine vps --folder /srv/api
+herdr-app do space.new --name "remote api" --machine vps --folder /srv/api --focus false
 ```
 
 The folder is on that machine; tabs and splits in the space stay there.
@@ -166,7 +181,8 @@ those files or the generated guide. The app rewrites them on start.
   not in an earlier task. The installed guide explains its 250 ms quit budget
   and which cleanup commands go out before shutdown.
 
-After every mod change:
+After every mod change (stay in your own current space; do not `space.select`
+into the human's workspace to take the shot):
 
 ```sh
 herdr-app check ~/.config/herdr-app/mods/<name>
@@ -195,7 +211,8 @@ capture or permissions. It needs a running window that has drawn a frame;
 If Herdr misbehaves, `herdr-app feedback "<what happened>"` drafts a report.
 The person reviews and sends it; it does not silently send feedback.
 
-Never experiment with pointer/key automation on the person's real display.
-When developing the app on Linux, its `scripts/sandbox` provides an isolated
-home, core and display: `up`, `do`, `status`, `shot`, then `down` when done.
+Follow Focus etiquette above. Never experiment with pointer/key automation on
+the person's real display. When developing the app on Linux, its
+`scripts/sandbox` provides an isolated home, core and display: `up`, `do`,
+`status`, `shot`, then `down` when done.
 Never stop a server or session you didn't start.

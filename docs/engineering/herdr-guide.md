@@ -39,6 +39,7 @@ No. The pin and the check live in this package. A newer page is reviewed in the 
 
 - A setup conversation starts with the mouse, and does not hand over tmux commands.
 - A failed key or a missing agent ends with a Herdr command or a docs link, not a guessed flag.
+- When someone asks how agents should share the window, the answer is Focus etiquette: own space, no focus theft, non-focusing creates.
 - The agent does not offer to `npx skills add herdrdev/herdr`.
 
 ## Where it fits

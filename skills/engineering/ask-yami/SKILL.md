@@ -132,10 +132,10 @@ Read [PHASE-BOUNDARIES.md](PHASE-BOUNDARIES.md) for the ordered tree and the rea
 - **`/writing-for-agents`**: how to write skills, AGENTS.md, and docs agents read.
 - **`/mermaid-validator`**: check Mermaid diagrams before committing docs.
 - **`/git-guardrails`**, **`/setup-pre-commit`**: one-time safety and quality hooks.
-- **`herdr`**: control the Herdr TUI from inside a pane (`HERDR_ENV=1`). `spec-flow` calls it on the TUI so each ready ticket gets a pane in a sibling child tab (max 6 per tab, 2×3 grid; parent tab stays alone). `/ship-spec` and `/ship-release` both reach that procedure. The file is a pinned copy; see `.agents/external-skills.md`.
-- **`herdr-core`**: control Herdr Desktop terminals with `hc` (`HC_TERMINAL_ID` is set). `spec-flow` calls it on Desktop so each ready ticket gets its own terminal in a child tab, then steers that terminal with a screen-read loop (allowlist dialogs often stay `working`). Run `hc --skill` for the live flags.
-- **`herdr-app`**: show and arrange the Herdr Desktop window. `spec-flow` calls it so ticket terminals appear in sibling child tabs of the current space, not the parent's tab.
-- **`herdr-guide`**: help a human install, learn, or troubleshoot Herdr. Not the skill that drives panes or terminals.
+- **`herdr`**: control the Herdr TUI from inside a pane (`HERDR_ENV=1`). `spec-flow` calls it on the TUI so each ready ticket gets a pane in a sibling child tab (max 6 per tab, 2×3 grid; parent tab stays alone). `/ship-spec` and `/ship-release` both reach that procedure. Focus etiquette: stay in the current workspace, `--no-focus` for background work. The file is a pinned copy plus that overlay; see `.agents/external-skills.md`.
+- **`herdr-core`**: control Herdr Desktop terminals with `hc` (`HC_TERMINAL_ID` is set). `spec-flow` calls it on Desktop so each ready ticket gets its own terminal in a child tab, then steers that terminal with a screen-read loop (allowlist dialogs often stay `working`). Focus etiquette: own space only, no focus theft. Run `hc --skill` for the live flags.
+- **`herdr-app`**: show and arrange the Herdr Desktop window. `spec-flow` calls it so ticket terminals appear in sibling child tabs of the current space, not the parent's tab. Default `--focus false`; never `space.select` for convenience.
+- **`herdr-guide`**: help a human install, learn, or troubleshoot Herdr. Not the skill that drives panes or terminals. Teaches Focus etiquette for agents in a shared window.
 
 ## Beta (opt-in only)
 

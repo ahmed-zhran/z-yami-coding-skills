@@ -27,7 +27,7 @@ A live URL with no tag (the agent guide) is checked by re-fetching it and diffin
 - **Source:** https://raw.githubusercontent.com/herdrdev/herdr/v0.9.5/skills/herdr/SKILL.md
 - **Blob:** `4943e5575e941a7820ea01ca9416e79749c3ddc3`
 - **Content hash (sha256):** `fbd9d502767f7dff29c211505a0bd9ba34e980ed4cc456247e2adc1642883984`
-- **Divergence:** none. The file is a byte copy of the pin. Do not edit it locally. A behavior change belongs upstream, then here as a new pin.
+- **Divergence:** Focus etiquette section (and a matching Safety bullet): stay in the agent's current workspace; no focus theft for convenience; `--no-focus` for background creates. Re-apply after each pin bump. Other behaviour changes still belong upstream, then here as a new pin.
 
 ### herdr-guide
 
@@ -36,7 +36,7 @@ A live URL with no tag (the agent guide) is checked by re-fetching it and diffin
 - **License:** Apache-2.0, same project as `herdr`. The text is `skills/engineering/herdr-guide/LICENSE`.
 - **Pin:** fetched 2026-11-15. No release tag. The page is the source.
 - **Content hash (sha256) of the fetched page:** `74a5212e3f99cc02ef8553238de4aebf1d9598d10b98c2050ef5d2216bbc0e5f`
-- **Divergence:** em dashes in the page are rewritten to colons. The section that tells an agent to `npx skills add herdrdev/herdr` is replaced: this package already ships `herdr`, and a second install is refused. A session with `HC_TERMINAL_ID` set is named as Herdr Desktop and pointed at `herdr-core` and `herdr-app`. Re-apply all three when the page changes.
+- **Divergence:** em dashes in the page are rewritten to colons. The section that tells an agent to `npx skills add herdrdev/herdr` is replaced: this package already ships `herdr`, and a second install is refused. A session with `HC_TERMINAL_ID` set is named as Herdr Desktop and pointed at `herdr-core` and `herdr-app`. Focus etiquette is named in The control skill and Rules for you. Re-apply all four when the page changes.
 
 ### herdr-core
 
@@ -47,7 +47,7 @@ A live URL with no tag (the agent guide) is checked by re-fetching it and diffin
 - **Source:** https://raw.githubusercontent.com/herdrdev/herdr-core/c84d6e76156a6c2aac1da20efbe800f10acfe897/skills/herdr-core/SKILL.md
 - **Blob:** `864a6e4681d629d1c46fa2f2c5a24fb4028e76d3`
 - **Content hash (sha256):** `677e9f2e21f13a3ecf11708fc50211373fda7e50251e7e0cb303707ac8eed70a`
-- **Divergence:** none. The file is a byte copy of that commit. The live flags come from `hc --skill` on the installed binary.
+- **Divergence:** Focus etiquette section after the upstream body: stay in the agent's current space; never `space.select` / steal focus for convenience; prefer `--focus false` via `herdr-app` for background tabs. Re-apply after each pin bump. The live flags still come from `hc --skill` on the installed binary.
 
 ### herdr-app
 
@@ -58,7 +58,7 @@ A live URL with no tag (the agent guide) is checked by re-fetching it and diffin
 - **Source:** https://raw.githubusercontent.com/herdrdev/herdr-app/5216e6f9f8c0c281a65e09816c66e4319e671784/src/SKILL.md
 - **Blob:** `9e940ff83f1bd547698bacca2d057d007eb5819b`
 - **Content hash (sha256) of the upstream body:** `cf20cbef338e8f0df22107c0b154d5a9bbc7a6851003afc2a61181cb549a7f97`
-- **Divergence:** YAML frontmatter (`name`, `description`) is added so agents can load the skill. The body after that frontmatter is the upstream file. Re-apply the frontmatter when the body changes. The live window commands come from `herdr-app --skill`.
+- **Divergence:** YAML frontmatter (`name`, `description`) is added so agents can load the skill. Focus etiquette section plus example and safety edits: default to the current space, `--focus false` on creates, no `space.select` / focus theft for convenience, shots stay in the agent's space. Re-apply frontmatter and Focus etiquette when the body changes. The live window commands come from `herdr-app --skill`.
 
 ### design-taste-frontend
 

@@ -4,6 +4,8 @@
 
 A terminal with no `herdr.space` label stays hidden. `spec-flow` uses this skill so each ticket terminal is labeled into a sibling child tab of the current space (not the parent's tab). `/ship-spec` and `/ship-release` both reach that procedure.
 
+**Focus etiquette** is the default: stay in the agent's current space, create with `--focus false`, and never `space.select` or yank the window for convenience unless you asked, or the work cannot stay put (the agent says so first).
+
 ## When to reach for it
 
 Type `/herdr-app`, or the agent reaches for it when you ask to change the Herdr window, or when a terminal started with `hc` should appear on screen.
@@ -27,10 +29,15 @@ The leading word is the **window**. Core keeps the terminals alive after the win
 
 `hc` workers with no space label stay hidden. The release labels `herdr.space` and `herdr.tab` from `herdr-app ls` so the terminal joins a sibling child tab in that space.
 
+**Why did the window jump to another space while an agent was testing?**
+
+That agent ignored Focus etiquette. Inspection, shots, and panel checks stay in the agent's own space. `space.select` and focus-stealing creates are only for when you asked to move, or when the task cannot use the current space.
+
 ## It's working if
 
 - `herdr-app ls` shows the ticket terminal under the current space in a child tab, not the parent's tab.
-- The agent did not open a new space unless you asked for one.
+- The agent did not open a new space unless you asked for one, and new tabs used `--focus false` unless you asked to watch them.
+- Your focused space did not jump while the agent inspected or took shots.
 - Starting and messaging the agent still went through `hc`, not through a window command.
 
 ## Where it fits

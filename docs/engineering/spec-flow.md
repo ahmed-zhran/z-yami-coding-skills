@@ -24,7 +24,7 @@ After a ready ticket has its own session, this run **steers** that session. Shel
 
 ## Child sessions
 
-Ticket sessions open in sibling Herdr tabs, not beside the shipping pane. Each child tab holds at most six sessions in a 2×3 grid. When a ticket has landed, that pane closes so the slot frees up. `/ship-release` uses the same packing for bug tickets opened while testing.
+Ticket sessions open in sibling Herdr tabs, not beside the shipping pane. Each child tab holds at most six sessions in a 2×3 grid. Creates use `--no-focus` / `--focus false` and stay in the parent's workspace or space (no `space.select` for convenience). When a ticket has landed, that pane closes so the slot frees up. `/ship-release` uses the same packing for bug tickets opened while testing.
 
 Tickets of this spec may only be blocked by other tickets of this same spec (or by none). A **blocker checker** runs on the ticket set before any child session starts. A cross-spec edge is a craft failure: the run removes a false edge, or recrafts the tickets / feature cut / release feature order until the checker passes, then continues.
 

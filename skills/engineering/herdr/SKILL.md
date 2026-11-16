@@ -201,9 +201,20 @@ Use `--format ansi` when colors and terminal styling are evidence. Otherwise use
 
 If a larger recent read still does not reveal the completed response, ask the agent to write it as Markdown in a temporary directory and reply only with the file path, then read that file on the same machine. Use this only as a fallback; do not request file output in the initial prompt.
 
+## Focus etiquette
+
+Stay in your own current workspace. Unless the user explicitly asks, or the task cannot be done without another workspace (say so in one short line first):
+
+1. Do all `herdr` inspection and testing only in that workspace (and, by default, the current tab).
+2. Never switch workspace or tab focus, or steal another client's focus, just for convenience.
+3. Prefer `--no-focus` when creating tabs or panes for background checks.
+4. Do not drive the focused workspace or tab the human is using for your own experiments.
+
+Default to a sibling pane in the current tab. Create a workspace, tab, worktree, or different cwd only when the user requested that topology or location, or when the task truly cannot stay put.
+
 ## Safety and coordination rules
 
-- Use `--no-focus` for background work unless the user asked to switch context.
+- Follow Focus etiquette above. Use `--no-focus` for background work unless the user asked to switch context.
 - Use `--current`, an explicit pane ID, or a unique agent name. Do not rely on another client's focused pane.
 - Parse IDs from JSON responses. Do not derive them from sidebar order or examples.
 - Do not close workspaces, tabs, panes, or sessions you did not create unless the user explicitly asked. Ordinary CLI/API closes do not inherit the TUI's last-pane confirmation. `workspace close --group` closes the primary workspace and its linked worktree workspaces; never add it merely to bypass `workspace_group_close_required`.

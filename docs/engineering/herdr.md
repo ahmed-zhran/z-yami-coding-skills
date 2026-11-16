@@ -2,7 +2,7 @@
 
 `herdr` is the Herdr control skill, vendored from Herdr `v0.9.5`. Inside a Herdr pane it drives the `herdr` CLI: layout, commands in other panes, and other agents.
 
-It refuses to run unless `HERDR_ENV=1`. The installed binary is the authority for flags. The skill tells the agent to read `herdr --help` and the command group before it invents a flag. The copy in this repo is a byte match of that tag. The pin is in [`.agents/external-skills.md`](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/.agents/external-skills.md).
+It refuses to run unless `HERDR_ENV=1`. The installed binary is the authority for flags. The skill tells the agent to read `herdr --help` and the command group before it invents a flag. The pin is in [`.agents/external-skills.md`](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/.agents/external-skills.md). This package adds **Focus etiquette** on top of the pin: stay in the agent's current workspace, prefer `--no-focus`, and do not steal the human's focus for convenience.
 
 ## When to reach for it
 
@@ -16,7 +16,7 @@ A Herdr pane (`HERDR_ENV=1`) and the `herdr` binary on `PATH`. The binary and th
 
 ## The pin
 
-The leading idea is the **pin**. This file is not edited to taste in a consumer repo, and it is not edited here except by moving the pin forward. A newer Herdr release shows up as a diff against `v0.9.5`. Someone reviews that diff, replaces the file, and updates the pin. Until then the published skill stays on `v0.9.5`.
+The leading idea is the **pin**. A newer Herdr release shows up as a diff against `v0.9.5`. Someone reviews that diff, replaces the file, updates the pin, and re-applies Focus etiquette (recorded in [`.agents/external-skills.md`](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/.agents/external-skills.md)). Until then the published skill stays on `v0.9.5` plus that overlay.
 
 ## Common questions
 
@@ -28,7 +28,8 @@ It does not install the program. If Herdr is running, `herdr --skill` prints the
 
 - Outside Herdr, the agent stops before it runs a control command.
 - Inside Herdr, the agent reads the live command help before it splits a pane or starts an agent.
-- The skill file in this repo still matches the hash recorded for `v0.9.5`, or the pin has moved on purpose.
+- Background splits and tabs use `--no-focus`, and the agent's work stays in the current workspace unless you asked otherwise.
+- The pin matches `v0.9.5` (or a deliberate bump) with Focus etiquette still present.
 
 ## Where it fits
 

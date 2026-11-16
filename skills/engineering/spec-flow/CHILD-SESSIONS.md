@@ -10,7 +10,7 @@ The parent session (the one running this ship) stays alone in its own tab. Child
 2. **Child tabs.** Open children in sibling tabs of the same workspace (TUI) or space (Desktop). Label them `tickets` (or `tickets-2`, `tickets-3`, …). Never split the parent's pane for a ticket.
 3. **Cap.** At most **6** live child panes or terminals per child tab. A seventh opens a new child tab and packs the same way.
 4. **Grid.** Each child tab aims for a **2×3** board: three panes across the top row, three across the bottom, as equal as the host allows. Fill empty shells before creating a new tab.
-5. **Focus.** Create and fill with `--no-focus` / without stealing the parent's focus unless the human asked to watch a child.
+5. **Focus.** Stay in the parent's workspace (TUI) or space (Desktop). Create and fill with `--no-focus` / `--focus false`. Never `space.select`, never steal window focus, and never drive the human's focused space for experiments, unless the human asked to watch a child or the task cannot stay in the current space (say so briefly first).
 6. **Retire.** When a child this run started has finished its land (or this run no longer needs it), close that pane or terminal so it stops taking a slot. When a child tab this run created has no remaining live children, close the tab. Never close the parent's pane, tab, workspace, or space.
 
 ## Open or fill a slot
@@ -40,11 +40,11 @@ Start the ticket agent in a free shell pane (interactive prompt, no foreground c
 
 ### Desktop (`HC_TERMINAL_ID` set)
 
-Call the Skill tool with "herdr-core" and "herdr-app". Run `hc --skill` and `herdr-app --skill` before inventing a flag. Keep the parent's space; create a sibling tab there:
+Call the Skill tool with "herdr-core" and "herdr-app". Run `hc --skill` and `herdr-app --skill` before inventing a flag. Keep the parent's space; never `space.select`. Create a sibling tab there without moving the human's view:
 
 ```bash
 herdr-app ls
-herdr-app do tab.new --name tickets --space <space-id> --folder "$PWD"
+herdr-app do tab.new --name tickets --space <space-id> --folder "$PWD" --focus false
 ```
 
 Read the new tab id from the reply or a fresh `herdr-app ls`. Grow toward the same 2×3 with `pane.split` (`right` / `down`) on panes in that tab. Prefer an empty shell in the grid over a new tab until the tab holds 6. When `pane.split` exposes a ratio argument, use the same thirds as the TUI path; until then, keep the 2×3 tree even if column widths are only approximately even.

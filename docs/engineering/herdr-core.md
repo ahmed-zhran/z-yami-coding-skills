@@ -41,6 +41,7 @@ Cursor's "Run this command?" / "Not in allowlist" dialog usually leaves status a
 - Inside Desktop, a ready ticket shows up as its own terminal in a sibling child tab, and the parent steers it until the pull request URL arrives, then closes that terminal after land.
 - Ticket terminals do not wait on you for shell approvals; the parent clears them from a screen-read loop, not only from a `blocked` status.
 - The parent lands the ticket when the ship door owns that level (under `/ship-spec` or `/ship-release`).
+- Child tabs stay in the parent's space with `--focus false`; the window does not jump to another space for agent experiments.
 - Outside both hosts, the release stops instead of building every ticket in the parent session.
 
 ## Where it fits
