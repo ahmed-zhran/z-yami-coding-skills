@@ -39,4 +39,4 @@ Read this before adding a dependency. A slot already filled here is decided: use
 - **Testing**: ...
 ```
 
-The next decision for the same surface is usually its code architecture: point the user to `/surface-architecture`.
+The next decision for the same surface is usually its code architecture: point the user to `/surface-architecture`. When the stack for a surface changed in a way that should change which craft skills the build loads, tell the user to run **`/empower-crafting`** so it can propose updates to `docs/agents/craft-skills.md`. Do not run that skill unless they ask.

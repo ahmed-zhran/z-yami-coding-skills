@@ -14,7 +14,7 @@ Do not reach for it to change how one repo behaves. That belongs in the repo's `
 
 ## Prerequisites
 
-The skills were installed from `ahmed-zhran/z-yami-coding-skills`, by the marketplace plugin, by `npx skills`, or by a symlink into a checkout of this repo. If the skill cannot tell which, it stops.
+The skills were installed from the published `ahmed-zhran/z-yami-coding-skills` package: the marketplace plugin, or `npx skills`. If the skill cannot tell which, it stops. Symlinks into a local checkout (`scripts/link-skills.sh`) are an author link, not a supported install; the skill stops and asks you to install from the remote instead.
 
 ## Read-only copies
 

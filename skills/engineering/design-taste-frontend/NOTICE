@@ -1,0 +1,9 @@
+design-taste-frontend (tasteskill)
+
+Source: https://github.com/Leonxlnx/taste-skill (tag v2.5.1, commit f6b76575f949707b4e3c37cd86cb44b0b98643e8)
+Upstream skill path: skills/taste-skill/
+License: MIT. The license text is LICENSE in this folder.
+Upstream repository: https://github.com/Leonxlnx/taste-skill
+
+The pin and the update check live in `.agents/external-skills.md`. Divergences from upstream
+are recorded there.

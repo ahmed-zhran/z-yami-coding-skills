@@ -2,6 +2,8 @@
 
 `ship-release` runs one release from the idea through a tag on `main`. It names every feature, then ships each one with the same procedure as `/ship-spec` under release authority, and waits until that [spec](https://www.aihero.dev/ai-coding-dictionary/spec) has landed before the next. Each ready [ticket](https://www.aihero.dev/ai-coding-dictionary/ticket) is built in its own [session](https://www.aihero.dev/ai-coding-dictionary/session).
 
+It does not run OpenPencil and does not start a design phase. Beta `/release-ui-design` runs only when the user explicitly asks for it. If an approved `docs/agents/releases/<N>/design.md` already exists, this door may enrich UI tickets from it; missing or incomplete packs are ignored.
+
 This door owns the release land. The shipping session lands every ticket and every spec. You approve only the release pull request into `main`. The tag is not the end of your responsibility. Finishing writes a gate onto `main`. The next release cannot start while a box in that gate is open.
 
 ## When to reach for it
@@ -11,6 +13,7 @@ You invoke this by typing `/ship-release`, and the agent won't reach for it on i
 | You want | Reach for |
 | --- | --- |
 | The whole release, one spec at a time, then the tag and the gate | `/ship-release <N>` |
+| Specs first, then OpenPencil settle, then this door (beta, only if you ask) | `/release-ui-design <N>`, then `/ship-release <N>` |
 | Only to open the branch, or only to tag | `/release start` or `/release finish` |
 | One spec, through its tickets, until it lands in the release | [ship-spec](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-spec.md) |
 | One ticket | [ship-ticket](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-ticket.md) |
@@ -25,7 +28,7 @@ A previous release's `docs/agents/pending-release.md` must have no open blocking
 
 ## The gate
 
-The leading word beside authority is the **gate**. Before the release pull request, the session runs the test suite, a code review, and a security review. After the tag, `docs/agents/pending-release.md` is on `main` with open boxes: retro, reflect, learnings, debt, the ADRs the release touched, architecture drift, a risk and repo-scale note, any decision only a human can make, and a skills update. Checking a box means that work is done. The next `/ship-release` or `/release start` refuses while one is open.
+The leading word beside authority is the **gate**. Before the release pull request, the session runs the test suite, a code review, a security review, and **human testing**: it writes `docs/releases/<N>/human-testing.md` from this release's user stories by surface, and stops until Sign-off is Approved. The release PR is not a substitute. After the tag, `docs/agents/pending-release.md` is on `main` with open boxes: human-testing feedback into next-release tickets, retro, reflect, learnings, debt, the ADRs the release touched, architecture drift, a risk and repo-scale note, any decision only a human can make, a skills update (`/sync-skills`), and last **`/empower-crafting`**. Checking a box means that work is done. The next `/ship-release` or `/release start` refuses while one is open.
 
 Tickets that are still blocked do not get a session. When one lands, the tickets it was blocking can start. The shipping session keeps its own tab, packs ticket sessions into sibling tabs (at most six per 2×3 grid), **steers** every pane it opened (screen-read loop for allowlist dialogs that stay `working`), lands lower levels under release authority, and closes finished child panes.
 

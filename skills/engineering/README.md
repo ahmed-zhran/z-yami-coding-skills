@@ -6,7 +6,7 @@ Skills for daily code work.
 
 Reachable only when you type them (Claude Code: `disable-model-invocation: true`; Codex: `policy.allow_implicit_invocation: false` in `agents/openai.yaml`).
 
-- **[ask-yami](./ask-yami/SKILL.md)**: Ask which skill or flow fits your situation. A router over the skills in this repo.
+- **[ask-yami](./ask-yami/SKILL.md)**: Ask which skill or flow fits. Checks project state and names what is next; on a clear board, offers brainstorm or upgrades.
 - **[setup-z-yami-coding-skills](./setup-z-yami-coding-skills/SKILL.md)**: Configure a repo for the engineering skills (issue tracker, triage labels, domain docs, branching policy, surface map). Run once per repo.
 - **[grill-with-docs](./grill-with-docs/SKILL.md)**: Grilling session that also builds your project's domain model, sharpening terminology and updating `GLOSSARY.md` and ADRs inline.
 - **[wayfinder](./wayfinder/SKILL.md)**: Plan a huge chunk of work as a shared map of decision tickets on the issue tracker, resolved one at a time until the way is clear.
@@ -21,11 +21,11 @@ Reachable only when you type them (Claude Code: `disable-model-invocation: true`
 - **[land](./land/SKILL.md)**: After you approve a PR, merge it into its recorded base, close the issue, restack children, and clean up.
 - **[release](./release/SKILL.md)**: Start a release branch, finish it with version, changelog and tag, or ship a hotfix from a tag. Finish writes the gate that blocks the next release.
 - **[ship-release](./ship-release/SKILL.md)**: Run a whole release: land tickets and specs under release authority, then tag after you approve the release pull request, then the post-release gate.
-- **[sync-skills](./sync-skills/SKILL.md)**: Update skills installed from this package. Stop if one was edited locally. Leave every other skill alone.
+- **[sync-skills](./sync-skills/SKILL.md)**: Update skills from the published remote (plugin or skills.sh). Refuse author checkout symlinks and locally edited skill files. Leave every other skill alone.
+- **[empower-crafting](./empower-crafting/SKILL.md)**: Propose complementary coding-craft skills from the package draft, stack, and post-release learnings; after approval, rewrite `docs/agents/craft-skills.md`. Last box on the post-release gate.
 - **[stack-decision](./stack-decision/SKILL.md)**: Choose a surface's framework or a library for a slot, recorded as an ADR and in `docs/agents/stack.md`.
 - **[surface-architecture](./surface-architecture/SKILL.md)**: Choose how code is organised inside one surface, write its architecture doc, and enforce it with lint.
 - **[extract-surface](./extract-surface/SKILL.md)**: Plan splitting one monorepo surface into its own repo, carrying exactly the context it needs.
-- **[software-factory](./software-factory/SKILL.md)**: Shared language for designing a software factory (agents that turn issues, PRs, and schedules into merged code): the tasks it runs and the services it plugs into. Call it alongside a grilling session.
 - **[improve-codebase-architecture](./improve-codebase-architecture/SKILL.md)**: Scan for deepening opportunities and drift from the architecture docs, present them as an HTML report, then grill through the one you pick.
 - **[debt](./debt/SKILL.md)**: Harvest `shortcut:` comments into a debt ledger and turn the due ones into issues.
 - **[reflect](./reflect/SKILL.md)**: After a session, turn its lessons into proposed edits to skills, `AGENTS.md`, and docs.
@@ -55,6 +55,7 @@ Model- or user-reachable (rich trigger phrasing so the model can reach for them)
 - **[learnings](./learnings/SKILL.md)**: Solution notes in `docs/solutions/`: written after non-obvious fixes, read before work in the same area.
 - **[resolving-merge-conflicts](./resolving-merge-conflicts/SKILL.md)**: Resolve an in-progress merge or rebase conflict by intent, traced to each side's primary source.
 - **[prototype](./prototype/SKILL.md)**: Build a throwaway prototype to answer a design question: a single HTML file for state and logic, or toggleable UI variations.
+- **[design-taste-frontend](./design-taste-frontend/SKILL.md)**: Anti-slop UI and frontend production (pinned tasteskill). Prefer for most UI work; always on cool/eye-catching/heavy design asks.
 - **[research](./research/SKILL.md)**: Investigate a question against primary sources and capture the findings as a cited Markdown file, run as a background agent.
 - **[domain-modeling](./domain-modeling/SKILL.md)**: Build and sharpen the domain model: challenge terms, stress-test with scenarios, update `GLOSSARY.md` and ADRs inline.
 - **[codebase-design](./codebase-design/SKILL.md)**: Shared vocabulary for designing deep modules: small interfaces, clean seams, testable through the interface.

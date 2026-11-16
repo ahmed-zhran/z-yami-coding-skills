@@ -29,6 +29,8 @@ Call the Skill tool with "branch-lineage" and follow its **resolve the base** an
 
 Before writing code, read what binds the area: `GLOSSARY.md`, ADRs, `docs/agents/stack.md`, and the architecture doc for each surface the ticket touches (`docs/agents/architecture/<surface>.md`). New code goes where the architecture doc says. A dependency for a slot `stack.md` already fills is not added. If you need to break either, stop and ask. When a parent session started this one and named a report address (`hc send` to that terminal), send the question there and wait for the reply; do not wait on a human at this pane's keyboard. Search `docs/solutions/` for notes on the area (call the Skill tool with "learnings").
 
+Read `docs/agents/craft-skills.md`. If it is missing, tell the user (or the parent report address) to run `/setup-z-yami-coding-skills` or `/empower-crafting` (or copy the template); continue without craft rows only when the ticket does not clearly need them, and note the miss. Match the ticket to every row that applies. For each named skill that is installed, call the Skill tool with that name and follow it **while writing product code** (order as the table says). Skip names that are not installed; do not invent their procedures. This file routes coding craft only (UI taste, framework practice, mobile, backend-arch, …). It does not list `tdd` or `code-review`: those stay in the steps below.
+
 Take the first option that fully works:
 
 1. Does it need to exist? Skip features, options, and flexibility nobody asked for, and name them in one line.
@@ -39,11 +41,11 @@ Take the first option that fully works:
 
 Be lazy about the solution, never about the change: finish every caller, test, and fixture it breaks. **Never cut** validation at trust boundaries, error handling that prevents data loss, security, or accessibility. A shortcut with a known limit gets a comment `shortcut: <the limit>, <when to upgrade>`.
 
-Call the Skill tool with "tdd" where possible, at pre-agreed seams. Logic with a branch, a loop, a parser, money, permissions, or security always leaves at least one test behind.
+Call the Skill tool with "tdd" where possible at pre-agreed seams. Logic with a branch, a loop, a parser, money, permissions, or security always leaves at least one test behind.
 
 Run typechecking regularly, single test files regularly, and the full test suite once at the end.
 
-For a bug, call the Skill tool with "diagnosing-bugs" instead of the build rules above. It still ends in a pull request.
+When the matched rows name `diagnosing-bugs` (or the ticket is a bug), follow that skill instead of the normal build rules above. It still ends in a pull request.
 
 Once done, call the Skill tool with "code-review" with the ticket's base as the fixed point. Fix what it finds. This is the review that can still block the merge.
 

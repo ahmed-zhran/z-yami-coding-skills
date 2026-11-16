@@ -37,17 +37,18 @@ Record the decision as an ADR (call the Skill tool with "domain-modeling" for th
 
 1. **Freeze.** List every open issue whose lineage reaches `release/<N>`. Each must land or be re-based onto the next release (update its `Base:`). Stop until that list is empty.
 2. **Version and changelog.** Call the Skill tool with "changelog" in **compile** mode for `release/<N>`. It bumps the version and writes the `CHANGELOG.md` section on the release branch.
-3. **Gate for the next release.** On the release branch, copy `pending-release.md` from this skill's directory to `docs/agents/pending-release.md`. Fill in the version and tag you are about to cut. Leave every box open. Commit it with the version bump. `/ship-release` copies that same file.
-4. **Release PR.** Open a PR from `release/<N>` into `main` (call the Skill tool with "pr"; the evidence section is the compiled changelog and the green CI run). Tell the user to review it, then stop.
-5. **When the user confirms approval:** follow the **land** procedure from "branch-lineage" with a merge commit (never squash a release).
-6. **Tag and publish.** Tag the merge commit `v<version>`, push the tag, and publish release notes from the new `CHANGELOG.md` section (`gh release create v<version> --notes-file <section>`).
-7. **Retire.** Delete `release/<N>` after the tag exists. Reset the default base in `docs/agents/branching.md` to `main` (or the next open release).
+3. **Human testing (blocking).** Same gate as `release-flow` step 4 item 4: write `docs/releases/<N>/human-testing.md` from [`human-testing.md`](./human-testing.md) in this skill directory, from this release's user stories by surface; stop until Sign-off is **Approved**. The release PR is not a substitute. Follow `release-flow` for bugs found here.
+4. **Gate for the next release.** On the release branch, copy `pending-release.md` from this skill's directory to `docs/agents/pending-release.md`. Fill in the version and tag you are about to cut. Leave every box open. Commit it with the version bump. `/ship-release` copies that same file.
+5. **Release PR.** Open a PR from `release/<N>` into `main` (call the Skill tool with "pr"; the evidence section is the compiled changelog, green CI, and the approved human-testing Sign-off). Tell the user to review it, then stop.
+6. **When the user confirms approval:** follow the **land** procedure from "branch-lineage" with a merge commit (never squash a release).
+7. **Tag and publish.** Tag the merge commit `v<version>`, push the tag, and publish release notes from the new `CHANGELOG.md` section (`gh release create v<version> --notes-file <section>`).
+8. **Retire.** Delete `release/<N>` after the tag exists. Reset the default base in `docs/agents/branching.md` to `main` (or the next open release).
 
-Done when the tag is on `main`, the release notes are published, the release branch is gone, the gate file is on `main` with its boxes still open, and no issue still has this release as a base. Tell the user the next `/release start` or `/ship-release` refuses until they clear the boxes.
+Done when the tag is on `main`, the notes are published, the release branch is gone, the gate file is on `main` with its boxes still open, and no issue still has this release as a base. Tell the user the next `/release start` or `/ship-release` refuses until they clear the boxes.
 
 ### Pending checklist
 
-The list is `pending-release.md` in this skill's directory. `release-flow` copies that file. Learnings and debt are blocking boxes, with retro and reflect.
+The list is `pending-release.md` in this skill's directory. `release-flow` copies that file. It includes human-testing feedback (from `docs/releases/<N>/human-testing.md`), learnings, debt, retro, reflect, `/sync-skills`, and last `/empower-crafting`.
 
 ## `hotfix <tag>`
 

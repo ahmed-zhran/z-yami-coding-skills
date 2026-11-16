@@ -1,286 +1,2046 @@
 <!doctype html>
-<html lang="en">
+<!-- type: software
+     deal: hero centred, nav nav-mega, close close-word, footer footer-statement, rhythm dark-band, buttons arrow, mark dots, grounds sky, effect grain-gradient
+     moments: headline-arrives (hero), cursor-spotlight (hero window), counter-rolls (proof), marquee-row (skills)
+     palette void-signal (Yami dark) · type syne+sora · radius sharp · why: dark void with signal cyan keeps the old brand night look -->
+<html
+  lang="en"
+  data-type="software"
+  data-radius="sharp"
+  data-ground="sky"
+  data-buttons="arrow"
+  data-tone="dark"
+  data-motion
+>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Yami Coding</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Yami Coding: Ship in the dark.</title>
     <meta
       name="description"
-      content="Agent skills that ship software through recorded bases: ticket, spec, release. You approve the door you opened."
+      content="Sixty-one agent skills that cut work from a recorded base and land it back there. Install the plugin, open a ship door, and approve only that level."
     />
-    <link rel="icon" href="%BASE_URL%favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Yami Coding: Ship in the dark." />
+    <meta
+      property="og:description"
+      content="Sixty-one agent skills that cut work from a recorded base and land it back there. Install the plugin, open a ship door, and approve only that level."
+    />
+    <meta property="og:image" content="share.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#010308" />
+    <meta name="site-kind" content="software" />
+    <meta name="page-type" content="software" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@400;500;600&family=Syne:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./src/styles.css" />
+    <link rel="stylesheet" href="assets/system.css" />
+    <link rel="stylesheet" href="assets/ui/cards.css" />
+    <link rel="stylesheet" href="assets/ui/base.css" />
+    <link rel="stylesheet" href="assets/motion/motion.css" />
+    <link rel="stylesheet" href="assets/backgrounds/backgrounds.css" />
+    <link rel="stylesheet" href="assets/layout/layout.css" />
+    <link rel="stylesheet" href="assets/layout/demo.css" />
+    <link rel="stylesheet" href="assets/moments/marquee-row/moment.css" />
+    <link rel="stylesheet" href="assets/moments/cursor-spotlight/moment.css" />
+    <link rel="stylesheet" href="assets/moments/headline-arrives/moment.css" />
+    <link rel="stylesheet" href="assets/moments/counter-rolls/moment.css" />
+    <style>
+      :root {
+        --p-bg: #010308;
+        --p-surface: #07101c;
+        --p-ink: #f7f4ec;
+        --p-muted: #a8b0bc;
+        --p-accent: #3db4ff;
+        --p-accent-ink: #010308;
+        --p-action: #3db4ff;
+        --p-action-ink: #010308;
+        --p-inv-bg: #07101c;
+        --p-inv-surface: #0c1828;
+        --p-inv-ink: #f7f4ec;
+        --p-inv-muted: #a8b0bc;
+        --p-inv-accent: #9ad0ff;
+        --p-inv-accent-ink: #010308;
+        --p-inv-action: #ffb43c;
+        --p-inv-action-ink: #010308;
+        --font-display: "Syne", "Arial Narrow", sans-serif;
+        --font-text: "Sora", "Segoe UI", sans-serif;
+        --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+        --display-weight: 800;
+        --display-tracking: -0.02em;
+        --display-tracking-xl: -0.04em;
+        color-scheme: dark;
+      }
+      body {
+        background: transparent;
+      }
+
+      /* pack sections: the kit's one-screen rule leaves huge empty air on content-light blocks */
+      :root {
+        --padt: 56px;
+        --padb: 40px;
+        --section: 3.5rem;
+        --section-band: 40px;
+      }
+      @media (min-width: 640px) {
+        :root { --padt: 64px; --padb: 48px; --section: 4rem; }
+      }
+      main > :is(section, .section):not(.hero) {
+        height: auto !important;
+        min-height: 0 !important;
+        padding: var(--padt) 0 var(--padb) !important;
+      }
+      main > :is(section, .section):not(.hero) > .wrap {
+        height: auto !important;
+        min-height: 0 !important;
+      }
+      .section-head { margin-bottom: var(--s-5); }
+      .section-head h2 { max-width: 22ch; }
+      .cli {
+        margin: 0.85rem 0 0;
+        padding: 0.85rem 1rem;
+        border-radius: 12px;
+        border: 1px solid rgba(61, 180, 255, 0.22);
+        background: rgba(1, 3, 8, 0.88);
+        color: #d7e8f7;
+        font: 500 0.82rem/1.5 var(--font-mono);
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+      .cli b { color: #9ad0ff; font-weight: 500; }
+      .cli em { color: #ffb43c; font-style: normal; }
+      .depth {
+        position: fixed;
+        inset: 0;
+        z-index: -3;
+        pointer-events: none;
+        overflow: hidden;
+        background: #010308;
+      }
+      .depth__grid {
+        position: absolute;
+        inset: -20%;
+        background-image:
+          linear-gradient(rgba(61, 180, 255, 0.06) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(61, 180, 255, 0.06) 1px, transparent 1px);
+        background-size: 56px 56px;
+        transform: perspective(900px) rotateX(58deg) scale(1.35);
+        transform-origin: center 20%;
+        animation: depth-drift 28s linear infinite;
+        mask-image: radial-gradient(ellipse 70% 55% at 50% 35%, #000 20%, transparent 75%);
+      }
+      .depth__orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(40px);
+        opacity: 0.55;
+        animation: orb-float 16s ease-in-out infinite;
+      }
+      .depth__orb--a {
+        width: 42vw; height: 42vw; max-width: 520px; max-height: 520px;
+        left: -8%; top: 8%;
+        background: radial-gradient(circle, rgba(61, 180, 255, 0.35), transparent 68%);
+      }
+      .depth__orb--b {
+        width: 36vw; height: 36vw; max-width: 440px; max-height: 440px;
+        right: -6%; bottom: 12%;
+        background: radial-gradient(circle, rgba(255, 180, 60, 0.28), transparent 68%);
+        animation-delay: -6s;
+      }
+      .depth__orb--c {
+        width: 28vw; height: 28vw; max-width: 360px; max-height: 360px;
+        left: 40%; top: 55%;
+        background: radial-gradient(circle, rgba(154, 208, 255, 0.18), transparent 70%);
+        animation-delay: -11s;
+      }
+      .depth__veil {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, rgba(1, 3, 8, 0.2) 0%, rgba(1, 3, 8, 0.55) 42%, rgba(1, 3, 8, 0.92) 100%);
+      }
+      @keyframes depth-drift {
+        from { background-position: 0 0, 0 0; }
+        to { background-position: 0 56px, 56px 0; }
+      }
+      @keyframes orb-float {
+        0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+        50% { transform: translate3d(2%, -3%, 0) scale(1.08); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .depth__grid, .depth__orb { animation: none; }
+        .herdr-pane--kid, .door-viz .chip, .changelog-card .entry { animation: none; }
+        .herdr-pulse i { animation: none; opacity: 1; }
+      }
+      .nav__logo {
+        gap: 0.75rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        font-size: 0.88rem;
+      }
+      .nav__logo img.mark {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: block;
+      }
+      .hero__window {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        background: linear-gradient(160deg, #0a1524 0%, #010308 55%, #07101c 100%);
+      }
+      .hero__fx {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.55;
+      }
+      .hero__window > .ly-piece {
+        position: relative;
+        z-index: 1;
+      }
+      .hero__window .d-win--dark .d-win__body {
+        grid-template-columns: 220px 1fr;
+        min-height: 420px;
+      }
+      .hero__window .d-chat {
+        padding: 14px 18px;
+        gap: 8px;
+      }
+      .hero__window .d-msg--me small {
+        display: none;
+      }
+      .hero__window .d-msg--bot {
+        max-width: 86%;
+        background: #122033;
+        color: #e9ecee;
+      }
+      .hero__window .d-msg--bot small {
+        display: inline;
+        margin: 0 0 0 8px;
+        white-space: nowrap;
+      }
+      .hero--centred .hero__lead {
+        color: var(--p-muted);
+      }
+      .hero--centred h1 {
+        max-width: 12ch;
+      }
+      .brand-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
+        margin-bottom: 0.35rem;
+        font-family: var(--font-display);
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.78rem;
+        color: var(--p-ink);
+      }
+      .brand-chip img {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+      }
+      .ship-close {
+        text-align: center;
+      }
+      .ship-close h2 {
+        font-size: clamp(4.5rem, 18vw, 9rem);
+        line-height: 0.86;
+        letter-spacing: var(--display-tracking-xl);
+        margin: 0;
+        max-width: none;
+      }
+      .ship-close .ship-tag {
+        margin: 0.75rem auto 0;
+        max-width: 28ch;
+        color: var(--p-muted);
+        font-size: var(--t-lead);
+      }
+      .ship-close .btn-row {
+        justify-content: center;
+        margin-top: var(--s-6);
+      }
+      #skills-band {
+        overflow-x: clip;
+      }
+      #skills-band .mo-mq {
+        margin-top: var(--s-5);
+        max-width: 100%;
+      }
+      .install-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--s-3);
+        margin-bottom: var(--s-3);
+      }
+      .inbox {
+        border-right: 1px solid rgb(255 255 255 / 0.07);
+        padding: 10px;
+        display: grid;
+        align-content: start;
+        gap: 2px;
+      }
+      .inbox .q {
+        height: 34px;
+        margin-bottom: 6px;
+        border-radius: 9px;
+        background: rgb(255 255 255 / 0.06);
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        color: #7d8389;
+        font-size: 13px;
+      }
+      .inbox .t {
+        display: grid;
+        grid-template-columns: 30px 1fr auto;
+        gap: 1px 10px;
+        padding: 9px 8px;
+        border-radius: 9px;
+        font-size: 13px;
+      }
+      .inbox .t.is-on {
+        background: rgb(255 255 255 / 0.07);
+      }
+      .inbox .t i {
+        grid-row: 1 / span 2;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font: 600 11px/1 var(--font-mono);
+        font-style: normal;
+        color: #0c0d0f;
+      }
+      .inbox .t b {
+        font-weight: 500;
+        color: #eceef0;
+      }
+      .inbox .t time {
+        color: #7d8389;
+        font-size: 12px;
+      }
+      .inbox .t span {
+        grid-column: 2 / -1;
+        color: #8d9399;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .convo {
+        display: grid;
+        min-width: 0;
+        align-content: start;
+      }
+      .acts {
+        display: flex;
+        gap: 8px;
+      }
+      .acts span {
+        height: 30px;
+        padding: 0 12px;
+        border-radius: 99px;
+        display: inline-flex;
+        align-items: center;
+        font-size: 13px;
+        font-weight: 500;
+        background: #f2f2f0;
+        color: #0c0d0f;
+      }
+      .acts span + span {
+        background: rgb(255 255 255 / 0.08);
+        color: #e9ecee;
+      }
+      .door-stage .panel {
+        --p-h: 160px;
+        margin-top: var(--s-5);
+      }
+      #features .panel {
+        --p-h: auto;
+        min-height: 0;
+      }
+      #features .panel .stage {
+        height: auto;
+        min-height: 0;
+      }
+      #features .panel pre {
+        height: auto !important;
+        overflow: visible !important;
+        white-space: pre-wrap;
+      }
+      #steer .section-head {
+        margin-bottom: var(--s-6);
+      }
+      #steer .card > p {
+        margin-bottom: var(--s-4);
+      }
+      #steer .card > .panel {
+        margin-top: var(--s-2);
+      }
+      #install pre {
+        margin: 0;
+        padding: 1.25rem 1.35rem;
+        border-radius: 12px;
+        background: var(--p-inv-bg);
+        color: var(--p-inv-ink);
+        font: 400 0.92rem/1.55 var(--font-mono);
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+      #install .card {
+        margin-top: var(--s-4);
+      }
+      #install .tabs button {
+        min-height: 44px;
+      }
+      .mo-mq__pause {
+        z-index: 2;
+      }
+      .card {
+        overflow: hidden;
+      }
+      .door-stage .card,
+      #features .card {
+        display: flex;
+        flex-direction: column;
+      }
+      .door-stage .panel,
+      #features .panel {
+        margin-top: auto;
+      }
+      @media (max-width: 639px) {
+        .hero__window .d-win--dark .d-win__body {
+          grid-template-columns: 1fr;
+        }
+        .inbox {
+          display: none;
+        }
+        .hero__window .d-msg--bot small,
+        .hero__window .d-tool {
+          display: none;
+        }
+        #features .panel {
+          --p-h: auto;
+        }
+      }
+
+      .t-stat {
+        font: var(--display-weight) clamp(2.4rem, 6vw, 4.2rem)/1 var(--font-display);
+        letter-spacing: var(--display-tracking);
+        margin: 0;
+      }
+      .proof-grid {
+        align-items: end;
+      }
+      .proof-grid .card {
+        min-height: 180px;
+      }
+      .glow-card {
+        --gx: 50%;
+        --gy: 40%;
+        position: relative;
+      }
+      .glow-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: radial-gradient(420px circle at var(--gx) var(--gy), rgba(61, 180, 255, 0.18), transparent 55%);
+        opacity: 0;
+        transition: opacity 180ms ease;
+        z-index: 0;
+      }
+      .glow-card:hover::before { opacity: 1; }
+      .glow-card > * { position: relative; z-index: 1; }
+      .flow-stage {
+        perspective: 1400px;
+        min-height: 420px;
+        border-radius: 18px;
+        border: 1px solid rgba(61, 180, 255, 0.22);
+        background:
+          radial-gradient(ellipse 70% 50% at 50% 0%, rgba(61, 180, 255, 0.16), transparent 60%),
+          linear-gradient(180deg, #07101c, #010308);
+        overflow: hidden;
+        touch-action: pan-y;
+      }
+      .flow-scene {
+        position: relative;
+        height: 420px;
+        transform-style: preserve-3d;
+        transform: rotateX(8deg) rotateY(0deg);
+        transition: transform 80ms linear;
+        will-change: transform;
+      }
+      .flow-node {
+        position: absolute;
+        width: min(240px, 42%);
+        padding: 1rem 1.1rem;
+        border-radius: 14px;
+        border: 1px solid rgba(61, 180, 255, 0.28);
+        background: rgba(7, 16, 28, 0.92);
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 180, 60, 0.06);
+        transform-style: preserve-3d;
+        backdrop-filter: blur(8px);
+      }
+      .flow-node b {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        color: var(--p-accent);
+        margin-bottom: 0.35rem;
+      }
+      .flow-node strong {
+        display: block;
+        font-family: var(--font-display);
+        font-size: 1.15rem;
+        margin-bottom: 0.35rem;
+      }
+      .flow-node span {
+        color: var(--p-muted);
+        font-size: 0.9rem;
+        line-height: 1.45;
+      }
+      .flow-node--release { left: 8%; top: 14%; transform: translateZ(80px); }
+      .flow-node--spec { left: 36%; top: 36%; transform: translateZ(140px); }
+      .flow-node--ticket { left: 58%; top: 58%; transform: translateZ(200px); }
+      .flow-node--main { left: 74%; top: 12%; transform: translateZ(40px); width: min(200px, 34%); }
+      .flow-beam {
+        position: absolute;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #3db4ff, #ffb43c, transparent);
+        transform-origin: left center;
+        opacity: 0.75;
+        animation: beam-pulse 2.8s ease-in-out infinite;
+      }
+      .flow-beam--1 { left: 22%; top: 28%; width: 22%; transform: rotate(28deg) translateZ(90px); }
+      .flow-beam--2 { left: 48%; top: 52%; width: 18%; transform: rotate(32deg) translateZ(160px); animation-delay: 0.4s; }
+      .flow-beam--3 { left: 78%; top: 28%; width: 10%; transform: rotate(-40deg) translateZ(60px); animation-delay: 0.8s; }
+      @keyframes beam-pulse {
+        0%, 100% { filter: brightness(0.8); opacity: 0.45; }
+        50% { filter: brightness(1.4); opacity: 1; }
+      }
+      .flow-hint {
+        position: absolute;
+        left: 1rem;
+        bottom: 1rem;
+        z-index: 2;
+        font-size: 0.8rem;
+        color: var(--p-muted);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .compare {
+        --split: 40%;
+        position: relative;
+        display: block;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid rgba(61, 180, 255, 0.22);
+        min-height: 380px;
+        height: clamp(360px, 52vh, 480px);
+        background: #010308;
+        isolation: isolate;
+        touch-action: none;
+        cursor: ew-resize;
+      }
+      .compare__pane {
+        position: absolute;
+        inset: 0;
+        padding: 1.5rem 1.6rem 1.7rem;
+        overflow: hidden;
+      }
+      .compare__pane h3 {
+        margin: 0 0 0.75rem;
+        font-family: var(--font-display);
+        font-size: 1.35rem;
+      }
+      .compare__pane ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 0.55rem;
+        max-width: 34ch;
+      }
+      .compare__pane li {
+        display: grid;
+        grid-template-columns: 1.1rem 1fr;
+        gap: 0.55rem;
+        color: var(--p-muted);
+        font-size: 0.92rem;
+        line-height: 1.45;
+      }
+      .compare__pane li::before {
+        content: "";
+        width: 0.55rem;
+        height: 0.55rem;
+        margin-top: 0.4rem;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      .compare__pane .cli {
+        margin-top: 1.1rem;
+        max-width: 36ch;
+      }
+      .compare__before {
+        z-index: 1;
+        background:
+          radial-gradient(ellipse 80% 60% at 15% 15%, rgba(255, 80, 80, 0.14), transparent 55%),
+          #12080a;
+        color: #f7c7c7;
+      }
+      .compare__before h3 { color: #ffb0b0; }
+      .compare__before li::before { background: #ff6b6b; }
+      .compare__after {
+        z-index: 2;
+        background:
+          radial-gradient(ellipse 80% 60% at 85% 15%, rgba(61, 180, 255, 0.18), transparent 55%),
+          #07101c;
+        clip-path: inset(0 0 0 var(--split));
+        padding-left: max(1.6rem, calc(var(--split) + 1.2rem));
+      }
+      .compare__after h3 { color: #9ad0ff; }
+      .compare__after li::before { background: #3db4ff; }
+      .compare__warp {
+        position: absolute;
+        top: -8%;
+        bottom: -8%;
+        left: calc(var(--split) - 28px);
+        width: 56px;
+        z-index: 4;
+        pointer-events: auto;
+        cursor: ew-resize;
+        filter: drop-shadow(0 0 18px rgba(61, 180, 255, 0.45));
+      }
+      .compare__warp svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .compare__hint {
+        position: absolute;
+        left: 1rem;
+        bottom: 0.85rem;
+        z-index: 5;
+        margin: 0;
+        font-size: 0.72rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: rgba(233, 236, 238, 0.55);
+        pointer-events: none;
+      }
+      .orch-stage {
+        position: relative;
+        min-height: 380px;
+        border-radius: 18px;
+        border: 1px solid rgba(61, 180, 255, 0.22);
+        background:
+          radial-gradient(ellipse 60% 50% at 50% 40%, rgba(61, 180, 255, 0.12), transparent 65%),
+          #07101c;
+        overflow: hidden;
+        perspective: 1200px;
+      }
+      .orch-scene {
+        position: relative;
+        height: 380px;
+        transform-style: preserve-3d;
+        transform: rotateX(10deg);
+        transition: transform 90ms linear;
+      }
+      .orch-hub, .orch-agent {
+        position: absolute;
+        border-radius: 14px;
+        border: 1px solid rgba(61, 180, 255, 0.3);
+        background: rgba(1, 3, 8, 0.9);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+        padding: 0.85rem 1rem;
+        transform-style: preserve-3d;
+      }
+      .orch-hub {
+        left: 50%;
+        top: 42%;
+        width: min(220px, 48%);
+        transform: translate(-50%, -50%) translateZ(120px);
+        text-align: center;
+      }
+      .orch-hub strong {
+        display: block;
+        font-family: var(--font-display);
+        font-size: 1.15rem;
+        margin-top: 0.2rem;
+      }
+      .orch-hub b {
+        color: #3db4ff;
+        font: 500 0.78rem/1 var(--font-mono);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .orch-agent {
+        width: min(168px, 38%);
+        font-size: 0.88rem;
+      }
+      .orch-agent b {
+        display: block;
+        color: #9ad0ff;
+        font: 500 0.75rem/1.2 var(--font-mono);
+        margin-bottom: 0.25rem;
+      }
+      .orch-agent--1 { left: 8%; top: 16%; transform: translateZ(40px) rotateY(12deg); }
+      .orch-agent--2 { right: 8%; top: 18%; transform: translateZ(60px) rotateY(-10deg); }
+      .orch-agent--3 { left: 12%; bottom: 14%; transform: translateZ(80px) rotateY(8deg); }
+      .orch-agent--4 { right: 10%; bottom: 16%; transform: translateZ(100px) rotateY(-8deg); }
+      .orch-link {
+        position: absolute;
+        left: 50%;
+        top: 42%;
+        width: 2px;
+        height: 110px;
+        background: linear-gradient(180deg, #3db4ff, transparent);
+        transform-origin: top center;
+        opacity: 0.65;
+        animation: link-pulse 2.4s ease-in-out infinite;
+      }
+      .orch-link--1 { transform: translate(-50%, 0) rotate(-48deg) translateZ(70px); }
+      .orch-link--2 { transform: translate(-50%, 0) rotate(46deg) translateZ(70px); animation-delay: .3s; }
+      .orch-link--3 { transform: translate(-50%, 0) rotate(-128deg) translateZ(70px); animation-delay: .6s; }
+      .orch-link--4 { transform: translate(-50%, 0) rotate(130deg) translateZ(70px); animation-delay: .9s; }
+      @keyframes link-pulse {
+        0%, 100% { opacity: 0.35; filter: brightness(0.8); }
+        50% { opacity: 1; filter: brightness(1.35); }
+      }
+      .prompt-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.85rem;
+      }
+      .prompt-card {
+        border-radius: 14px;
+        border: 1px solid rgba(61, 180, 255, 0.2);
+        background: rgba(7, 16, 28, 0.92);
+        padding: 1rem 1.05rem;
+      }
+      .prompt-card h3 {
+        margin: 0 0 0.35rem;
+        font-size: 1.05rem;
+      }
+      .prompt-card p {
+        margin: 0;
+        color: var(--p-muted);
+        font-size: 0.9rem;
+      }
+      @media (max-width: 900px) {
+        .compare { height: 420px; }
+        .compare__pane { padding: 1.2rem; }
+        .compare__after { padding-left: max(1.2rem, calc(var(--split) + 0.9rem)); }
+        .prompt-grid { grid-template-columns: 1fr; }
+        .orch-agent { width: min(150px, 42%); font-size: 0.8rem; }
+        .herdr-stage { grid-template-columns: 1fr; }
+        .door-walk { grid-template-columns: 1fr; }
+        .cycle-rail { grid-template-columns: 1fr; }
+        .changelog-live { grid-template-columns: 1fr; }
+        .cycle-step::after { display: none; }
+      }
+      @media (max-width: 639px) {
+        .hero--centred h1 { max-width: 10ch; font-size: clamp(2.2rem, 12vw, 3.2rem); }
+        .hero__window { min-height: 320px; }
+        .flow-stage, .flow-scene, .orch-stage, .orch-scene { min-height: 320px; height: 320px; }
+        .ship-close h2 { font-size: clamp(3.4rem, 22vw, 5.5rem); }
+        .prompt-grid { grid-template-columns: 1fr; }
+        .cli { font-size: 0.78rem; }
+        .compare { height: 460px; }
+      }
+      .herdr-stage {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.2fr);
+        gap: 10px;
+        padding: 12px;
+        min-height: 420px;
+        position: relative;
+        z-index: 1;
+      }
+      .herdr-pane {
+        border-radius: 12px;
+        border: 1px solid rgba(61, 180, 255, 0.22);
+        background: rgba(1, 3, 8, 0.88);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+      }
+      .herdr-pane__bar {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.45rem 0.65rem;
+        font: 600 0.72rem/1 var(--font-mono);
+        color: var(--p-muted);
+        border-bottom: 1px solid rgba(61, 180, 255, 0.14);
+        background: rgba(18, 32, 51, 0.7);
+      }
+      .herdr-pane__bar b { color: var(--p-ink); font-weight: 700; }
+      .herdr-pane__bar .dot {
+        width: 7px; height: 7px; border-radius: 50%;
+        background: #3db4ff;
+        box-shadow: 0 0 10px rgba(61, 180, 255, 0.8);
+      }
+      .herdr-pane__bar .dot--warn { background: #ffb43c; box-shadow: 0 0 10px rgba(255, 180, 60, 0.7); }
+      .herdr-pane__bar .dot--ok { background: #9fd3b5; box-shadow: 0 0 10px rgba(159, 211, 181, 0.7); }
+      .herdr-pane__body {
+        padding: 0.65rem 0.75rem;
+        font: 500 0.78rem/1.45 var(--font-mono);
+        color: #c8d0d8;
+        flex: 1;
+        display: grid;
+        gap: 0.45rem;
+        align-content: start;
+      }
+      .herdr-pane__body .ask {
+        color: #ffb43c;
+        border-left: 2px solid rgba(255, 180, 60, 0.55);
+        padding-left: 0.45rem;
+      }
+      .herdr-pane__body .reply {
+        color: #9ad0ff;
+        border-left: 2px solid rgba(61, 180, 255, 0.55);
+        padding-left: 0.45rem;
+      }
+      .herdr-pane--parent {
+        border-color: rgba(61, 180, 255, 0.4);
+        box-shadow: inset 0 0 40px rgba(61, 180, 255, 0.08);
+      }
+      .herdr-kids {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        min-height: 0;
+      }
+      .herdr-pane--kid { animation: herdr-pop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+      .herdr-pane--kid:nth-child(1) { animation-delay: 0.15s; }
+      .herdr-pane--kid:nth-child(2) { animation-delay: 0.35s; }
+      .herdr-pane--kid:nth-child(3) { animation-delay: 0.55s; }
+      .herdr-pane--kid:nth-child(4) { animation-delay: 0.75s; }
+      @keyframes herdr-pop {
+        from { opacity: 0; transform: translateY(12px) scale(0.96); }
+        to { opacity: 1; transform: none; }
+      }
+      .herdr-pulse {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #9ad0ff;
+      }
+      .herdr-pulse i {
+        width: 6px; height: 6px; border-radius: 50%;
+        background: #3db4ff;
+        animation: herdr-blink 1.2s ease-in-out infinite;
+      }
+      @keyframes herdr-blink {
+        0%, 100% { opacity: 0.35; }
+        50% { opacity: 1; }
+      }
+      [data-herdr-beat] .herdr-beat { opacity: 0.35; transition: opacity 0.35s ease; }
+      [data-herdr-beat].beat-0 .b0,
+      [data-herdr-beat].beat-1 .b1,
+      [data-herdr-beat].beat-2 .b2,
+      [data-herdr-beat].beat-3 .b3 { opacity: 1; }
+      .door-walk {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.9rem;
+        margin-top: var(--s-5);
+      }
+      .door-card {
+        border-radius: 16px;
+        border: 1px solid rgba(61, 180, 255, 0.22);
+        background: linear-gradient(165deg, rgba(18, 32, 51, 0.95), rgba(1, 3, 8, 0.98));
+        padding: 1.05rem 1.1rem 1.15rem;
+        display: grid;
+        gap: 0.7rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .door-card::before {
+        content: "";
+        position: absolute;
+        inset: auto -20% -40% -20%;
+        height: 55%;
+        background: radial-gradient(ellipse at 50% 0%, rgba(61, 180, 255, 0.16), transparent 70%);
+        pointer-events: none;
+      }
+      .door-card h3 { margin: 0; font-size: 1.15rem; position: relative; }
+      .door-card > p { margin: 0; color: var(--p-muted); font-size: 0.9rem; position: relative; }
+      .door-viz {
+        position: relative;
+        border-radius: 12px;
+        border: 1px solid rgba(61, 180, 255, 0.18);
+        background: #010308;
+        min-height: 168px;
+        padding: 0.75rem;
+        display: grid;
+        gap: 0.45rem;
+        align-content: start;
+      }
+      .door-viz .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.35rem 0.55rem;
+        border-radius: 8px;
+        background: #122033;
+        font: 600 0.72rem/1.2 var(--font-mono);
+        color: #c8d0d8;
+        width: fit-content;
+        animation: door-rise 0.55s ease both;
+      }
+      .door-viz .chip:nth-child(2) { animation-delay: 0.15s; }
+      .door-viz .chip:nth-child(3) { animation-delay: 0.3s; }
+      .door-viz .chip:nth-child(4) { animation-delay: 0.45s; }
+      .door-viz .chip--you {
+        background: rgba(61, 180, 255, 0.18);
+        color: #9ad0ff;
+        border: 1px solid rgba(61, 180, 255, 0.35);
+      }
+      .door-viz .chip--land {
+        background: rgba(159, 211, 181, 0.14);
+        color: #9fd3b5;
+      }
+      .door-viz .arrow {
+        color: rgba(154, 208, 255, 0.55);
+        font: 600 0.7rem/1 var(--font-mono);
+        padding-left: 0.35rem;
+      }
+      @keyframes door-rise {
+        from { opacity: 0; transform: translateX(-8px); }
+        to { opacity: 1; transform: none; }
+      }
+      .door-steps {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 0.4rem;
+        position: relative;
+      }
+      .door-steps li {
+        display: grid;
+        grid-template-columns: 1.4rem 1fr;
+        gap: 0.4rem;
+        font-size: 0.82rem;
+        color: var(--p-muted);
+      }
+      .door-steps li span {
+        font: 700 0.72rem/1.4 var(--font-mono);
+        color: #3db4ff;
+      }
+      .cycle-hero {
+        border-radius: 20px;
+        border: 1px solid rgba(61, 180, 255, 0.28);
+        background:
+          radial-gradient(ellipse 70% 60% at 20% 10%, rgba(61, 180, 255, 0.16), transparent 55%),
+          radial-gradient(ellipse 50% 50% at 90% 80%, rgba(159, 211, 181, 0.1), transparent 60%),
+          #07101c;
+        padding: clamp(1.4rem, 3vw, 2.2rem);
+        overflow: hidden;
+      }
+      .cycle-hero h2 {
+        margin: 0 0 0.55rem;
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        max-width: 18ch;
+      }
+      .cycle-hero > p {
+        margin: 0 0 1.4rem;
+        max-width: 52ch;
+        color: var(--p-muted);
+      }
+      .cycle-rail {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+      }
+      .cycle-step {
+        border-radius: 12px;
+        border: 1px solid rgba(61, 180, 255, 0.2);
+        background: rgba(1, 3, 8, 0.72);
+        padding: 0.85rem 0.9rem;
+        position: relative;
+      }
+      .cycle-step::after {
+        content: "";
+        position: absolute;
+        top: 1.15rem;
+        right: -0.55rem;
+        width: 0.45rem;
+        height: 0.45rem;
+        border-top: 2px solid rgba(61, 180, 255, 0.45);
+        border-right: 2px solid rgba(61, 180, 255, 0.45);
+        transform: rotate(45deg);
+        z-index: 1;
+      }
+      .cycle-step:last-child::after { display: none; }
+      .cycle-step b {
+        display: block;
+        font: 700 0.72rem/1 var(--font-mono);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #3db4ff;
+        margin-bottom: 0.4rem;
+      }
+      .cycle-step strong {
+        display: block;
+        font-family: var(--font-display);
+        font-size: 1.05rem;
+        margin-bottom: 0.3rem;
+      }
+      .cycle-step span {
+        color: var(--p-muted);
+        font-size: 0.82rem;
+        line-height: 1.4;
+      }
+      .changelog-live {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+        gap: 0.9rem;
+        align-items: stretch;
+      }
+      .changelog-card {
+        border-radius: 14px;
+        border: 1px solid rgba(61, 180, 255, 0.2);
+        background: #010308;
+        padding: 0.9rem 1rem;
+        font: 500 0.8rem/1.45 var(--font-mono);
+      }
+      .changelog-card h3 {
+        margin: 0 0 0.65rem;
+        font: 700 0.75rem/1 var(--font-mono);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #9ad0ff;
+      }
+      .changelog-card .entry {
+        display: grid;
+        gap: 0.15rem;
+        padding: 0.55rem 0;
+        border-top: 1px solid rgba(61, 180, 255, 0.12);
+        animation: door-rise 0.5s ease both;
+      }
+      .changelog-card .entry:nth-child(2) { animation-delay: 0.1s; }
+      .changelog-card .entry:nth-child(3) { animation-delay: 0.22s; }
+      .changelog-card .entry:nth-child(4) { animation-delay: 0.34s; }
+      .changelog-card .entry em {
+        font-style: normal;
+        color: #9fd3b5;
+        font-size: 0.72rem;
+      }
+      .changelog-card .entry strong { color: var(--p-ink); font-weight: 700; }
+      .walk {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: var(--s-6);
+        align-items: stretch;
+      }
+      .walk__steps {
+        display: grid;
+        gap: 0.55rem;
+        align-content: start;
+      }
+      .walk__steps button {
+        text-align: left;
+        border: 1px solid rgba(61, 180, 255, 0.18);
+        background: rgba(7, 16, 28, 0.8);
+        color: var(--p-ink);
+        border-radius: 12px;
+        padding: 0.9rem 1rem;
+        cursor: pointer;
+        transition: border-color 160ms ease, transform 160ms ease, background 160ms ease;
+      }
+      .walk__steps button:hover {
+        border-color: rgba(61, 180, 255, 0.45);
+        transform: translateX(4px);
+      }
+      .walk__steps button.is-on {
+        border-color: #3db4ff;
+        background: rgba(61, 180, 255, 0.12);
+        box-shadow: inset 3px 0 0 #3db4ff;
+      }
+      .walk__steps button small {
+        display: block;
+        margin-top: 0.25rem;
+        color: var(--p-muted);
+        font-size: 0.85rem;
+      }
+      .walk__stage {
+        position: relative;
+        border-radius: 18px;
+        border: 1px solid rgba(61, 180, 255, 0.22);
+        background: #07101c;
+        min-height: 340px;
+        overflow: hidden;
+      }
+      .walk__pane {
+        position: absolute;
+        inset: 0;
+        padding: 1.25rem 1.35rem;
+        opacity: 0;
+        transform: translateY(12px) scale(0.985);
+        transition: opacity 280ms ease, transform 320ms cubic-bezier(.16,1,.3,1);
+        pointer-events: none;
+      }
+      .walk__pane.is-on {
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+        position: relative;
+      }
+      .walk__pane[hidden] {
+        display: block !important;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      .walk__pane pre {
+        margin: 0.85rem 0 0;
+        padding: 1rem;
+        border-radius: 12px;
+        background: #010308;
+        color: #e9ecee;
+        font: 500 0.85rem/1.5 var(--font-mono);
+        white-space: pre-wrap;
+      }
+      .walk__pulse {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        font-size: 0.8rem;
+        color: #9ad0ff;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .walk__pulse i {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #3db4ff;
+        box-shadow: 0 0 0 0 rgba(61, 180, 255, 0.7);
+        animation: ping 1.6s ease-out infinite;
+      }
+      @keyframes ping {
+        0% { box-shadow: 0 0 0 0 rgba(61, 180, 255, 0.55); }
+        70% { box-shadow: 0 0 0 12px rgba(61, 180, 255, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(61, 180, 255, 0); }
+      }
+      .hero__window.mo-cs {
+        --mo-light: rgba(61, 180, 255, 0.2);
+      }
+      @media (max-width: 900px) {
+        .walk { grid-template-columns: 1fr; }
+        .flow-node--main { display: none; }
+        .flow-beam--3 { display: none; }
+      }
+      @media (max-width: 639px) {
+        .flow-stage, .flow-scene { min-height: 360px; height: 360px; }
+        .flow-node { width: min(200px, 56%); }
+        .flow-node--release { left: 6%; top: 10%; }
+        .flow-node--spec { left: 28%; top: 38%; }
+        .flow-node--ticket { left: 48%; top: 62%; }
+        .compare { min-height: 420px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .flow-beam, .walk__pulse i { animation: none; }
+        .flow-scene { transition: none; }
+      }
+
+      .star-btn {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        min-height: 44px;
+        padding: 0 1rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 180, 60, 0.55);
+        background: linear-gradient(180deg, rgba(255, 180, 60, 0.22), rgba(255, 180, 60, 0.08));
+        color: #f7f4ec;
+        font: 600 0.88rem/1 var(--font-text);
+        text-decoration: none;
+        overflow: hidden;
+        isolation: isolate;
+        animation: star-pulse 2.4s ease-in-out infinite;
+        box-shadow: 0 0 0 0 rgba(255, 180, 60, 0.35);
+        white-space: nowrap;
+      }
+      .star-btn svg {
+        width: 16px;
+        height: 16px;
+        fill: #ffb43c;
+        flex: 0 0 auto;
+        animation: star-spin 5s linear infinite;
+      }
+      .star-btn::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.28) 48%, transparent 62%);
+        transform: translateX(-120%);
+        animation: star-sheen 3.2s ease-in-out infinite;
+        z-index: -1;
+      }
+      .star-btn:hover {
+        border-color: #ffb43c;
+        transform: translateY(-1px);
+      }
+      @keyframes star-pulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(255, 180, 60, 0.28); }
+        50% { box-shadow: 0 0 0 10px rgba(255, 180, 60, 0); }
+      }
+      @keyframes star-sheen {
+        0%, 55% { transform: translateX(-120%); }
+        100% { transform: translateX(120%); }
+      }
+      @keyframes star-spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .star-btn, .star-btn svg, .star-btn::after { animation: none; }
+      }
+    </style>
+    <script>
+      document.documentElement.classList.add("m-enter");
+      setTimeout(() => document.documentElement.classList.add("m-enter-done"), 700);
+    </script>
+    <script>
+      document.documentElement.classList.add("mo-js");
+      setTimeout(() => document.documentElement.classList.add("mo-safe"), 2500);
+    </script>
+    <script src="assets/backgrounds/backgrounds.js"></script>
+    <link rel="modulepreload" href="assets/moments/moments.js" />
+    <link rel="modulepreload" href="assets/moments/lib.js" />
+    <link rel="modulepreload" href="assets/moments/marquee-row/moment.js" />
+    <link rel="modulepreload" href="assets/moments/cursor-spotlight/moment.js" />
+    <link rel="modulepreload" href="assets/moments/headline-arrives/moment.js" />
+    <link rel="modulepreload" href="assets/moments/counter-rolls/moment.js" />
   </head>
   <body>
-    <div class="sky" aria-hidden="true">
-      <canvas data-rift></canvas>
-      <div class="sky-veil"></div>
+    <div class="depth" aria-hidden="true">
+      <div class="depth__grid"></div>
+      <div class="depth__orb depth__orb--a"></div>
+      <div class="depth__orb depth__orb--b"></div>
+      <div class="depth__orb depth__orb--c"></div>
+      <div class="depth__veil"></div>
     </div>
-
-    <header class="site-header">
-      <a class="brand" href="./index.html">
-        <img class="mark" src="%BASE_URL%favicon.svg" alt="" />
-        Yami
-      </a>
-      <nav class="nav">
-        <a href="#lineage">Lineage</a>
-        <a href="#authority">Authority</a>
-        <a href="#steer">Steer</a>
-        <a href="#install">Install</a>
-        <a href="./skills.html">Skills</a>
-        <a href="https://github.com/ahmed-zhran/z-yami-coding-skills">GitHub</a>
-      </nav>
+    <header class="nav">
+      <div class="wrap nav__bar">
+        <a class="skip-link" href="#top">Skip to content</a>
+        <a class="nav__logo" href="#top">
+          <img class="mark" src="favicon.svg" width="40" height="40" alt="" />
+          Yami
+        </a>
+        <nav class="nav__links" aria-label="Main">
+          <div class="nav__item"><a class="nav__link" href="#orch">Orchestration</a></div>
+          <div class="nav__item"><a class="nav__link" href="#flow">Branch lineage</a></div>
+          <div class="nav__item"><a class="nav__link" href="#authority">Doors</a></div>
+          <div class="nav__item"><a class="nav__link" href="#cycle">Changelog cycle</a></div>
+          <div class="nav__item"><a class="nav__link" href="#install">Install</a></div>
+          <div class="nav__item"><a class="nav__link" href="#install">Install</a></div>
+          <div class="nav__item"><a class="nav__link" href="./skills.html">Skills</a></div>
+          <div class="nav__item"><a class="nav__link" href="./contributing.html">Contributing</a></div>
+        </nav>
+        <div class="nav__actions">
+          <a
+            class="star-btn"
+            href="https://github.com/ahmed-zhran/z-yami-coding-skills"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M8 1.5l1.76 3.57 3.94.57-2.85 2.78.67 3.92L8 10.96l-3.52 1.85.67-3.92L2.3 5.64l3.94-.57L8 1.5z" />
+            </svg>
+            Star us on GitHub
+          </a>
+          <a class="btn btn--primary" href="#install">Install the plugin</a>
+        </div>
+        <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Menu">
+          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+            <path d="M2 5h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
     </header>
 
-    <main>
-      <section class="hero">
-        <div class="hero-copy">
-          <p class="brand-mark">
-            <img class="brand-mark-logo" src="%BASE_URL%favicon.svg" alt="" width="52" height="52" />
-            Yami Coding
-          </p>
-          <h1>Ship in the dark.</h1>
-          <p class="lede">
-            Sixty-one agent skills that cut work from a recorded base and land it back there.
-            You approve the door you typed. The session steers everything below.
-          </p>
-          <div class="hero-actions">
-            <a class="button solid" href="#install">Install</a>
-            <a class="button" href="./skills.html">Browse skills</a>
+    <main id="top">
+      <section class="hero hero--centred" data-enter aria-labelledby="hero-h">
+        <div class="wrap">
+          <div class="hero-text">
+            <div
+              class="hero__c"
+              data-moment="headline-arrives"
+              data-moment-opts='{"unit":"words"}'
+            >
+              <p class="brand-chip">
+                <img src="favicon.svg" width="44" height="44" alt="" />
+                Yami Coding
+              </p>
+              <h1 id="hero-h">Ship in the dark.</h1>
+              <p class="hero__lead">
+                AI orchestration for shipping software: one parent session steers child agents across
+                recorded bases. You type a ship door. Yami lands everything under it.
+              </p>
+              <div class="btn-row">
+                <a class="btn btn--primary" href="#install">Install the plugin</a>
+                <a class="btn btn--secondary" href="#orch">See orchestration</a>
+              </div>
+              <pre class="cli" aria-label="Example prompt"><b>$</b> /ship-release
+<em>→</em> open child panes · steer allowlists · land tickets · you approve release</pre>
+            </div>
+            <div
+              class="hero__window"
+              data-moment="cursor-spotlight"
+              data-moment-opts='{"rest":[0.72,0.28],"radius":460}'
+              data-herdr-beat
+              role="img"
+              aria-label="Herdr grid: parent ship-release session with child panes asking and parent steering without human intervention"
+            >
+              <div class="hero__fx" data-fx="grain-gradient" data-fx-seed="11" aria-hidden="true"></div>
+              <div class="herdr-stage" aria-hidden="true">
+                <div class="herdr-pane herdr-pane--parent">
+                  <div class="herdr-pane__bar">
+                    <span class="dot"></span>
+                    <b>parent</b>
+                    <span>/ship-release · release/1</span>
+                    <span class="sp"></span>
+                    <span class="herdr-pulse"><i></i> steering</span>
+                  </div>
+                  <div class="herdr-pane__body">
+                    <div class="line herdr-beat b0">Opened child tab · 2×2 grid packing</div>
+                    <div class="reply herdr-beat b1">ticket-10 asks: allowlist?</div>
+                    <div class="line herdr-beat b1">→ run-once y · cleared</div>
+                    <div class="reply herdr-beat b2">ticket-9 asks: CI green, land?</div>
+                    <div class="line herdr-beat b2">→ land into spec/42 · close pane</div>
+                    <div class="reply herdr-beat b3">ticket-11 asks: base?</div>
+                    <div class="line herdr-beat b3">→ recorded base release/1 · continue</div>
+                    <div class="line herdr-beat b0 b1 b2 b3" style="margin-top:0.35rem;color:#9fd3b5">
+                      No human in the loop until the release PR
+                    </div>
+                  </div>
+                </div>
+                <div class="herdr-kids">
+                  <div class="herdr-pane herdr-pane--kid">
+                    <div class="herdr-pane__bar">
+                      <span class="dot dot--warn"></span>
+                      <b>ticket-10</b>
+                      <span>working</span>
+                    </div>
+                    <div class="herdr-pane__body">
+                      <div class="ask herdr-beat b1">→ parent: Run this command?</div>
+                      <div class="line herdr-beat b1">npm test</div>
+                      <div class="line herdr-beat b2">cleared · tests running</div>
+                    </div>
+                  </div>
+                  <div class="herdr-pane herdr-pane--kid">
+                    <div class="herdr-pane__bar">
+                      <span class="dot dot--ok"></span>
+                      <b>ticket-9</b>
+                      <span>CI green</span>
+                    </div>
+                    <div class="herdr-pane__body">
+                      <div class="ask herdr-beat b2">→ parent: land me?</div>
+                      <div class="line herdr-beat b2">PR #88 ready</div>
+                      <div class="line herdr-beat b3">landed · pane closing</div>
+                    </div>
+                  </div>
+                  <div class="herdr-pane herdr-pane--kid">
+                    <div class="herdr-pane__bar">
+                      <span class="dot"></span>
+                      <b>ticket-11</b>
+                      <span>boot</span>
+                    </div>
+                    <div class="herdr-pane__body">
+                      <div class="ask herdr-beat b3">→ parent: which base?</div>
+                      <div class="line herdr-beat b3">got release/1 · cloning worktree</div>
+                    </div>
+                  </div>
+                  <div class="herdr-pane herdr-pane--kid">
+                    <div class="herdr-pane__bar">
+                      <span class="dot"></span>
+                      <b>ticket-12</b>
+                      <span>queued</span>
+                    </div>
+                    <div class="herdr-pane__body">
+                      <div class="line herdr-beat b0">waiting for grid slot</div>
+                      <div class="line herdr-beat b1">parent: start when 9 closes</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="hero-scroll" aria-hidden="true">
-          <span></span>
-          Scroll
         </div>
       </section>
 
-      <div class="wrap">
-        <section class="section" id="lineage">
-          <p class="kicker">Branch lineage</p>
-          <h2>Every issue already knows where it lands</h2>
-          <p class="lede">
-            The base is written on the issue before any branch is cut. The checkout you happen to have open is never the destination.
-          </p>
-          <ol class="lineage">
-            <li class="reveal">
-              <span class="lineage-level">01</span>
-              <div>
-                <strong>Release</strong>
-                <code>release/&lt;N&gt;</code>
-                <p>Cut from <code>main</code>. Holds every feature of the cycle. The version tag lands on the merge into <code>main</code>.</p>
+      
+      
+      <section class="section" id="orch" aria-labelledby="orch-h">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id="orch-h">Orchestration, not a pile of chats.</h2>
+            <p>
+              Hot topic, concrete shape: a parent agent owns the release. Child agents run tickets in
+              parallel. The parent reads every screen, clears blockers, and lands only what the door
+              allows. You stay at the door you typed.
+            </p>
+          </div>
+          <div class="orch-stage" data-orch-stage>
+            <div class="orch-scene" data-orch-scene aria-hidden="true">
+              <i class="orch-link orch-link--1"></i>
+              <i class="orch-link orch-link--2"></i>
+              <i class="orch-link orch-link--3"></i>
+              <i class="orch-link orch-link--4"></i>
+              <div class="orch-hub">
+                <b>Parent</b>
+                <strong>ship-release</strong>
+                <span style="display:block;margin-top:0.4rem;color:var(--p-muted);font-size:0.85rem"
+                  >Steers · lands · reports</span
+                >
               </div>
-            </li>
-            <li class="reveal">
-              <span class="lineage-level">02</span>
-              <div>
-                <strong>Spec</strong>
-                <code>spec/&lt;issue&gt;</code>
-                <p>One feature, one branch. Lands into the open release. Git cannot nest branch names, so the level lives in the name and the parent lives in the base.</p>
+              <div class="orch-agent orch-agent--1">
+                <b>ticket/42-cli</b>
+                Build the tracer path
               </div>
-            </li>
-            <li class="reveal">
-              <span class="lineage-level">03</span>
-              <div>
-                <strong>Ticket</strong>
-                <code>ticket/&lt;issue&gt;-&lt;slug&gt;</code>
-                <p>A tracer path through the stack. Lands into its spec. A bug lands into the open release, a hotfix from the production tag, or <code>main</code>.</p>
+              <div class="orch-agent orch-agent--2">
+                <b>ticket/42-docs</b>
+                Write the docs page
               </div>
-            </li>
-          </ol>
-        </section>
-
-        <section class="section" id="authority">
-          <p class="kicker">Ship doors</p>
-          <h2>The door you type owns the land gate</h2>
-          <p class="lede">
-            Higher doors land everything beneath them. You only approve the level you invoked.
-          </p>
-          <div class="authority">
-            <div class="stop-list" role="tablist" aria-label="Ship doors">
-              <button class="is-on" type="button" data-stop="ticket" aria-selected="true">/ship-ticket</button>
-              <button type="button" data-stop="spec" aria-selected="false">/ship-spec</button>
-              <button type="button" data-stop="release" aria-selected="false">/ship-release</button>
-              <button type="button" data-stop="gate" aria-selected="false">After the tag</button>
-            </div>
-            <div class="stop-stage">
-              <article class="stop-card" data-stop-panel="ticket">
-                <p class="kicker">Ticket door</p>
-                <h3>You approve the ticket merge</h3>
-                <p>
-                  One issue, one worktree, one pull request into the recorded base.
-                  Review runs before the PR opens. Landing waits on you, unless the branch policy says <code>review: auto</code> and CI is green.
-                </p>
-                <p class="mono">You · ticket PR → base</p>
-              </article>
-              <article class="stop-card" data-stop-panel="spec" hidden>
-                <p class="kicker">Spec door</p>
-                <h3>The session lands every ticket</h3>
-                <p>
-                  Ready tickets run in their own Herdr sessions. The parent steers them, waits for green CI, and merges each ticket into <code>spec/&lt;issue&gt;</code>.
-                  You approve only the spec pull request into the release.
-                </p>
-                <p class="mono">Session · tickets · You · spec PR → release</p>
-              </article>
-              <article class="stop-card" data-stop-panel="release" hidden>
-                <p class="kicker">Release door</p>
-                <h3>The session lands tickets and specs</h3>
-                <p>
-                  Features ship one after another. Each spec's tickets and the spec itself merge under release authority.
-                  Tests, code review, and security review run before the release pull request. You approve only that PR into <code>main</code>. Then the tag.
-                </p>
-                <p class="mono">Session · tickets + specs · You · release PR → main</p>
-              </article>
-              <article class="stop-card" data-stop-panel="gate" hidden>
-                <p class="kicker">The gate</p>
-                <h3>The next release waits on open boxes</h3>
-                <p>
-                  <code>docs/agents/pending-release.md</code> lands on <code>main</code> with every box open: retro, reflect, learnings, debt, ADRs, architecture, risk, open decisions, and a skills update.
-                  The agent does not check those boxes. A hotfix from a production tag skips this gate.
-                </p>
-                <p class="mono">Next /ship-release refuses while a box is open</p>
-              </article>
+              <div class="orch-agent orch-agent--3">
+                <b>ticket/55-steer</b>
+                Wire the screen loop
+              </div>
+              <div class="orch-agent orch-agent--4">
+                <b>code-review</b>
+                Standards + spec axes
+              </div>
             </div>
           </div>
-        </section>
+          <pre class="cli" aria-label="Orchestration prompt"><b>you</b>  Frontier ready. Steer every working pane.
+<b>parent</b> Reading ticket-10 · allowlist dialog
+<b>parent</b> Cleared with run-once y. Send land for ticket-9.
+<em>→</em> three children stay working · you never leave the parent tab</pre>
+        </div>
+      </section>
 
-        <section class="section" id="steer">
-          <p class="kicker">Orchestration</p>
-          <h2>The parent steers every pane it opened</h2>
-          <p class="lede">
-            You stay in the session where you typed the ship command. Child panes do not wait on your keyboard.
-          </p>
-          <div class="desk" aria-hidden="true">
-            <article class="pane pane-parent">
-              <header><span class="dot"></span> ship-release</header>
-              <p>Parent. Steers children. Lands under its authority.</p>
-              <p class="pane-note">Reads the screen every few seconds</p>
+<section class="section" id="proof" aria-labelledby="proof-h">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id="proof-h">Orchestration you can count.</h2>
+            <p>One package. Three ship doors. One recorded base under every branch the agents open.</p>
+          </div>
+          <div class="grid proof-grid" data-moment="counter-rolls">
+            <article class="card span-4 glow-card" data-glow>
+              <p class="t-stat">61</p>
+              <p class="t-small muted">skills that move an idea to a tagged release</p>
             </article>
-            <article class="pane pane-a">
-              <header><span class="dot"></span> ticket-9</header>
-              <p>ticket-flow. Stops at the open PR.</p>
-              <p class="status"><i>working</i><i>allowlist · y</i><i>PR open · land</i></p>
+            <article class="card span-4 glow-card" data-glow>
+              <p class="t-stat">3</p>
+              <p class="t-small muted">orchestration doors: ticket, spec, release</p>
             </article>
-            <article class="pane pane-b">
-              <header><span class="dot"></span> ticket-10</header>
-              <p>Blocked until 9 lands. Then its own session.</p>
-              <p class="status"><i>waiting</i><i>pane opens</i><i>working</i></p>
-            </article>
-            <article class="pane pane-c">
-              <header><span class="dot"></span> ticket-11</header>
-              <p>Parallel when unblocked. Same parent steers.</p>
-              <p class="status"><i>working</i><i>allowlist · y</i><i>PR open</i></p>
+            <article class="card span-4 glow-card" data-glow>
+              <p class="t-stat">1</p>
+              <p class="t-small muted">recorded base decides where every PR lands</p>
             </article>
           </div>
-          <ul class="plain desk-notes">
-            <li>Cursor allowlist dialogs often leave status as <code>working</code>. The parent polls the screen and clears each with a run-once <code>y</code>.</li>
-            <li>Questions the ticket already answers get answered in the child. Doc breaks and unsettled breaking changes escalate in the parent session.</li>
-            <li>Needs Herdr: TUI sets <code>HERDR_ENV=1</code>, Desktop sets <code>HC_TERMINAL_ID</code>. Without either, shipping stops instead of collapsing onto one branch.</li>
-          </ul>
-        </section>
+        </div>
+      </section>
 
-        <section class="section" id="compare">
-          <p class="kicker">Why a base</p>
-          <h2>With a recorded base, and without one</h2>
-          <p class="lede">If the base line is missing, the work stops. Guessing from the open checkout is how releases get tangled.</p>
-          <div class="split">
-            <article class="board reveal">
-              <p class="kicker">No recorded base</p>
-              <h3>The open checkout decides</h3>
-              <ul class="plain">
-                <li>The agent builds on whatever branch is checked out.</li>
-                <li>A ticket can merge into <code>main</code>, a release, or a branch that happened to be open.</li>
-                <li>Two features share one branch and one pull request.</li>
-                <li>A fix for a shipped bug can land on an unreleased branch and never reach production.</li>
+      <section class="section" id="flow" aria-labelledby="flow-h">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id="flow-h">Branch lineage in 3D: every branch knows its base.</h2>
+            <p>
+              Orchestration starts with a written destination. Release holds the cycle. Spec holds one
+              feature. Ticket is one tracer path. Move the pointer to tip the stack.
+            </p>
+          </div>
+          <div class="flow-stage" data-flow-stage>
+            <p class="flow-hint">Pointer parallax · orchestration stack</p>
+            <div class="flow-scene" data-flow-scene aria-hidden="true">
+              <i class="flow-beam flow-beam--1"></i>
+              <i class="flow-beam flow-beam--2"></i>
+              <i class="flow-beam flow-beam--3"></i>
+              <div class="flow-node flow-node--main">
+                <b>main</b>
+                <strong>Production</strong>
+                <span>Only the release PR lands here. The tag sits on that merge.</span>
+              </div>
+              <div class="flow-node flow-node--release">
+                <b>release/1</b>
+                <strong>Release branch</strong>
+                <span>Cut from main. Holds every feature of the cycle.</span>
+              </div>
+              <div class="flow-node flow-node--spec">
+                <b>spec/42</b>
+                <strong>Spec branch</strong>
+                <span>One feature. Lands into the open release.</span>
+              </div>
+              <div class="flow-node flow-node--ticket">
+                <b>ticket/42-cli</b>
+                <strong>Ticket branch</strong>
+                <span>One tracer path. Lands into its recorded base.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+            <section class="section" id="compare" aria-labelledby="compare-h">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id="compare-h">Same agents. Different orchestration.</h2>
+            <p>
+              Left is undirected agent sprawl. Right is Yami: recorded bases, ship doors, and a parent
+              that steers. Drag the warp to feel the cut.
+            </p>
+          </div>
+          <div class="compare" data-compare role="slider" aria-valuemin="28" aria-valuemax="72" aria-valuenow="40" aria-label="Drag the warp stick to reveal With Yami over Without orchestration">
+            <div class="compare__pane compare__before">
+              <h3>Without orchestration</h3>
+              <ul>
+                <li>Five chats, no owner of the land gate</li>
+                <li>PRs aim at whatever branch is open</li>
+                <li>Allowlist dialogs stall overnight</li>
+                <li>Hotfixes vanish into feature branches</li>
+                <li>Nobody can answer "where does this land?"</li>
               </ul>
-              <div class="tangle" aria-hidden="true">
-                <span></span><span></span><span></span><span></span>
+              <pre class="cli"><b>$</b> "fix the login bug"
+<em>→</em> agent opens a PR into your dirty local branch</pre>
+            </div>
+            <div class="compare__pane compare__after">
+              <h3>With Yami</h3>
+              <ul>
+                <li>One parent owns the door you typed</li>
+                <li>Every issue already names its base</li>
+                <li>Child panes clear, land, and close</li>
+                <li>You approve only that level's merge</li>
+                <li>The tag is the merge commit on main</li>
+              </ul>
+              <pre class="cli"><b>$</b> /ship-ticket
+<em>→</em> worktree · PR into recorded base · you land</pre>
+            </div>
+            <div class="compare__warp" data-compare-handle>
+              <svg viewBox="0 0 56 400" preserveAspectRatio="none" aria-hidden="true">
+                <path
+                  data-compare-warp
+                  d="M24 0 C 8 40, 40 80, 22 120 C 6 160, 42 200, 20 240 C 8 280, 38 320, 22 360 C 14 380, 30 390, 22 400"
+                  fill="none"
+                  stroke="#f7f4ec"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </div>
+            <p class="compare__hint" data-compare-label>Drag the stick · sides overlay</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="walk" aria-labelledby="walk-h">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id="walk-h">Orchestrated release: four beats, real prompts.</h2>
+            <p>
+              Click a step, or let it play. This is the parent workflow behind <code>/ship-release</code>:
+              open, fan out, steer, land.
+            </p>
+          </div>
+          <div class="walk" data-walk>
+            <div class="walk__steps" role="tablist" aria-label="Release walkthrough">
+              <button type="button" class="is-on" role="tab" aria-selected="true" data-walk-step="1">
+                01 · Open the release
+                <small>Cut release/N from main. The gate must be clear.</small>
+              </button>
+              <button type="button" role="tab" aria-selected="false" data-walk-step="2">
+                02 · Ship each feature
+                <small>spec-flow opens tickets in sibling Herdr panes.</small>
+              </button>
+              <button type="button" role="tab" aria-selected="false" data-walk-step="3">
+                03 · Parent steers
+                <small>Screen loop clears allowlists. Finished panes close.</small>
+              </button>
+              <button type="button" role="tab" aria-selected="false" data-walk-step="4">
+                04 · You land the release
+                <small>Approve the PR into main. Tag. Hold the gate.</small>
+              </button>
+            </div>
+            <div class="walk__stage">
+              <div class="walk__pane is-on" data-walk-pane="1">
+                <p class="walk__pulse"><i></i> Live path</p>
+                <h3>/release start</h3>
+                <p>Cuts <code>release/1</code> from <code>main</code>. An open gate box stops this cold.</p>
+                <pre>main
+ └─ release/1   ← you are here
+     (empty, ready for specs)</pre>
+              </div>
+              <div class="walk__pane" data-walk-pane="2" hidden>
+                <p class="walk__pulse"><i></i> Live path</p>
+                <h3>/ship-release → /ship-spec</h3>
+                <p>Each feature gets a <code>spec/&lt;issue&gt;</code>. Ready tickets run in a 2×3 child tab.</p>
+                <pre>release/1
+ ├─ spec/42-lineage
+ │   ├─ ticket/42-cli   working
+ │   └─ ticket/42-docs  queued
+ └─ spec/55-steer</pre>
+              </div>
+              <div class="walk__pane" data-walk-pane="3" hidden>
+                <p class="walk__pulse"><i></i> Live path</p>
+                <h3>Parent steer loop</h3>
+                <p>Status says working while a dialog waits. The parent reads the screen and sends a run-once y.</p>
+                <pre>ticket-10 · working
+Run this command?  npm test
+→ y once
+→ working again
+ticket-9 · CI green · land</pre>
+              </div>
+              <div class="walk__pane" data-walk-pane="4" hidden>
+                <p class="walk__pulse"><i></i> Live path</p>
+                <h3>Human land gate</h3>
+                <p>The session already landed tickets and specs. You approve only the release PR.</p>
+                <pre>release/1  →  PR into main
+you approve
+tag v1.5.0 on the merge
+gate file stays open on main</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="authority" aria-labelledby="authority-h">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id="authority-h">
+              Three orchestration doors, one land gate.
+              <span class="muted">Higher doors land everything the children finish.</span>
+            </h2>
+            <p>
+              Pick the door that matches how much you want the session to own. Walk each column: what
+              opens, what the parent steers, what you alone approve.
+            </p>
+          </div>
+          <div class="door-walk">
+            <article class="door-card glow-card" data-glow>
+              <p class="t-label">Door 1 · /ship-ticket</p>
+              <h3>One tracer path</h3>
+              <p>Smallest door. One issue, one worktree, one PR into the recorded base on the issue.</p>
+              <div class="door-viz" role="img" aria-label="ship-ticket walkthrough">
+                <div class="chip">open worktree</div>
+                <div class="arrow">↓</div>
+                <div class="chip">PR → recorded base</div>
+                <div class="arrow">↓</div>
+                <div class="chip chip--you">you land the ticket</div>
+              </div>
+              <ul class="door-steps">
+                <li><span>01</span> Cut ticket/&lt;id&gt; from its Base field</li>
+                <li><span>02</span> Build the tracer path in the worktree</li>
+                <li><span>03</span> Open the PR; session stops at your land gate</li>
+              </ul>
+              <pre class="cli"><b>$</b> /ship-ticket
+<em>→</em> you approve the ticket merge</pre>
+            </article>
+            <article class="door-card glow-card" data-glow>
+              <p class="t-label">Door 2 · /ship-spec</p>
+              <h3>One feature, many tickets</h3>
+              <p>Session lands every ready ticket under the spec. You approve only the spec PR.</p>
+              <div class="door-viz" role="img" aria-label="ship-spec walkthrough">
+                <div class="chip">ticket panes · Herdr grid</div>
+                <div class="arrow">↓</div>
+                <div class="chip chip--land">parent lands tickets</div>
+                <div class="arrow">↓</div>
+                <div class="chip chip--you">you land the spec</div>
+              </div>
+              <ul class="door-steps">
+                <li><span>01</span> Spec branch holds the feature slice</li>
+                <li><span>02</span> Children run tickets; parent steers allowlists</li>
+                <li><span>03</span> Finished tickets land; you land spec → release</li>
+              </ul>
+              <pre class="cli"><b>$</b> /ship-spec
+<em>→</em> tickets auto-land · you land spec</pre>
+            </article>
+            <article class="door-card glow-card" data-glow>
+              <p class="t-label">Door 3 · /ship-release</p>
+              <h3>Full cycle to a tag</h3>
+              <p>Highest door. Session lands tickets and specs. You approve only the release into main.</p>
+              <div class="door-viz" role="img" aria-label="ship-release walkthrough">
+                <div class="chip">specs fan out</div>
+                <div class="arrow">↓</div>
+                <div class="chip chip--land">parent lands specs</div>
+                <div class="arrow">↓</div>
+                <div class="chip chip--you">you land release · tag</div>
+              </div>
+              <ul class="door-steps">
+                <li><span>01</span> Cut release/N; gate must be clear</li>
+                <li><span>02</span> Each feature ships through ship-spec</li>
+                <li><span>03</span> You approve release PR; tag on the merge</li>
+              </ul>
+              <pre class="cli"><b>$</b> /ship-release
+<em>→</em> specs auto-land · you land release</pre>
+            </article>
+          </div>
+          <pre class="cli" style="margin-top:1.2rem"><b>$</b> /ask-yami
+Which door should I open for a bug on the open release?
+<em>→</em> /ship-ticket with base = release/N  (or /release hotfix from the prod tag)</pre>
+        </div>
+      </section>
+
+      <section class="section" id="cycle" aria-labelledby="cycle-h">
+        <div class="wrap">
+          <div class="cycle-hero" data-moment="cursor-spotlight" data-moment-opts='{"rest":[0.2,0.35],"radius":520}'>
+            <p class="t-label">Release cycle</p>
+            <h2 id="cycle-h">Ship the cycle. Changelog every ticket.</h2>
+            <p>
+              Each ticket writes its own changeset before it lands. The release compiles those notes
+              into CHANGELOG.md and the version bump. No orphan merges without a human-readable why.
+            </p>
+            <div class="cycle-rail" aria-hidden="true">
+              <div class="cycle-step">
+                <b>01</b>
+                <strong>Ticket lands</strong>
+                <span>Changeset file in .changeset/ names the skill and the user-visible why.</span>
+              </div>
+              <div class="cycle-step">
+                <b>02</b>
+                <strong>Spec lands</strong>
+                <span>Feature merges into release/N. Ticket notes stay stacked for the bump.</span>
+              </div>
+              <div class="cycle-step">
+                <b>03</b>
+                <strong>Release PR</strong>
+                <span>Version workflow opens chore: version skills from the stacked changesets.</span>
+              </div>
+              <div class="cycle-step">
+                <b>04</b>
+                <strong>Tag on main</strong>
+                <span>You land the release. CHANGELOG section + tag sit on the merge commit.</span>
+              </div>
+            </div>
+            <div class="changelog-live">
+              <div class="changelog-card" role="img" aria-label="Per-ticket changeset files">
+                <h3>.changeset/ · per ticket</h3>
+                <div class="entry">
+                  <em>ticket/42-cli</em>
+                  <strong>ask-yami-what-next.md</strong>
+                  Router now points “what next” at ship doors
+                </div>
+                <div class="entry">
+                  <em>ticket/42-docs</em>
+                  <strong>sync-skills-remote-only.md</strong>
+                  Install block drops local clone path
+                </div>
+                <div class="entry">
+                  <em>ticket/55-steer</em>
+                  <strong>design-taste-frontend.md</strong>
+                  Vendored taste kit for landing motion
+                </div>
+              </div>
+              <div class="changelog-card" role="img" aria-label="Compiled changelog at release">
+                <h3>CHANGELOG.md · at release</h3>
+                <div class="entry">
+                  <em>## 1.5.0</em>
+                  <strong>ask-yami</strong>
+                  Maps “what next” to the right ship door
+                </div>
+                <div class="entry">
+                  <strong>sync-skills</strong>
+                  Remote-only install; marketplace is the source
+                </div>
+                <div class="entry">
+                  <strong>design-taste-frontend</strong>
+                  Motion moments for dark landing work
+                </div>
+              </div>
+            </div>
+            <pre class="cli" style="margin-top:1.15rem"><b>$</b> /ship-ticket · finish with changelog skill
+<em>→</em> .changeset/&lt;slug&gt;.md written before the land gate
+<b>$</b> /ship-release · after features land
+<em>→</em> version PR compiles every ticket note into the release section</pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="steer" aria-labelledby="steer-h">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id="steer-h">The orchestrator never leaves the parent tab.</h2>
+            <p>
+              You stay where you typed the ship command. The parent clears allowlist dialogs, packs
+              child panes into a 2×3 grid, and closes them after land.
+            </p>
+          </div>
+          <div class="grid" id="features">
+            <article class="card span-6 glow-card" data-glow>
+              <p class="t-label">Screen loop</p>
+              <h3>Allowlist dialogs</h3>
+              <p>
+                Cursor often leaves status as working while a dialog waits. The parent polls the
+                screen and clears each with a run-once y.
+              </p>
+              <div class="panel panel--inset" role="img" aria-label="Terminal showing Run this command dialog cleared with y">
+                <div class="stage">
+                  <pre style="margin:0;padding:1rem;font:500 12px/1.45 var(--font-mono);color:#e9ecee;background:#07101c;border-radius:10px">ticket-10 · working
+Run this command?
+  npm test
+[y] once · Approval 1 of 1
+→ cleared · working again</pre>
+                </div>
               </div>
             </article>
-            <article class="board board-live reveal">
-              <p class="kicker">Yami Coding</p>
-              <h3>The issue decides</h3>
-              <ul class="plain">
-                <li>The base is written when the issue is created.</li>
-                <li>A ticket lands into <code>spec/&lt;issue&gt;</code>. That spec lands into <code>release/&lt;N&gt;</code>. The release lands on <code>main</code>.</li>
-                <li>One release holds every feature. Each feature keeps its own spec branch.</li>
-                <li>A bug lands into the open release, a hotfix from the production tag, or <code>main</code>.</li>
-              </ul>
-              <div class="stack" aria-hidden="true">
-                <span>release</span><span>spec</span><span>ticket</span>
+            <article class="card span-6 glow-card" data-glow>
+              <p class="t-label">Child tabs</p>
+              <h3>Six-pane Herdr grid</h3>
+              <p>
+                The shipping tab stays alone. Children pack into sibling tabs, close after land, and
+                never steal focus from the parent.
+              </p>
+              <div class="panel panel--inset" role="img" aria-label="Grid of six ticket panes in a child tab">
+                <div class="stage" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:12px;background:#07101c;border-radius:10px;min-height:140px">
+                  <span style="background:#122033;border-radius:6px;min-height:56px"></span>
+                  <span style="background:#122033;border-radius:6px;min-height:56px"></span>
+                  <span style="background:#122033;border-radius:6px;min-height:56px"></span>
+                  <span style="background:#122033;border-radius:6px;min-height:56px"></span>
+                  <span style="background:#122033;border-radius:6px;min-height:56px"></span>
+                  <span style="background:#122033;border-radius:6px;min-height:56px"></span>
+                </div>
               </div>
             </article>
           </div>
-        </section>
+          <pre class="cli"><b>you</b>  Steer ticket-10. If CI is green on 9, land it.
+<b>parent</b> Cleared allowlist · ticket-10 working · landing 9 into spec/42</pre>
+        </div>
+      </section>
 
-        <section class="section" id="cycle">
-          <p class="kicker">Release cycle</p>
-          <h2>Open, fill, review, tag, hold</h2>
-          <p class="lede">
-            Spec and ticket branches die when they land. The release branch lives until the tag. Changelog entries compile at finish.
-          </p>
-          <ol class="cycle">
-            <li class="reveal"><b>01</b><strong>Open</strong><span><code>/release start</code> cuts <code>release/&lt;N&gt;</code>. An open gate box stops this.</span></li>
-            <li class="reveal"><b>02</b><strong>Fill</strong><span><code>/ship-release</code> ships each feature through its tickets and lands the specs.</span></li>
-            <li class="reveal"><b>03</b><strong>Review</strong><span>Full tests, code review, and security review on the release diff against <code>main</code>.</span></li>
-            <li class="reveal"><b>04</b><strong>Tag</strong><span>You approve the release PR. The tag is the merge commit on <code>main</code>.</span></li>
-            <li class="reveal"><b>05</b><strong>Hold</strong><span>The gate file stays open on <code>main</code>. A shipped bug uses <code>/release hotfix</code>.</span></li>
-          </ol>
-        </section>
 
-        <section class="section" id="install">
-          <p class="kicker">Get it</p>
-          <h2>Install one route</h2>
-          <p class="lede">The plugin and skills.sh both install this package. Using both leaves every skill twice. Pick one.</p>
-          <div class="tabs" role="tablist">
-            <button class="is-on" type="button" role="tab" aria-selected="true" data-install-tab="claude">Claude Code</button>
+      <section class="section" id="prompts" aria-labelledby="prompts-h">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id="prompts-h">Prompt the door. Copy the short form.</h2>
+            <p>
+              Each ship door is a human prompt with authority baked in. Paste these when you want the
+              orchestration to run, not a one-off chat.
+            </p>
+          </div>
+          <div class="prompt-grid">
+            <article class="prompt-card glow-card" data-glow>
+              <h3>/ask-yami</h3>
+              <p>Unsure which skill fits. The router maps the ask to a door or procedure.</p>
+              <pre class="cli"><b>$</b> /ask-yami
+what next after the spec is sliced?</pre>
+            </article>
+            <article class="prompt-card glow-card" data-glow>
+              <h3>/ship-ticket</h3>
+              <p>One issue through a worktree. You own the ticket land gate.</p>
+              <pre class="cli"><b>$</b> /ship-ticket
+issue 42 · slug cli · base already on the issue</pre>
+            </article>
+            <article class="prompt-card glow-card" data-glow>
+              <h3>/ship-spec</h3>
+              <p>Parent steers ticket panes. Session lands tickets. You land the spec.</p>
+              <pre class="cli"><b>$</b> /ship-spec
+ship every ready ticket under spec/42</pre>
+            </article>
+            <article class="prompt-card glow-card" data-glow>
+              <h3>/ship-release</h3>
+              <p>Full orchestration: features, steers, lands. You approve only the release PR.</p>
+              <pre class="cli"><b>$</b> /ship-release
+run the open release to a tag on main</pre>
+            </article>
+            <article class="prompt-card glow-card" data-glow>
+              <h3>Steer prompt</h3>
+              <p>Tell the parent what to clear while children work.</p>
+              <pre class="cli"><b>you</b>  Frontier ready. Steer every pane still working.
+<em>→</em> parent polls screens · run-once y · land green PRs</pre>
+            </article>
+            <article class="prompt-card glow-card" data-glow>
+              <h3>/grill-with-docs</h3>
+              <p>Interview that keeps glossary and ADRs current before you cut tickets.</p>
+              <pre class="cli"><b>$</b> /grill-with-docs
+pressure-test the branch lineage model before /to-tickets</pre>
+            </article>
+          </div>
+        </div>
+      </section>
+
+<section class="section" id="skills-band" style="--h: 1" aria-labelledby="skills-h">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id="skills-h">Sixty-one skills to a tagged release.</h2>
+            <p>Browse the set, or install one route in the next section.</p>
+          </div>
+          <div data-moment="marquee-row" data-moment-opts='{"speed": 36}'>
+            <ul class="mo-mq__track">
+              <li>/ask-yami</li>
+              <li>/ship-ticket</li>
+              <li>/ship-spec</li>
+              <li>/ship-release</li>
+              <li>/grill-with-docs</li>
+              <li>/to-tickets</li>
+              <li>/code-review</li>
+              <li>/tdd</li>
+              <li>herdr</li>
+              <li>design-taste-frontend</li>
+              <li>/branch-lineage</li>
+              <li>/land</li>
+            </ul>
+          </div>
+          <div class="btn-row" style="margin-top: var(--s-6)">
+            <a class="btn btn--secondary" href="./skills.html">Browse the full set</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="install" style="--h: 1" aria-labelledby="install-h">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id="install-h">
+              Install route for Claude, Codex, or Cursor.
+              <span class="muted">Plugin or skills.sh, not both.</span>
+            </h2>
+          </div>
+          <div class="tabs" role="tablist" aria-label="Install routes">
+            <button class="is-on" type="button" role="tab" aria-selected="true" data-install-tab="claude">
+              Claude Code
+            </button>
             <button type="button" role="tab" aria-selected="false" data-install-tab="codex">Codex</button>
-            <button type="button" role="tab" aria-selected="false" data-install-tab="other">Cursor and others</button>
+            <button type="button" role="tab" aria-selected="false" data-install-tab="other">
+              Cursor and others
+            </button>
           </div>
-          <div class="panel" data-install-panel="claude">
-            <button class="copy" type="button" data-copy="#install-claude">Copy</button>
+          <div class="card" data-install-panel="claude">
+            <div class="install-head">
+              <p class="t-label" style="margin: 0">Claude Code</p>
+              <button class="btn btn--secondary copy" type="button" data-copy="#install-claude">
+                Copy
+              </button>
+            </div>
             <pre id="install-claude"><code>claude plugin marketplace add ahmed-zhran/z-yami-coding-skills
 claude plugin install z-yami-coding-skills@z-yami</code></pre>
           </div>
-          <div class="panel" data-install-panel="codex" hidden>
-            <button class="copy" type="button" data-copy="#install-codex">Copy</button>
+          <div class="card" data-install-panel="codex" hidden>
+            <div class="install-head">
+              <p class="t-label" style="margin: 0">Codex</p>
+              <button class="btn btn--secondary copy" type="button" data-copy="#install-codex">
+                Copy
+              </button>
+            </div>
             <pre id="install-codex"><code>codex plugin marketplace add ahmed-zhran/z-yami-coding-skills
 codex plugin add z-yami-coding-skills@z-yami</code></pre>
           </div>
-          <div class="panel" data-install-panel="other" hidden>
-            <button class="copy" type="button" data-copy="#install-other">Copy</button>
+          <div class="card" data-install-panel="other" hidden>
+            <div class="install-head">
+              <p class="t-label" style="margin: 0">Cursor and others</p>
+              <button class="btn btn--secondary copy" type="button" data-copy="#install-other">
+                Copy
+              </button>
+            </div>
             <pre id="install-other"><code>npx skills@latest add ahmed-zhran/z-yami-coding-skills -a &lt;agent&gt;</code></pre>
           </div>
-          <p class="note">
-            Run <code>/setup-z-yami-coding-skills</code> once in the project.
-            When you are unsure which skill fits, run <code>/ask-yami</code>.
+          <p class="t-label" style="margin-top: var(--s-5)">
+            Then run <code>/setup-z-yami-coding-skills</code> once in the project. When you are
+            unsure which skill fits, run <code>/ask-yami</code>.
           </p>
-        </section>
-
-        <section class="section credits">
-          <p class="kicker">Credits</p>
-          <h2>Built on a hard fork</h2>
-          <p>
-            Yami Coding is Ahmed Zhran's package. The agentic workflow uses
-            <a href="https://github.com/mattpocock/skills">mattpocock/skills</a>
-            as a base. Herdr, security-review, caveman, and skill-eval stay under Apache-2.0.
-            The full list is in the
-            <a href="https://github.com/ahmed-zhran/z-yami-coding-skills#credits">repository credits</a>.
-          </p>
-        </section>
-      </div>
+          <div class="btn-row" style="margin-top: var(--s-5)">
+            <a class="btn btn--primary" href="#install">Install the plugin</a>
+            <a
+              class="btn btn--secondary"
+              href="https://github.com/ahmed-zhran/z-yami-coding-skills"
+               target="_blank" rel="noopener noreferrer">View on GitHub</a
+            >
+          </div>
+        </div>
+      </section>
     </main>
 
-    <footer class="wrap site-footer">
-      <span>Yami Coding</span>
-      <a href="https://github.com/ahmed-zhran/z-yami-coding-skills">ahmed-zhran/z-yami-coding-skills</a>
+    <footer class="footer closing footer--dark" id="contact" aria-labelledby="close-h">
+      <div class="wrap">
+        <div class="closing__cta close--type ship-close">
+          <h2 id="close-h">Ship.</h2>
+          <p class="ship-tag">In the dark. From a recorded base.</p>
+          <div class="btn-row">
+            <a class="btn btn--primary btn--xl" href="#install">Install the plugin</a>
+            <a
+            class="star-btn"
+            href="https://github.com/ahmed-zhran/z-yami-coding-skills"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M8 1.5l1.76 3.57 3.94.57-2.85 2.78.67 3.92L8 10.96l-3.52 1.85.67-3.92L2.3 5.64l3.94-.57L8 1.5z" />
+            </svg>
+            Star us on GitHub
+          </a>
+          </div>
+        </div>
+        <div class="closing__links">
+          <div class="grid">
+            <div class="span-4 stack-4">
+              <a class="nav__logo" href="#top"
+                ><img class="mark" src="favicon.svg" width="40" height="40" alt="" />Yami</a
+              >
+              <p class="footer__lede">Agent skills that ship software from a recorded base.</p>
+            </div>
+            <div class="span-2 footer__col">
+              <h3>Flow</h3>
+              <ul>
+                <li><a href="#flow">Flow</a></li>
+                <li><a href="#authority">Ship doors</a></li>
+              </ul>
+            </div>
+            <div class="span-2 footer__col">
+              <h3>Runtime</h3>
+              <ul>
+                <li><a href="#steer">Steer</a></li>
+                <li><a href="#skills-band">Skills</a></li>
+              </ul>
+            </div>
+            <div class="span-2 footer__col">
+              <h3>Install</h3>
+              <ul>
+                <li><a href="#install">Install</a></li>
+                <li><a href="./skills.html">Browse</a></li>
+                <li><a href="./contributing.html">Contributing</a></li>
+              </ul>
+            </div>
+            <div class="span-2 footer__col">
+              <h3>Source</h3>
+              <ul>
+                <li>
+                  <a href="https://github.com/ahmed-zhran/z-yami-coding-skills" target="_blank" rel="noopener noreferrer">GitHub</a>
+                </li>
+                <li><a href="https://github.com/mattpocock/skills" target="_blank" rel="noopener noreferrer">Upstream</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer__legal">
+            <span>&copy; 2026 Ahmed Zhran</span>
+            <span class="credits">Hard fork of mattpocock/skills.</span>
+          </div>
+        </div>
+      </div>
     </footer>
-    <script type="module" src="./src/site.js"></script>
+    <script type="module" src="./src/boot.js"></script>
   </body>
 </html>

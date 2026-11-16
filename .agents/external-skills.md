@@ -60,6 +60,16 @@ A live URL with no tag (the agent guide) is checked by re-fetching it and diffin
 - **Content hash (sha256) of the upstream body:** `cf20cbef338e8f0df22107c0b154d5a9bbc7a6851003afc2a61181cb549a7f97`
 - **Divergence:** YAML frontmatter (`name`, `description`) is added so agents can load the skill. The body after that frontmatter is the upstream file. Re-apply the frontmatter when the body changes. The live window commands come from `herdr-app --skill`.
 
+### design-taste-frontend
+
+- **Vendored:** `skills/engineering/design-taste-frontend/` (full upstream skill tree: `SKILL.md`, `scripts/`, `assets/`, `references/`, `library/`)
+- **Upstream:** https://github.com/Leonxlnx/taste-skill
+- **License:** MIT. The text is `skills/engineering/design-taste-frontend/LICENSE`. See `skills/engineering/design-taste-frontend/NOTICE`.
+- **Pin:** tag `v2.5.1` (commit `f6b76575f949707b4e3c37cd86cb44b0b98643e8`)
+- **Source:** https://github.com/Leonxlnx/taste-skill/tree/v2.5.1/skills/taste-skill
+- **Content hash (sha256) of upstream `SKILL.md` at the pin:** `0c7a5852a5217be79cab422c6d58329b776f0c25bd6da8a7a01707ce75be6206`
+- **Divergence:** Frontmatter `description` is rewritten for this package's invocation policy (prefer for most UI/frontend work; always on cool/eye-catching/heavy/rich/theme/3D/animations/amazing/attractive and similar; skip only light no-design tasks). An **In this package** section is inserted after the frontmatter (no second install; pointer to `/prototype` for throwaway variants). The Stop-hook search path adds `skills/engineering/design-taste-frontend/scripts/gate.mjs`. `agents/openai.yaml` is added for display. Re-apply those when bumping the pin; leave scripts, assets, references, and library as upstream.
+
 ## Adding another external skill
 
-Add a row here in the same change as the copy. Record the pin, the hash, the license, and every line that is not upstream. A skill from this table is part of the published set (`plugin.json`, the READMEs, `ask-yami`). It is not a private install under `~/.agents/skills` or `~/.claude/skills` except as a symlink back to this repo.
+Add a row here in the same change as the copy. Record the pin, the hash, the license, and every line that is not upstream. A skill from this table is part of the published set (`plugin.json`, the READMEs, `ask-yami`). Consumers get it through the marketplace plugin or skills.sh; `/sync-skills` refreshes that published copy. Author-only `link-skills.sh` symlinks are not a sync target.

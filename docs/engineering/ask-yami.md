@@ -1,6 +1,6 @@
 ## What it does
 
-`ask-yami` is the router over the skills in this repo. You describe the situation you are in (an idea you cannot start, a pile of incoming bug reports, a [session](https://www.aihero.dev/ai-coding-dictionary/session) that has run long), and it names the skill or the sequence of skills that fits, plus where the human decisions in that sequence sit.
+`ask-yami` is the router over the skills in this repo. On every invoke it first **reads the project's state** (gate, open release, takeable tickets, triage inbox, open PRs) and names the next door. When you also describe a situation, it folds that into the same recommendation. When the board is clear, it says so and offers brainstorming new features or upgrade paths.
 
 It recommends and stops. It does not grill, write a [spec](https://www.aihero.dev/ai-coding-dictionary/spec), open a file or fire the skill it just named; what you get back is the next thing to type, and you type it. It is also a hand-written map of the skills in this repo rather than a scan of what you have installed, so it will not route you over your own skills or another author's.
 
@@ -10,6 +10,7 @@ You invoke this by typing `/ask-yami`; the agent won't reach for it on its own.
 
 | Your situation | What the router gives back |
 | --- | --- |
+| You just opened the project and want "what's next" | A state check, then one next command (or clear-board brainstorm / upgrade options) |
 | An idea, and no idea where to start | The head of the main flow, and whether the build is small enough to skip the spec |
 | Bugs and requests arriving from other people | The [triage](https://aihero.dev/skills-triage) on-ramp, and why [tickets](https://www.aihero.dev/ai-coding-dictionary/ticket) you generated yourself don't belong on it |
 | Two skills that look interchangeable | The line between them, and it is usually one concrete test rather than a matter of taste. [grill-me](https://aihero.dev/skills-grill-me) or [grill-with-docs](https://aihero.dev/skills-grill-with-docs) turns on whether you are in a working directory; [grill-with-docs](https://aihero.dev/skills-grill-with-docs) or [wayfinder](https://aihero.dev/skills-wayfinder) turns on whether the effort fits one session |
@@ -22,14 +23,18 @@ The router names skills; it does not install them. Everything it points at has t
 
 The tracker-dependent routes (triage, `to-spec`, `to-tickets`, `implement`) assume [setup-z-yami-coding-skills](https://aihero.dev/skills-setup-z-yami-coding-skills) has already configured an issue tracker in the repo. The router recommends them even before that has happened.
 
+## What next
+
+The leading move beside the map is **what next**. Before it answers from keywords alone, it inspects this checkout: setup, the post-release gate, an open `release/<N>`, takeable `ready-for-agent` work, the triage inbox, and open PRs. First match wins. Beta doors (`/release-ui-design`, `/software-factory`) are named only when you already asked for them. An open post-release gate names the next unchecked box (last is `/empower-crafting`). An empty board is not a shrug: it offers `/grill-with-docs` for new ideas, `/wayfinder` when the effort is foggy, or `/improve-codebase-architecture` / `/debt` / a stack revisit for upgrades.
+
 ## Flows, not skills
 
-The skill's leading word is **flow**, a path *through* the skills rather than a single skill. When you name your situation, the router places you at a step on a flow. That is a different answer from "here is the skill that matches your keywords". There are five kinds of route, and the skill itself describes them in full:
+The skill's other leading word is **flow**, a path *through* the skills rather than a single skill. When you name your situation, the router places you at a step on a flow. That is a different answer from "here is the skill that matches your keywords". There are five kinds of route, and the skill itself describes them in full:
 
-- **The main flow**, idea to ship. Grill, spec, tickets, then either [ship-ticket](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-ticket.md) once per ticket or the separate start, implement, and land steps. [ship-release](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-release.md) runs that whole cycle and puts each ready ticket in its own session. [implement-spec](https://aihero.dev/skills-implement-spec) is the other build: one branch, one pull request. After the tag, a gate blocks the next release until retro, review of the architecture, and a skills update are done. The flow has two branches. One is a prototype detour, for when a question needs runnable code to settle it. The other is the spec-and-tickets split, which is only worth its cost when the build spans more than one session.
+- **The main flow**, idea to ship. Grill, spec, tickets, then either [ship-ticket](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-ticket.md) once per ticket or the separate start, implement, and land steps. [ship-release](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-release.md) runs that whole cycle and puts each ready ticket in its own session. Beta `/release-ui-design` and `/software-factory` stay out of the main flow unless you ask for them by name. [implement-spec](https://aihero.dev/skills-implement-spec) is the other build: one branch, one pull request. Before the tag, human testing writes `docs/releases/<N>/human-testing.md` and requires Sign-off. After the tag, a gate blocks the next release until human-testing feedback, retro, review of the architecture, a skills update (`/sync-skills`), and last `/empower-crafting` are done. The flow has two branches. One is a prototype detour, for when a question needs runnable code to settle it. The other is the spec-and-tickets split, which is only worth its cost when the build spans more than one session.
 - **On-ramps**, for a situation that generates work and then merges onto the main flow: incoming bug reports, something broken, or an effort too foggy and too large to hold in one session.
 - **Codebase health**, upkeep rather than feature work. [improve-codebase-architecture](https://aihero.dev/skills-improve-codebase-architecture) surveys the code for deepening opportunities, and each one it finds re-enters the main flow as an idea.
-- **Standalones**, which sit off every flow and which you use on their own: the prototype, the questionnaire, the research run.
+- **Standalones**, which sit off every flow and which you use on their own: the prototype, the questionnaire, the research run. UI production that should look designed reaches [design-taste-frontend](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/design-taste-frontend/SKILL.md) (prefer for most frontend work; always on cool/eye-catching asks).
 - **A vocabulary layer underneath**, the two references the other skills pull in when the words rather than the process are the problem.
 
 ## The phase boundary
@@ -76,8 +81,13 @@ That advice is often correct, but the edit rarely lasts. Someone asked it how to
 
 Check the changelog for a rename before assuming it is gone. `writing-great-skills` became [writing-for-agents](https://aihero.dev/skills-writing-for-agents) with no alias, `to-prd` became [to-spec](https://aihero.dev/skills-to-spec), and `pathfinder` became [wayfinder](https://aihero.dev/skills-wayfinder). Four skills were retired outright into the skills that absorbed them: `ubiquitous-language`, `design-an-interface`, `qa` and `request-refactor-plan`. If it misses a skill you have, that is the router's own lag, described above.
 
+**I typed `/ask-yami` with no question and got a generic menu.**
+
+It should have checked the repo first. On a clear board it should say so and offer brainstorm or upgrade doors, not only "what are you trying to do?".
+
 ## It's working if
 
+- A bare `/ask-yami` reports what it found in the repo (or that the board is clear) before any menu.
 - It ends by naming what to type and stops there, instead of starting the work itself.
 - The route it gives back mentions where to clear or compact context and where you are expected to review, not just a list of skill names.
 - Where two skills are close, it says which one and why the other is wrong for you.

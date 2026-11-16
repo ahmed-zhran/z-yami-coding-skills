@@ -1,0 +1,549 @@
+<!doctype html>
+<html
+  lang="en"
+  data-type="software"
+  data-radius="sharp"
+  data-ground="sky"
+  data-buttons="arrow"
+  data-tone="dark"
+  data-motion
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Contributing · Yami Coding</title>
+    <meta
+      name="description"
+      content="How to report bugs, share ideas, and contribute to Yami Coding. Read SCOPE.md first."
+    />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#010308" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@400;500;600&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/system.css" />
+    <link rel="stylesheet" href="assets/ui/cards.css" />
+    <link rel="stylesheet" href="assets/motion/motion.css" />
+    <link rel="stylesheet" href="assets/backgrounds/backgrounds.css" />
+    <link rel="stylesheet" href="assets/layout/layout.css" />
+    <style>
+      :root {
+        --p-bg: #010308;
+        --p-surface: #07101c;
+        --p-ink: #f7f4ec;
+        --p-muted: #a8b0bc;
+        --p-accent: #3db4ff;
+        --p-accent-ink: #010308;
+        --p-action: #3db4ff;
+        --p-action-ink: #010308;
+        --p-inv-bg: #07101c;
+        --p-inv-surface: #0c1828;
+        --p-inv-ink: #f7f4ec;
+        --p-inv-muted: #a8b0bc;
+        --p-inv-accent: #9ad0ff;
+        --p-inv-accent-ink: #010308;
+        --p-inv-action: #ffb43c;
+        --p-inv-action-ink: #010308;
+        --font-display: "Syne", "Arial Narrow", sans-serif;
+        --font-text: "Sora", "Segoe UI", sans-serif;
+        --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+        --display-weight: 800;
+        --display-tracking: -0.02em;
+        --padt: 56px;
+        --padb: 40px;
+        color-scheme: dark;
+      }
+      body {
+        background: transparent;
+      }
+      .depth {
+        position: fixed;
+        inset: 0;
+        z-index: -3;
+        pointer-events: none;
+        overflow: hidden;
+        background: #010308;
+      }
+      .depth__grid {
+        position: absolute;
+        inset: -20%;
+        background-image:
+          linear-gradient(rgba(61, 180, 255, 0.06) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(61, 180, 255, 0.06) 1px, transparent 1px);
+        background-size: 56px 56px;
+        transform: perspective(900px) rotateX(58deg) scale(1.35);
+        transform-origin: center 20%;
+        animation: depth-drift 28s linear infinite;
+        mask-image: radial-gradient(ellipse 70% 55% at 50% 35%, #000 20%, transparent 75%);
+      }
+      .depth__orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(40px);
+        opacity: 0.5;
+        animation: orb-float 16s ease-in-out infinite;
+      }
+      .depth__orb--a {
+        width: 42vw;
+        height: 42vw;
+        max-width: 520px;
+        max-height: 520px;
+        left: -8%;
+        top: 8%;
+        background: radial-gradient(circle, rgba(61, 180, 255, 0.35), transparent 68%);
+      }
+      .depth__orb--b {
+        width: 36vw;
+        height: 36vw;
+        max-width: 440px;
+        max-height: 440px;
+        right: -6%;
+        bottom: 12%;
+        background: radial-gradient(circle, rgba(255, 180, 60, 0.28), transparent 68%);
+        animation-delay: -6s;
+      }
+      .depth__veil {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(1, 3, 8, 0.2) 0%,
+          rgba(1, 3, 8, 0.55) 42%,
+          rgba(1, 3, 8, 0.92) 100%
+        );
+      }
+      @keyframes depth-drift {
+        from {
+          background-position: 0 0, 0 0;
+        }
+        to {
+          background-position: 0 56px, 56px 0;
+        }
+      }
+      @keyframes orb-float {
+        0%,
+        100% {
+          transform: translate3d(0, 0, 0) scale(1);
+        }
+        50% {
+          transform: translate3d(2%, -3%, 0) scale(1.08);
+        }
+      }
+      .nav__logo {
+        gap: 0.75rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        font-size: 0.88rem;
+      }
+      .nav__logo img.mark {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: block;
+      }
+      main > .section {
+        height: auto !important;
+        min-height: 0 !important;
+        padding: var(--padt) 0 var(--padb) !important;
+      }
+      .route-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+      }
+      .route-table th,
+      .route-table td {
+        text-align: left;
+        padding: 0.85rem 1rem;
+        border-bottom: 1px solid rgba(61, 180, 255, 0.16);
+        vertical-align: top;
+      }
+      .route-table th {
+        color: var(--p-muted);
+        font-weight: 500;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      .route-table a {
+        color: #9ad0ff;
+      }
+      .steps {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 0.75rem;
+      }
+      .steps li {
+        border: 1px solid rgba(61, 180, 255, 0.18);
+        border-radius: 12px;
+        background: rgba(7, 16, 28, 0.88);
+        padding: 0.95rem 1.05rem;
+      }
+      .steps b {
+        display: block;
+        font-family: var(--font-mono);
+        color: #3db4ff;
+        font-size: 0.8rem;
+        margin-bottom: 0.3rem;
+      }
+      .star-btn {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        min-height: 44px;
+        padding: 0 1rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 180, 60, 0.55);
+        background: linear-gradient(180deg, rgba(255, 180, 60, 0.22), rgba(255, 180, 60, 0.08));
+        color: #f7f4ec;
+        font: 600 0.88rem/1 var(--font-text);
+        text-decoration: none;
+        overflow: hidden;
+        isolation: isolate;
+        animation: star-pulse 2.4s ease-in-out infinite;
+        box-shadow: 0 0 0 0 rgba(255, 180, 60, 0.35);
+      }
+      .star-btn svg {
+        width: 16px;
+        height: 16px;
+        fill: #ffb43c;
+        animation: star-spin 5s linear infinite;
+      }
+      .star-btn::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          110deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.28) 48%,
+          transparent 62%
+        );
+        transform: translateX(-120%);
+        animation: star-sheen 3.2s ease-in-out infinite;
+        z-index: -1;
+      }
+      .star-btn:hover {
+        border-color: #ffb43c;
+        transform: translateY(-1px);
+      }
+      @keyframes star-pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(255, 180, 60, 0.28);
+        }
+        50% {
+          box-shadow: 0 0 0 10px rgba(255, 180, 60, 0);
+        }
+      }
+      @keyframes star-sheen {
+        0%,
+        55% {
+          transform: translateX(-120%);
+        }
+        100% {
+          transform: translateX(120%);
+        }
+      }
+      @keyframes star-spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .depth__grid,
+        .depth__orb,
+        .star-btn,
+        .star-btn svg,
+        .star-btn::after {
+          animation: none;
+        }
+      }
+      @media (max-width: 639px) {
+        .route-table,
+        .route-table tbody,
+        .route-table tr,
+        .route-table th,
+        .route-table td {
+          display: block;
+          width: 100%;
+        }
+        .route-table thead {
+          display: none;
+        }
+        .route-table tr {
+          margin-bottom: 0.75rem;
+          border: 1px solid rgba(61, 180, 255, 0.18);
+          border-radius: 12px;
+          overflow: hidden;
+        }
+        .route-table td {
+          border: 0;
+          padding: 0.55rem 0.9rem;
+        }
+        .route-table td:first-child {
+          background: rgba(61, 180, 255, 0.08);
+          font-weight: 600;
+        }
+      }
+    </style>
+    <script>
+      document.documentElement.classList.add("m-enter");
+      setTimeout(() => document.documentElement.classList.add("m-enter-done"), 700);
+    </script>
+    <script src="assets/backgrounds/backgrounds.js"></script>
+  </head>
+  <body>
+    <div class="depth" aria-hidden="true">
+      <div class="depth__grid"></div>
+      <div class="depth__orb depth__orb--a"></div>
+      <div class="depth__orb depth__orb--b"></div>
+      <div class="depth__veil"></div>
+    </div>
+    <header class="nav">
+      <div class="wrap nav__bar">
+        <a class="skip-link" href="#top">Skip to content</a>
+        <a class="nav__logo" href="./index.html">
+          <img class="mark" src="favicon.svg" width="40" height="40" alt="" />
+          Yami
+        </a>
+        <nav class="nav__links" aria-label="Main">
+          <div class="nav__item"><a class="nav__link" href="./index.html#orch">Orchestration</a></div>
+          <div class="nav__item"><a class="nav__link" href="./skills.html">Skills</a></div>
+          <div class="nav__item">
+            <a class="nav__link" href="./contributing.html" aria-current="page">Contributing</a>
+          </div>
+          <div class="nav__item">
+            <a
+              class="nav__link"
+              href="https://github.com/ahmed-zhran/z-yami-coding-skills"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          </div>
+        </nav>
+        <div class="nav__actions">
+          <a
+            class="star-btn"
+            href="https://github.com/ahmed-zhran/z-yami-coding-skills"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path
+                d="M8 1.5l1.76 3.57 3.94.57-2.85 2.78.67 3.92L8 10.96l-3.52 1.85.67-3.92L2.3 5.64l3.94-.57L8 1.5z"
+              />
+            </svg>
+            Star us on GitHub
+          </a>
+        </div>
+        <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Menu">
+          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+            <path d="M2 5h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="section" aria-labelledby="contrib-h">
+        <div class="wrap">
+          <div class="section-head">
+            <p class="t-label">Contributing</p>
+            <h1 id="contrib-h">Report, discuss, then ship with us.</h1>
+            <p>
+              Every issue is judged against
+              <a
+                href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/SCOPE.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                >SCOPE.md</a
+              >. This is a personal, curated fork. Pull requests are open to collaborators only, so
+              describe the fix in an issue first.
+            </p>
+          </div>
+
+          <div class="btn-row" style="margin-bottom: var(--s-6)">
+            <a
+              class="star-btn"
+              href="https://github.com/ahmed-zhran/z-yami-coding-skills"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path
+                  d="M8 1.5l1.76 3.57 3.94.57-2.85 2.78.67 3.92L8 10.96l-3.52 1.85.67-3.92L2.3 5.64l3.94-.57L8 1.5z"
+                />
+              </svg>
+              Star us on GitHub
+            </a>
+            <a class="btn btn--secondary" href="./index.html#install">Install the plugin</a>
+          </div>
+
+          <h2>Where each request goes</h2>
+          <table class="route-table">
+            <thead>
+              <tr>
+                <th>You have</th>
+                <th>Go to</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>A bug in a skill</td>
+                <td>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/issues/new?template=bug.yml"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Bug issue</a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>A change to an existing skill, or a new skill that clears the bar</td>
+                <td>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/issues/new?template=idea.yml"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Idea or feedback issue</a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>A question, or "how do I…?"</td>
+                <td>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/discussions/categories/q-a"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Discussions: Q&amp;A</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="collab-h">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id="collab-h">If you are a collaborator</h2>
+            <p>One problem per issue. Repro first. Keep the manifests in sync.</p>
+          </div>
+          <ol class="steps">
+            <li>
+              <b>01 · Issue</b>
+              Open an issue describing the observed failure: what you ran, what happened, what you
+              expected. Short.
+            </li>
+            <li>
+              <b>02 · Branch</b>
+              Branch from <code>main</code>, change the skill, and keep
+              <code>README.md</code>, the bucket README, <code>plugin.json</code>,
+              <code>ask-yami</code>, and <code>UPSTREAM.md</code> in sync.
+            </li>
+            <li>
+              <b>03 · Check</b>
+              Run <code>skill-eval</code> on every skill you changed, and
+              <code>npm run check-plugin-version</code>.
+            </li>
+            <li>
+              <b>04 · Changeset</b>
+              Add a changeset for any user-visible change, then open the PR. No em-dashes in prose.
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="ai-h">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id="ai-h">Issues written with AI</h2>
+            <p>Agents are welcome to help, but you post the issue, so you own it.</p>
+          </div>
+          <div class="grid">
+            <article class="card span-6">
+              <h3>One problem per issue</h3>
+              <p>Several findings from one session are several issues, or none.</p>
+            </article>
+            <article class="card span-6">
+              <h3>Short</h3>
+              <p>If it does not fit on one screen, cut it.</p>
+            </article>
+            <article class="card span-6">
+              <h3>Repro first</h3>
+              <p>The steps that show the problem come before any analysis.</p>
+            </article>
+            <article class="card span-6">
+              <h3>No pasted specs</h3>
+              <p>
+                No full proposals, plans, or rewritten SKILL.md files. Describe the problem; the fix
+                is ours to design.
+              </p>
+            </article>
+          </div>
+          <p style="margin-top: var(--s-5); color: var(--p-muted)">
+            Not your project's issues. If your agent files specs or tickets for your own project
+            here, it has the wrong repo. Run <code>/setup-z-yami-coding-skills</code> in your
+            project.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer closing footer--dark" id="contact" aria-labelledby="contrib-close-h">
+      <div class="wrap">
+        <div class="closing__cta close--type" style="text-align: center">
+          <h2 id="contrib-close-h" style="font-size: clamp(2.8rem, 10vw, 5rem); max-width: none">
+            Star the repo.
+          </h2>
+          <p class="t-lead" style="margin-inline: auto">
+            Then open a door from the skills you install.
+          </p>
+          <div class="btn-row" style="justify-content: center; margin-top: var(--s-6)">
+            <a
+              class="star-btn"
+              href="https://github.com/ahmed-zhran/z-yami-coding-skills"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path
+                  d="M8 1.5l1.76 3.57 3.94.57-2.85 2.78.67 3.92L8 10.96l-3.52 1.85.67-3.92L2.3 5.64l3.94-.57L8 1.5z"
+                />
+              </svg>
+              Star us on GitHub
+            </a>
+            <a class="btn btn--secondary" href="./index.html#install">Install the plugin</a>
+          </div>
+        </div>
+        <div class="closing__links">
+          <div class="footer__legal">
+            <span>&copy; 2026 Ahmed Zhran</span>
+            <a
+              href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/CONTRIBUTING.md"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Full CONTRIBUTING.md</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="./src/boot-skills.js"></script>
+  </body>
+</html>

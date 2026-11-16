@@ -14,6 +14,12 @@ Call the Skill tool with "branch-lineage". If you are not already on the ticket'
 
 Before writing code, read what binds the area: `GLOSSARY.md`, ADRs, `docs/agents/stack.md`, and the architecture doc for each surface the ticket touches (`docs/agents/architecture/<surface>.md`). New code goes where the architecture doc says; a dependency for a slot `stack.md` already fills is not added. If you need to break either, stop and ask. Search `docs/solutions/` for notes on the area (call the Skill tool with "learnings").
 
+## Craft skills (coding itself)
+
+Read `docs/agents/craft-skills.md`. If it is missing, tell the user to run `/setup-z-yami-coding-skills` or `/empower-crafting` (or copy the template) and stop only when the ticket clearly needs craft you cannot choose without the file; otherwise continue and note the miss.
+
+Match the ticket to every row that applies. For each named skill that is installed, call the Skill tool with that name and follow it **while writing product code** (order as the table says). Skip names that are not installed; do not invent their procedures. This file routes coding craft only (UI taste, framework practice, mobile, backend-arch, …). It does not list `tdd` or `code-review`: those stay in the steps below.
+
 ## The smallest complete change
 
 Take the first option that fully works:
@@ -28,7 +34,7 @@ Be lazy about the solution, never about the change: finish every caller, test, a
 
 ## Build
 
-Call the Skill tool with "tdd" where possible, at pre-agreed seams. Logic with a branch, a loop, a parser, money, permissions, or security always leaves at least one test behind.
+Call the Skill tool with "tdd" where possible at pre-agreed seams. Logic with a branch, a loop, a parser, money, permissions, or security always leaves at least one test behind.
 
 Run typechecking regularly, single test files regularly, and the full test suite once at the end.
 

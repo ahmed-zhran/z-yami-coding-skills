@@ -1,103 +1,470 @@
 <!doctype html>
-<html lang="en">
+<html
+  lang="en"
+  data-type="software"
+  data-radius="sharp"
+  data-ground="sky"
+  data-buttons="arrow"
+  data-tone="dark"
+  data-motion
+>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Skills · Yami Coding</title>
     <meta
       name="description"
       content="Engineering and productivity skills in Yami Coding: ship doors, lineage, review, and Herdr."
     />
-    <link rel="icon" href="%BASE_URL%favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#010308" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@400;500;600&family=Syne:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./src/styles.css" />
-  </head>
-  <body class="page-skills">
-    <div class="sky sky-dim" aria-hidden="true">
-      <canvas data-rift></canvas>
-      <div class="sky-veil"></div>
-    </div>
+    <link rel="stylesheet" href="assets/system.css" />
+    <link rel="stylesheet" href="assets/ui/cards.css" />
+    <link rel="stylesheet" href="assets/motion/motion.css" />
+    <link rel="stylesheet" href="assets/backgrounds/backgrounds.css" />
+    <link rel="stylesheet" href="assets/layout/layout.css" />
+    <style>
+      :root {
+        --p-bg: #010308;
+        --p-surface: #07101c;
+        --p-ink: #f7f4ec;
+        --p-muted: #a8b0bc;
+        --p-accent: #3db4ff;
+        --p-accent-ink: #010308;
+        --p-action: #3db4ff;
+        --p-action-ink: #010308;
+        --p-inv-bg: #07101c;
+        --p-inv-surface: #0c1828;
+        --p-inv-ink: #f7f4ec;
+        --p-inv-muted: #a8b0bc;
+        --p-inv-accent: #9ad0ff;
+        --p-inv-accent-ink: #010308;
+        --p-inv-action: #ffb43c;
+        --p-inv-action-ink: #010308;
+        --font-display: "Syne", "Arial Narrow", sans-serif;
+        --font-text: "Sora", "Segoe UI", sans-serif;
+        --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+        --display-weight: 800;
+        --display-tracking: -0.02em;
+        color-scheme: dark;
+      }
+      body {
+        background:
+          radial-gradient(ellipse 90% 55% at 70% -10%, rgba(61, 180, 255, 0.14), transparent 55%),
+          radial-gradient(ellipse 70% 45% at 10% 110%, rgba(255, 180, 60, 0.1), transparent 50%),
+          var(--p-bg);
+      }
+      .nav__logo {
+        gap: 0.75rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        font-size: 0.88rem;
+      }
+      .nav__logo img.mark {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: block;
+      }
+      .catalog {
+        display: grid;
+        gap: var(--s-8);
+      }
+      .catalog h2 {
+        margin-bottom: var(--s-4);
+      }
+      .catalog ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 1px;
+        background: var(--line);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        overflow: hidden;
+      }
+      .catalog li {
+        display: grid;
+        grid-template-columns: minmax(10rem, 18rem) 1fr;
+        gap: var(--s-4);
+        padding: 0.9rem 1.1rem;
+        background: var(--bg);
+        align-items: baseline;
+      }
+      .catalog li a {
+        font-family: var(--font-mono);
+        font-size: 0.92rem;
+        font-weight: 500;
+        color: var(--ink);
+        text-decoration: none;
+      }
+      .catalog li a:hover {
+        color: var(--action);
+      }
+      .catalog li span {
+        color: var(--muted);
+        font-size: var(--t-small);
+      }
+      @media (max-width: 639px) {
+        .catalog li {
+          grid-template-columns: 1fr;
+          gap: 0.25rem;
+        }
+      }
 
-    <header class="site-header">
-      <a class="brand" href="./index.html">
-        <img class="mark" src="%BASE_URL%favicon.svg" alt="" />
-        Yami
-      </a>
-      <nav class="nav">
-        <a href="./index.html#lineage">Lineage</a>
-        <a href="./index.html#authority">Authority</a>
-        <a href="./index.html#steer">Steer</a>
-        <a href="./skills.html" aria-current="page">Skills</a>
-        <a href="https://github.com/ahmed-zhran/z-yami-coding-skills">GitHub</a>
-      </nav>
+      .star-btn {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        min-height: 44px;
+        padding: 0 1rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 180, 60, 0.55);
+        background: linear-gradient(180deg, rgba(255, 180, 60, 0.22), rgba(255, 180, 60, 0.08));
+        color: #f7f4ec;
+        font: 600 0.88rem/1 var(--font-text);
+        text-decoration: none;
+        overflow: hidden;
+        isolation: isolate;
+        animation: star-pulse 2.4s ease-in-out infinite;
+        box-shadow: 0 0 0 0 rgba(255, 180, 60, 0.35);
+        white-space: nowrap;
+      }
+      .star-btn svg {
+        width: 16px;
+        height: 16px;
+        fill: #ffb43c;
+        flex: 0 0 auto;
+        animation: star-spin 5s linear infinite;
+      }
+      .star-btn::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.28) 48%, transparent 62%);
+        transform: translateX(-120%);
+        animation: star-sheen 3.2s ease-in-out infinite;
+        z-index: -1;
+      }
+      .star-btn:hover {
+        border-color: #ffb43c;
+        transform: translateY(-1px);
+      }
+      @keyframes star-pulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(255, 180, 60, 0.28); }
+        50% { box-shadow: 0 0 0 10px rgba(255, 180, 60, 0); }
+      }
+      @keyframes star-sheen {
+        0%, 55% { transform: translateX(-120%); }
+        100% { transform: translateX(120%); }
+      }
+      @keyframes star-spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .star-btn, .star-btn svg, .star-btn::after { animation: none; }
+      }
+    </style>
+    <script>
+      document.documentElement.classList.add("m-enter");
+      setTimeout(() => document.documentElement.classList.add("m-enter-done"), 700);
+    </script>
+    <script src="assets/backgrounds/backgrounds.js"></script>
+  </head>
+  <body>
+    <header class="nav">
+      <div class="wrap nav__bar">
+        <a class="skip-link" href="#top">Skip to content</a>
+        <a class="nav__logo" href="./index.html">
+          <img class="mark" src="favicon.svg" width="40" height="40" alt="" />
+          Yami
+        </a>
+        <nav class="nav__links" aria-label="Main">
+          <div class="nav__item"><a class="nav__link" href="./index.html#lineage">Bases</a></div>
+          <div class="nav__item"><a class="nav__link" href="./index.html#authority">Ship doors</a></div>
+          <div class="nav__item"><a class="nav__link" href="./index.html#install">Install</a></div>
+          <div class="nav__item">
+            <a class="nav__link" href="./skills.html" aria-current="page">Skills</a>
+          </div>
+          <div class="nav__item"><a class="nav__link" href="./contributing.html">Contributing</a></div>
+          <div class="nav__item">
+            <a
+              class="nav__link"
+              href="https://github.com/ahmed-zhran/z-yami-coding-skills"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          </div>
+        </nav>
+        <div class="nav__actions">
+          <a
+            class="star-btn"
+            href="https://github.com/ahmed-zhran/z-yami-coding-skills"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M8 1.5l1.76 3.57 3.94.57-2.85 2.78.67 3.92L8 10.96l-3.52 1.85.67-3.92L2.3 5.64l3.94-.57L8 1.5z" />
+            </svg>
+            Star us on GitHub
+          </a>
+        </div>
+        <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Menu">
+          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+            <path d="M2 5h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
     </header>
 
-    <main class="wrap">
-      <section class="page-intro">
-        <p class="kicker">The set</p>
-        <h1>Skills</h1>
-        <p class="lede">
-          You type the ship doors and the setup commands. The model can also reach the procedures when the task fits.
-          A user-invoked skill never calls another user-invoked skill.
-        </p>
-      </section>
+    <main id="top">
+      <section class="section" style="--h: 1" aria-labelledby="skills-page-h">
+        <div class="wrap">
+          <div class="section-head">
+            <p class="t-label">The set</p>
+            <h1 id="skills-page-h">Skills</h1>
+            <p>
+              You type the ship doors and the setup commands. The model can also reach the procedures
+              when the task fits. A user-invoked skill never calls another user-invoked skill.
+            </p>
+          </div>
 
-      <section class="catalog">
-        <div class="reveal">
-          <h2>Engineering · you type</h2>
-          <ul>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/ask-yami/SKILL.md">ask-yami</a><span>Which skill or flow fits this moment.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/setup-z-yami-coding-skills/SKILL.md">setup-z-yami-coding-skills</a><span>Tracker, labels, branching, surfaces. Once per repo.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/grill-with-docs/SKILL.md">grill-with-docs</a><span>Interview that keeps the glossary and ADRs current.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/wayfinder/SKILL.md">wayfinder</a><span>A foggy effort, charted as decision tickets.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/to-spec/SKILL.md">to-spec</a><span>One spec, with its base recorded.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/to-tickets/SKILL.md">to-tickets</a><span>Tracer bullets, blockers, and bases.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/ship-ticket/SKILL.md">ship-ticket</a><span>One ticket. You approve the land.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/ship-spec/SKILL.md">ship-spec</a><span>One spec. Session lands tickets. You approve the spec.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/ship-release/SKILL.md">ship-release</a><span>The whole release. You approve the PR into main.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/implement-spec/SKILL.md">implement-spec</a><span>Every ticket of one spec, one pull request.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/land/SKILL.md">land</a><span>Merge into the recorded base and restack.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/sync-skills/SKILL.md">sync-skills</a><span>Update this package, then apply its file migrations.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/release/SKILL.md">release</a><span>Start, finish, or hotfix one phase.</span></li>
-          </ul>
-        </div>
-        <div class="reveal">
-          <h2>Engineering · the model can reach</h2>
-          <ul>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/branch-lineage/SKILL.md">branch-lineage</a><span>Bases, worktrees, landing, restack.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/ticket-flow/SKILL.md">ticket-flow</a><span>The procedure behind ship-ticket.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/spec-flow/SKILL.md">spec-flow</a><span>The procedure behind ship-spec. Steers and lands tickets.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/release-flow/SKILL.md">release-flow</a><span>The procedure behind ship-release.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/code-review/SKILL.md">code-review</a><span>Standards and spec, plus security and deep on request.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/security-review/SKILL.md">security-review</a><span>Only findings you can exploit.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/tdd/SKILL.md">tdd</a><span>Red, green, and a test for risky logic.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/diagnosing-bugs/SKILL.md">diagnosing-bugs</a><span>A tight feedback loop before a theory.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/herdr/SKILL.md">herdr</a><span>TUI panes, when HERDR_ENV is set.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/herdr-core/SKILL.md">herdr-core</a><span>Desktop terminals, with hc.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/herdr-app/SKILL.md">herdr-app</a><span>The Desktop window: spaces, tabs, panes.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/surface-map/SKILL.md">surface-map</a><span>Monorepo surfaces and the contracts between them.</span></li>
-          </ul>
-          <h2>Productivity</h2>
-          <ul>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/productivity/grill-me/SKILL.md">grill-me</a><span>An interview with no repo docs to update.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/productivity/handoff/SKILL.md">handoff</a><span>Move the work to another session.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/productivity/unslop/SKILL.md">unslop</a><span>Take the AI tells out of prose people will read.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/productivity/caveman/SKILL.md">caveman</a><span>Short chat. Files stay in full prose.</span></li>
-            <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/productivity/skill-eval/SKILL.md">skill-eval</a><span>Score a skill before you change it.</span></li>
-          </ul>
+          <div class="catalog">
+            <div>
+              <h2>Engineering · you type</h2>
+              <ul>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/ask-yami/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">ask-yami</a
+                  ><span>Which skill or flow fits this moment.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/setup-z-yami-coding-skills/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">setup-z-yami-coding-skills</a
+                  ><span>Tracker, labels, branching, surfaces. Once per repo.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/grill-with-docs/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">grill-with-docs</a
+                  ><span>Interview that keeps the glossary and ADRs current.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/wayfinder/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">wayfinder</a
+                  ><span>A foggy effort, charted as decision tickets.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/to-spec/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">to-spec</a
+                  ><span>One spec, with its base recorded.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/to-tickets/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">to-tickets</a
+                  ><span>Tracer bullets, blockers, and bases.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/ship-ticket/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">ship-ticket</a
+                  ><span>One ticket. You approve the land.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/ship-spec/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">ship-spec</a
+                  ><span>One spec. Session lands tickets. You approve the spec.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/ship-release/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">ship-release</a
+                  ><span>The whole release. You approve the PR into main.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/implement-spec/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">implement-spec</a
+                  ><span>Every ticket of one spec, one pull request.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/land/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">land</a
+                  ><span>Merge into the recorded base and restack.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/sync-skills/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">sync-skills</a
+                  ><span>Update this package, then apply its file migrations.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/release/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">release</a
+                  ><span>Start, finish, or hotfix one phase.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/design-taste-frontend/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">design-taste-frontend</a
+                  ><span>Landing pages and product UI with dealt layout, motion, and a finish gate.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h2>Engineering · the model can reach</h2>
+              <ul>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/branch-lineage/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">branch-lineage</a
+                  ><span>Bases, worktrees, landing, restack.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/ticket-flow/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">ticket-flow</a
+                  ><span>The procedure behind ship-ticket.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/spec-flow/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">spec-flow</a
+                  ><span>The procedure behind ship-spec. Steers and lands tickets.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/release-flow/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">release-flow</a
+                  ><span>The procedure behind ship-release.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/code-review/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">code-review</a
+                  ><span>Standards and spec, plus security and deep on request.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/security-review/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">security-review</a
+                  ><span>Only findings you can exploit.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/tdd/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">tdd</a
+                  ><span>Red, green, and a test for risky logic.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/diagnosing-bugs/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">diagnosing-bugs</a
+                  ><span>A tight feedback loop before a theory.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/herdr/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">herdr</a
+                  ><span>TUI panes, when HERDR_ENV is set.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/herdr-core/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">herdr-core</a
+                  ><span>Desktop terminals, with hc.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/herdr-app/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">herdr-app</a
+                  ><span>The Desktop window: spaces, tabs, panes.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/engineering/surface-map/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">surface-map</a
+                  ><span>Monorepo surfaces and the contracts between them.</span>
+                </li>
+              </ul>
+
+              <h2 style="margin-top: var(--s-8)">Productivity</h2>
+              <ul>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/productivity/grill-me/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">grill-me</a
+                  ><span>An interview with no repo docs to update.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/productivity/handoff/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">handoff</a
+                  ><span>Move the work to another session.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/productivity/unslop/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">unslop</a
+                  ><span>Take the AI tells out of prose people will read.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/productivity/caveman/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">caveman</a
+                  ><span>Short chat. Files stay in full prose.</span>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/skills/productivity/skill-eval/SKILL.md"
+                     target="_blank" rel="noopener noreferrer">skill-eval</a
+                  ><span>Score a skill before you change it.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
     </main>
 
-    <footer class="wrap site-footer">
-      <span>Yami Coding</span>
-      <a href="https://github.com/ahmed-zhran/z-yami-coding-skills">ahmed-zhran/z-yami-coding-skills</a>
+    <footer class="footer closing footer--dark" id="contact" aria-labelledby="skills-close-h">
+      <div class="wrap">
+        <div class="closing__cta close--type" style="text-align:center">
+          <h2 id="skills-close-h" style="font-size:clamp(3.5rem,14vw,7rem);letter-spacing:-0.04em;max-width:none">Ship.</h2>
+          <p class="t-lead" style="margin-inline:auto">In the dark. From a recorded base.</p>
+          <div class="btn-row" style="justify-content:center;margin-top:var(--s-6)">
+            <a class="btn btn--primary btn--xl" href="./index.html#install">Install the plugin</a>
+          </div>
+        </div>
+        <div class="closing__links">
+          <div class="footer__legal">
+            <span>&copy; 2026 Ahmed Zhran</span>
+            <a href="https://github.com/ahmed-zhran/z-yami-coding-skills"
+               target="_blank" rel="noopener noreferrer">ahmed-zhran/z-yami-coding-skills</a
+            >
+          </div>
+        </div>
+      </div>
     </footer>
-    <script type="module" src="./src/site.js"></script>
+    <script type="module" src="./src/boot-skills.js"></script>
   </body>
 </html>

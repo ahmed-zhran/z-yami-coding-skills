@@ -1,0 +1,5 @@
+interface:
+  display_name: "Empower Crafting"
+  short_description: "Approve implementation skills and rewrite the live build router"
+policy:
+  allow_implicit_invocation: false

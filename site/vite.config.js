@@ -8,6 +8,7 @@ export default defineConfig({
       input: {
         main: resolve("index.html"),
         skills: resolve("skills.html"),
+        contributing: resolve("contributing.html"),
       },
     },
   },

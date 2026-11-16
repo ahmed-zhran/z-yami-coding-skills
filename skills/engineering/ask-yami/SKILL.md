@@ -1,6 +1,6 @@
 ---
 name: ask-yami
-description: Ask which skill or flow fits your situation. A router over the skills in this repo.
+description: Ask which skill or flow fits. On invoke, read the project's current state and name what to do next; when nothing is planned, suggest brainstorming or upgrades.
 disable-model-invocation: true
 ---
 
@@ -11,6 +11,29 @@ You don't remember every skill, so ask.
 Before stating what a skill does or recommending a step be skipped, read that skill's SKILL.md: the summaries here are for orientation only.
 
 A **flow** is a path through the skills. Most work travels the **main flow**, inside a **release cycle**, on branches that each know their **base**. A few **on-ramps** merge onto it; everything else is design, upkeep, or standalone.
+
+## What next (run first)
+
+On every invoke, before answering from the map alone, **read this repo's state** and name the next door. If the user already named a situation, still check state, then fold both into one recommendation. Recommend and stop: do not start the named skill unless they asked you to run it.
+
+Inspect, in order. Use the first match that is true. Read `docs/agents/branching.md`, `docs/agents/issue-tracker.md`, and `docs/agents/triage-labels.md` when they exist so labels and tracker commands are this repo's, not guesses.
+
+1. **Setup missing.** This checkout is meant to run the ship flow, and `docs/agents/branching.md` (or the issue-tracker config the other skills assume) is absent → **`/setup-z-yami-coding-skills`**. Skip when this repo *is* the skills package (or only authors skills and does not ship product through that cycle).
+2. **Post-release gate open.** `docs/agents/pending-release.md` exists and any line matches `- [ ]` → clear those boxes first (the doors on each box: human-testing feedback from `docs/releases/<N>/human-testing.md`, retro, reflect, learnings, debt, …, `/sync-skills`, last `/empower-crafting`). The next release cannot start.
+3. **Open release in flight.** An open `release/<N>` (and/or that branch is the default base) → say which. Then:
+   - open `ready-for-agent` (or equivalent) tickets whose `**Base:**` is a `spec/<issue>` under that release → **`/ship-spec <issue>`** (or continue the frontier if a ship is mid-flight);
+   - specs published, no tickets yet → **`/ship-spec`** or **`/to-tickets`** (or **`/ship-release <N>`** for the whole cycle);
+   - release branch ready to finish (specs landed, or user wants the whole cycle) → **`/ship-release <N>`** or **`/release finish <N>`**.
+   Do **not** recommend beta doors (`/release-ui-design`, `/software-factory`) from state alone; only if the user already asked for that beta capability. When the open gate's last unchecked box is Empower crafting, name **`/empower-crafting`**.
+4. **Ready work, no release branch needed** (repo ships from `main`, or bugs with `**Base:**` already set) → name the takeable issues and the door (**`/ship-ticket <n>`**, **`/ship-spec`**, or **`/implement`**).
+5. **Inbox that needs triage.** Open issues with `needs-triage` / `needs-info` (or the repo's mapped labels), or unlabeled arrivals that are not yet agent-ready → **`/triage`**.
+6. **Open PRs waiting on the human.** Name them and whether the next step is review, **`/land`**, or a fix comment plus **`/implement`**.
+7. **Nothing planned.** No open release cycle worth continuing, no takeable `ready-for-agent` work, no triage inbox, no blocking gate → say the board is clear, then offer to **brainstorm** or **upgrade**:
+   - new product ideas → **`/grill-with-docs`** (or **`/grill-me`** with no repo), then the main flow;
+   - foggy large effort → **`/wayfinder`**;
+   - deepen or modernise the codebase → **`/improve-codebase-architecture`**, **`/debt`**, or a stack revisit via **`/stack-decision`** / **`/surface-architecture`** where a surface has drifted.
+
+End with **one** next command (or a short ordered list when the gate has several open boxes). If state could not be read (no tracker access, wrong cwd), say what failed and ask the one question that unblocks routing.
 
 ## Branch lineage, in one paragraph
 
@@ -27,10 +50,10 @@ Every spec and ticket carries a `**Base:**` line, written when that issue is cre
      - **The phases, by hand**: **`/to-spec`** (this conversation, one feature), then **`/to-tickets`**, then **`/ship-ticket <n>`** per ticket. When those tickets have landed, **`/ship-spec <issue>`** lands the spec. Repeat `/ship-spec` once per feature.
      - **One ticket's phases**: **`/start-work <n>`**, **`/implement <n>`**, **you review the PR**, then **`/land <pr>`**.
      - **All of one spec's tickets in one pull request**: **`/implement-spec`**. That is a different door. `/ship-spec` and `/ship-release` give each ticket its own pull request into the spec branch, then land the spec.
-     - **The whole release**: **`/ship-release <N>`** names every feature, runs the `/ship-spec` procedure once per feature under release authority (lands tickets and specs), then tests and opens the release pull request. You approve only that pull request into `main`. Two features are two specs, finished one after the other.
+     - **The whole release**: **`/ship-release <N>`** names every feature, runs the `/ship-spec` procedure once per feature under release authority (lands tickets and specs), then tests and opens the release pull request. You approve only that pull request into `main`. Two features are two specs, finished one after the other. No design phase in this door.
    - **No.** It is still one ticket, and the ticket already has a `**Base:**`. **`/implement`** builds that ticket and opens the PR into the recorded base. It stops when the issue has no base. You review it, then **`/land`**.
-5. **`/release finish <N>`** freezes the release, compiles the changelog and version bump, writes the post-release gate, opens the release PR into `main`, lands it after your approval, tags it, and publishes the notes. Human testing, `code-review`, and `security-review` of the release diff happen before that tag. **`/ship-release`** includes this step. Skip it when `/ship-release` already tagged.
-6. **The gate blocks the next release.** `docs/agents/pending-release.md` lands on `main` with open boxes: `/retro`, `/reflect`, `/learnings`, `/debt`, an ADR pass, `/improve-codebase-architecture`, a risk and repo-scale note, any human decision still open, and `/sync-skills`. Clear them by doing the work. The next `/release start` or `/ship-release` refuses while a box is open.
+5. **`/release finish <N>`** freezes the release, compiles the changelog and version bump, runs `code-review` and `security-review`, writes **`docs/releases/<N>/human-testing.md`** (user stories by surface; human walks checks + notes; Sign-off **Approved** is required), writes the post-release gate, opens the release PR into `main`, lands it after your approval, tags it, and publishes the notes. The release PR is not a substitute for human-testing Sign-off. **`/ship-release`** includes this step. Skip it when `/ship-release` already tagged.
+6. **The gate blocks the next release.** `docs/agents/pending-release.md` lands on `main` with open boxes: human-testing feedback from that release file, `/retro`, `/reflect`, `/learnings`, `/debt`, an ADR pass, `/improve-codebase-architecture`, a risk and repo-scale note, any human decision still open, `/sync-skills`, and last **`/empower-crafting`**. Clear them by doing the work. The next `/release start` or `/ship-release` refuses while a box is open.
 
 ### Context hygiene
 
@@ -51,12 +74,11 @@ Keep steps 2 to 4 (through `/to-spec` and `/to-tickets` for one feature) in **on
 
 Decide these before the first ticket of a new surface, and revisit when they stop fitting.
 
-- **`/setup-z-yami-coding-skills`** (once per repo) configures the tracker, labels, domain docs, the branching policy (including the pending-release gate), and the surface map.
+- **`/setup-z-yami-coding-skills`** (once per repo) configures the tracker, labels, domain docs, the branching policy (including the pending-release gate), the surface map, and the craft-skills **draft** plus a seeded live router (`docs/agents/craft-skills.md`, what `/implement` loads while writing code).
 - **`/surface-map`** keeps `docs/agents/surfaces.md`: each surface of the monorepo, its contracts, and the minimum context it needs from the others. The model reaches for it when a contract changes.
 - **`/stack-decision`** picks a surface's framework or a library for a slot, and records an ADR and `docs/agents/stack.md`.
 - **`/surface-architecture`** picks how code is organised inside a surface (feature modules, page-based, clean, vertical slices), writes its architecture doc, and enforces the dependency rule with lint (via `/setup-ts-deep-modules` for TypeScript).
 - **`/extract-surface`** plans splitting a surface into its own repo from its extraction context.
-- **`/software-factory`**: run alongside `/grill-me` when designing automation where agents pick up issues and PRs on their own (triggers, runners, orchestrator, human checkpoints).
 
 ## Review
 
@@ -71,7 +93,8 @@ Decide these before the first ticket of a new surface, and revisit when they sto
 - **`/debt`**: harvest `shortcut:` comments into a ledger and issues. One box on the post-release gate.
 - **`/learnings`**: solution notes in `docs/solutions/`, written after non-obvious fixes and read before work in the same area (model-invoked). One box on the post-release gate: every non-obvious fix from the release has a note, or the gate says there were none.
 - **`/reflect`** and **`/retro`**: boxes on the post-release gate. `/retro` improves the environment (checks, tooling). `/reflect` turns the session's lessons into edits to skills and docs.
-- **`/sync-skills`**: replace installed skills from this package with the published version. It refuses a locally edited skill file and does not touch skills from anywhere else. One box on the post-release gate.
+- **`/sync-skills`**: replace installed skills from this package with the published remote (plugin or skills.sh). It refuses author checkout symlinks and locally edited skill files, and does not touch skills from anywhere else. One box on the post-release gate (before empower-crafting).
+- **`/empower-crafting`**: propose complementary **coding-craft** skills from the package draft, stack/architecture, and this release's retro, reflect, learnings, debt, ADRs, bugs, and dependency changes; after you approve the table, install and rewrite `docs/agents/craft-skills.md`. Fills the gap in coding itself (not `tdd` / review). **Last** box on the post-release gate. Also run after a stack or architecture decision when craft skills should change.
 - **`/skill-eval`**: score a skill and test its trigger before changing it.
 
 ## Vocabulary underneath
@@ -104,6 +127,7 @@ Read [PHASE-BOUNDARIES.md](PHASE-BOUNDARIES.md) for the ordered tree and the rea
 - **`/wait-what`**: a reply didn't land; get it re-explained in plain words.
 - **`/caveman`**: terse chat replies (never files); pair with `/wait-what` when too terse.
 - **`/unslop`**: strip AI tells from prose humans read (model-invoked by `/pr` and `/changelog`).
+- **`design-taste-frontend`**: anti-slop UI and frontend production (pinned tasteskill). Prefer for most UI/frontend builds and updates; always when the user asks for cool, eye-catching, heavy, rich, theme, 3D, animations, amazing, or attractive design. Skip only light no-design tweaks. `/prototype` stays for throwaway layout options. The file is a pinned copy; see `.agents/external-skills.md`.
 - **`/teach`**: learn a concept over several sessions.
 - **`/writing-for-agents`**: how to write skills, AGENTS.md, and docs agents read.
 - **`/mermaid-validator`**: check Mermaid diagrams before committing docs.
@@ -112,6 +136,13 @@ Read [PHASE-BOUNDARIES.md](PHASE-BOUNDARIES.md) for the ordered tree and the rea
 - **`herdr-core`**: control Herdr Desktop terminals with `hc` (`HC_TERMINAL_ID` is set). `spec-flow` calls it on Desktop so each ready ticket gets its own terminal in a child tab, then steers that terminal with a screen-read loop (allowlist dialogs often stay `working`). Run `hc --skill` for the live flags.
 - **`herdr-app`**: show and arrange the Herdr Desktop window. `spec-flow` calls it so ticket terminals appear in sibling child tabs of the current space, not the parent's tab.
 - **`herdr-guide`**: help a human install, learn, or troubleshoot Herdr. Not the skill that drives panes or terminals.
+
+## Beta (opt-in only)
+
+These live under `skills/in-progress/`. They are **not** in the plugin and must **not** appear in what-next or the main flow unless the user explicitly asked for them (by slash name or a clear ask for that capability). Normal grill → spec → tickets → ship ignores them.
+
+- **`/release-ui-design`**: design-before-tickets for a release (OpenPencil under `.ui-designs/`, pack written only after approval). Without an approved pack, `/ship-release` is unchanged.
+- **`/software-factory`**: vocabulary for designing a factory of agents (tasks, triggers, runners, orchestrator). Not paired with `/grill-me` unless the user asked for factory design.
 
 ## Precondition
 

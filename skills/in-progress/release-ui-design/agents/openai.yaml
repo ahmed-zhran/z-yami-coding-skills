@@ -1,0 +1,5 @@
+interface:
+  display_name: "Release UI Design"
+  short_description: "Specs then OpenPencil settle; hand off to ship-release"
+policy:
+  allow_implicit_invocation: false

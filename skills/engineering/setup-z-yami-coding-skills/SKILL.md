@@ -31,7 +31,7 @@ Look at the current repo to understand its starting state. Read whatever exists;
 - Is the `triage` skill installed? (a `triage` skill folder alongside this one, or `triage` in your available skills.) This decides whether Section B runs at all.
 - Monorepo signals: a `pnpm-workspace.yaml`, a `workspaces` field in `package.json`, `go.work`, a Cargo or melos workspace, or populated `apps/`, `services/`, `packages/` folders with their own build files.
 - Branches: `git branch -r`, open `release/*` branches, the latest tag (`git describe --tags --abbrev=0`), and the repo's merge settings (`gh repo view --json mergeCommitAllowed,squashMergeAllowed,rebaseMergeAllowed`).
-- `docs/agents/branching.md`, `docs/agents/surfaces.md`, `docs/agents/stack.md`, `docs/agents/architecture/`, `docs/agents/release.md`: prior output of this skill or of `surface-map`, `stack-decision`, `surface-architecture`, `release`.
+- `docs/agents/branching.md`, `docs/agents/surfaces.md`, `docs/agents/stack.md`, `docs/agents/architecture/`, `docs/agents/release.md`, `docs/agents/craft-skills-draft.md`, `docs/agents/craft-skills.md`: prior output of this skill or of `surface-map`, `stack-decision`, `surface-architecture`, `release`.
 
 ### 2. Present findings and ask
 
@@ -118,9 +118,13 @@ The block:
 ### Surfaces
 
 [one-line list of surfaces, or "single surface"]. Before working in a surface, read its row in `docs/agents/surfaces.md`, `docs/agents/stack.md`, and its architecture doc under `docs/agents/architecture/`.
+
+### Craft skills
+
+Live coding-craft router at `docs/agents/craft-skills.md` (what `/implement` reads while writing code). Package candidates at `docs/agents/craft-skills-draft.md` (for `/empower-crafting`; sync may refresh the draft only). Not for `tdd` / review: those stay in the implement flow.
 ```
 
-Include `### Surfaces` only when Section E ran.
+Include `### Surfaces` only when Section E ran. Always include `### Craft skills` and write both the draft and the live file.
 
 Include the `### Triage labels` sub-block, and write `docs/agents/triage-labels.md`, only when `triage` is installed and Section B ran. When it isn't, both are omitted.
 
@@ -134,6 +138,10 @@ Then write the docs files using the seed templates in this skill folder as a sta
 - [triage-labels.md](./triage-labels.md): label mapping (only if `triage` is installed)
 - [domain.md](./domain.md): domain doc consumer rules + layout
 - [branching.md](./branching.md): branch lineage policy
+- [craft-skills-draft.md](./craft-skills-draft.md): package candidate craft rows for `/empower-crafting` (sync may refresh)
+- [craft-skills.md](./craft-skills.md): live approved coding-craft router for `/implement` / `ticket-flow` (seed once; later rewritten only by `/empower-crafting`)
+
+When writing them: always write the draft from its template. Write the live file from its template only when `docs/agents/craft-skills.md` is missing (do not overwrite an existing live file on re-setup).
 
 For "other" issue trackers, write `docs/agents/issue-tracker.md` from scratch using the user's description.
 

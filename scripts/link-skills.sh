@@ -6,11 +6,11 @@ set -euo pipefail
 # modifications, will not be approved.
 #
 # Links all skills in the repository into the local skill directories used by
-# each agent harness:
+# each agent harness for live author testing:
 #   - ~/.claude/skills: Claude Code
 #   - ~/.agents/skills: Codex and other Agent Skills-compatible harnesses
-# Each entry is a symlink into this repo, so a `git pull` is all that's needed
-# to keep installed skills up to date.
+# Consumer updates use the published remote via /sync-skills (plugin or
+# skills.sh). That skill refuses this symlink shape and will not git pull here.
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 DESTS=("$HOME/.claude/skills" "$HOME/.agents/skills")

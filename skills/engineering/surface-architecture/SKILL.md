@@ -85,6 +85,8 @@ Prove it bites: add a deliberate violation, show the lint failing, remove it.
 
 Done when the doc exists, the ADR exists, the surface map links both, and a deliberate violation fails the lint command.
 
+When the architecture choice should change which craft skills the build loads, tell the user to run **`/empower-crafting`** so it can propose updates to `docs/agents/craft-skills.md`. Do not run that skill unless they ask.
+
 ## Who reads the doc
 
 - `to-tickets` and `implement` read it before planning or writing code in the surface.
