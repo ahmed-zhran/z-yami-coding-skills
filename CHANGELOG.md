@@ -1,5 +1,23 @@
 # z-yami-coding-skills
 
+## 1.6.0
+
+### Minor Changes
+
+- [`d589d20`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/d589d20a9a1f33a23bf873468729d62415d0dc3d) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - `/ask-yami` reads the project's state on every invoke and names the next door. When nothing is planned and the triage inbox is empty, it says the board is clear and offers brainstorming new features or upgrade paths.
+
+- [`d589d20`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/d589d20a9a1f33a23bf873468729d62415d0dc3d) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - Coding craft uses `docs/agents/craft-skills-draft.md` (package candidates; sync may refresh) and live `docs/agents/craft-skills.md` (`/implement` loads these while writing code). `/empower-crafting` proposes the table from draft, stack, and post-release learnings, then rewrites the live file after approval. It is the last post-release gate box. Craft rows exclude `tdd` and review: those stay in the implement flow.
+
+- [`d589d20`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/d589d20a9a1f33a23bf873468729d62415d0dc3d) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - Vendor `design-taste-frontend` (tasteskill v2.5.1) for anti-slop UI and frontend production. Prefer it for most UI work; always when the user asks for cool, eye-catching, heavy, rich, theme, 3D, animations, amazing, or attractive design; skip only light no-design tweaks.
+
+- [`d589d20`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/d589d20a9a1f33a23bf873468729d62415d0dc3d) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - Product releases write a blocking human-testing checklist at `docs/releases/<N>/human-testing.md` (user stories by surface, checkboxes, notes, Sign-off). Sign-off Approved is required before the release tag; the release PR is not a substitute. After the tag, pending-release includes a human-testing feedback box that turns fails and notes into next-release work. New files must use a named home (`docs/releases/<N>/`, `docs/agents/`, …), not an ad-hoc path at a folder root.
+
+- [`d589d20`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/d589d20a9a1f33a23bf873468729d62415d0dc3d) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - Beta opt-in only: `/release-ui-design` (design-before-tickets) and `/software-factory` live under `in-progress/`, stay out of the plugin, and are not recommended by `/ask-yami` unless the user asks for them. `/ship-release` ignores missing or incomplete design packs and never starts a design phase on its own.
+
+### Patch Changes
+
+- [`d589d20`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/d589d20a9a1f33a23bf873468729d62415d0dc3d) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - `/sync-skills` updates only from the published remote (Claude/Codex plugin or skills.sh). It no longer treats a `link-skills.sh` checkout as the install, and it will not `git pull` that repo.
+
 ## 1.5.0
 
 ### Minor Changes
