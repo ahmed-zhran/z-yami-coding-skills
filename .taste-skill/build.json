@@ -1,0 +1,11 @@
+{
+ "page": null,
+ "url": "http://localhost:5173/z-yami-coding-skills/",
+ "root": null,
+ "kind": "software",
+ "category": "agent skills for shipping software",
+ "primary": "Install the plugin",
+ "rounds": 3,
+ "start": "2026-11-15T18:18:20.148Z",
+ "by": "gate.mjs --start"
+}

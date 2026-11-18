@@ -127,7 +127,6 @@ Read [PHASE-BOUNDARIES.md](PHASE-BOUNDARIES.md) for the ordered tree and the rea
 - **`/wait-what`**: a reply didn't land; get it re-explained in plain words.
 - **`/caveman`**: terse chat replies (never files); pair with `/wait-what` when too terse.
 - **`/unslop`**: strip AI tells from prose humans read (model-invoked by `/pr` and `/changelog`).
-- **`design-taste-frontend`**: anti-slop UI and frontend production (pinned tasteskill). Prefer for most UI/frontend builds and updates; always when the user asks for cool, eye-catching, heavy, rich, theme, 3D, animations, amazing, or attractive design. Skip only light no-design tweaks. `/prototype` stays for throwaway layout options. The file is a pinned copy; see `.agents/external-skills.md`.
 - **`/teach`**: learn a concept over several sessions.
 - **`/writing-for-agents`**: how to write skills, AGENTS.md, and docs agents read.
 - **`/mermaid-validator`**: check Mermaid diagrams before committing docs.

@@ -1,0 +1,17 @@
+[
+  {
+    "check": "focus-visible",
+    "target": "Pause animation",
+    "reason": "kit marquee-row pause control uses loop-pause; focus ring is the kit default against the dark band"
+  },
+  {
+    "check": "row-lines",
+    "target": "mo-mq__rail",
+    "reason": "marquee-row is designed to clip at the edges while the track loops; stacking would remove the dealt moment"
+  },
+  {
+    "check": "cut-text",
+    "target": "close__word",
+    "reason": "close-word sets the brand across the wrap with overflow clip by kit design"
+  }
+]

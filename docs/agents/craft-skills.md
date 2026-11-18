@@ -2,7 +2,7 @@
 
 Approved coding-craft router for this repo. `/implement` and `ticket-flow` read **only** this file before writing product code.
 
-These skills fill the gap in the **coding itself** (framework, UI craft, mobile, backend architecture). They are not before-code gates and not after-code gates: `tdd`, typecheck, and `code-review` stay in the implement flow.
+These skills fill the gap in the **coding itself** (framework, UI craft, mobile, backend architecture, SEO). They are not before-code gates and not after-code gates: `tdd`, typecheck, and `code-review` stay in the implement flow. Package vocabulary skills (`codebase-design`, `domain-modeling`) stay outside this table; other skills call them directly.
 
 Written by `/empower-crafting` after you approve its proposal table. To change it, re-run that skill (it reads `craft-skills-draft.md` and your stack/architecture docs). Do not hand-merge the draft into this file. `/sync-skills` never overwrites this file.
 
@@ -13,7 +13,7 @@ Written by `/empower-crafting` after you approve its proposal table. To change i
 
 | When the work is… | Call these skills (in order) | Why |
 | --- | --- | --- |
-| Frontend **UI / visual design** | `design-taste-frontend` | Package default ui-taste until `/empower-crafting` revises this table |
-| **Module / interface design** inside a surface | `codebase-design` | Package default module-design |
+
+No craft skills are approved yet. Run `/empower-crafting` (from the package draft plus this repo's stack) to fill this table.
 
 After craft skills: continue the implement flow (`tdd` at seams, typecheck/tests, then `code-review`).

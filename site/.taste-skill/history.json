@@ -1,0 +1,25 @@
+{
+  "palettes": [
+    "cool-grey-cobalt"
+  ],
+  "types": [
+    "hanken"
+  ],
+  "dealt": [
+    "hanken",
+    "manrope",
+    "outfit"
+  ],
+  "moments": [
+    {
+      "id": "marquee-row",
+      "at": "2026-11-15T18:14:00.925Z",
+      "seed": "47986eaf"
+    },
+    {
+      "id": "liquid-type",
+      "at": "2026-11-15T18:14:00.925Z",
+      "seed": "47986eaf"
+    }
+  ]
+}

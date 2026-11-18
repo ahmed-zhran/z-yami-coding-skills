@@ -55,7 +55,6 @@ Model- or user-reachable (rich trigger phrasing so the model can reach for them)
 - **[learnings](./learnings/SKILL.md)**: Solution notes in `docs/solutions/`: written after non-obvious fixes, read before work in the same area.
 - **[resolving-merge-conflicts](./resolving-merge-conflicts/SKILL.md)**: Resolve an in-progress merge or rebase conflict by intent, traced to each side's primary source.
 - **[prototype](./prototype/SKILL.md)**: Build a throwaway prototype to answer a design question: a single HTML file for state and logic, or toggleable UI variations.
-- **[design-taste-frontend](./design-taste-frontend/SKILL.md)**: Anti-slop UI and frontend production (pinned tasteskill). Prefer for most UI work; always on cool/eye-catching/heavy design asks.
 - **[research](./research/SKILL.md)**: Investigate a question against primary sources and capture the findings as a cited Markdown file, run as a background agent.
 - **[domain-modeling](./domain-modeling/SKILL.md)**: Build and sharpen the domain model: challenge terms, stress-test with scenarios, update `GLOSSARY.md` and ADRs inline.
 - **[codebase-design](./codebase-design/SKILL.md)**: Shared vocabulary for designing deep modules: small interfaces, clean seams, testable through the interface.

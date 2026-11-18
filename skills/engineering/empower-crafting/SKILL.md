@@ -78,15 +78,15 @@ Show the user **one proposal table** and wait. Do not install and do not write t
 ```markdown
 ## Proposed craft skills
 
-| When the work is… | Call these skills (in order) | Job | Why chosen | Evidence (stack / retro / bug / learning) | Source (package / installed / to install) |
+| When the work is… | Call these skills (in order) | Job | Why chosen | Evidence (stack / retro / bug / learning) | Source (draft / installed / to install) |
 | --- | --- | --- | --- | --- | --- |
-| … | `skill-a` | ui-taste | … | … | package default |
+| … | `skill-a` | ui-taste | … | … | to install |
 
 ### Rejected (same job or poor fit)
 
 | Skill | Job | Why not |
 | --- | --- | --- |
-| … | … | duplicates ui-taste already covered by design-taste-frontend |
+| … | … | duplicates ui-taste already covered by another chosen row |
 
 ### Install plan (after approval)
 
