@@ -1,5 +1,11 @@
 # z-yami-coding-skills
 
+## 1.8.0
+
+### Minor Changes
+
+- [`3edbc7e`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/3edbc7ea293d95879a19b574a25ab8d8f01f841c) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - Promoted `html-artifacts` (vendored from dogum/html-artifacts v2.0.0): self-contained HTML when spatial layout beats markdown, with carve-outs so durable SoT and GitHub PR bodies stay markdown and `/improve-codebase-architecture` keeps its own architecture HTML report.
+
 ## 1.7.0
 
 ### Minor Changes
