@@ -60,6 +60,19 @@ A live URL with no tag (the agent guide) is checked by re-fetching it and diffin
 - **Content hash (sha256) of the upstream body:** `cf20cbef338e8f0df22107c0b154d5a9bbc7a6851003afc2a61181cb549a7f97`
 - **Divergence:** YAML frontmatter (`name`, `description`) is added so agents can load the skill. Focus etiquette section plus example and safety edits: default to the current space, `--focus false` on creates, no `space.select` / focus theft for convenience, shots stay in the agent's space. Re-apply frontmatter and Focus etiquette when the body changes. The live window commands come from `herdr-app --skill`.
 
+
+### html-artifacts
+
+- **Vendored:** `skills/productivity/html-artifacts/`
+- **Upstream:** https://github.com/dogum/html-artifacts
+- **License:** Apache-2.0. The text is `skills/productivity/html-artifacts/LICENSE`. See `skills/productivity/html-artifacts/NOTICE`.
+- **Pin:** tag `v2.0.0` (commit `d54982f5da13392481f122b533b4ab9a8b2dc3d9`, latest stable release as of 2026-11-19)
+- **Source:** https://github.com/dogum/html-artifacts/releases/download/v2.0.0/html-artifacts.skill
+- **Blob (upstream SKILL.md):** `b2fbe7d7a81dd85196d1c71548bfd46ef682c087`
+- **Content hash (sha256) of upstream SKILL.md:** `b0dc26229461e939b8c859d2de44feaa6f9006fc7c5be21d74f754ec392ef59f`
+- **Why vendored (not external-only pin):** same convention as Herdr. Consumers install one copy from this package; `/sync-skills` refreshes that copy. An external-only skills.sh pin would leave a second name collision risk and no reviewed overlay.
+- **Divergence:** (1) package carve-outs in SKILL.md: durable SoT stays markdown; GitHub PR bodies stay `"pr"`; `/improve-codebase-architecture` owns architecture-candidate HTML. (2) description drops automatic "PR description" / "spec" triggers and names those carve-outs. (3) `agents/openai.yaml` added for Codex. (4) em dashes and en dashes in `references/` rewritten to commas, colons, parentheses, hyphens, or conjunctions per repo prose rules. Re-apply all four after each pin bump. Pattern credit: Thariq Shihipar / Anthropic Claude Code, HTML for rich human-facing deliverables.
+
 ### design-taste-frontend (not vendored)
 
 - **Status:** Removed from the plugin. Listed only as a **Proposed** craft-skills draft candidate (`docs/agents/craft-skills-draft.md`). `/empower-crafting` may install it into a consumer harness after approval.

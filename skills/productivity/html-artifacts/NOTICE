@@ -1,0 +1,10 @@
+html-artifacts
+
+Source: https://github.com/dogum/html-artifacts (tag v2.0.0)
+Blob (upstream SKILL.md): b2fbe7d7a81dd85196d1c71548bfd46ef682c087
+License: Apache License 2.0. The license text is LICENSE in this folder.
+Upstream repository: https://github.com/dogum/html-artifacts
+
+SKILL.md in this folder is a reviewed copy of that tag with the divergences
+recorded in `.agents/external-skills.md`. The pin and the update check live there.
+Pattern credit: Thariq Shihipar / Anthropic Claude Code, "The Unreasonable Effectiveness of HTML."

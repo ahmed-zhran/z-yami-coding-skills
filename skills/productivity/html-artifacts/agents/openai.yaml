@@ -1,0 +1,3 @@
+interface:
+  display_name: "HTML Artifacts"
+  short_description: "Self-contained HTML when layout beats markdown"

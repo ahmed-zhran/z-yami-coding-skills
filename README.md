@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/brand/header.svg" alt="Yami Coding. Ahmed Zhran. 61 skills for release, spec, and ticket." width="880">
+<img src="docs/brand/header.svg" alt="Yami Coding. Ahmed Zhran. 62 skills for release, spec, and ticket." width="880">
 
 # Yami Coding
 
@@ -14,7 +14,7 @@
 
 [Installation](#installation) · [Quick start](#quick-start) · [What it does](#what-it-does) · [Reference](#reference) · [Site](https://ahmed-zhran.github.io/z-yami-coding-skills)
 
-61 skills in the `z-yami-coding-skills` plugin. A release, a spec, and a ticket each record a base when the issue is created, and the agent lands into that base. The ship door you typed owns that level's land gate; everything below lands under that session's authority. The site is [z-yami-coding-skills](https://ahmed-zhran.github.io/z-yami-coding-skills).
+62 skills in the `z-yami-coding-skills` plugin. A release, a spec, and a ticket each record a base when the issue is created, and the agent lands into that base. The ship door you typed owns that level's land gate; everything below lands under that session's authority. The site is [z-yami-coding-skills](https://ahmed-zhran.github.io/z-yami-coding-skills).
 
 ## Requirements
 
@@ -179,6 +179,7 @@ for each ticket:  /ship-ticket <n>     (or /start-work, /implement, you review, 
 - **[unslop](./skills/productivity/unslop/SKILL.md)**: Remove AI tells from prose humans read.
 - **[caveman](./skills/productivity/caveman/SKILL.md)**: Terse chat replies; files stay full prose.
 - **[skill-eval](./skills/productivity/skill-eval/SKILL.md)**: Score a skill and test its trigger.
+- **[html-artifacts](./skills/productivity/html-artifacts/SKILL.md)**: Self-contained HTML when layout beats markdown (pinned in `.agents/external-skills.md`).
 
 ## Documentation
 
@@ -200,9 +201,9 @@ To edit these skills as an author, `scripts/link-skills.sh` can symlink them int
 
 ## Credits
 
-Yami Coding is Ahmed Zhran's package. `herdr`, `herdr-core`, `herdr-app`, `herdr-guide`, `security-review`, `caveman`, and `skill-eval` are Apache-2.0, and each of those folders includes the Apache license text.
+Yami Coding is Ahmed Zhran's package. `herdr`, `herdr-core`, `herdr-app`, `herdr-guide`, `security-review`, `caveman`, `skill-eval`, and `html-artifacts` are Apache-2.0, and each of those folders includes the Apache license text.
 
-The agentic workflow uses [mattpocock/skills](https://github.com/mattpocock/skills) (MIT) as a base. [`UPSTREAM.md`](./UPSTREAM.md) lists what was kept, changed, added, and dropped. Also adapted, with credit: [security-specialist](https://github.com/fabricioctelles/skills/tree/main/skills/security-specialist) and [skill-evaluation](https://github.com/fabricioctelles/skills/tree/main/skills/skill-evaluation) by Fabricio Telles (Apache-2.0), [caveman](https://github.com/JuliusBrussee/caveman) by Julius Brussee (Apache-2.0), [ponytail](https://github.com/DietrichGebert/ponytail) by Dietrich Gebert (MIT), [avoid-ai-writing](https://github.com/conorbronsdon/avoid-ai-writing) by Conor Bronsdon (MIT), [mermaid-validator](https://github.com/dt418/mermaid-validator-agent-skill) by dt418 (MIT), [herdr](https://github.com/herdrdev/herdr/blob/v0.9.5/skills/herdr/SKILL.md), [herdr-core](https://github.com/herdrdev/herdr-core/blob/c84d6e76156a6c2aac1da20efbe800f10acfe897/skills/herdr-core/SKILL.md), [herdr-app](https://github.com/herdrdev/herdr-app/blob/5216e6f9f8c0c281a65e09816c66e4319e671784/src/SKILL.md), and the [Herdr agent guide](https://herdr.dev/agent-guide.md) (Apache-2.0). UI taste and other coding-craft candidates live in the craft-skills draft for `/empower-crafting` (for example [taste-skill](https://github.com/Leonxlnx/taste-skill) / `design-taste-frontend`, MIT) and are not shipped in the plugin until a consumer approves them. Pins for remaining vendored skills are in [`.agents/external-skills.md`](./.agents/external-skills.md). `deep-review` is inspired by the thermo-nuclear review in [cursor/plugins](https://github.com/cursor/plugins).
+The agentic workflow uses [mattpocock/skills](https://github.com/mattpocock/skills) (MIT) as a base. [`UPSTREAM.md`](./UPSTREAM.md) lists what was kept, changed, added, and dropped. Also adapted, with credit: [security-specialist](https://github.com/fabricioctelles/skills/tree/main/skills/security-specialist) and [skill-evaluation](https://github.com/fabricioctelles/skills/tree/main/skills/skill-evaluation) by Fabricio Telles (Apache-2.0), [caveman](https://github.com/JuliusBrussee/caveman) by Julius Brussee (Apache-2.0), [ponytail](https://github.com/DietrichGebert/ponytail) by Dietrich Gebert (MIT), [avoid-ai-writing](https://github.com/conorbronsdon/avoid-ai-writing) by Conor Bronsdon (MIT), [mermaid-validator](https://github.com/dt418/mermaid-validator-agent-skill) by dt418 (MIT), [herdr](https://github.com/herdrdev/herdr/blob/v0.9.5/skills/herdr/SKILL.md), [herdr-core](https://github.com/herdrdev/herdr-core/blob/c84d6e76156a6c2aac1da20efbe800f10acfe897/skills/herdr-core/SKILL.md), [herdr-app](https://github.com/herdrdev/herdr-app/blob/5216e6f9f8c0c281a65e09816c66e4319e671784/src/SKILL.md), the [Herdr agent guide](https://herdr.dev/agent-guide.md) (Apache-2.0), and [html-artifacts](https://github.com/dogum/html-artifacts) by Greg Dogum (Apache-2.0; pattern from Thariq Shihipar / Anthropic Claude Code). UI taste and other coding-craft candidates live in the craft-skills draft for `/empower-crafting` (for example [taste-skill](https://github.com/Leonxlnx/taste-skill) / `design-taste-frontend`, MIT) and are not shipped in the plugin until a consumer approves them. Pins for remaining vendored skills are in [`.agents/external-skills.md`](./.agents/external-skills.md). `deep-review` is inspired by the thermo-nuclear review in [cursor/plugins](https://github.com/cursor/plugins).
 
 ## License
 

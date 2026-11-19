@@ -82,6 +82,7 @@
     "./skills/productivity/writing-for-agents",
     "./skills/productivity/unslop",
     "./skills/productivity/caveman",
-    "./skills/productivity/skill-eval"
+    "./skills/productivity/skill-eval",
+    "./skills/productivity/html-artifacts"
   ]
 }

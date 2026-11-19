@@ -89,7 +89,7 @@ Decide these before the first ticket of a new surface, and revisit when they sto
 
 ## Codebase health and learning
 
-- **`/improve-codebase-architecture`**: in a spare moment, find deepening opportunities and drift from the architecture docs. Picking one generates an idea for `/grill-with-docs`. Also one box on the post-release gate.
+- **`/improve-codebase-architecture`**: in a spare moment, find deepening opportunities and drift from the architecture docs; writes its own HTML report for those candidates. Picking one generates an idea for `/grill-with-docs`. Also one box on the post-release gate. For other long human-facing HTML (plans, explainers, decks, triage editors), use `/html-artifacts` instead.
 - **`/debt`**: harvest `shortcut:` comments into a ledger and issues. One box on the post-release gate.
 - **`/learnings`**: solution notes in `docs/solutions/`, written after non-obvious fixes and read before work in the same area (model-invoked). One box on the post-release gate: every non-obvious fix from the release has a note, or the gate says there were none.
 - **`/reflect`** and **`/retro`**: boxes on the post-release gate. `/retro` improves the environment (checks, tooling). `/reflect` turns the session's lessons into edits to skills and docs.
@@ -127,6 +127,7 @@ Read [PHASE-BOUNDARIES.md](PHASE-BOUNDARIES.md) for the ordered tree and the rea
 - **`/wait-what`**: a reply didn't land; get it re-explained in plain words.
 - **`/caveman`**: terse chat replies (never files); pair with `/wait-what` when too terse.
 - **`/unslop`**: strip AI tells from prose humans read (model-invoked by `/pr` and `/changelog`).
+- **`/html-artifacts`**: self-contained HTML when spatial layout, diagrams, interactivity, or a round-trip editor beat markdown. Stay in markdown for durable SoT (`SKILL.md`, ADRs, `GLOSSARY.md`, research notes) and for GitHub PR bodies (`/pr`). Architecture-candidate surveys stay with `/improve-codebase-architecture` (that skill already owns its HTML report). Pinned copy: see `.agents/external-skills.md`.
 - **`/teach`**: learn a concept over several sessions.
 - **`/writing-for-agents`**: how to write skills, AGENTS.md, and docs agents read.
 - **`/mermaid-validator`**: check Mermaid diagrams before committing docs.

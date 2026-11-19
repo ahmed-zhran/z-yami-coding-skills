@@ -109,5 +109,6 @@ The skill does not ship a good answer. People often ask for a `TYPESCRIPT.md` wi
 - [codebase-design](https://aihero.dev/skills-codebase-design) owns the depth-and-seam vocabulary that every candidate uses.
 - [grilling](https://aihero.dev/skills-grilling) walks the decision tree after you choose a candidate.
 - [domain-modeling](https://aihero.dev/skills-domain-modeling) keeps `GLOSSARY.md` and the ADRs current as you make the decision.
+- [html-artifacts](https://aihero.dev/skills-html-artifacts) is the general format-judgment skill for other long human-facing HTML (plans, explainers, decks). This skill keeps its own architecture-candidate HTML report; do not replace it with that skill.
 
 Its output is an idea, which goes back into the main build flow at [grill-with-docs](https://aihero.dev/skills-grill-with-docs) or [to-spec](https://aihero.dev/skills-to-spec). Its counterpart at the end of the main flow is [retro](https://aihero.dev/skills-retro). This skill improves the code the agent works in, and `retro` improves the environment around it (checks, standards, steering files) after a build. For which skill fits a situation, [ask-yami](https://aihero.dev/skills-ask-yami) is the router over the whole set.

@@ -21,3 +21,4 @@ Model- or user-reachable (rich trigger phrasing so the model can reach for them)
 - **[unslop](./unslop/SKILL.md)**: Remove AI writing tells from prose humans read: PR bodies, changelogs, release notes, READMEs, ADRs.
 - **[caveman](./caveman/SKILL.md)**: Terse chat replies with every technical fact kept; never applied to files, commits, issues, or PRs.
 - **[skill-eval](./skill-eval/SKILL.md)**: Score a skill on 18 criteria and run trigger evals, before merging a change to it.
+- **[html-artifacts](./html-artifacts/SKILL.md)**: Self-contained HTML when spatial layout, diagrams, interactivity, or a round-trip editor beat markdown (durable SoT and GitHub PR bodies stay markdown; architecture surveys stay with improve-codebase-architecture).
