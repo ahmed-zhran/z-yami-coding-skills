@@ -39,6 +39,7 @@ grill-with-docs, wayfinder, prototype, research, domain-modeling, codebase-desig
 | `git-guardrails-claude-code` → `git-guardrails` | Moved from `misc/`; Cursor support; allows normal work-branch pushes; careful and freeze modes |
 | `setup-ts-deep-modules` | Moved from `in-progress/` to `engineering/`; now model-invoked so `surface-architecture` can call it |
 | `software-factory` | Demoted back to `in-progress/` (beta, opt-in only; not in the plugin) |
+| `release-ui-design` | Moved from `in-progress/` to `deprecated/`; design is external under `.designs/release-<N>/` |
 | `resolving-merge-conflicts` | Restored from upstream history (removed in v1.3.0), needed for restacking |
 
 ## Added

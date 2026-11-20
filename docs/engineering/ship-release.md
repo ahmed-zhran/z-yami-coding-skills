@@ -2,7 +2,7 @@
 
 `ship-release` runs one release from the idea through a tag on `main`. It names every feature, then ships each one with the same procedure as `/ship-spec` under release authority, and waits until that [spec](https://www.aihero.dev/ai-coding-dictionary/spec) has landed before the next. Each ready [ticket](https://www.aihero.dev/ai-coding-dictionary/ticket) is built in its own [session](https://www.aihero.dev/ai-coding-dictionary/session).
 
-It does not run OpenPencil and does not start a design phase. Beta `/release-ui-design` runs only when the user explicitly asks for it. If an approved `docs/agents/releases/<N>/design.md` already exists, this door may enrich UI tickets from it; missing or incomplete packs are ignored.
+It does not run a design phase. Drop external exports under `.designs/release-<N>/` when you want UI built against them; a missing or empty folder means the release ships without design.
 
 This door owns the release land. The shipping session lands every ticket and every spec. You approve only the release pull request into `main`. The tag is not the end of your responsibility. Finishing writes a gate onto `main`. The next release cannot start while a box in that gate is open.
 
@@ -13,7 +13,7 @@ You invoke this by typing `/ship-release`, and the agent won't reach for it on i
 | You want | Reach for |
 | --- | --- |
 | The whole release, one spec at a time, then the tag and the gate | `/ship-release <N>` |
-| Specs first, then OpenPencil settle, then this door (beta, only if you ask) | `/release-ui-design <N>`, then `/ship-release <N>` |
+| UI matched to external exports | Drop files in `.designs/release-<N>/`, then `/ship-release <N>` |
 | Only to open the branch, or only to tag | `/release start` or `/release finish` |
 | One spec, through its tickets, until it lands in the release | [ship-spec](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-spec.md) |
 | One ticket | [ship-ticket](https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/docs/engineering/ship-ticket.md) |

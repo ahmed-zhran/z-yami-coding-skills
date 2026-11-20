@@ -33,5 +33,5 @@ Each row is **atomic**: one skill, one job. Stack-conditioned rows (Flutter vs R
 - Prefer compose across jobs (ui-taste + frontend-craft + react-practice + seo) over duplicates.
 - Prefer MIT/Apache and an obvious maintainer when replacing a row later.
 - Never put `tdd`, `diagnosing-bugs`, `code-review`, `security-review`, `pr`, `changelog`, `codebase-design`, or `domain-modeling` here: the implement flow and other package skills already own those.
-- Never put beta doors (`release-ui-design`, `software-factory`) here unless the human already asked.
+- Never put beta doors (`software-factory`) here unless the human already asked.
 - Throwaway layout exploration stays `/prototype`, not a craft-skills row.

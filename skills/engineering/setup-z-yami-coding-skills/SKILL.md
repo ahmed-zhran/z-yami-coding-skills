@@ -138,10 +138,11 @@ Then write the docs files using the seed templates in this skill folder as a sta
 - [triage-labels.md](./triage-labels.md): label mapping (only if `triage` is installed)
 - [domain.md](./domain.md): domain doc consumer rules + layout
 - [branching.md](./branching.md): branch lineage policy
+- [designs.md](./designs.md): external design drop folder (`.designs/release-<N>/`)
 - [craft-skills-draft.md](./craft-skills-draft.md): package candidate craft rows for `/empower-crafting` (sync may refresh)
 - [craft-skills.md](./craft-skills.md): live approved coding-craft router for `/implement` / `ticket-flow` (seed once; later rewritten only by `/empower-crafting`)
 
-When writing them: always write the draft from its template. Write the live file from its template only when `docs/agents/craft-skills.md` is missing (do not overwrite an existing live file on re-setup).
+When writing them: always write the draft from its template. Write the live file from its template only when `docs/agents/craft-skills.md` is missing (do not overwrite an existing live file on re-setup). Write `docs/agents/designs.md` from its template when missing. Ensure `.designs/` exists (`.gitkeep` is enough); do not invent per-release subfolders.
 
 For "other" issue trackers, write `docs/agents/issue-tracker.md` from scratch using the user's description.
 

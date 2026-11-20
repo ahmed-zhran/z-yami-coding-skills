@@ -14,6 +14,8 @@ Call the Skill tool with "branch-lineage". If you are not already on the ticket'
 
 Before writing code, read what binds the area: `GLOSSARY.md`, ADRs, `docs/agents/stack.md`, and the architecture doc for each surface the ticket touches (`docs/agents/architecture/<surface>.md`). New code goes where the architecture doc says; a dependency for a slot `stack.md` already fills is not added. If you need to break either, stop and ask. Search `docs/solutions/` for notes on the area (call the Skill tool with "learnings").
 
+**Designs folder.** If this ticket touches UI, resolve release `<N>` from lineage: ticket `**Base:** release/<N>`, or the parent spec's `**Base:** release/<N>` when the ticket base is `spec/<issue>`. Check `.designs/release-<N>/` (non-empty: any file other than `.gitkeep`, `.gitignore`, or `README.md`). If non-empty, open that folder and build the UI to match those files. Missing or empty: continue without design. `main` / hotfix bases have no release designs folder. See `docs/agents/designs.md`.
+
 ## Craft skills (coding itself)
 
 Read `docs/agents/craft-skills.md`. If it is missing, tell the user to run `/setup-z-yami-coding-skills` or `/empower-crafting` (or copy the template) and stop only when the ticket clearly needs craft you cannot choose without the file; otherwise continue and note the miss.

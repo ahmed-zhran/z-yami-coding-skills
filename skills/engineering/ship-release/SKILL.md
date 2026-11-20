@@ -9,7 +9,7 @@ Ship release `<N>` the user named. If they named none, ask which number.
 
 Call the Skill tool with "release-flow" and follow it. Do not invent a second procedure.
 
-This door does **not** run OpenPencil and does **not** start a design phase. Beta design (`/release-ui-design`) runs only when the user explicitly asks for it. If an approved `docs/agents/releases/<N>/design.md` already exists, release-flow may enrich UI tickets from it; missing or incomplete packs are ignored.
+This door does **not** run a design phase. If `.designs/release-<N>/` is non-empty, release-flow and its UI tickets build against those files; if missing or empty, the release ships without design. See `docs/agents/designs.md`.
 
 **Authority.** This door owns the release land. The shipping session lands every ticket and every spec. You approve only the release pull request into `main`. The tag happens after that approval. Each feature is the same procedure as `/ship-spec` under release authority, one feature at a time. The next feature starts after that spec has landed. Mid-build the session packs ticket panes into sibling child tabs (max six, 2×3), **steers** them: poll the screen every few seconds (Cursor allowlist dialogs often stay `working`, so status-only `hc wait` misses them), clear each with run-once `y`, ask you only for a doc break or an unsettled breaking change, and closes each child's pane after that ticket lands.
 
