@@ -1,5 +1,11 @@
 # z-yami-coding-skills
 
+## 1.9.0
+
+### Minor Changes
+
+- [#2](https://github.com/ahmed-zhran/z-yami-coding-skills/pull/2) [`42c3063`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/42c30637ffa0fb6873291ebb12339c3c09b485d4) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - Design is external: drop exports under `.designs/release-<N>/`. `/ship-release`, `/ship-spec`, `/ship-ticket`, and `/implement` use a non-empty folder for UI; missing or empty means ship without design. The OpenPencil design phase (`/release-ui-design`) is deprecated.
+
 ## 1.8.0
 
 ### Minor Changes
