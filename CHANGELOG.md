@@ -1,5 +1,11 @@
 # z-yami-coding-skills
 
+## 1.10.0
+
+### Minor Changes
+
+- [#3](https://github.com/ahmed-zhran/z-yami-coding-skills/pull/3) [`5a86023`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/5a860239be6f7fab4e57d31918ea4265d489b48f) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - Site landing and skills pages rebuilt from `.designs/release-1.9.0` exports: clearer ship-flow articulation, full 62-skill inventory, and a note that optional UI exports live under `.designs/release-<N>/`.
+
 ## 1.9.0
 
 ### Minor Changes
