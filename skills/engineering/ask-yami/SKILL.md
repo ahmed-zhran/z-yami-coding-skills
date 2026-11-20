@@ -24,7 +24,7 @@ Inspect, in order. Use the first match that is true. Read `docs/agents/branching
    - open `ready-for-agent` (or equivalent) tickets whose `**Base:**` is a `spec/<issue>` under that release → **`/ship-spec <issue>`** (or continue the frontier if a ship is mid-flight);
    - specs published, no tickets yet → **`/ship-spec`** or **`/to-tickets`** (or **`/ship-release <N>`** for the whole cycle);
    - release branch ready to finish (specs landed, or user wants the whole cycle) → **`/ship-release <N>`** or **`/release finish <N>`**.
-   Do **not** recommend beta doors (`/release-ui-design`, `/software-factory`) from state alone; only if the user already asked for that beta capability. When the open gate's last unchecked box is Empower crafting, name **`/empower-crafting`**.
+   Do **not** recommend beta doors (`/software-factory`) from state alone; only if the user already asked for that beta capability. When the open gate's last unchecked box is Empower crafting, name **`/empower-crafting`**.
 4. **Ready work, no release branch needed** (repo ships from `main`, or bugs with `**Base:**` already set) → name the takeable issues and the door (**`/ship-ticket <n>`**, **`/ship-spec`**, or **`/implement`**).
 5. **Inbox that needs triage.** Open issues with `needs-triage` / `needs-info` (or the repo's mapped labels), or unlabeled arrivals that are not yet agent-ready → **`/triage`**.
 6. **Open PRs waiting on the human.** Name them and whether the next step is review, **`/land`**, or a fix comment plus **`/implement`**.
@@ -137,11 +137,14 @@ Read [PHASE-BOUNDARIES.md](PHASE-BOUNDARIES.md) for the ordered tree and the rea
 - **`herdr-app`**: show and arrange the Herdr Desktop window. `spec-flow` calls it so ticket terminals appear in sibling child tabs of the current space, not the parent's tab. Default `--focus false`; never `space.select` for convenience.
 - **`herdr-guide`**: help a human install, learn, or troubleshoot Herdr. Not the skill that drives panes or terminals. Teaches Focus etiquette for agents in a shared window.
 
+## Designs (external)
+
+UI design is not a ship-flow phase. Drop exports under `.designs/release-<N>/` for branch `release/<N>`. When that folder is non-empty, `/ship-release`, `/ship-spec`, `/ship-ticket`, and `/implement` build UI against those files; when missing or empty, they ship without design. See `docs/agents/designs.md`.
+
 ## Beta (opt-in only)
 
 These live under `skills/in-progress/`. They are **not** in the plugin and must **not** appear in what-next or the main flow unless the user explicitly asked for them (by slash name or a clear ask for that capability). Normal grill → spec → tickets → ship ignores them.
 
-- **`/release-ui-design`**: design-before-tickets for a release (OpenPencil under `.ui-designs/`, pack written only after approval). Without an approved pack, `/ship-release` is unchanged.
 - **`/software-factory`**: vocabulary for designing a factory of agents (tasks, triggers, runners, orchestrator). Not paired with `/grill-me` unless the user asked for factory design.
 
 ## Precondition

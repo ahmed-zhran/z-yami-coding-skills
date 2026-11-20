@@ -26,17 +26,24 @@ If `release/<N>` does not exist yet, do what `/release start <N>` does:
 3. Cut `release/<N>` from `main`, record `branch.release/<N>.base main`, push it.
 4. Set `release/<N>` as the default base in `docs/agents/branching.md`.
 
-### Design pack (beta, passive)
+### Designs folder (external, passive)
 
-Do **not** open a design phase, recommend `/release-ui-design`, or run OpenPencil from this skill. Design is beta and user-opt-in only.
+Do **not** open a design phase or run a design tool from this skill. Read `docs/agents/designs.md` (or the setup seed) for the layout.
 
-If `docs/agents/releases/<N>/design.md` exists and is **fully approved** (`- [x] Design approved for release/<N>` with Approved by and Date filled), when `spec-flow` / `to-tickets` slices tickets for this release's specs, enrich UI tickets from that pack (screens, states, acceptance). Otherwise (missing or incomplete), ignore design entirely and continue as today. Drafts under `.ui-designs/` alone never apply and never block.
+Check `.designs/release-<N>/` for this release. **Non-empty** means at least one file other than `.gitkeep`, `.gitignore`, or `README.md`.
+
+| Folder | What to do |
+| --- | --- |
+| Missing or empty | Continue with no design. Never invent screens. |
+| Non-empty | Tell every `spec-flow` / UI ticket under this release to build against those files. Logic-only work ignores them. |
+
+Missing design never blocks the release.
 
 ## 2. Name the features
 
 Keep this phase in one context window. Publish nothing here, and start no ticket here.
 
-**Resume.** When every feature already has a published spec whose `**Base:**` is `release/<N>` and tickets are not all landed, skip the interview. Use that feature list and continue at step 3. (An approved design pack may also list those specs; do not invent a design phase to get one.)
+**Resume.** When every feature already has a published spec whose `**Base:**` is `release/<N>` and tickets are not all landed, skip the interview. Use that feature list and continue at step 3.
 
 Otherwise:
 
@@ -47,7 +54,7 @@ Otherwise:
 
 For each feature, in the order you named them, call the Skill tool with "spec-flow" for that one feature under **release authority**: that run lands its tickets and lands `spec/<issue>` into `release/<N>` without asking the user. Wait until that spec's branch has landed into `release/<N>` before the next feature.
 
-When the design pack for this release is approved, `spec-flow` must attach UI requirements from that pack to every UI-touching ticket it publishes (see the design-pack section in `to-tickets` / `spec-flow`). Logic-only tickets stay unchanged.
+When `.designs/release-<N>/` is non-empty, `spec-flow` must attach that path to every UI-touching ticket it publishes (see the designs section in `to-tickets` / `spec-flow`). Logic-only tickets stay unchanged.
 
 The release is not ready to test while one of its spec branches is still open. A bug found while testing is step 4, not another spec.
 

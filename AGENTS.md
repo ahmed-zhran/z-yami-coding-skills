@@ -48,7 +48,7 @@ Never drop a new file at a folder root with an ad-hoc name. Every new file lands
 | --- | --- |
 | Agent/repo policy the skills read | `docs/agents/` (or a skill template that setup / sync writes there) |
 | Per-release product artifacts (human testing, release notes the product keeps) | `docs/releases/<N>/` |
-| Design packs (when used) | `docs/agents/releases/<N>/` and canvases under `.ui-designs/` |
+| External design exports (optional) | `.designs/release-<N>/` (see `docs/agents/designs.md`) |
 | Skill procedures | `skills/<bucket>/<skill-name>/` |
 | Human docs for a promoted skill | `docs/<bucket>/<skill-name>.md` |
 

@@ -1,3 +1,5 @@
 # Deprecated
 
-Skills I no longer use. This bucket is currently empty: a retired skill is deleted, and the changeset that removes it names whatever replaced it.
+Skills no longer used. Not in the plugin. Not linked by `scripts/link-skills.sh`.
+
+- [`release-ui-design`](./release-ui-design/SKILL.md): design phase removed. Use `.designs/release-<N>/` instead (`docs/agents/designs.md`).
