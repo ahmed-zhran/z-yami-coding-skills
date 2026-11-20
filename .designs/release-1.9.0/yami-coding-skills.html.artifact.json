@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "exports/yami-coding-skills.html",
+  "entry": "exports/yami-coding-skills.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-11-20T12:53:35.326Z",
+  "updatedAt": "2026-11-20T12:53:35.326Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}

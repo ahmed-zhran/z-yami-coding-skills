@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script type="application/json" data-od-external-dependencies>["https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"]</script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yami Coding — Full skills list</title>
+  <meta name="description" content="All 62 Yami Coding skills by Engineering / Productivity and user / model invoke mode. Filterable tables. MIT · v1.8.0." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+@layer od-layout {
+  [hidden]:not([hidden="until-found" i]) { display: none !important; }
+  :where(.od-row) > :where(*) { min-width: 0; }
+  .od-row { display: flex; align-items: center; gap: var(--od-gap, 8px); }
+  .od-touch { min-width: 44px; min-height: 44px; }
+}
+:root {
+  --bg: #07090f;
+  --bg-elev: #0b0e16;
+  --surface: #11151f;
+  --ink: #eef2fa;
+  --muted: #8b95a8;
+  --border: #273044;
+  --border-strong: #3a465c;
+  --accent: #3db4ff;
+  --accent-2: #8eb6ff;
+  --accent-soft: #0f2433;
+  --accent-ink: #041018;
+  --font-display: "Syne", "Segoe UI", sans-serif;
+  --font-text: "Sora", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --nav-h: 68px;
+  --wrap: 1160px;
+  --gut: clamp(16px, 3.5vw, 48px);
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --space-6: 80px;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --dur-in: 240ms;
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 16px/1.65 var(--font-text);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: #7accff; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 0;
+}
+h1 { font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 800; }
+h2 { font-size: clamp(1.4rem, 2.5vw, 1.9rem); }
+h3 { font-size: 1.05rem; }
+p { margin: 0; }
+code { font-family: var(--font-mono); font-size: 0.88em; color: var(--accent); }
+.wrap { width: min(100% - 2 * var(--gut), var(--wrap)); margin-inline: auto; }
+.eyebrow {
+  margin: 0 0 12px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.lead { margin-top: 16px; color: var(--muted); font-size: 1.06rem; max-width: 62ch; }
+.atmosphere {
+  position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  background:
+    radial-gradient(900px 520px at 50% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 58%),
+    var(--bg);
+}
+.site-nav {
+  position: sticky; top: 0; z-index: 40;
+  height: var(--nav-h);
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(16px);
+}
+.site-nav .inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: inherit;
+  text-decoration: none;
+}
+.brand__name { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em; }
+.brand__tag {
+  display: inline-block;
+  margin-left: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.nav-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 40px; padding: 0 14px;
+  border: 1px solid var(--border);
+  text-decoration: none; font-weight: 600; font-size: 0.9rem;
+  border-radius: 2px;
+  transition: background var(--dur-in) var(--ease-out), border-color var(--dur-in) var(--ease-out), color var(--dur-in) var(--ease-out), transform var(--dur-in) var(--ease-out);
+}
+.btn-primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn-primary:hover { color: var(--accent-ink); background: #62c4ff; transform: translateY(-1px); }
+.btn-secondary { background: var(--surface); color: var(--ink); }
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+.btn-ghost { background: transparent; color: var(--muted); }
+.btn-ghost:hover { color: var(--ink); border-color: var(--border-strong); }
+.section { padding: var(--space-6) 0; }
+.section-head { margin-bottom: var(--space-4); }
+.cap-toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: var(--space-3); }
+.chip {
+  min-height: 40px; padding: 0 14px;
+  border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+  font-size: 0.88rem; border-radius: 2px;
+  transition: background var(--dur-in) var(--ease-out), color var(--dur-in) var(--ease-out), border-color var(--dur-in) var(--ease-out), transform var(--dur-in) var(--ease-out);
+}
+.chip:hover { color: var(--ink); border-color: var(--border-strong); }
+.chip[aria-pressed="true"] {
+  background: var(--accent-soft); border-color: var(--accent); color: var(--accent); transform: translateY(-1px);
+}
+.cap-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.cap-block {
+  background: var(--surface); border: 1px solid var(--border); overflow: hidden;
+  transition: border-color var(--dur-in) var(--ease-out), transform var(--dur-in) var(--ease-out), box-shadow var(--dur-in) var(--ease-out);
+}
+.cap-block:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px color-mix(in srgb, #000 35%, transparent);
+}
+.cap-block header {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 16px 18px; border-bottom: 1px solid var(--border);
+  background: linear-gradient(90deg, var(--accent-soft), transparent 70%);
+}
+.cap-block .count {
+  font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.04em;
+}
+.skill-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.skill-table th, .skill-table td {
+  padding: 11px 16px; text-align: left;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+  vertical-align: top;
+}
+.skill-table th {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted); font-weight: 500;
+}
+.skill-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+.skill-table .desc { color: var(--muted); }
+.skill-table tr.is-hidden { display: none; }
+.pill {
+  display: inline-block; margin-left: 6px; padding: 1px 6px;
+  font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.04em;
+  text-transform: uppercase; border: 1px solid var(--border); color: var(--muted); border-radius: 2px;
+}
+.pill-user { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
+.pill-model { color: var(--accent-2); border-color: color-mix(in srgb, var(--accent-2) 40%, var(--border)); }
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 0 40px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.site-footer .inner {
+  display: flex; flex-wrap: wrap; gap: 16px 28px;
+  align-items: center; justify-content: space-between;
+}
+.site-footer a { color: var(--muted); text-decoration: none; }
+.site-footer a:hover { color: var(--accent); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 16px; list-style: none; margin: 0; padding: 0; }
+@media (max-width: 1024px) {
+  .cap-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .brand__tag { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cap-block, .btn, .chip { transition: none !important; }
+  .cap-block:hover, .btn-primary:hover { transform: none; }
+}
+  </style>
+</head>
+<body>
+  <div class="atmosphere" aria-hidden="true"></div>
+  <header class="site-nav">
+    <div class="wrap inner">
+      <a class="brand" href="index.html">
+        <svg viewBox="0 0 144 144" width="32" height="32" aria-hidden="true">
+          <polygon points="6,118 118,92 138,116 26,142" fill="#1a1e30"/>
+          <polygon points="12,76 124,50 144,74 32,100" fill="#8eb6ff"/>
+          <polygon points="18,34 130,8 150,32 38,58" fill="#f4f7ff"/>
+        </svg>
+        <span>
+          <span class="brand__name">Yami Coding</span>
+          <span class="brand__tag">Skills list</span>
+        </span>
+      </a>
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="index.html">← Landing</a>
+        <a class="btn btn-secondary" href="https://github.com/ahmed-zhran/z-yami-coding-skills" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-primary" href="index.html#install">Install</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section" aria-labelledby="skills-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Full inventory · 62 skills · v1.8.0</p>
+          <h1 id="skills-title">Skills by lane and invoke mode</h1>
+          <p class="lead">
+            <strong>User-invoked</strong> skills run when you type them; they orchestrate.
+            <strong>Model-invoked</strong> skills can also be reached by the agent when a task fits; they hold reusable discipline.
+            A user-invoked skill may call model-invoked skills, never another user-invoked one.
+          </p>
+        </div>
+
+<div class="cap-toolbar reveal" role="group" aria-label="Filter skills">
+          <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="chip" data-filter="engineering" aria-pressed="false">Engineering</button>
+          <button type="button" class="chip" data-filter="productivity" aria-pressed="false">Productivity</button>
+          <button type="button" class="chip" data-filter="user" aria-pressed="false">User-invoked</button>
+          <button type="button" class="chip" data-filter="model" aria-pressed="false">Model-invoked</button>
+        </div>
+
+        <div class="cap-grid">
+          <article class="cap-block reveal" data-lane="engineering">
+            <header>
+              <h3>Engineering · user-invoked</h3>
+              <span class="count">24</span>
+            </header>
+            <table class="skill-table">
+              <thead><tr><th>Skill</th><th>What you get</th></tr></thead>
+              <tbody>
+                <tr data-mode="user" data-lane="engineering"><td><code>/ask-yami</code> <span class="pill pill-user">user</span></td><td class="desc">Names the next skill from project state</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/setup-z-yami-coding-skills</code> <span class="pill pill-user">user</span></td><td class="desc">Tracker, labels, branching, surface map</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/grill-with-docs</code> <span class="pill pill-user">user</span></td><td class="desc">Grill a plan; update glossary and ADRs</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/wayfinder</code> <span class="pill pill-user">user</span></td><td class="desc">Map a foggy effort as decision tickets</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/to-spec</code> <span class="pill pill-user">user</span></td><td class="desc">Conversation → spec with recorded base</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/to-tickets</code> <span class="pill pill-user">user</span></td><td class="desc">Spec → tracer-bullet tickets</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/triage</code> <span class="pill pill-user">user</span></td><td class="desc">Triage issues; find bug version and base</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/start-work</code> <span class="pill pill-user">user</span></td><td class="desc">Cut a ticket branch from its base</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/implement</code> <span class="pill pill-user">user</span></td><td class="desc">Build one ticket; open PR into base</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/ship-ticket</code> <span class="pill pill-user">user</span></td><td class="desc">Branch → merge for one ticket</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/ship-spec</code> <span class="pill pill-user">user</span></td><td class="desc">Run a feature’s tickets until it lands</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/implement-spec</code> <span class="pill pill-user">user</span></td><td class="desc">Whole spec in parallel → one PR</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/land</code> <span class="pill pill-user">user</span></td><td class="desc">Merge approved PR; close; restack</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/release</code> <span class="pill pill-user">user</span></td><td class="desc">Start, finish, or hotfix a release</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/ship-release</code> <span class="pill pill-user">user</span></td><td class="desc">Whole release; write next gate</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/sync-skills</code> <span class="pill pill-user">user</span></td><td class="desc">Update package skills from remote</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/empower-crafting</code> <span class="pill pill-user">user</span></td><td class="desc">Approve live craft-skills router</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/stack-decision</code> <span class="pill pill-user">user</span></td><td class="desc">Choose and record a surface stack</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/surface-architecture</code> <span class="pill pill-user">user</span></td><td class="desc">Document and enforce architecture</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/extract-surface</code> <span class="pill pill-user">user</span></td><td class="desc">Plan splitting a surface to its own repo</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/improve-codebase-architecture</code> <span class="pill pill-user">user</span></td><td class="desc">Find deepening opportunities and drift</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/debt</code> <span class="pill pill-user">user</span></td><td class="desc">Harvest shortcut comments into a ledger</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/reflect</code> <span class="pill pill-user">user</span></td><td class="desc">Turn lessons into skill and doc edits</td></tr>
+                <tr data-mode="user" data-lane="engineering"><td><code>/retro</code> <span class="pill pill-user">user</span></td><td class="desc">Improve the agent environment after a session</td></tr>
+              </tbody>
+            </table>
+          </article>
+
+          <article class="cap-block reveal" data-lane="engineering">
+            <header>
+              <h3>Engineering · model-invoked</h3>
+              <span class="count">27</span>
+            </header>
+            <table class="skill-table">
+              <thead><tr><th>Skill</th><th>What you get</th></tr></thead>
+              <tbody>
+                <tr data-mode="model" data-lane="engineering"><td><code>branch-lineage</code> <span class="pill pill-model">model</span></td><td class="desc">Bases, worktrees, landing, restacking</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>ticket-flow</code> <span class="pill pill-model">model</span></td><td class="desc">Procedure behind /ship-ticket</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>spec-flow</code> <span class="pill pill-model">model</span></td><td class="desc">Procedure behind /ship-spec</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>release-flow</code> <span class="pill pill-model">model</span></td><td class="desc">Procedure behind /ship-release</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>herdr</code> <span class="pill pill-model">model</span></td><td class="desc">Control Herdr TUI from a pane</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>herdr-core</code> <span class="pill pill-model">model</span></td><td class="desc">Drive Herdr Desktop with hc</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>herdr-app</code> <span class="pill pill-model">model</span></td><td class="desc">Arrange the Herdr Desktop window</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>herdr-guide</code> <span class="pill pill-model">model</span></td><td class="desc">Install and troubleshoot Herdr</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>surface-map</code> <span class="pill pill-model">model</span></td><td class="desc">Monorepo surfaces and contracts</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>setup-ts-deep-modules</code> <span class="pill pill-model">model</span></td><td class="desc">Enforce deep TS modules</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>diagnosing-bugs</code> <span class="pill pill-model">model</span></td><td class="desc">Feedback-loop diagnosis and fix</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>tdd</code> <span class="pill pill-model">model</span></td><td class="desc">Red-green at agreed seams</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>code-review</code> <span class="pill pill-model">model</span></td><td class="desc">Standards + Spec axes on a diff</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>security-review</code> <span class="pill pill-model">model</span></td><td class="desc">Exploit-focused security review</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>deep-review</code> <span class="pill pill-model">model</span></td><td class="desc">Strict maintainability audit</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>pr</code> <span class="pill pill-model">model</span></td><td class="desc">Shape of a PR body</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>changelog</code> <span class="pill pill-model">model</span></td><td class="desc">Entries per change; compile at release</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>learnings</code> <span class="pill pill-model">model</span></td><td class="desc">Solution notes in docs/solutions</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>resolving-merge-conflicts</code> <span class="pill pill-model">model</span></td><td class="desc">Resolve conflicts by intent</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>prototype</code> <span class="pill pill-model">model</span></td><td class="desc">Throwaway code for one design question</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>research</code> <span class="pill pill-model">model</span></td><td class="desc">Cited research from primary sources</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>domain-modeling</code> <span class="pill pill-model">model</span></td><td class="desc">Glossary and ADR sharpening</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>codebase-design</code> <span class="pill pill-model">model</span></td><td class="desc">Deep-module vocabulary</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>wizard</code> <span class="pill pill-model">model</span></td><td class="desc">Scripts for human-only steps</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>mermaid-validator</code> <span class="pill pill-model">model</span></td><td class="desc">Validate Mermaid diagrams</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>git-guardrails</code> <span class="pill pill-model">model</span></td><td class="desc">Block dangerous git commands</td></tr>
+                <tr data-mode="model" data-lane="engineering"><td><code>setup-pre-commit</code> <span class="pill pill-model">model</span></td><td class="desc">Hooks for format, types, tests</td></tr>
+              </tbody>
+            </table>
+          </article>
+
+          <article class="cap-block reveal" data-lane="productivity">
+            <header>
+              <h3>Productivity · user-invoked</h3>
+              <span class="count">5</span>
+            </header>
+            <table class="skill-table">
+              <thead><tr><th>Skill</th><th>What you get</th></tr></thead>
+              <tbody>
+                <tr data-mode="user" data-lane="productivity"><td><code>/grill-me</code> <span class="pill pill-user">user</span></td><td class="desc">Interview until every branch resolves</td></tr>
+                <tr data-mode="user" data-lane="productivity"><td><code>/handoff</code> <span class="pill pill-user">user</span></td><td class="desc">Hand work to another session or --bg</td></tr>
+                <tr data-mode="user" data-lane="productivity"><td><code>/teach</code> <span class="pill pill-user">user</span></td><td class="desc">Learn a concept across sessions</td></tr>
+                <tr data-mode="user" data-lane="productivity"><td><code>/to-questionnaire</code> <span class="pill pill-user">user</span></td><td class="desc">Questionnaire for the person with answers</td></tr>
+                <tr data-mode="user" data-lane="productivity"><td><code>/wait-what</code> <span class="pill pill-user">user</span></td><td class="desc">Re-explain a message that didn’t land</td></tr>
+              </tbody>
+            </table>
+          </article>
+
+          <article class="cap-block reveal" data-lane="productivity">
+            <header>
+              <h3>Productivity · model-invoked</h3>
+              <span class="count">6</span>
+            </header>
+            <table class="skill-table">
+              <thead><tr><th>Skill</th><th>What you get</th></tr></thead>
+              <tbody>
+                <tr data-mode="model" data-lane="productivity"><td><code>grilling</code> <span class="pill pill-model">model</span></td><td class="desc">Interview primitive</td></tr>
+                <tr data-mode="model" data-lane="productivity"><td><code>writing-for-agents</code> <span class="pill pill-model">model</span></td><td class="desc">How to write docs agents read</td></tr>
+                <tr data-mode="model" data-lane="productivity"><td><code>unslop</code> <span class="pill pill-model">model</span></td><td class="desc">Remove AI tells from human prose</td></tr>
+                <tr data-mode="model" data-lane="productivity"><td><code>caveman</code> <span class="pill pill-model">model</span></td><td class="desc">Terse chat; files stay full prose</td></tr>
+                <tr data-mode="model" data-lane="productivity"><td><code>skill-eval</code> <span class="pill pill-model">model</span></td><td class="desc">Score a skill and test its trigger</td></tr>
+                <tr data-mode="model" data-lane="productivity"><td><code>html-artifacts</code> <span class="pill pill-model">model</span></td><td class="desc">Self-contained HTML when layout beats markdown</td></tr>
+              </tbody>
+            </table>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap inner">
+      <p>Yami Coding by Ahmed Zhran · MIT · v1.8.0</p>
+      <ul class="footer-links">
+        <li><a href="index.html">Landing</a></li>
+        <li><a href="index.html#capabilities">Skills rails</a></li>
+        <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    var chips = document.querySelectorAll("[data-filter]");
+    var rows = document.querySelectorAll(".skill-table tbody tr");
+    var blocks = document.querySelectorAll(".cap-block");
+    chips.forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        var filter = chip.getAttribute("data-filter") || "all";
+        chips.forEach(function (c) { c.setAttribute("aria-pressed", c === chip ? "true" : "false"); });
+        rows.forEach(function (row) {
+          var lane = row.getAttribute("data-lane");
+          var mode = row.getAttribute("data-mode");
+          var show = filter === "all" || filter === lane || filter === mode;
+          row.classList.toggle("is-hidden", !show);
+        });
+        blocks.forEach(function (block) {
+          var visibleRows = block.querySelectorAll("tbody tr:not(.is-hidden)");
+          var lane = block.getAttribute("data-lane");
+          var showBlock = filter === "all" || filter === lane || visibleRows.length > 0;
+          block.hidden = !showBlock;
+        });
+      });
+    });
+  })();
+  </script>
+</body>
+</html>
