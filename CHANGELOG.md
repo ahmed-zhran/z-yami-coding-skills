@@ -1,5 +1,11 @@
 # z-yami-coding-skills
 
+## 2.0.0
+
+### Major Changes
+
+- [#4](https://github.com/ahmed-zhran/z-yami-coding-skills/pull/4) [`037af38`](https://github.com/ahmed-zhran/z-yami-coding-skills/commit/037af38ea1e17a89f53cc9d6ffc81fa61d5bcac4) Thanks [@ahmed-zhran](https://github.com/ahmed-zhran)! - Site rebuilt from `.designs/release-1.10.0`: five-stat overview (62 / Engineering 51 / Productivity 11), updated landing and skills pages, and design stock/diagram assets under `site/public/assets/`.
+
 ## 1.10.0
 
 ### Minor Changes

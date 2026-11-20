@@ -1,10 +1,10 @@
 # Pending release actions
 
-Release 1.10.0 (v1.10.0) is on main. The next release cannot start while a blocking box is open. Check a box only after that work is done, in a commit on the default branch.
+Release 2.0.0 (v2.0.0) is on main. The next release cannot start while a blocking box is open. Check a box only after that work is done, in a commit on the default branch.
 
 ## Blocking
 
-- [ ] Human-testing feedback: read `docs/releases/1.10.0/human-testing.md` (unchecked items, fails, Notes, Sign-off). File tickets or next-release notes for each, or write one line that Sign-off was clean with no leftover notes
+- [ ] Human-testing feedback: read `docs/releases/2.0.0/human-testing.md` (unchecked items, fails, Notes, Sign-off). File tickets or next-release notes for each, or write one line that Sign-off was clean with no leftover notes
 - [ ] Retro for this release (`/retro`)
 - [ ] Reflect: edits to skills or docs from this release, or a one-line note that there were none (`/reflect`)
 - [ ] Learnings: every non-obvious fix in this release has a note in `docs/solutions/`, or a one-line note that there were none (`/learnings`)
