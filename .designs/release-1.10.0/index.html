@@ -1,0 +1,5327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yami Coding — Agent skills for shipping software</title>
+  <meta name="description" content="62 open-source agent skills for release, spec, and ticket. Lineage bases, ship doors, and review axes — you approve the landings. MIT. v1.8.0." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+/* OD-LAYOUT-PRIMITIVES v1 — structure only */
+@layer od-layout {
+  [hidden]:not([hidden="until-found" i]) { display: none !important; }
+  dialog:not([open]) { display: none !important; }
+  :where(.od-stack,.od-row,.od-row-top,.od-cluster,.od-grid,.od-field,.od-stat,.od-cell,.od-tile) > :where(*) { min-width: 0; }
+  .od-stack   { display: flex; flex-direction: column; gap: var(--od-gap, 8px); }
+  .od-row     { display: flex; align-items: center; gap: var(--od-gap, 8px); }
+  .od-row-top { display: flex; align-items: flex-start; gap: var(--od-gap, 8px); }
+  .od-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--od-gap, 8px); }
+  .od-fill    { flex: 1 1 0; min-width: 0; }
+  .od-fixed   { flex: none; }
+  .od-grid    { display: grid; gap: var(--od-gap, 12px); grid-template-columns: repeat(var(--od-cols, 3), minmax(0, 1fr)); }
+  .od-stat, .od-field, .od-cell { display: grid; gap: var(--od-gap, 2px); }
+  :where(.od-stat,.od-field,.od-cell) > :where(*) { display: block; }
+  .od-tile { display: grid; grid-template-rows: auto 1fr; }
+  :where(.od-tile) > :where(*) { display: block; }
+  .od-media { display: block; width: 100%; height: auto; aspect-ratio: var(--od-ratio, auto); }
+  .od-media-cover { object-fit: cover; }
+  .od-icon { display: inline-block; inline-size: var(--od-icon-size, 1em); block-size: var(--od-icon-size, 1em); flex: none; }
+  .od-truncate { display: block; max-width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .od-clamp-2, .od-clamp-3 { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+  .od-clamp-2 { -webkit-line-clamp: 2; }
+  .od-clamp-3 { -webkit-line-clamp: 3; }
+  .od-nowrap  { white-space: nowrap; }
+  .od-keep    { word-break: keep-all; overflow-wrap: anywhere; }
+  .od-screen { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; height: 100%; }
+  .od-scroll { overflow-y: auto; overscroll-behavior: contain; min-height: 0; }
+  .od-rail { display: flex; gap: var(--od-gap, 8px); overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
+             padding-inline: var(--od-rail-pad, 16px); scroll-padding-inline: var(--od-rail-pad, 16px); }
+  .od-rail::-webkit-scrollbar { display: none; }
+  :where(.od-rail) > :where(*) { flex: none; scroll-snap-align: start; }
+  :where(.od-rail) > :where(:last-child) { margin-inline-end: var(--od-rail-pad, 16px); }
+  .od-spacer { flex: none; visibility: hidden; pointer-events: none; }
+  .od-touch  { min-width: 44px; min-height: 44px; }
+}
+:root [hidden]:where(:not([hidden="until-found" i])) { display: none; }
+/* /OD-LAYOUT-PRIMITIVES v1 */
+
+:root {
+  --bg: #07090f;
+  --bg-elev: #0b0e16;
+  --surface: #11151f;
+  --surface-2: #161b27;
+  --ink: #eef2fa;
+  --muted: #8b95a8;
+  --border: #273044;
+  --border-strong: #3a465c;
+  --accent: #3db4ff;
+  --accent-2: #8eb6ff;
+  --accent-soft: #0f2433;
+  --accent-ink: #041018;
+  --font-display: "Syne", "Segoe UI", sans-serif;
+  --font-text: "Sora", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --nav-h: 68px;
+  --wrap: 1160px;
+  --gut: clamp(16px, 3.5vw, 48px);
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --space-6: 80px;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --dur-in: 240ms;
+  --dur-out: 150ms;
+  --mx: 50%;
+  --my: 40%;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 16px/1.65 var(--font-text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: #7accff; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 0;
+}
+h1 { font-size: clamp(2.55rem, 6vw, 4.2rem); font-weight: 800; }
+h2 { font-size: clamp(1.75rem, 3.2vw, 2.55rem); }
+h3 { font-size: 1.12rem; letter-spacing: -0.02em; }
+p { margin: 0; }
+code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  color: var(--accent);
+}
+
+.wrap {
+  width: min(100% - 2 * var(--gut), var(--wrap));
+  margin-inline: auto;
+}
+.eyebrow {
+  margin: 0 0 12px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.lead {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 1.06rem;
+  max-width: 62ch;
+}
+.prose {
+  margin-top: 12px;
+  color: var(--muted);
+  max-width: 58ch;
+}
+.prose + .prose { margin-top: 10px; }
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip:focus {
+  left: var(--gut);
+  top: 12px;
+  z-index: 100;
+  width: auto;
+  height: auto;
+  padding: 10px 14px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Atmosphere */
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 520px at var(--mx) var(--my), color-mix(in srgb, var(--accent) 18%, transparent), transparent 58%),
+    radial-gradient(700px 420px at 88% 8%, color-mix(in srgb, var(--accent-2) 12%, transparent), transparent 55%),
+    radial-gradient(600px 380px at 8% 70%, color-mix(in srgb, #1a2a44 55%, transparent), transparent 60%),
+    var(--bg);
+  transition: background-position 80ms linear;
+}
+.atmosphere__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--accent) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--accent) 8%, transparent) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 70% 55% at 50% 20%, #000 20%, transparent 75%);
+  opacity: 0.35;
+  transform: translate3d(0, calc(var(--scroll-y, 0) * -0.08px), 0);
+}
+.atmosphere__noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  z-index: 60;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  pointer-events: none;
+  transform-origin: left center;
+}
+
+/* Brand mark — three-layer stacked chevron */
+.brand-mark {
+  width: 36px;
+  height: 36px;
+  flex: none;
+}
+.brand-mark--lg {
+  width: 72px;
+  height: 72px;
+}
+.brand-mark polygon {
+  transform-origin: 72px 72px;
+}
+.brand-mark.is-alive .layer-dark {
+  animation: markPulse 4.8s var(--ease-out) infinite;
+}
+.brand-mark.is-alive .layer-signal {
+  animation: markPulse 4.8s var(--ease-out) 0.18s infinite;
+}
+.brand-mark.is-alive .layer-light {
+  animation: markPulse 4.8s var(--ease-out) 0.36s infinite;
+}
+@keyframes markPulse {
+  0%, 100% { opacity: 1; transform: translateY(0); }
+  50% { opacity: 0.86; transform: translateY(-1.5px); }
+}
+
+/* Nav */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: var(--nav-h);
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+}
+.site-nav .inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+  min-width: 0;
+  flex: 0 0 auto;
+  z-index: 1;
+}
+.brand:hover { color: inherit; }
+.brand__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.03em;
+  display: block;
+  white-space: nowrap;
+}
+.brand__tag {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.top-nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+  list-style: none;
+  padding: 0;
+  min-width: 0;
+  flex: 1 1 auto;
+  justify-content: flex-end;
+}
+.top-nav > li {
+  position: relative;
+  flex: 0 0 auto;
+}
+.top-nav a,
+.top-nav .nav-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 0 10px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  border-radius: 2px;
+  position: relative;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.top-nav a:hover,
+.top-nav .nav-trigger:hover { color: var(--ink); }
+.top-nav a.is-active,
+.top-nav .nav-trigger.is-active {
+  color: var(--ink);
+}
+.top-nav a.is-active::after,
+.top-nav .nav-trigger.is-active::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 6px;
+  height: 2px;
+  background: var(--accent);
+  transform-origin: left;
+  animation: navUnderline var(--dur-in) var(--ease-out);
+}
+.nav-trigger__chev {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid currentColor;
+  opacity: 0.7;
+}
+.nav-dd {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  min-width: 188px;
+  padding: 8px;
+  list-style: none;
+  margin: 0;
+  background: color-mix(in srgb, var(--surface) 94%, var(--bg));
+  border: 1px solid var(--border);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 160ms var(--ease-out), transform 160ms var(--ease-out), visibility 160ms;
+  z-index: 50;
+}
+.nav-dd::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -10px;
+  height: 10px;
+}
+.nav-item.has-dd:hover .nav-dd,
+.nav-item.has-dd:focus-within .nav-dd,
+.nav-item.has-dd.is-open .nav-dd {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.nav-dd a {
+  display: flex;
+  width: 100%;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 2px;
+  font-size: 0.88rem;
+}
+.nav-dd a.is-active::after { display: none; }
+.nav-dd a.is-active {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+.nav-dd a:hover {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+}
+@keyframes navUnderline {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 8px;
+  flex: 0 0 auto;
+}
+.nav-actions .btn {
+  white-space: nowrap;
+}
+.mobile-nav-toggle {
+  display: none;
+  margin-left: auto;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.88rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 2px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform var(--dur-in) var(--ease-out), background var(--dur-in) var(--ease-out), border-color var(--dur-in) var(--ease-out), color var(--dur-in) var(--ease-out), box-shadow var(--dur-in) var(--ease-out);
+}
+.btn:hover { color: inherit; }
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: 1px solid var(--accent);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent);
+}
+.btn-primary:hover {
+  background: #62c4ff;
+  border-color: #62c4ff;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+.btn-secondary {
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--border-strong);
+}
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid transparent;
+}
+.btn-ghost:hover {
+  border-color: var(--border);
+  background: var(--surface);
+}
+
+/* Sections */
+.section {
+  padding: var(--space-6) 0;
+  position: relative;
+}
+.section-head { max-width: 720px; margin-bottom: var(--space-4); }
+.section-head .lead { margin-top: 12px; }
+
+/* Reveal / motion */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 480ms var(--ease-out), transform 480ms var(--ease-out);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+.stagger > .reveal:nth-child(1) { transition-delay: 0ms; }
+.stagger > .reveal:nth-child(2) { transition-delay: 40ms; }
+.stagger > .reveal:nth-child(3) { transition-delay: 80ms; }
+.stagger > .reveal:nth-child(4) { transition-delay: 120ms; }
+.stagger > .reveal:nth-child(5) { transition-delay: 160ms; }
+.stagger > .reveal:nth-child(6) { transition-delay: 200ms; }
+
+/* Hero */
+.hero {
+  padding: clamp(48px, 8vw, 96px) 0 var(--space-6);
+  position: relative;
+  overflow: clip;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: center;
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--accent);
+  position: relative;
+}
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.hero-meta strong {
+  color: var(--ink);
+  font-weight: 600;
+  margin-right: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+}
+
+.hero-stage {
+  position: relative;
+  min-height: 460px;
+  isolation: isolate;
+}
+.hero-viz {
+  position: relative;
+  display: grid;
+  grid-template-rows: minmax(220px, 1fr) auto;
+  gap: 16px;
+  min-height: 460px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 28%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
+    linear-gradient(165deg, var(--surface) 0%, var(--bg-elev) 100%);
+  overflow: hidden;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+}
+.hero-viz::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--accent) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--accent) 8%, transparent) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 75% 70% at 50% 35%, #000 20%, transparent 75%);
+  pointer-events: none;
+  opacity: 0.55;
+}
+.hero-viz::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--mx) var(--my), color-mix(in srgb, var(--accent) 14%, transparent), transparent 42%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* 3D stacked chevron */
+.logo-3d {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  min-height: 240px;
+  perspective: 920px;
+  perspective-origin: 50% 42%;
+}
+.logo-3d__scene {
+  position: relative;
+  width: min(78%, 280px);
+  aspect-ratio: 1;
+  transform-style: preserve-3d;
+  transform:
+    rotateX(calc(58deg + var(--tilt-x)))
+    rotateZ(calc(-18deg + var(--tilt-y)));
+  transition: transform 160ms var(--ease-out);
+}
+.logo-3d__orbit {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: logoOrbit 7.5s var(--ease-out) infinite;
+}
+.logo-3d__layer {
+  position: absolute;
+  inset: 8%;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 18px 28px color-mix(in srgb, #000 55%, transparent));
+}
+.logo-3d__layer svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.logo-3d__layer--dark {
+  transform: translateZ(-42px) translateY(18px);
+  animation: layerBob 4.8s var(--ease-out) infinite;
+}
+.logo-3d__layer--signal {
+  transform: translateZ(0);
+  animation: layerBob 4.8s var(--ease-out) 0.2s infinite;
+}
+.logo-3d__layer--light {
+  transform: translateZ(42px) translateY(-16px);
+  animation: layerBob 4.8s var(--ease-out) 0.4s infinite;
+}
+.logo-3d__glow {
+  position: absolute;
+  width: 46%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 45%, transparent), transparent 68%);
+  filter: blur(18px);
+  animation: glowPulse 3.6s var(--ease-out) infinite;
+  pointer-events: none;
+}
+.logo-3d__floor {
+  position: absolute;
+  bottom: 18%;
+  width: 58%;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, color-mix(in srgb, var(--accent) 28%, transparent), transparent 70%);
+  filter: blur(4px);
+  animation: floorPulse 3.6s var(--ease-out) infinite;
+  pointer-events: none;
+}
+.logo-3d__ring {
+  position: absolute;
+  width: min(86%, 320px);
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  border-radius: 50%;
+  transform: rotateX(72deg);
+  animation: spinSlow 22s linear infinite;
+  pointer-events: none;
+}
+.logo-3d__ring--inner {
+  width: min(62%, 230px);
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--accent-2) 36%, transparent);
+  animation-duration: 16s;
+  animation-direction: reverse;
+}
+.logo-3d__label {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+@keyframes logoOrbit {
+  0%, 100% { transform: rotateY(-26deg) rotateZ(2deg); }
+  50% { transform: rotateY(28deg) rotateZ(-2deg); }
+}
+@keyframes layerBob {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -6px; }
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+@keyframes floorPulse {
+  0%, 100% { opacity: 0.55; transform: scaleX(1); }
+  50% { opacity: 0.9; transform: scaleX(1.08); }
+}
+@keyframes spinSlow {
+  to { transform: rotateX(72deg) rotate(360deg); }
+}
+
+/* Multi-step ship prompting */
+.ship-flow {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 12px;
+  padding: 14px 14px 16px;
+  border: 1px solid var(--border-strong);
+  background: color-mix(in srgb, var(--bg) 82%, var(--surface));
+  box-shadow: 0 18px 40px color-mix(in srgb, #000 35%, transparent);
+}
+.ship-flow__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+.ship-flow__dots {
+  display: inline-flex;
+  gap: 5px;
+}
+.ship-flow__dots i {
+  width: 7px;
+  height: 7px;
+  border-radius: 1px;
+  background: var(--border-strong);
+}
+.ship-flow__dots i:nth-child(1) { background: #ff5f57; }
+.ship-flow__dots i:nth-child(2) { background: #febc2e; }
+.ship-flow__dots i:nth-child(3) { background: #28c840; }
+.ship-flow__steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ship-flow__step {
+  display: grid;
+  gap: 4px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+  transition: border-color var(--dur-in) var(--ease-out), background var(--dur-in) var(--ease-out), color var(--dur-in) var(--ease-out);
+}
+.ship-flow__step strong {
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.74rem;
+}
+.ship-flow__step.is-active {
+  border-color: color-mix(in srgb, var(--accent) 65%, var(--border));
+  background: var(--accent-soft);
+  color: var(--accent-2);
+}
+.ship-flow__step.is-done {
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+  color: var(--ink);
+}
+.ship-flow__step.is-done strong::after {
+  content: " ✓";
+  color: var(--accent);
+}
+.ship-flow__terminal {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 8px;
+  height: 148px;
+  min-height: 148px;
+  max-height: 148px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  background: #05070c;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.ship-flow__prompt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  min-width: 0;
+  height: 1.55em;
+  flex: none;
+}
+.ship-flow__ps {
+  color: var(--accent);
+  flex: none;
+}
+.ship-flow__prompt code {
+  color: var(--ink);
+  font-size: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.ship-flow__caret {
+  width: 8px;
+  height: 1.05em;
+  background: var(--accent);
+  flex: none;
+  animation: caretBlink 1s steps(1) infinite;
+}
+.ship-flow__out {
+  margin: 0;
+  color: var(--muted);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  height: 4.65em;
+  min-height: 4.65em;
+  max-height: 4.65em;
+  overflow: hidden;
+}
+.ship-flow__out .ok { color: var(--accent); }
+.ship-flow__out .dim { color: color-mix(in srgb, var(--muted) 70%, transparent); }
+.ship-flow__progress {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.ship-flow__bar {
+  height: 4px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.ship-flow__bar > span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: width 280ms var(--ease-out);
+}
+@keyframes caretBlink {
+  0%, 45% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Facts */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+.fact {
+  padding: 20px 18px;
+  background: linear-gradient(180deg, var(--surface) 0%, var(--bg-elev) 100%);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--dur-in) var(--ease-out), transform var(--dur-in) var(--ease-out);
+}
+.fact::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  transform: scaleX(0.35);
+  transform-origin: left;
+  transition: transform 360ms var(--ease-out);
+}
+.fact:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-3px);
+}
+.fact:hover::before { transform: scaleX(1); }
+.fact-value {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  line-height: 1;
+}
+.fact-label {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: clamp(20px, 3vw, 40px);
+  align-items: start;
+}
+.panel {
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+/* Landing slope — ticket (bottom-left) → main (top-right) */
+.land-flow {
+  margin-top: var(--space-5);
+  display: grid;
+  gap: var(--space-3);
+}
+.land-flow__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr);
+  gap: clamp(20px, 3vw, 40px);
+  align-items: start;
+}
+.land-flow__intro h3 {
+  font-size: clamp(1.45rem, 2.6vw, 2rem);
+  margin-bottom: 12px;
+}
+.land-flow__stage {
+  position: relative;
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(ellipse 55% 50% at 78% 18%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 68%),
+    radial-gradient(ellipse 45% 48% at 12% 88%, color-mix(in srgb, var(--accent-2) 12%, transparent), transparent 70%),
+    linear-gradient(155deg, #0c1019 0%, var(--bg-elev) 55%, #080a10 100%);
+  padding: clamp(16px, 2.2vw, 24px) clamp(14px, 2vw, 28px) clamp(18px, 2.4vw, 28px);
+  overflow: hidden;
+}
+.land-flow__stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--border) 50%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--border) 50%, transparent) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.18;
+  pointer-events: none;
+  mask-image: linear-gradient(125deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+}
+.land-flow__stage.is-closing {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+.land-flow__eyebrow {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.land-flow__eyebrow strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+  letter-spacing: -0.03em;
+}
+.land-flow__status {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.land-flow__status[data-state="live"] { color: var(--accent); }
+.land-flow__status[data-state="done"] { color: #9fe0a8; }
+
+.land-slope {
+  position: relative;
+  z-index: 1;
+  height: clamp(220px, 28vw, 300px);
+  margin-top: 4px;
+}
+.land-slope__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.land-slope__track {
+  fill: none;
+  stroke: color-mix(in srgb, var(--border-strong) 85%, transparent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 6 10;
+  opacity: 0.55;
+}
+.land-slope__glow {
+  fill: none;
+  stroke: url(#landGlowGrad);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 55%, transparent));
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-width 280ms var(--ease-out), filter 280ms var(--ease-out);
+}
+.land-slope.is-closing .land-slope__glow {
+  stroke-width: 7;
+  filter:
+    drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 80%, transparent))
+    drop-shadow(0 0 22px color-mix(in srgb, var(--accent-2) 45%, transparent));
+}
+.land-slope__spark {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--accent) 70%, transparent));
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.land-slope.is-live .land-slope__spark { opacity: 1; }
+.land-slope.is-closing .land-slope__spark {
+  opacity: 0;
+}
+
+.land-node {
+  position: absolute;
+  z-index: 2;
+  width: min(168px, 34vw);
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+  opacity: 0.34;
+  filter: saturate(0.55);
+  transform: translate(-50%, -50%) scale(0.92);
+  transition:
+    opacity 360ms var(--ease-out),
+    transform 360ms var(--ease-out),
+    filter 360ms var(--ease-out),
+    border-color 280ms var(--ease-out),
+    box-shadow 280ms var(--ease-out),
+    background 280ms var(--ease-out);
+}
+.land-node[data-level="ticket"] { left: 8%; top: 86%; }
+.land-node[data-level="spec"] { left: 34%; top: 62%; }
+.land-node[data-level="release"] { left: 60%; top: 38%; }
+.land-node[data-level="main"] { left: 88%; top: 14%; }
+.land-node.is-active,
+.land-node.is-landed {
+  opacity: 1;
+  filter: none;
+  transform: translate(-50%, -50%) scale(1);
+  border-color: color-mix(in srgb, var(--accent) 48%, var(--border));
+  background: linear-gradient(155deg, color-mix(in srgb, var(--accent-soft) 75%, var(--surface)), var(--bg-elev));
+}
+.land-node.is-active {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent),
+    0 0 28px color-mix(in srgb, var(--accent) 28%, transparent),
+    0 14px 32px rgba(0, 0, 0, 0.35);
+  animation: landNodePulse 900ms var(--ease-out);
+}
+.land-node.is-landed {
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
+}
+.land-slope.is-closing .land-node.is-landed {
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--border));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent) 28%, transparent),
+    0 0 22px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.land-node__rank {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.land-node__name {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--ink);
+}
+.land-node[data-level="main"] .land-node__name {
+  color: var(--accent);
+  text-shadow: 0 0 18px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+.land-node__path {
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent-2);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.land-node__door {
+  display: inline-block;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--accent);
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+  background: color-mix(in srgb, var(--accent-soft) 70%, transparent);
+  white-space: nowrap;
+}
+@keyframes landNodePulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent), 0 14px 32px rgba(0, 0, 0, 0.35); }
+  40% { box-shadow: 0 0 0 10px color-mix(in srgb, var(--accent) 14%, transparent), 0 14px 32px rgba(0, 0, 0, 0.35); }
+  100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent), 0 14px 32px rgba(0, 0, 0, 0.35); }
+}
+
+/* Process sections — release cycle, tickets, gates, writing */
+.process-stage {
+  margin-top: var(--space-4);
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent-soft) 55%, transparent), transparent 42%),
+    var(--surface);
+  padding: clamp(20px, 3vw, 32px);
+  position: relative;
+  overflow: hidden;
+}
+.process-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--border) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--border) 55%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.18;
+  pointer-events: none;
+}
+.process-stage > * { position: relative; z-index: 1; }
+.process-eyebrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.process-eyebrow strong { color: var(--accent); letter-spacing: 0.08em; }
+.process-status[data-state="live"] { color: var(--accent); }
+.process-status[data-state="done"] { color: #9fe0a8; }
+.process-status[data-state="idle"] { color: var(--muted); }
+
+.cycle-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+  gap: clamp(20px, 3vw, 36px);
+  align-items: center;
+}
+.cycle-flow {
+  display: grid;
+  gap: 0;
+  position: relative;
+  padding: 8px 4px;
+}
+.cycle-node {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 12px;
+  align-items: stretch;
+  opacity: 0.34;
+  filter: saturate(0.65);
+  transform: translateX(-10px);
+  transition: opacity 280ms var(--ease-out), transform 280ms var(--ease-out), filter 280ms var(--ease-out);
+}
+.cycle-node.is-active,
+.cycle-node.is-done {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+.cycle-node__spine {
+  display: grid;
+  justify-items: center;
+  grid-template-rows: auto 1fr;
+}
+.cycle-node__pip {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 2px solid var(--border-strong);
+  background: var(--bg);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted);
+  z-index: 1;
+  transition: border-color 240ms var(--ease-out), background 240ms var(--ease-out), color 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
+}
+.cycle-node.is-active .cycle-node__pip,
+.cycle-node.is-done .cycle-node__pip {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.cycle-node.is-active .cycle-node__pip {
+  animation: landPulse 720ms var(--ease-out);
+}
+.cycle-node__link {
+  width: 2px;
+  min-height: 22px;
+  margin-top: 6px;
+  background: var(--border);
+  transform-origin: top;
+  transform: scaleY(0.28);
+  transition: transform 320ms var(--ease-out), background 240ms var(--ease-out);
+}
+.cycle-node:last-child .cycle-node__link { display: none; }
+.cycle-node.is-done .cycle-node__link,
+.cycle-node.is-active .cycle-node__link {
+  transform: scaleY(1);
+  background: linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--accent) 35%, var(--border)));
+}
+.cycle-node__body {
+  position: relative;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 8%, transparent), transparent 55%),
+    color-mix(in srgb, var(--bg-elev) 92%, transparent);
+  border-radius: 18px 18px 18px 6px;
+  padding: 12px 16px 14px;
+  margin-bottom: 10px;
+  display: grid;
+  gap: 4px;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+  transition: border-color 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
+}
+.cycle-node.is-active .cycle-node__body {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 16%, transparent), 0 16px 36px -26px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+.cycle-node.is-done .cycle-node__body {
+  border-color: color-mix(in srgb, var(--accent) 32%, var(--border));
+}
+.cycle-node__label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cycle-node__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.8vw, 1.28rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.cycle-node__meta {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--accent-2);
+  margin-top: 2px;
+}
+.cycle-node__hint {
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.45;
+  max-width: 42ch;
+}
+
+.cycle-orbit-wrap {
+  display: grid;
+  justify-items: center;
+  padding-bottom: 28px;
+}
+.cycle-orbit {
+  --orbit-r: 158px;
+  position: relative;
+  aspect-ratio: 1;
+  width: min(100%, 420px);
+  margin-inline: auto;
+  display: grid;
+  place-items: center;
+}
+.cycle-orbit__ring {
+  position: absolute;
+  inset: calc(50% - var(--orbit-r));
+  border-radius: 50%;
+  border: 1px dashed color-mix(in srgb, var(--accent) 28%, var(--border));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--border) 70%, transparent),
+    0 0 0 28px color-mix(in srgb, var(--accent) 4%, transparent);
+  pointer-events: none;
+}
+.cycle-orbit__ring::before {
+  content: "";
+  position: absolute;
+  inset: 18%;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+}
+.cycle-orbit__hub {
+  position: relative;
+  z-index: 2;
+  width: min(46%, 168px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+  background:
+    radial-gradient(circle at 40% 30%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 58%),
+    var(--bg-elev);
+  display: grid;
+  place-content: center;
+  text-align: center;
+  gap: 4px;
+  padding: 16px;
+  box-shadow: 0 18px 48px -28px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.cycle-orbit__hub strong {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.cycle-orbit__hub span {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cycle-orbit__track {
+  position: absolute;
+  inset: 0;
+  animation: cycleOrbitSpin 56s linear infinite;
+  transform-origin: 50% 50%;
+}
+.cycle-orbit.is-paused .cycle-orbit__track,
+.cycle-orbit.is-paused .cycle-orbit__face {
+  animation-play-state: paused;
+}
+.cycle-orbit__slot {
+  --angle: 0deg;
+  --gate: var(--accent);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 118px;
+  height: 78px;
+  margin: -39px 0 0 -59px;
+  transform: rotate(var(--angle)) translateY(calc(-1 * var(--orbit-r)));
+  z-index: 3;
+}
+.cycle-orbit__face {
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--gate) 36%, var(--border));
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--gate) 18%, transparent), transparent 60%),
+    var(--surface);
+  padding: 12px 14px;
+  display: grid;
+  align-content: center;
+  gap: 2px;
+  text-align: center;
+  cursor: default;
+  box-shadow: 0 12px 28px -20px color-mix(in srgb, var(--gate) 55%, transparent);
+  transform: rotate(calc(-1 * var(--angle)));
+  animation: cycleOrbitCounter 56s linear infinite;
+  transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
+}
+.cycle-orbit__slot:hover .cycle-orbit__face,
+.cycle-orbit__slot:focus-within .cycle-orbit__face {
+  border-color: color-mix(in srgb, var(--gate) 70%, var(--border));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--gate) 28%, transparent), 0 16px 36px -18px color-mix(in srgb, var(--gate) 60%, transparent);
+}
+.cycle-orbit__slot[data-gate="entry"] { --gate: #3db4ff; --angle: 0deg; }
+.cycle-orbit__slot[data-gate="compile"] { --gate: #8eb6ff; --angle: 45deg; }
+.cycle-orbit__slot[data-gate="retro"] { --gate: #6ee7b7; --angle: 90deg; }
+.cycle-orbit__slot[data-gate="reflect"] { --gate: #fbbf24; --angle: 135deg; }
+.cycle-orbit__slot[data-gate="learnings"] { --gate: #f472b6; --angle: 180deg; }
+.cycle-orbit__slot[data-gate="debt"] { --gate: #fb923c; --angle: 225deg; }
+.cycle-orbit__slot[data-gate="sync"] { --gate: #a78bfa; --angle: 270deg; }
+.cycle-orbit__slot[data-gate="craft"] { --gate: #38bdf8; --angle: 315deg; }
+.cycle-orbit__face .gate-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--gate) 85%, var(--ink));
+}
+.cycle-orbit__face strong {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--ink);
+}
+.cycle-orbit__hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  transform: translateY(100%);
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+@keyframes cycleOrbitSpin {
+  to { transform: rotate(360deg); }
+}
+@keyframes cycleOrbitCounter {
+  from { transform: rotate(calc(-1 * var(--angle))); }
+  to { transform: rotate(calc(-1 * var(--angle) - 360deg)); }
+}
+
+.issue-map {
+  display: grid;
+  gap: var(--space-3);
+}
+.issue-kinds {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.issue-kind {
+  --kind: var(--accent);
+  --kind-soft: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--kind) 28%, var(--border));
+  background:
+    linear-gradient(165deg, color-mix(in srgb, var(--kind) 14%, transparent), transparent 58%),
+    var(--bg-elev);
+  padding: 20px 18px 18px;
+  display: grid;
+  gap: 10px;
+  min-height: 168px;
+  opacity: 0.32;
+  transform: translateY(14px) scale(0.98);
+  transition: opacity 280ms var(--ease-out), transform 280ms var(--ease-out), border-color 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+.issue-kind::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--kind);
+  opacity: 0.85;
+}
+.issue-kind[data-kind="release"] {
+  --kind: #3db4ff;
+  --kind-soft: #0f2433;
+}
+.issue-kind[data-kind="spec"] {
+  --kind: #5eead4;
+  --kind-soft: #0f2a28;
+}
+.issue-kind[data-kind="ticket"] {
+  --kind: #f5a524;
+  --kind-soft: #2a1d0a;
+}
+.issue-kind.is-lit,
+.issue-kind.is-active {
+  opacity: 1;
+  transform: none;
+  border-color: color-mix(in srgb, var(--kind) 55%, var(--border));
+  box-shadow: 0 22px 48px -34px color-mix(in srgb, var(--kind) 55%, transparent);
+}
+.issue-kind.is-active {
+  animation: landPulse 720ms var(--ease-out);
+}
+.issue-kind__badge {
+  display: inline-flex;
+  width: fit-content;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--kind);
+  background: color-mix(in srgb, var(--kind) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--kind) 35%, var(--border));
+  padding: 4px 8px;
+}
+.issue-kind h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2vw, 1.45rem);
+  letter-spacing: -0.02em;
+}
+.issue-kind p {
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+.issue-kind__path {
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  color: var(--ink);
+  border-top: 1px solid color-mix(in srgb, var(--kind) 22%, var(--border));
+  padding-top: 10px;
+}
+.issue-kind__path span { color: var(--muted); }
+
+.issue-ticket-block {
+  border: 1px solid color-mix(in srgb, #f5a524 22%, var(--border));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #f5a524 8%, transparent), transparent 40%),
+    color-mix(in srgb, var(--bg-elev) 92%, transparent);
+  padding: clamp(16px, 2.4vw, 22px);
+  display: grid;
+  gap: 14px;
+}
+.issue-ticket-block__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px 16px;
+}
+.issue-ticket-block__head strong {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  color: #f5a524;
+}
+.issue-ticket-block__head span {
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  max-width: 62ch;
+}
+.ticket-type-rail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.ticket-type {
+  --tt: #f5a524;
+  border: 1px solid color-mix(in srgb, var(--tt) 28%, var(--border));
+  background: var(--bg);
+  padding: 16px 14px 14px;
+  display: grid;
+  gap: 10px;
+  min-height: 100%;
+  opacity: 0.3;
+  transform: translateY(12px) scale(0.98);
+  transition: opacity 280ms var(--ease-out), transform 280ms var(--ease-out), border-color 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
+}
+.ticket-type[data-type="feature"] { --tt: #f5a524; }
+.ticket-type[data-type="bug"] { --tt: #ff6b6b; }
+.ticket-type[data-type="research"] { --tt: #fb7185; }
+.ticket-type[data-type="hotfix"] { --tt: #34d399; }
+.ticket-type.is-lit,
+.ticket-type.is-active {
+  opacity: 1;
+  transform: none;
+  border-color: color-mix(in srgb, var(--tt) 50%, var(--border));
+  box-shadow: 0 18px 40px -32px color-mix(in srgb, var(--tt) 55%, transparent);
+}
+.ticket-type.is-active {
+  animation: landPulse 720ms var(--ease-out);
+}
+.ticket-type__badge {
+  display: inline-flex;
+  width: fit-content;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--tt);
+  background: color-mix(in srgb, var(--tt) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tt) 32%, var(--border));
+  padding: 3px 7px;
+}
+.ticket-type h4 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: -0.015em;
+}
+.ticket-type > p {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+.ticket-specs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  border-top: 1px solid color-mix(in srgb, var(--tt) 18%, var(--border));
+  padding-top: 10px;
+}
+.ticket-specs li {
+  display: grid;
+  gap: 2px;
+}
+.ticket-specs__k {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--tt) 75%, var(--muted));
+}
+.ticket-specs__v {
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.ticket-specs__v code {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent-2);
+}
+
+.gate-rail {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+}
+.gate-step {
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+  padding: 16px 14px;
+  display: grid;
+  gap: 8px;
+  min-height: 150px;
+  opacity: 0.32;
+  transform: translateY(12px);
+  transition: opacity 260ms var(--ease-out), transform 260ms var(--ease-out), border-color 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
+  position: relative;
+}
+.gate-step::after {
+  content: "";
+  position: absolute;
+  top: 28px;
+  right: -8px;
+  width: 8px;
+  height: 2px;
+  background: var(--border);
+  opacity: 0.8;
+}
+.gate-step:last-child::after { display: none; }
+.gate-step.is-lit {
+  opacity: 1;
+  transform: none;
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.gate-step.is-lit::after {
+  background: color-mix(in srgb, var(--accent) 60%, var(--border));
+}
+.gate-step__n {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.gate-step h3 { font-size: 1rem; }
+.gate-step p { color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
+
+.writing-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.writing-card {
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg-elev) 90%, transparent);
+  padding: 18px;
+  display: grid;
+  gap: 10px;
+  opacity: 0.4;
+  transform: translateY(12px);
+  transition: opacity 280ms var(--ease-out), transform 280ms var(--ease-out), border-color 240ms var(--ease-out);
+}
+.writing-card.is-lit {
+  opacity: 1;
+  transform: none;
+  border-color: color-mix(in srgb, var(--accent) 32%, var(--border));
+}
+.writing-card h3 { font-size: 1.08rem; }
+.writing-card p { color: var(--muted); font-size: 0.94rem; line-height: 1.55; }
+.writing-card code { font-size: 0.86em; }
+
+/* Branch lineage — heartbeat nodes */
+.lineage-stage {
+  margin-top: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  background:
+    radial-gradient(640px 280px at 50% 0%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 60%),
+    linear-gradient(180deg, color-mix(in srgb, var(--accent-soft) 50%, transparent), transparent 40%),
+    var(--surface);
+  padding: clamp(20px, 3vw, 34px);
+  position: relative;
+  overflow: hidden;
+}
+.lineage-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 28%),
+    radial-gradient(circle at 80% 70%, color-mix(in srgb, var(--accent-2) 8%, transparent), transparent 30%);
+  pointer-events: none;
+  opacity: 0.9;
+}
+.lineage-stage > * { position: relative; z-index: 1; }
+.lineage-eyebrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.lineage-eyebrow strong { color: var(--accent); letter-spacing: 0.08em; }
+.lineage-status[data-state="live"] { color: var(--accent); }
+.lineage-status[data-state="done"] { color: #9fe0a8; }
+.lineage-status[data-state="idle"] { color: var(--muted); }
+
+.lineage-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(18px, 2.5vw, 28px);
+  align-items: start;
+}
+.lineage-tree {
+  display: grid;
+  gap: 0;
+  padding: 8px 4px 4px;
+}
+.lineage-node {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 12px;
+  opacity: 0.28;
+  transform: translateY(10px) scale(0.96);
+  filter: saturate(0.65);
+  transition: opacity 280ms var(--ease-out), transform 280ms var(--ease-out), filter 280ms var(--ease-out);
+}
+.lineage-node.is-lit,
+.lineage-node.is-active,
+.lineage-node.is-done {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+.lineage-node__rail {
+  display: grid;
+  justify-items: center;
+  grid-template-rows: auto 1fr;
+}
+.lineage-node__pip {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 2px solid var(--border-strong);
+  background: var(--bg);
+  margin-top: 22px;
+  transition: border-color 240ms var(--ease-out), background 240ms var(--ease-out), box-shadow 240ms var(--ease-out), transform 240ms var(--ease-out);
+}
+.lineage-node.is-lit .lineage-node__pip,
+.lineage-node.is-active .lineage-node__pip,
+.lineage-node.is-done .lineage-node__pip {
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow:
+    0 0 0 6px color-mix(in srgb, var(--accent) 16%, transparent),
+    0 0 18px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.lineage-node.is-beating .lineage-node__pip {
+  animation: lineageHeartPip 900ms cubic-bezier(0.23, 1, 0.32, 1) infinite;
+}
+.lineage-node__stem {
+  width: 3px;
+  min-height: 22px;
+  margin-top: 8px;
+  border-radius: 999px;
+  background: var(--border);
+  transform-origin: top;
+  transform: scaleY(0.2);
+  transition: transform 360ms var(--ease-out), background 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
+}
+.lineage-node:last-child .lineage-node__stem { display: none; }
+.lineage-node.is-done .lineage-node__stem,
+.lineage-node.is-active .lineage-node__stem,
+.lineage-node.is-lit .lineage-node__stem {
+  transform: scaleY(1);
+  background: linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--accent-2) 70%, var(--border)));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+.lineage-node.is-beating .lineage-node__stem {
+  animation: lineageStemPulse 900ms cubic-bezier(0.23, 1, 0.32, 1) infinite;
+}
+.lineage-card {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg-elev) 92%, transparent);
+  padding: 14px 18px 14px 20px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px 16px;
+  align-items: center;
+  margin-bottom: 10px;
+  min-height: 72px;
+  box-shadow: 0 10px 28px -24px color-mix(in srgb, #000 70%, transparent);
+  transition: border-color 240ms var(--ease-out), box-shadow 240ms var(--ease-out), background 240ms var(--ease-out);
+}
+.lineage-node.is-lit .lineage-card,
+.lineage-node.is-active .lineage-card,
+.lineage-node.is-done .lineage-card {
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--border));
+  background: linear-gradient(120deg, color-mix(in srgb, var(--accent-soft) 70%, var(--bg-elev)), var(--bg-elev));
+}
+.lineage-node.is-active .lineage-card,
+.lineage-node.is-beating .lineage-card {
+  animation: lineageHeartCard 900ms cubic-bezier(0.23, 1, 0.32, 1) infinite;
+}
+.lineage-card__meta {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+.lineage-card__kind {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.lineage-card__name {
+  font-family: var(--font-mono);
+  font-size: clamp(0.95rem, 1.6vw, 1.12rem);
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lineage-card__base {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.lineage-card__base code { color: var(--accent-2); font-size: 0.86em; }
+.lineage-card__badge {
+  justify-self: end;
+  align-self: center;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border));
+  background: var(--accent-soft);
+  border-radius: 999px;
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+.lineage-node[data-kind="stacked"] .lineage-card {
+  margin-left: clamp(12px, 3vw, 28px);
+  border-style: dashed;
+}
+.lineage-node[data-kind="main"] .lineage-card__name {
+  color: var(--accent);
+}
+
+.lineage-side {
+  display: grid;
+  gap: 14px;
+}
+.lineage-beats {
+  display: grid;
+  gap: 10px;
+}
+.lineage-beat {
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: var(--bg-elev);
+  padding: 16px 16px 14px;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  opacity: 0.34;
+  transform: translateY(12px) scale(0.97);
+  transition: opacity 280ms var(--ease-out), transform 280ms var(--ease-out), border-color 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
+}
+.lineage-beat.is-lit {
+  opacity: 1;
+  transform: none;
+  border-color: color-mix(in srgb, var(--accent) 38%, var(--border));
+  box-shadow: 0 16px 36px -30px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+.lineage-beat.is-beating {
+  animation: lineageHeartCard 980ms cubic-bezier(0.23, 1, 0.32, 1) infinite;
+}
+.lineage-beat__n {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+  background: var(--accent-soft);
+}
+.lineage-beat h3 {
+  font-size: 1.02rem;
+  margin-bottom: 4px;
+}
+.lineage-beat p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.lineage-why {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.lineage-why__card {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 70%, var(--bg-elev));
+  padding: 12px 14px;
+  display: grid;
+  gap: 4px;
+  min-height: 74px;
+  opacity: 0.3;
+  transform: scale(0.94);
+  transition: opacity 260ms var(--ease-out), transform 260ms var(--ease-out), border-color 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
+}
+.lineage-why__card.is-lit {
+  opacity: 1;
+  transform: none;
+  border-color: color-mix(in srgb, var(--accent) 34%, var(--border));
+}
+.lineage-why__card.is-beating {
+  animation: lineageHeartCard 860ms cubic-bezier(0.23, 1, 0.32, 1) infinite;
+}
+.lineage-why__card strong {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.lineage-why__card span {
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.4;
+}
+
+@keyframes lineageHeartCard {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent);
+  }
+  18% {
+    transform: scale(1.035);
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 14%, transparent);
+  }
+  34% {
+    transform: scale(0.985);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 8%, transparent);
+  }
+  52% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 12%, transparent);
+  }
+}
+@keyframes lineageHeartPip {
+  0%, 100% { transform: scale(1); }
+  18% { transform: scale(1.28); }
+  34% { transform: scale(0.94); }
+  52% { transform: scale(1.16); }
+}
+@keyframes lineageStemPulse {
+  0%, 100% { filter: brightness(1); opacity: 1; }
+  30% { filter: brightness(1.35); opacity: 1; }
+  55% { filter: brightness(1.1); opacity: 0.85; }
+}
+
+/* Capability map */
+.cap-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: var(--space-3);
+}
+.chip {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.88rem;
+  border-radius: 2px;
+  transition: background var(--dur-in) var(--ease-out), color var(--dur-in) var(--ease-out), border-color var(--dur-in) var(--ease-out), transform var(--dur-in) var(--ease-out);
+}
+.chip:hover {
+  color: var(--ink);
+  border-color: var(--border-strong);
+}
+.chip[aria-pressed="true"] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.cap-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.cap-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: border-color var(--dur-in) var(--ease-out), transform var(--dur-in) var(--ease-out), box-shadow var(--dur-in) var(--ease-out);
+}
+.cap-block:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px color-mix(in srgb, #000 35%, transparent);
+}
+.cap-block header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(90deg, var(--accent-soft), transparent 70%);
+}
+.cap-block .count {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+}
+.skill-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.skill-table th,
+.skill-table td {
+  padding: 11px 16px;
+  text-align: left;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+  vertical-align: top;
+}
+.skill-table th {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+.skill-table tr {
+  transition: background 180ms var(--ease-out);
+}
+.skill-table tbody tr:hover {
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+.skill-table .desc { color: var(--muted); }
+.skill-table tr.is-hidden { display: none; }
+.pill {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  vertical-align: middle;
+}
+.pill-user { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); color: var(--accent); }
+.pill-model { border-color: color-mix(in srgb, var(--accent-2) 45%, var(--border)); color: var(--accent-2); }
+
+/* Install */
+.install-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.install-card {
+  padding: 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--dur-in) var(--ease-out), border-color var(--dur-in) var(--ease-out);
+}
+.install-card::after {
+  content: "";
+  position: absolute;
+  inset: auto -20% -40% auto;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%);
+  pointer-events: none;
+}
+.install-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+}
+.install-card h3 { margin-bottom: 6px; }
+.install-card .who {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+.code-block {
+  position: relative;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 14px 14px 12px;
+}
+.code-block pre {
+  margin: 0;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--ink);
+  white-space: pre-wrap;
+}
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  min-height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  transition: background var(--dur-in) var(--ease-out), border-color var(--dur-in) var(--ease-out), color var(--dur-in) var(--ease-out);
+}
+.copy-btn:hover,
+.copy-btn.is-copied {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.install-card .note {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+.callout {
+  margin-top: var(--space-4);
+  padding: 16px 18px;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+  background: linear-gradient(90deg, var(--accent-soft), transparent 80%);
+  color: var(--muted);
+}
+.callout strong { color: var(--ink); }
+
+/* Orchestration control room */
+.orch-stage {
+  margin-top: var(--space-4);
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(720px 320px at 12% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 55%),
+    linear-gradient(180deg, color-mix(in srgb, var(--accent-soft) 40%, transparent), transparent 36%),
+    var(--surface);
+  padding: clamp(18px, 2.6vw, 28px);
+  position: relative;
+  overflow: hidden;
+}
+.orch-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--border) 50%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--border) 50%, transparent) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.16;
+  pointer-events: none;
+}
+.orch-stage > * { position: relative; z-index: 1; }
+.orch-eyebrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.orch-eyebrow strong { color: var(--accent); letter-spacing: 0.08em; }
+.orch-status[data-state="live"] { color: var(--accent); }
+.orch-status[data-state="done"] { color: #9fe0a8; }
+.orch-status[data-state="idle"] { color: var(--muted); }
+
+.orch-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.2fr);
+  gap: 14px;
+  align-items: stretch;
+}
+.orch-panel {
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg-elev) 92%, transparent);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: 220px;
+  opacity: 0.42;
+  transform: translateY(10px);
+  transition: opacity 280ms var(--ease-out), transform 280ms var(--ease-out), border-color 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
+}
+.orch-panel.is-lit {
+  opacity: 1;
+  transform: none;
+  border-color: color-mix(in srgb, var(--accent) 38%, var(--border));
+  box-shadow: 0 22px 48px -36px color-mix(in srgb, var(--accent) 48%, transparent);
+}
+.orch-panel.is-active {
+  border-color: color-mix(in srgb, var(--accent) 62%, var(--border));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent),
+    0 24px 52px -30px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+.orch-panel__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+}
+.orch-panel__head strong { color: var(--ink); letter-spacing: 0.04em; }
+.orch-panel__body { padding: 14px; }
+
+.orch-main__prompt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+  color: var(--ink);
+  min-height: 1.6em;
+}
+.orch-main__ps { color: var(--accent); }
+.orch-main__caret {
+  width: 8px;
+  height: 1.1em;
+  background: var(--accent);
+  display: inline-block;
+  animation: caretBlink 900ms steps(1) infinite;
+  opacity: 0;
+}
+.orch-panel.is-active .orch-main__caret { opacity: 1; }
+@keyframes caretBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.orch-main__out {
+  margin: 14px 0 0;
+  padding: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--muted);
+  min-height: 7.5em;
+  white-space: pre-wrap;
+}
+.orch-main__out .ok { color: #9fe0a8; }
+.orch-main__out .dim { color: color-mix(in srgb, var(--muted) 70%, transparent); }
+.orch-main__out .accent { color: var(--accent); }
+
+.orch-plan {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.orch-plan li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  opacity: 0.32;
+  transform: translateX(-6px);
+  transition: opacity 240ms var(--ease-out), transform 240ms var(--ease-out), border-color 240ms var(--ease-out);
+}
+.orch-plan li.is-lit,
+.orch-plan li.is-done {
+  opacity: 1;
+  transform: none;
+}
+.orch-plan li.is-active {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+  background: color-mix(in srgb, var(--accent-soft) 70%, var(--bg));
+}
+.orch-plan__n {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+  padding-top: 2px;
+}
+.orch-plan__text strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.orch-plan__text span {
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.orch-graph-wrap {
+  margin-top: 14px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg-elev) 88%, transparent);
+  padding: 14px;
+  opacity: 0.35;
+  transform: translateY(12px);
+  transition: opacity 280ms var(--ease-out), transform 280ms var(--ease-out), border-color 240ms var(--ease-out);
+}
+.orch-graph-wrap.is-lit {
+  opacity: 1;
+  transform: none;
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+}
+.orch-graph-wrap.is-active {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+}
+.orch-graph__label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.orch-graph {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) 28px minmax(0, 1.35fr);
+  grid-template-rows: repeat(3, auto);
+  gap: 8px 6px;
+  align-items: center;
+}
+.orch-node {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  padding: 12px 14px;
+  display: grid;
+  gap: 4px;
+  opacity: 0.28;
+  transform: scale(0.96);
+  transition: opacity 240ms var(--ease-out), transform 240ms var(--ease-out), border-color 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
+}
+.orch-node.is-lit {
+  opacity: 1;
+  transform: none;
+}
+.orch-node.is-active {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent);
+  animation: landPulse 720ms var(--ease-out);
+}
+.orch-node.is-blocked {
+  opacity: 0.55;
+  border-style: dashed;
+}
+.orch-node.is-done {
+  border-color: color-mix(in srgb, #9fe0a8 40%, var(--border));
+}
+.orch-node__kind {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.orch-node__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.02rem;
+  letter-spacing: -0.02em;
+}
+.orch-node__meta {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.orch-edge {
+  height: 2px;
+  background: var(--border);
+  position: relative;
+  opacity: 0.25;
+  transform: scaleX(0.3);
+  transform-origin: left;
+  transition: opacity 240ms var(--ease-out), transform 320ms var(--ease-out), background 240ms var(--ease-out);
+}
+.orch-edge.is-lit {
+  opacity: 1;
+  transform: scaleX(1);
+  background: color-mix(in srgb, var(--accent) 65%, var(--border));
+}
+.orch-edge::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid currentColor;
+  border-top: 2px solid currentColor;
+  color: color-mix(in srgb, var(--accent) 70%, var(--border));
+  transform: translateY(-50%) rotate(45deg);
+  opacity: 0;
+}
+.orch-edge.is-lit::after { opacity: 1; }
+.orch-spec-span {
+  grid-row: 1 / span 3;
+  grid-column: 1;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+.orch-graph > [data-orch-edge="e1"] { grid-column: 2; grid-row: 1; }
+.orch-graph > [data-orch-node="t1"] { grid-column: 3; grid-row: 1; }
+.orch-graph > [data-orch-edge="e2"] { grid-column: 2; grid-row: 2; }
+.orch-graph > [data-orch-node="t2"] { grid-column: 3; grid-row: 2; }
+.orch-graph > [data-orch-edge="e3"] { grid-column: 2; grid-row: 3; }
+.orch-graph > [data-orch-node="t3"] { grid-column: 3; grid-row: 3; }
+
+.orch-workers {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.orch-worker {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  min-height: 148px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  opacity: 0.28;
+  transform: translateY(14px) scale(0.97);
+  transition: opacity 260ms var(--ease-out), transform 260ms var(--ease-out), border-color 240ms var(--ease-out);
+}
+.orch-worker.is-lit {
+  opacity: 1;
+  transform: none;
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+}
+.orch-worker.is-active {
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--border));
+  box-shadow: 0 18px 40px -30px color-mix(in srgb, var(--accent) 50%, transparent);
+}
+.orch-worker.is-done {
+  border-color: color-mix(in srgb, #9fe0a8 35%, var(--border));
+}
+.orch-worker.is-waiting {
+  opacity: 0.5;
+  border-style: dashed;
+}
+.orch-worker__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.orch-worker__head strong { color: var(--ink); }
+.orch-worker__badge[data-state="run"] { color: var(--accent); }
+.orch-worker__badge[data-state="wait"] { color: var(--muted); }
+.orch-worker__badge[data-state="done"] { color: #9fe0a8; }
+.orch-worker__log {
+  margin: 0;
+  padding: 10px 12px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--muted);
+  white-space: pre-wrap;
+}
+
+.orch-merge {
+  margin-top: 14px;
+  border: 1px solid var(--border);
+  background: linear-gradient(90deg, var(--accent-soft), transparent 70%), var(--bg);
+  padding: 14px 16px;
+  display: grid;
+  gap: 6px;
+  opacity: 0.3;
+  transform: translateY(10px);
+  transition: opacity 280ms var(--ease-out), transform 280ms var(--ease-out), border-color 240ms var(--ease-out);
+}
+.orch-merge.is-lit {
+  opacity: 1;
+  transform: none;
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+.orch-merge strong {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+.orch-merge p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.orch-unlock {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border: 1px dashed color-mix(in srgb, var(--accent) 40%, var(--border));
+  background: color-mix(in srgb, var(--accent-soft) 45%, transparent);
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+.orch-unlock strong { color: var(--ink); }
+.orch-unlock code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  color: var(--accent);
+}
+
+@media (max-width: 1024px) {
+  .orch-grid,
+  .orch-workers { grid-template-columns: 1fr; }
+  .orch-graph {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+  }
+  .orch-edge { display: none; }
+  .orch-spec-span,
+  .orch-graph > [data-orch-node="t1"],
+  .orch-graph > [data-orch-node="t2"],
+  .orch-graph > [data-orch-node="t3"] {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
+
+/* Flow + refs */
+.flow-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.flow-table th,
+.flow-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.flow-table th {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--bg-elev);
+}
+.flow-table tr {
+  transition: background 180ms var(--ease-out);
+}
+.flow-table tbody tr:hover {
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+}
+.ref-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: var(--space-4);
+}
+.ref-card {
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  min-height: 140px;
+  transition: transform var(--dur-in) var(--ease-out), border-color var(--dur-in) var(--ease-out);
+}
+.ref-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+}
+.ref-card h3 { margin-bottom: 8px; }
+.ref-card p { color: var(--muted); font-size: 0.9rem; }
+
+/* CTA */
+.final-cta {
+  padding: var(--space-6) 0;
+  position: relative;
+}
+.final-cta .panel {
+  padding: clamp(28px, 5vw, 48px);
+  background:
+    radial-gradient(600px 240px at 10% 0%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 60%),
+    var(--surface);
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) auto;
+  gap: 24px;
+  align-items: center;
+  overflow: hidden;
+}
+.final-cta .actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 0 40px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+.site-footer .inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 28px;
+  align-items: center;
+  justify-content: space-between;
+}
+.site-footer a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.site-footer a:hover { color: var(--accent); }
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Skills category rails */
+.skill-cats {
+  display: grid;
+  gap: 16px;
+  margin-top: var(--space-4);
+}
+.skill-cat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 420ms var(--ease-out),
+    transform 420ms var(--ease-out),
+    border-color var(--dur-in) var(--ease-out),
+    box-shadow var(--dur-in) var(--ease-out);
+}
+.skill-cat.is-in {
+  opacity: 1;
+  transform: none;
+}
+.skill-cat:nth-child(2) { transition-delay: 60ms; }
+.skill-cat:nth-child(3) { transition-delay: 120ms; }
+.skill-cat:nth-child(4) { transition-delay: 180ms; }
+.skill-cat:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  box-shadow: 0 16px 40px color-mix(in srgb, #000 35%, transparent);
+}
+.skill-cat__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px 12px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(90deg, var(--accent-soft), transparent 72%);
+}
+.skill-cat__meta h3 {
+  margin: 0 0 6px;
+}
+.skill-cat__meta p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  max-width: 52ch;
+}
+.skill-cat__count {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  padding: 6px 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+  background: color-mix(in srgb, var(--accent-soft) 80%, transparent);
+}
+.skill-cat__rail {
+  border-block: 0;
+  background: color-mix(in srgb, var(--bg-elev) 70%, transparent);
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.skill-cat__track {
+  display: flex;
+  gap: 28px;
+  width: max-content;
+  padding: 16px 0;
+  animation: skill-marquee 22s linear infinite;
+  animation-play-state: paused;
+}
+.skill-cat.is-in .skill-cat__track {
+  animation-play-state: running;
+}
+.skill-cat.is-in .skill-cat__track.is-restarting {
+  animation: none;
+}
+.skill-cat:nth-child(2) .skill-cat__track { animation-duration: 26s; animation-direction: reverse; }
+.skill-cat:nth-child(3) .skill-cat__track { animation-duration: 14s; }
+.skill-cat:nth-child(4) .skill-cat__track { animation-duration: 16s; animation-direction: reverse; }
+.skill-cat__track span {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.skill-cat__track span::before {
+  content: "▸";
+  color: var(--accent);
+  margin-right: 10px;
+}
+.skills-cta {
+  margin-top: var(--space-4);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 24px;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 10%, transparent), transparent 55%),
+    var(--surface);
+}
+.skills-cta p {
+  margin: 0;
+  color: var(--muted);
+  max-width: 52ch;
+}
+.skills-cta strong {
+  color: var(--ink);
+}
+@keyframes skill-marquee {
+  to { transform: translateX(-50%); }
+}
+
+@media (max-width: 1024px) {
+  .facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cap-grid,
+  .split,
+  .land-flow__intro,
+  .hero-grid,
+  .install-grid,
+  .final-cta .panel,
+  .ref-grid,
+  .cycle-layout,
+  .lineage-layout,
+  .issue-kinds,
+  .ticket-type-rail,
+  .writing-grid,
+  .gate-rail {
+    grid-template-columns: 1fr;
+  }
+  .cycle-orbit { --orbit-r: 148px; }
+  .gate-step::after { display: none; }
+  .ref-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .logo-3d__scene { width: min(70%, 240px); }
+  .land-slope { height: 340px; }
+  .land-node { width: min(150px, 42vw); }
+  .land-node[data-level="ticket"] { left: 16%; top: 88%; }
+  .land-node[data-level="spec"] { left: 40%; top: 66%; }
+  .land-node[data-level="release"] { left: 64%; top: 42%; }
+  .land-node[data-level="main"] { left: 86%; top: 16%; }
+}
+@media (max-width: 980px) {
+  .top-nav,
+  .nav-actions { display: none; }
+  .site-nav.is-open .top-nav,
+  .site-nav.is-open .nav-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--nav-h);
+    background: color-mix(in srgb, var(--bg) 96%, transparent);
+    border-bottom: 1px solid var(--border);
+    padding: 12px var(--gut) 16px;
+    margin: 0;
+    backdrop-filter: blur(16px);
+    z-index: 45;
+  }
+  .site-nav.is-open .top-nav {
+    gap: 4px;
+    justify-content: flex-start;
+  }
+  .site-nav.is-open .top-nav > li { width: 100%; }
+  .site-nav.is-open .top-nav a,
+  .site-nav.is-open .top-nav .nav-trigger {
+    width: 100%;
+    justify-content: space-between;
+    min-height: 44px;
+    padding: 0 12px;
+  }
+  .site-nav.is-open .nav-dd {
+    position: static;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    box-shadow: none;
+    border: 0;
+    background: transparent;
+    padding: 0 0 8px 12px;
+    min-width: 0;
+  }
+  .site-nav.is-open .nav-dd::before { display: none; }
+  .site-nav.is-open .nav-actions {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 8px 0 0;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .mobile-nav-toggle { display: inline-flex; align-items: center; }
+}
+@media (max-width: 768px) {
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .brand__tag { display: none; }
+  .hero-viz { min-height: 0; }
+  .logo-3d { min-height: 200px; }
+}
+@media (max-width: 1100px) {
+  .ticket-type-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .gate-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gate-step::after { display: none; }
+  .issue-kinds { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .facts,
+  .ref-grid,
+  .ticket-type-rail,
+  .writing-grid,
+  .lineage-why { grid-template-columns: 1fr; }
+  .hero-stage { min-height: 0; }
+  .ship-flow__steps { grid-template-columns: 1fr; }
+  .land-slope { height: 380px; }
+  .land-node { width: min(138px, 46vw); padding: 8px 10px; }
+  .land-node[data-level="ticket"] { left: 22%; top: 90%; }
+  .land-node[data-level="spec"] { left: 42%; top: 68%; }
+  .land-node[data-level="release"] { left: 64%; top: 42%; }
+  .land-node[data-level="main"] { left: 82%; top: 14%; }
+  .lineage-card {
+    border-radius: 22px;
+    grid-template-columns: 1fr;
+  }
+  .lineage-card__badge { justify-self: start; }
+  .lineage-node[data-kind="stacked"] .lineage-card { margin-left: 0; }
+  .cycle-orbit { --orbit-r: 126px; width: min(100%, 340px); }
+  .cycle-orbit__slot { width: 104px; height: 70px; margin: -35px 0 0 -52px; }
+  .cycle-orbit__face strong { font-size: 0.84rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .brand-mark.is-alive .layer-dark,
+  .brand-mark.is-alive .layer-signal,
+  .brand-mark.is-alive .layer-light,
+  .logo-3d__orbit,
+  .logo-3d__layer--dark,
+  .logo-3d__layer--signal,
+  .logo-3d__layer--light,
+  .logo-3d__glow,
+  .logo-3d__floor,
+  .logo-3d__ring,
+  .ship-flow__caret,
+  .skill-cat__track,
+  .cycle-orbit__track,
+  .cycle-orbit__face,
+  .land-node.is-active,
+  .top-nav a.is-active::after,
+  .top-nav .nav-trigger.is-active::after {
+    animation: none !important;
+  }
+  .land-node,
+  .land-slope__glow,
+  .cycle-node,
+  .cycle-node__pip,
+  .cycle-node__link,
+  .cycle-node__body,
+  .cycle-orbit__track,
+  .cycle-orbit__face,
+  .issue-kind,
+  .ticket-type,
+  .gate-step,
+  .writing-card,
+  .lineage-node,
+  .lineage-node__pip,
+  .lineage-node__stem,
+  .lineage-card,
+  .lineage-beat,
+  .lineage-why__card {
+    transition: none !important;
+  }
+  .cycle-node,
+  .issue-kind,
+  .ticket-type,
+  .gate-step,
+  .writing-card,
+  .lineage-node,
+  .lineage-beat,
+  .lineage-why__card {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  .cycle-node__link,
+  .lineage-node__stem { transform: scaleY(1); }
+  .cycle-orbit__track,
+  .cycle-orbit__face,
+  .cycle-node.is-active .cycle-node__pip,
+  .lineage-node.is-active .lineage-card,
+  .lineage-node.is-beating .lineage-card,
+  .lineage-node.is-beating .lineage-node__pip,
+  .lineage-node.is-beating .lineage-node__stem,
+  .lineage-beat.is-beating,
+  .lineage-why__card.is-beating { animation: none !important; }
+  .land-node {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    filter: none;
+  }
+  .land-slope__glow { stroke-dashoffset: 0 !important; }
+  .land-slope__spark { opacity: 0 !important; }
+  .logo-3d__scene { transition: none; }
+  .fact,
+  .skill-cat,
+  .cap-block,
+  .install-card,
+  .ref-card,
+  .btn {
+    transition: none !important;
+  }
+  .skill-cat {
+    opacity: 1;
+    transform: none;
+  }
+  .skill-cat__track {
+    animation: none !important;
+    flex-wrap: wrap;
+    width: auto;
+    max-width: 100%;
+    padding: 14px 16px;
+    gap: 12px 20px;
+  }
+  .fact:hover,
+  .skill-cat:hover,
+  .cap-block:hover,
+  .install-card:hover,
+  .ref-card:hover,
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    transform: none;
+  }
+  .atmosphere__grid { transform: none; }
+  .logo-3d__scene {
+    transform: rotateX(58deg) rotateZ(-18deg);
+  }
+  .logo-3d__orbit {
+    transform: rotateY(-28deg);
+  }
+}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="atmosphere" aria-hidden="true">
+    <div class="atmosphere__grid" id="atm-grid"></div>
+    <div class="atmosphere__noise"></div>
+  </div>
+  <div class="scroll-progress" id="progress" aria-hidden="true"></div>
+
+  <header class="site-nav" id="site-nav">
+    <div class="wrap inner">
+      <a class="brand" href="#top" aria-label="Yami Coding home">
+        <svg class="brand-mark is-alive" viewBox="0 0 144 144" aria-hidden="true">
+          <polygon class="layer-dark" points="6,118 118,92 138,116 26,142" fill="#1a1e30"/>
+          <polygon class="layer-signal" points="12,76 124,50 144,74 32,100" fill="#8eb6ff"/>
+          <polygon class="layer-light" points="18,34 130,8 150,32 38,58" fill="#f4f7ff"/>
+        </svg>
+        <span>
+          <span class="brand__name">Yami Coding</span>
+          <span class="brand__tag">Open source</span>
+        </span>
+      </a>
+      <ul class="top-nav" id="top-nav">
+        <li><a href="#overview" data-nav>Overview</a></li>
+        <li class="nav-item has-dd" id="nav-ship">
+          <button type="button" class="nav-trigger" id="nav-ship-trigger" aria-expanded="false" aria-controls="nav-ship-menu" data-nav-group="ship">
+            Ship <span class="nav-trigger__chev" aria-hidden="true"></span>
+          </button>
+          <ul class="nav-dd" id="nav-ship-menu" role="list">
+            <li><a href="#orchestrate" data-nav data-nav-parent="ship">Orchestrate</a></li>
+            <li><a href="#cycle" data-nav data-nav-parent="ship">Cycle</a></li>
+            <li><a href="#tickets" data-nav data-nav-parent="ship">Issues</a></li>
+            <li><a href="#lineage" data-nav data-nav-parent="ship">Lineage</a></li>
+            <li><a href="#gates" data-nav data-nav-parent="ship">Gates</a></li>
+            <li><a href="#writing" data-nav data-nav-parent="ship">Writing</a></li>
+          </ul>
+        </li>
+        <li><a href="#capabilities" data-nav>Skills</a></li>
+        <li><a href="#install" data-nav>Install</a></li>
+        <li><a href="#start" data-nav>Start</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="https://ahmed-zhran.github.io/z-yami-coding-skills" target="_blank" rel="noopener">Docs</a>
+        <a class="btn btn-secondary" href="https://github.com/ahmed-zhran/z-yami-coding-skills" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-primary" href="#install">Install</a>
+      </div>
+      <button type="button" class="mobile-nav-toggle od-touch" id="nav-toggle" aria-expanded="false" aria-controls="top-nav">Menu</button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div class="hero-copy reveal">
+          <p class="eyebrow">Open source · MIT · v1.8.0</p>
+          <h1>Ship in the <em>dark</em>. Land with a recorded base.</h1>
+          <p class="lead">
+            Yami Coding is Ahmed Zhran’s plugin of <strong>62 skills</strong> for Claude Code, Codex, Cursor, and other agents.
+            A release, a spec, and a ticket each record a base when the issue is created — the agent lands into that base, and the ship door you typed owns that level’s land gate.
+          </p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="#install">Install the plugin</a>
+            <a class="btn btn-secondary" href="https://github.com/ahmed-zhran/z-yami-coding-skills" target="_blank" rel="noopener">View on GitHub</a>
+            <a class="btn btn-ghost" href="https://ahmed-zhran.github.io/z-yami-coding-skills" target="_blank" rel="noopener">Read the site</a>
+          </div>
+          <ul class="hero-meta">
+            <li><strong>62</strong> skills</li>
+            <li><strong>MIT</strong> license</li>
+            <li><strong>v1.8.0</strong> current</li>
+            <li>Claude · Codex · skills.sh agents</li>
+          </ul>
+        </div>
+
+        <div class="hero-stage reveal" id="hero-stage">
+          <div class="hero-viz" id="hero-viz" aria-label="Three-layer logo and multi-step ship door prompting">
+            <div class="logo-3d" aria-hidden="true">
+              <span class="logo-3d__label">3-layer mark</span>
+              <div class="logo-3d__ring"></div>
+              <div class="logo-3d__ring logo-3d__ring--inner"></div>
+              <div class="logo-3d__glow"></div>
+              <div class="logo-3d__scene" id="logo-3d-scene">
+                <div class="logo-3d__orbit">
+                  <div class="logo-3d__layer logo-3d__layer--dark">
+                    <svg viewBox="0 0 160 160" role="presentation">
+                      <defs>
+                        <linearGradient id="g-dark" x1="0" y1="0" x2="1" y2="1">
+                          <stop offset="0%" stop-color="#2a3148"/>
+                          <stop offset="100%" stop-color="#121621"/>
+                        </linearGradient>
+                      </defs>
+                      <polygon points="8,128 124,98 146,126 30,156" fill="url(#g-dark)" stroke="#3a465c" stroke-width="1.5"/>
+                      <polygon points="30,156 146,126 146,138 30,168" fill="#0a0d14" opacity="0.55"/>
+                    </svg>
+                  </div>
+                  <div class="logo-3d__layer logo-3d__layer--signal">
+                    <svg viewBox="0 0 160 160" role="presentation">
+                      <defs>
+                        <linearGradient id="g-signal" x1="0" y1="0" x2="1" y2="1">
+                          <stop offset="0%" stop-color="#8eb6ff"/>
+                          <stop offset="55%" stop-color="#3db4ff"/>
+                          <stop offset="100%" stop-color="#1a7fbf"/>
+                        </linearGradient>
+                      </defs>
+                      <polygon points="14,88 130,58 152,86 36,116" fill="url(#g-signal)" stroke="#a8d8ff" stroke-width="1.2"/>
+                      <polygon points="36,116 152,86 152,98 36,128" fill="#1a5f8a" opacity="0.65"/>
+                    </svg>
+                  </div>
+                  <div class="logo-3d__layer logo-3d__layer--light">
+                    <svg viewBox="0 0 160 160" role="presentation">
+                      <defs>
+                        <linearGradient id="g-light" x1="0" y1="0" x2="1" y2="1">
+                          <stop offset="0%" stop-color="#ffffff"/>
+                          <stop offset="100%" stop-color="#c9d4ef"/>
+                        </linearGradient>
+                      </defs>
+                      <polygon points="20,48 136,18 158,46 42,76" fill="url(#g-light)" stroke="#ffffff" stroke-width="1.2"/>
+                      <polygon points="42,76 158,46 158,58 42,88" fill="#8b95a8" opacity="0.45"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="logo-3d__floor"></div>
+            </div>
+
+            <div class="ship-flow" id="ship-flow">
+              <div class="ship-flow__head">
+                <span class="ship-flow__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span>ship doors · multi-step prompting</span>
+              </div>
+              <ol class="ship-flow__steps" id="ship-steps">
+                <li class="ship-flow__step is-active" data-step="0"><strong>/ship-ticket</strong><span>ticket · branch → merge</span></li>
+                <li class="ship-flow__step" data-step="1"><strong>/ship-spec</strong><span>spec · land tickets</span></li>
+                <li class="ship-flow__step" data-step="2"><strong>/ship-release</strong><span>release · land specs</span></li>
+              </ol>
+              <div class="ship-flow__terminal" aria-live="polite">
+                <div class="ship-flow__prompt">
+                  <span class="ship-flow__ps">›</span>
+                  <code id="ship-cmd"></code>
+                  <span class="ship-flow__caret" aria-hidden="true"></span>
+                </div>
+                <pre class="ship-flow__out" id="ship-out"></pre>
+              </div>
+              <div class="ship-flow__progress">
+                <span id="ship-step-label">01 / 03</span>
+                <div class="ship-flow__bar" aria-hidden="true"><span id="ship-bar"></span></div>
+                <span id="ship-status">typing</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="overview" aria-labelledby="overview-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">At a glance</p>
+          <h2 id="overview-title">What ships in the box</h2>
+          <p class="lead">Facts from the published package — not marketing metrics.</p>
+        </div>
+
+        <div class="facts stagger" role="list">
+          <div class="fact reveal" role="listitem">
+            <div class="od-stat">
+              <div class="fact-value"><span data-count="62">0</span></div>
+              <div class="fact-label">Published skills</div>
+            </div>
+          </div>
+          <div class="fact reveal" role="listitem">
+            <div class="od-stat">
+              <div class="fact-value"><span data-count="51">0</span></div>
+              <div class="fact-label">Engineering</div>
+            </div>
+          </div>
+          <div class="fact reveal" role="listitem">
+            <div class="od-stat">
+              <div class="fact-value"><span data-count="11">0</span></div>
+              <div class="fact-label">Productivity</div>
+            </div>
+          </div>
+          <div class="fact reveal" role="listitem">
+            <div class="od-stat">
+              <div class="fact-value"><span data-count="3">0</span></div>
+              <div class="fact-label">Install routes</div>
+            </div>
+          </div>
+          <div class="fact reveal" role="listitem">
+            <div class="od-stat">
+              <div class="fact-value">MIT</div>
+              <div class="fact-label">License · v1.8.0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="land-flow" id="landing-path" data-land-flow>
+          <div class="land-flow__intro reveal">
+            <div>
+              <h3>How work lands</h3>
+              <p class="prose">
+                Work climbs from a lower-level <strong>ticket</strong> into a higher-level <code>spec/&lt;issue&gt;</code>,
+                then into <code>release/&lt;N&gt;</code>, and finally onto <code>main</code>.
+                The checked-out branch is never the base — each level lands into the one above it.
+              </p>
+              <p class="prose">
+                The ship door you typed owns that level’s land gate; everything below lands under that session’s authority.
+                You approve only the gate that belongs to the door you opened.
+              </p>
+            </div>
+            <div class="panel">
+              <h3 style="margin-bottom: 8px;">Requirements</h3>
+              <p class="prose" style="margin-top:0;">
+                Claude Code, Codex, or another agent that <a href="https://skills.sh" target="_blank" rel="noopener">skills.sh</a> can install into
+                (Cursor, OpenCode, Windsurf, Devin, Amp, Pi).
+              </p>
+            </div>
+          </div>
+
+          <div class="land-flow__stage" aria-label="Animated landing slope from ticket to main">
+            <div class="land-flow__eyebrow">
+              <strong>Landing path</strong>
+              <span class="land-flow__status" data-land-status data-state="idle">idle · waiting for viewport</span>
+            </div>
+            <div class="land-slope" data-land-slope>
+              <svg class="land-slope__svg" viewBox="0 0 1000 320" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="landGlowGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#3db4ff" />
+                    <stop offset="55%" stop-color="#8eb6ff" />
+                    <stop offset="100%" stop-color="#c9e4ff" />
+                  </linearGradient>
+                </defs>
+                <path class="land-slope__track" d="M 80 275 C 220 250, 280 210, 340 198 C 460 170, 520 130, 600 122 C 720 108, 790 70, 880 45" />
+                <path class="land-slope__glow" data-land-path d="M 80 275 C 220 250, 280 210, 340 198 C 460 170, 520 130, 600 122 C 720 108, 790 70, 880 45" pathLength="1" />
+                <circle class="land-slope__spark" data-land-spark r="5" cx="80" cy="275" />
+              </svg>
+              <article class="land-node" data-level="ticket" data-order="0">
+                <span class="land-node__rank">01 · lower</span>
+                <div class="land-node__name">ticket</div>
+                <div class="land-node__path">ticket/&lt;id&gt;</div>
+                <span class="land-node__door">/ship-ticket</span>
+              </article>
+              <article class="land-node" data-level="spec" data-order="1">
+                <span class="land-node__rank">02 · mid</span>
+                <div class="land-node__name">spec</div>
+                <div class="land-node__path">spec/&lt;issue&gt;</div>
+                <span class="land-node__door">/ship-spec</span>
+              </article>
+              <article class="land-node" data-level="release" data-order="2">
+                <span class="land-node__rank">03 · higher</span>
+                <div class="land-node__name">release</div>
+                <div class="land-node__path">release/&lt;N&gt;</div>
+                <span class="land-node__door">/ship-release</span>
+              </article>
+              <article class="land-node" data-level="main" data-order="3">
+                <span class="land-node__rank">04 · destination</span>
+                <div class="land-node__name">main</div>
+                <div class="land-node__path">release → main</div>
+                <span class="land-node__door">land → main</span>
+              </article>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section" id="orchestrate" aria-labelledby="orch-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Orchestration · ship-release</p>
+          <h2 id="orch-title">One release prompt. Specs, tickets, and parallel children.</h2>
+          <p class="lead">
+            <code>/ship-release</code> plans the release, cuts dependent specs and tickets, then spans child agents on independent work while blocked tickets wait.
+            Results fold back to the main agent — dependency-aware shipping, not a flat todo list.
+          </p>
+        </div>
+
+        <div class="orch-stage" id="orch-stage" data-orch-stage aria-label="Animated ship-release orchestration">
+          <div class="orch-eyebrow">
+            <strong>Control room</strong>
+            <span class="orch-status" data-orch-status data-state="idle">idle · waiting for viewport</span>
+          </div>
+
+          <div class="orch-grid">
+            <article class="orch-panel" data-orch-panel="main">
+              <div class="orch-panel__head">
+                <strong>Main agent</strong>
+                <span data-orch-main-badge>session</span>
+              </div>
+              <div class="orch-panel__body">
+                <div class="orch-main__prompt" aria-live="polite">
+                  <span class="orch-main__ps">›</span>
+                  <code data-orch-cmd></code>
+                  <span class="orch-main__caret" aria-hidden="true"></span>
+                </div>
+                <pre class="orch-main__out" data-orch-out></pre>
+              </div>
+            </article>
+
+            <article class="orch-panel" data-orch-panel="plan">
+              <div class="orch-panel__head">
+                <strong>Release plan</strong>
+                <span>ordered steps</span>
+              </div>
+              <div class="orch-panel__body">
+                <ol class="orch-plan" data-orch-plan>
+                  <li data-plan-step="0">
+                    <span class="orch-plan__n">01</span>
+                    <div class="orch-plan__text">
+                      <strong>Plan the release</strong>
+                      <span>Scope features that land in <code>release/&lt;N&gt;</code>.</span>
+                    </div>
+                  </li>
+                  <li data-plan-step="1">
+                    <span class="orch-plan__n">02</span>
+                    <div class="orch-plan__text">
+                      <strong>Cut specs</strong>
+                      <span>Create <code>spec/&lt;issue&gt;</code> branches with recorded bases.</span>
+                    </div>
+                  </li>
+                  <li data-plan-step="2">
+                    <span class="orch-plan__n">03</span>
+                    <div class="orch-plan__text">
+                      <strong>Cut tickets with depends-on</strong>
+                      <span>Issues link to parents; blocked work waits.</span>
+                    </div>
+                  </li>
+                  <li data-plan-step="3">
+                    <span class="orch-plan__n">04</span>
+                    <div class="orch-plan__text">
+                      <strong>Span child agents</strong>
+                      <span>Independent tickets run in parallel; replies return to main.</span>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </article>
+          </div>
+
+          <div class="orch-graph-wrap" data-orch-graph>
+            <div class="orch-graph__label">Dependency graph · specs → tickets</div>
+            <div class="orch-graph">
+              <div class="orch-node orch-spec-span" data-orch-node="spec">
+                <span class="orch-node__kind">spec</span>
+                <div class="orch-node__name">spec/auth-flow</div>
+                <div class="orch-node__meta">base · release/12 · door /ship-spec</div>
+              </div>
+              <div class="orch-edge" data-orch-edge="e1" aria-hidden="true"></div>
+              <div class="orch-node" data-orch-node="t1">
+                <span class="orch-node__kind">ticket · ready</span>
+                <div class="orch-node__name">ticket/schema</div>
+                <div class="orch-node__meta">no blockers · parallel lane A</div>
+              </div>
+              <div class="orch-edge" data-orch-edge="e2" aria-hidden="true"></div>
+              <div class="orch-node" data-orch-node="t2">
+                <span class="orch-node__kind">ticket · ready</span>
+                <div class="orch-node__name">ticket/api</div>
+                <div class="orch-node__meta">no blockers · parallel lane B</div>
+              </div>
+              <div class="orch-edge" data-orch-edge="e3" aria-hidden="true"></div>
+              <div class="orch-node" data-orch-node="t3">
+                <span class="orch-node__kind">ticket · blocked</span>
+                <div class="orch-node__name">ticket/ui</div>
+                <div class="orch-node__meta">depends-on · ticket/schema + ticket/api</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="orch-workers" data-orch-workers aria-label="Child agents">
+            <article class="orch-worker" data-orch-worker="0">
+              <div class="orch-worker__head">
+                <strong>Child A</strong>
+                <span class="orch-worker__badge" data-orch-wbadge data-state="wait">waiting</span>
+              </div>
+              <pre class="orch-worker__log" data-orch-wlog></pre>
+            </article>
+            <article class="orch-worker" data-orch-worker="1">
+              <div class="orch-worker__head">
+                <strong>Child B</strong>
+                <span class="orch-worker__badge" data-orch-wbadge data-state="wait">waiting</span>
+              </div>
+              <pre class="orch-worker__log" data-orch-wlog></pre>
+            </article>
+            <article class="orch-worker" data-orch-worker="2">
+              <div class="orch-worker__head">
+                <strong>Child C</strong>
+                <span class="orch-worker__badge" data-orch-wbadge data-state="wait">waiting</span>
+              </div>
+              <pre class="orch-worker__log" data-orch-wlog></pre>
+            </article>
+          </div>
+
+          <div class="orch-merge" data-orch-merge>
+            <strong>Results fold back to main</strong>
+            <p>Child A and B land first. Child C unblocks, finishes, then the main agent continues the release session with every reply attached.</p>
+          </div>
+
+          <p class="orch-unlock">
+            <strong>Unlock note:</strong> this orchestration power needs
+            <a href="https://herdr.dev" target="_blank" rel="noopener">Herdr TUI or Herdr Desktop</a>
+            (<code>HERDR_ENV=1</code> / Desktop terminal). Other skills still run without Herdr —
+            <code>/ship-spec</code> and <code>/ship-release</code> are the ones that span children.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="cycle" aria-labelledby="cycle-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Release cycle</p>
+          <h2 id="cycle-title">Start → ship → changelog → tag → clear the gate.</h2>
+          <p class="lead">
+            Five steps on <code>release/&lt;N&gt;</code>. The orbit shows changelog gates and the post-release checklist that must clear before the next start.
+          </p>
+        </div>
+
+        <div class="process-stage" data-process="cycle" aria-label="Animated release cycle">
+          <div class="process-eyebrow">
+            <strong>Release flow</strong>
+            <span class="process-status" data-process-status data-state="idle">idle · waiting for viewport</span>
+          </div>
+          <div class="cycle-layout">
+            <div class="cycle-flow" data-process-rail>
+              <article class="cycle-node" data-step="0">
+                <div class="cycle-node__spine" aria-hidden="true">
+                  <span class="cycle-node__pip">01</span>
+                  <span class="cycle-node__link"></span>
+                </div>
+                <div class="cycle-node__body">
+                  <span class="cycle-node__label">Step 1</span>
+                  <div class="cycle-node__title">Start release</div>
+                  <div class="cycle-node__meta">release/&lt;N&gt;</div>
+                  <p class="cycle-node__hint">Begins only when the pending-release gate has no open boxes.</p>
+                </div>
+              </article>
+              <article class="cycle-node" data-step="1">
+                <div class="cycle-node__spine" aria-hidden="true">
+                  <span class="cycle-node__pip">02</span>
+                  <span class="cycle-node__link"></span>
+                </div>
+                <div class="cycle-node__body">
+                  <span class="cycle-node__label">Step 2</span>
+                  <div class="cycle-node__title">Ship specs</div>
+                  <div class="cycle-node__meta">/ship-release · /ship-spec</div>
+                  <p class="cycle-node__hint">Features ship under release authority; you approve only the land into <code>main</code>.</p>
+                </div>
+              </article>
+              <article class="cycle-node" data-step="2">
+                <div class="cycle-node__spine" aria-hidden="true">
+                  <span class="cycle-node__pip">03</span>
+                  <span class="cycle-node__link"></span>
+                </div>
+                <div class="cycle-node__body">
+                  <span class="cycle-node__label">Step 3</span>
+                  <div class="cycle-node__title">Changelog</div>
+                  <div class="cycle-node__meta">entry → compile</div>
+                  <p class="cycle-node__hint">One user-visible note per ticket, then a version section in <code>CHANGELOG.md</code>.</p>
+                </div>
+              </article>
+              <article class="cycle-node" data-step="3">
+                <div class="cycle-node__spine" aria-hidden="true">
+                  <span class="cycle-node__pip">04</span>
+                  <span class="cycle-node__link"></span>
+                </div>
+                <div class="cycle-node__body">
+                  <span class="cycle-node__label">Step 4</span>
+                  <div class="cycle-node__title">Tag</div>
+                  <div class="cycle-node__meta">human gate → main → tag</div>
+                  <p class="cycle-node__hint">After sign-off and the release PR lands, tag and publish notes.</p>
+                </div>
+              </article>
+              <article class="cycle-node" data-step="4">
+                <div class="cycle-node__spine" aria-hidden="true">
+                  <span class="cycle-node__pip">05</span>
+                  <span class="cycle-node__link"></span>
+                </div>
+                <div class="cycle-node__body">
+                  <span class="cycle-node__label">Step 5</span>
+                  <div class="cycle-node__title">Post-release gate</div>
+                  <div class="cycle-node__meta">pending-release.md</div>
+                  <p class="cycle-node__hint">Open boxes block the next start. Hotfixes are not blocked.</p>
+                </div>
+              </article>
+            </div>
+
+            <div class="cycle-orbit-wrap">
+              <div class="cycle-orbit" data-cycle-orbit aria-label="Changelog and post-release gates">
+                <div class="cycle-orbit__ring" aria-hidden="true"></div>
+                <div class="cycle-orbit__hub">
+                  <strong>Release cycle gates</strong>
+                  <span>Hover to pause</span>
+                </div>
+                <div class="cycle-orbit__track">
+                  <div class="cycle-orbit__slot" data-gate="entry">
+                    <div class="cycle-orbit__face" tabindex="0">
+                      <span class="gate-kicker">Changelog</span>
+                      <strong>Entry</strong>
+                    </div>
+                  </div>
+                  <div class="cycle-orbit__slot" data-gate="compile">
+                    <div class="cycle-orbit__face" tabindex="0">
+                      <span class="gate-kicker">Changelog</span>
+                      <strong>Compile</strong>
+                    </div>
+                  </div>
+                  <div class="cycle-orbit__slot" data-gate="retro">
+                    <div class="cycle-orbit__face" tabindex="0">
+                      <span class="gate-kicker">Post-release</span>
+                      <strong>Retro</strong>
+                    </div>
+                  </div>
+                  <div class="cycle-orbit__slot" data-gate="reflect">
+                    <div class="cycle-orbit__face" tabindex="0">
+                      <span class="gate-kicker">Post-release</span>
+                      <strong>Reflect</strong>
+                    </div>
+                  </div>
+                  <div class="cycle-orbit__slot" data-gate="learnings">
+                    <div class="cycle-orbit__face" tabindex="0">
+                      <span class="gate-kicker">Post-release</span>
+                      <strong>Learnings</strong>
+                    </div>
+                  </div>
+                  <div class="cycle-orbit__slot" data-gate="debt">
+                    <div class="cycle-orbit__face" tabindex="0">
+                      <span class="gate-kicker">Post-release</span>
+                      <strong>Debt</strong>
+                    </div>
+                  </div>
+                  <div class="cycle-orbit__slot" data-gate="sync">
+                    <div class="cycle-orbit__face" tabindex="0">
+                      <span class="gate-kicker">Post-release</span>
+                      <strong>Sync skills</strong>
+                    </div>
+                  </div>
+                  <div class="cycle-orbit__slot" data-gate="craft">
+                    <div class="cycle-orbit__face" tabindex="0">
+                      <span class="gate-kicker">Post-release</span>
+                      <strong>Craft</strong>
+                    </div>
+                  </div>
+                </div>
+                <p class="cycle-orbit__hint">Changelog gates + post-release checklist · orbit pauses while you hover</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tickets" aria-labelledby="tickets-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Issue types</p>
+          <h2 id="tickets-title">Three issue kinds. Ticket issues carry the subtypes.</h2>
+          <p class="lead">
+            Every issue is a <strong>release</strong>, a <strong>spec</strong>, or a <strong>ticket</strong>. Ticket issues go further: feature/tracer, bug, research, or hotfix — each with a recorded <code>**Base:**</code>, surfaces, blockers, and what it delivers.
+          </p>
+        </div>
+
+        <div class="process-stage" data-process="tickets" aria-label="Issue type map">
+          <div class="process-eyebrow">
+            <strong>Issue map</strong>
+            <span class="process-status" data-process-status data-state="idle">idle · waiting for viewport</span>
+          </div>
+
+          <div class="issue-map" data-process-rail>
+            <div class="issue-kinds" aria-label="Issue kinds">
+              <article class="issue-kind" data-kind="release" data-step="0">
+                <span class="issue-kind__badge">Release issue</span>
+                <h3>Release</h3>
+                <p>Opens the version lane. Specs land here; you approve only the release PR into <code>main</code>. Ship door: <code>/ship-release</code>.</p>
+                <div class="issue-kind__path"><span>Branch ·</span> <code>release/&lt;N&gt;</code></div>
+              </article>
+              <article class="issue-kind" data-kind="spec" data-step="1">
+                <span class="issue-kind__badge">Spec issue</span>
+                <h3>Spec</h3>
+                <p>One shaped feature. Tickets land into this branch; the spec lands into the open release (or <code>main</code>). Ship door: <code>/ship-spec</code>.</p>
+                <div class="issue-kind__path"><span>Branch ·</span> <code>spec/&lt;issue&gt;</code></div>
+              </article>
+              <article class="issue-kind" data-kind="ticket" data-step="2">
+                <span class="issue-kind__badge">Ticket issue</span>
+                <h3>Ticket</h3>
+                <p>The work unit agents ship. Pattern <code>ticket/&lt;issue&gt;-&lt;slug&gt;</code>. The ticket type below decides the base and how it climbs.</p>
+                <div class="issue-kind__path"><span>Branch ·</span> <code>ticket/&lt;issue&gt;-&lt;slug&gt;</code></div>
+              </article>
+            </div>
+
+            <div class="issue-ticket-block">
+              <div class="issue-ticket-block__head">
+                <strong>Ticket issue · further types</strong>
+                <span>Each ticket publishes the same specification fields — lineage base, surfaces, blockers, and the end-to-end deliverable.</span>
+              </div>
+              <div class="ticket-type-rail" aria-label="Ticket subtypes">
+                <article class="ticket-type" data-type="feature" data-step="3">
+                  <span class="ticket-type__badge">Feature · tracer</span>
+                  <h4>Feature / tracer</h4>
+                  <p>Vertical slice cut from a shaped feature via <code>/to-tickets</code>. Demoable on its own.</p>
+                  <ul class="ticket-specs">
+                    <li>
+                      <span class="ticket-specs__k">Base</span>
+                      <span class="ticket-specs__v"><code>spec/&lt;issue&gt;</code> · stacked only onto a same-spec blocker when needed</span>
+                    </li>
+                    <li>
+                      <span class="ticket-specs__k">Surfaces</span>
+                      <span class="ticket-specs__v"><code>surface:&lt;name&gt;</code> from <code>docs/agents/surfaces.md</code></span>
+                    </li>
+                    <li>
+                      <span class="ticket-specs__k">Blocked by</span>
+                      <span class="ticket-specs__v">Same-spec tickets only · none means frontier-ready</span>
+                    </li>
+                    <li>
+                      <span class="ticket-specs__k">Delivers</span>
+                      <span class="ticket-specs__v">End-to-end behaviour the slice makes work · acceptance criteria on the issue</span>
+                    </li>
+                  </ul>
+                </article>
+                <article class="ticket-type" data-type="bug" data-step="4">
+                  <span class="ticket-type__badge">Bug</span>
+                  <h4>Bug</h4>
+                  <p>No spec branch just to hold the fix. Pick the base from what already shipped.</p>
+                  <ul class="ticket-specs">
+                    <li>
+                      <span class="ticket-specs__k">Base</span>
+                      <span class="ticket-specs__v">Open <code>release/&lt;N&gt;</code> · <code>hotfix/&lt;slug&gt;</code> if shipped · <code>main</code> if no release is open</span>
+                    </li>
+                    <li>
+                      <span class="ticket-specs__k">Surfaces</span>
+                      <span class="ticket-specs__v">Surface labels for every area the fix touches</span>
+                    </li>
+                    <li>
+                      <span class="ticket-specs__k">Blocked by</span>
+                      <span class="ticket-specs__v">Usually none · record real gates only</span>
+                    </li>
+                    <li>
+                      <span class="ticket-specs__k">Delivers</span>
+                      <span class="ticket-specs__v">Repro resolved · regression covered at the named seams</span>
+                    </li>
+                  </ul>
+                </article>
+                <article class="ticket-type" data-type="research" data-step="5">
+                  <span class="ticket-type__badge">Research</span>
+                  <h4>Research</h4>
+                  <p>AFK primary-source legwork. Leaves a cited notes file later shaping skills can point at.</p>
+                  <ul class="ticket-specs">
+                    <li>
+                      <span class="ticket-specs__k">Base</span>
+                      <span class="ticket-specs__v">Throwaway <code>research/&lt;name&gt;</code> · context pointer back to the ticket</span>
+                    </li>
+                    <li>
+                      <span class="ticket-specs__k">Surfaces</span>
+                      <span class="ticket-specs__v">Optional · name surfaces the question is about</span>
+                    </li>
+                    <li>
+                      <span class="ticket-specs__k">Blocked by</span>
+                      <span class="ticket-specs__v">None for the research run itself · may unblock later tickets</span>
+                    </li>
+                    <li>
+                      <span class="ticket-specs__k">Delivers</span>
+                      <span class="ticket-specs__v">One cited Markdown file from official docs, source, or first-party APIs</span>
+                    </li>
+                  </ul>
+                </article>
+                <article class="ticket-type" data-type="hotfix" data-step="6">
+                  <span class="ticket-type__badge">Hotfix</span>
+                  <h4>Hotfix path</h4>
+                  <p>Production already tagged. Pending-release does not block hotfixes.</p>
+                  <ul class="ticket-specs">
+                    <li>
+                      <span class="ticket-specs__k">Base</span>
+                      <span class="ticket-specs__v">Cut from the production tag · <code>hotfix/&lt;slug&gt;</code> lands into <code>main</code></span>
+                    </li>
+                    <li>
+                      <span class="ticket-specs__k">Surfaces</span>
+                      <span class="ticket-specs__v">Surfaces in the patch blast radius</span>
+                    </li>
+                    <li>
+                      <span class="ticket-specs__k">Blocked by</span>
+                      <span class="ticket-specs__v">Door · <code>/release hotfix &lt;tag&gt;</code> then <code>/release hotfix finish</code></span>
+                    </li>
+                    <li>
+                      <span class="ticket-specs__k">Delivers</span>
+                      <span class="ticket-specs__v">Patch tag + back-merge into open releases</span>
+                    </li>
+                  </ul>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="lineage" aria-labelledby="lineage-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Branch lineage</p>
+          <h2 id="lineage-title">Every branch records a base. The chain is the heartbeat.</h2>
+          <p class="lead">
+            Work never assumes <code>main</code>. Each ticket, spec, release, and hotfix records the branch it was cut from and lands back into.
+            The checked-out branch is never the base — following those base links upward is the lineage.
+          </p>
+        </div>
+
+        <div class="lineage-stage" data-lineage aria-label="Animated branch lineage heartbeat">
+          <div class="lineage-eyebrow">
+            <strong>Living lineage</strong>
+            <span class="lineage-status" data-lineage-status data-state="idle">idle · waiting for viewport</span>
+          </div>
+
+          <div class="lineage-layout">
+            <div class="lineage-tree" data-lineage-tree aria-label="ticket to spec to release to main">
+              <article class="lineage-node" data-kind="main" data-step="4">
+                <div class="lineage-node__rail" aria-hidden="true">
+                  <span class="lineage-node__pip"></span>
+                  <span class="lineage-node__stem"></span>
+                </div>
+                <div class="lineage-card">
+                  <div class="lineage-card__meta">
+                    <span class="lineage-card__kind">Long-lived</span>
+                    <span class="lineage-card__name">main</span>
+                    <span class="lineage-card__base">Top of every lineage · human release PR only</span>
+                  </div>
+                  <span class="lineage-card__badge">canonical tip</span>
+                </div>
+              </article>
+              <article class="lineage-node" data-kind="release" data-step="3">
+                <div class="lineage-node__rail" aria-hidden="true">
+                  <span class="lineage-node__pip"></span>
+                  <span class="lineage-node__stem"></span>
+                </div>
+                <div class="lineage-card">
+                  <div class="lineage-card__meta">
+                    <span class="lineage-card__kind">Release</span>
+                    <span class="lineage-card__name">release/1</span>
+                    <span class="lineage-card__base">Base · <code>main</code></span>
+                  </div>
+                  <span class="lineage-card__badge">lands → main</span>
+                </div>
+              </article>
+              <article class="lineage-node" data-kind="spec" data-step="2">
+                <div class="lineage-node__rail" aria-hidden="true">
+                  <span class="lineage-node__pip"></span>
+                  <span class="lineage-node__stem"></span>
+                </div>
+                <div class="lineage-card">
+                  <div class="lineage-card__meta">
+                    <span class="lineage-card__kind">Spec</span>
+                    <span class="lineage-card__name">spec/4</span>
+                    <span class="lineage-card__base">Base · <code>release/1</code></span>
+                  </div>
+                  <span class="lineage-card__badge">lands → release</span>
+                </div>
+              </article>
+              <article class="lineage-node" data-kind="ticket" data-step="1">
+                <div class="lineage-node__rail" aria-hidden="true">
+                  <span class="lineage-node__pip"></span>
+                  <span class="lineage-node__stem"></span>
+                </div>
+                <div class="lineage-card">
+                  <div class="lineage-card__meta">
+                    <span class="lineage-card__kind">Ticket</span>
+                    <span class="lineage-card__name">ticket/12-rooms</span>
+                    <span class="lineage-card__base">Base · <code>spec/4</code></span>
+                  </div>
+                  <span class="lineage-card__badge">lands → spec</span>
+                </div>
+              </article>
+              <article class="lineage-node" data-kind="stacked" data-step="0">
+                <div class="lineage-node__rail" aria-hidden="true">
+                  <span class="lineage-node__pip"></span>
+                  <span class="lineage-node__stem"></span>
+                </div>
+                <div class="lineage-card">
+                  <div class="lineage-card__meta">
+                    <span class="lineage-card__kind">Stacked child</span>
+                    <span class="lineage-card__name">ticket/14-rates</span>
+                    <span class="lineage-card__base">Base · <code>ticket/12-rooms</code> · needs unlanded code</span>
+                  </div>
+                  <span class="lineage-card__badge">restacks</span>
+                </div>
+              </article>
+            </div>
+
+            <div class="lineage-side">
+              <div class="lineage-beats" data-lineage-beats aria-label="How branch lineage works">
+                <article class="lineage-beat" data-beat="0">
+                  <span class="lineage-beat__n">01</span>
+                  <div>
+                    <h3>Resolve &amp; record <code>**Base:**</code></h3>
+                    <p>Issue body is canonical. Git config mirrors it as <code>branch.&lt;name&gt;.base</code>. Never invent a base from whatever is checked out.</p>
+                  </div>
+                </article>
+                <article class="lineage-beat" data-beat="1">
+                  <span class="lineage-beat__n">02</span>
+                  <div>
+                    <h3>Cut work in a worktree</h3>
+                    <p>Create the branch from the base tip, isolate it in a worktree, and keep the recorded base attached before any commit lands.</p>
+                  </div>
+                </article>
+                <article class="lineage-beat" data-beat="2">
+                  <span class="lineage-beat__n">03</span>
+                  <div>
+                    <h3>Land, then restack children</h3>
+                    <p>Merge into the recorded base through the ship door that owns that level. Open children move onto the landed branch’s own base and retarget their PRs.</p>
+                  </div>
+                </article>
+              </div>
+
+              <div class="lineage-why" data-lineage-why aria-label="Why lineage matters">
+                <article class="lineage-why__card" data-why="0">
+                  <strong>Safe land gates</strong>
+                  <span>PRs open into the recorded base — never accidental merges into <code>main</code>.</span>
+                </article>
+                <article class="lineage-why__card" data-why="1">
+                  <strong>Stacked work</strong>
+                  <span>Children can depend on unlanded tickets without losing the climb back to <code>main</code>.</span>
+                </article>
+                <article class="lineage-why__card" data-why="2">
+                  <strong>Restack after land</strong>
+                  <span>When a base lands, dependents rebase onto the new base and keep moving.</span>
+                </article>
+                <article class="lineage-why__card" data-why="3">
+                  <strong>One truth, two mirrors</strong>
+                  <span>Issue <code>**Base:**</code> wins; git config mirrors it for tools that never open the tracker.</span>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="gates" aria-labelledby="gates-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Code gating</p>
+          <h2 id="gates-title">Tests, review, PR — then the door that owns the land.</h2>
+          <p class="lead">
+            Work does not skip the rail. TDD seams and typecheck come first; <code>code-review</code> runs Standards and Spec axes before the pull request; landing only happens through the ship door that owns that level — and the release PR into <code>main</code> stays human.
+          </p>
+        </div>
+
+        <div class="process-stage" data-process="gates" aria-label="Code gating rail">
+          <div class="process-eyebrow">
+            <strong>Gate rail</strong>
+            <span class="process-status" data-process-status data-state="idle">idle · waiting for viewport</span>
+          </div>
+          <div class="gate-rail" data-process-rail>
+            <article class="gate-step" data-step="0">
+              <span class="gate-step__n">01</span>
+              <h3>TDD seams</h3>
+              <p>Red specs first. Implement against observable behaviour, not source intuition.</p>
+            </article>
+            <article class="gate-step" data-step="1">
+              <span class="gate-step__n">02</span>
+              <h3>Typecheck</h3>
+              <p>Package and workspace types stay green before review and before the PR opens.</p>
+            </article>
+            <article class="gate-step" data-step="2">
+              <span class="gate-step__n">03</span>
+              <h3>code-review</h3>
+              <p>Standards + Spec by default. Security on risky diffs. Deep when you ask.</p>
+            </article>
+            <article class="gate-step" data-step="3">
+              <span class="gate-step__n">04</span>
+              <h3>Pull request</h3>
+              <p><code>pr</code> opens into the recorded base with evidence from review and CI.</p>
+            </article>
+            <article class="gate-step" data-step="4">
+              <span class="gate-step__n">05</span>
+              <h3>Ship-door land</h3>
+              <p><code>/ship-ticket</code>, <code>/ship-spec</code>, or <code>/ship-release</code> owns that level’s land gate.</p>
+            </article>
+            <article class="gate-step" data-step="5">
+              <span class="gate-step__n">06</span>
+              <h3>Human → main</h3>
+              <p>Only the release PR into <code>main</code> is the human land gate for a full release.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="writing" aria-labelledby="writing-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Writing limits · agents &amp; humans</p>
+          <h2 id="writing-title">Leave constraints to work with agents and humans.</h2>
+          <p class="lead">
+            Shipping is not only code. Handoffs, questionnaires, agent-facing docs, and debt notes keep the limits that future departments — and future agents — need when they pick the work up.
+          </p>
+        </div>
+
+        <div class="process-stage" data-process="writing" aria-label="Writing and handoff constraints">
+          <div class="process-eyebrow">
+            <strong>Handoff surface</strong>
+            <span class="process-status" data-process-status data-state="idle">idle · waiting for viewport</span>
+          </div>
+          <div class="writing-grid" data-process-rail>
+            <article class="writing-card" data-step="0">
+              <h3><code>handoff</code> + questionnaires</h3>
+              <p>Bridge between prototype and shaping, and capture decisions humans still own. <code>to-questionnaire</code> turns open questions into a durable form other teams can answer later without replaying the chat.</p>
+            </article>
+            <article class="writing-card" data-step="1">
+              <h3><code>unslop</code> before humans read it</h3>
+              <p>Changelog sections, release notes, and PR bodies get a de-slop pass so filler and AI tells do not ship to other departments as the official record.</p>
+            </article>
+            <article class="writing-card" data-step="2">
+              <h3><code>writing-for-agents</code></h3>
+              <p>Skills and <code>AGENTS.md</code> use context pointers, progressive disclosure, and trigger wording so later agents load the right constraints instead of guessing from chat history.</p>
+            </article>
+            <article class="writing-card" data-step="3">
+              <h3><code>shortcut:</code> → <code>/debt</code></h3>
+              <p>Temporary escapes stay marked in source. Post-release, <code>/debt</code> harvests them into a ledger and issues so other teams inherit the limit instead of rediscovering the shortcut.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="capabilities" aria-labelledby="cap-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Skills</p>
+          <h2 id="cap-title">Four lanes. Animated name rails.</h2>
+          <p class="lead">
+            <strong>User-invoked</strong> skills run when you type them; they orchestrate.
+            <strong>Model-invoked</strong> skills can also be reached by the agent when a task fits; they hold reusable discipline.
+            Dense descriptions live on the full skills page.
+          </p>
+        </div>
+
+        <div class="skill-cats" data-skill-cats aria-label="Skill categories">
+          <article class="skill-cat" data-skill-cat>
+            <div class="skill-cat__head">
+              <div class="skill-cat__meta">
+                <h3>Engineering · user-invoked</h3>
+                <p>Ship doors, shaping, triage, surfaces, and post-release learning you type yourself.</p>
+              </div>
+              <span class="skill-cat__count">24 skills</span>
+            </div>
+            <div class="skill-cat__rail" aria-hidden="true">
+              <div class="skill-cat__track">
+                <span>/ask-yami</span><span>/setup-z-yami-coding-skills</span><span>/grill-with-docs</span><span>/wayfinder</span><span>/to-spec</span><span>/to-tickets</span><span>/triage</span><span>/start-work</span><span>/implement</span><span>/ship-ticket</span><span>/ship-spec</span><span>/implement-spec</span><span>/land</span><span>/release</span><span>/ship-release</span><span>/sync-skills</span><span>/empower-crafting</span><span>/stack-decision</span><span>/surface-architecture</span><span>/extract-surface</span><span>/improve-codebase-architecture</span><span>/debt</span><span>/reflect</span><span>/retro</span>
+                <span>/ask-yami</span><span>/setup-z-yami-coding-skills</span><span>/grill-with-docs</span><span>/wayfinder</span><span>/to-spec</span><span>/to-tickets</span><span>/triage</span><span>/start-work</span><span>/implement</span><span>/ship-ticket</span><span>/ship-spec</span><span>/implement-spec</span><span>/land</span><span>/release</span><span>/ship-release</span><span>/sync-skills</span><span>/empower-crafting</span><span>/stack-decision</span><span>/surface-architecture</span><span>/extract-surface</span><span>/improve-codebase-architecture</span><span>/debt</span><span>/reflect</span><span>/retro</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="skill-cat" data-skill-cat>
+            <div class="skill-cat__head">
+              <div class="skill-cat__meta">
+                <h3>Engineering · model-invoked</h3>
+                <p>Lineage, flows, review axes, Herdr, TDD, and reusable engineering discipline.</p>
+              </div>
+              <span class="skill-cat__count">27 skills</span>
+            </div>
+            <div class="skill-cat__rail" aria-hidden="true">
+              <div class="skill-cat__track">
+                <span>branch-lineage</span><span>ticket-flow</span><span>spec-flow</span><span>release-flow</span><span>herdr</span><span>herdr-core</span><span>herdr-app</span><span>herdr-guide</span><span>surface-map</span><span>setup-ts-deep-modules</span><span>diagnosing-bugs</span><span>tdd</span><span>code-review</span><span>security-review</span><span>deep-review</span><span>pr</span><span>changelog</span><span>learnings</span><span>resolving-merge-conflicts</span><span>prototype</span><span>research</span><span>domain-modeling</span><span>codebase-design</span><span>wizard</span><span>mermaid-validator</span><span>git-guardrails</span><span>setup-pre-commit</span>
+                <span>branch-lineage</span><span>ticket-flow</span><span>spec-flow</span><span>release-flow</span><span>herdr</span><span>herdr-core</span><span>herdr-app</span><span>herdr-guide</span><span>surface-map</span><span>setup-ts-deep-modules</span><span>diagnosing-bugs</span><span>tdd</span><span>code-review</span><span>security-review</span><span>deep-review</span><span>pr</span><span>changelog</span><span>learnings</span><span>resolving-merge-conflicts</span><span>prototype</span><span>research</span><span>domain-modeling</span><span>codebase-design</span><span>wizard</span><span>mermaid-validator</span><span>git-guardrails</span><span>setup-pre-commit</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="skill-cat" data-skill-cat>
+            <div class="skill-cat__head">
+              <div class="skill-cat__meta">
+                <h3>Productivity · user-invoked</h3>
+                <p>Interview, handoff, teaching, questionnaires, and re-explaining what didn’t land.</p>
+              </div>
+              <span class="skill-cat__count">5 skills</span>
+            </div>
+            <div class="skill-cat__rail" aria-hidden="true">
+              <div class="skill-cat__track">
+                <span>/grill-me</span><span>/handoff</span><span>/teach</span><span>/to-questionnaire</span><span>/wait-what</span>
+                <span>/grill-me</span><span>/handoff</span><span>/teach</span><span>/to-questionnaire</span><span>/wait-what</span>
+                <span>/grill-me</span><span>/handoff</span><span>/teach</span><span>/to-questionnaire</span><span>/wait-what</span>
+                <span>/grill-me</span><span>/handoff</span><span>/teach</span><span>/to-questionnaire</span><span>/wait-what</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="skill-cat" data-skill-cat>
+            <div class="skill-cat__head">
+              <div class="skill-cat__meta">
+                <h3>Productivity · model-invoked</h3>
+                <p>Writing for agents, de-slop, terse chat, skill eval, and HTML artifacts.</p>
+              </div>
+              <span class="skill-cat__count">6 skills</span>
+            </div>
+            <div class="skill-cat__rail" aria-hidden="true">
+              <div class="skill-cat__track">
+                <span>grilling</span><span>writing-for-agents</span><span>unslop</span><span>caveman</span><span>skill-eval</span><span>html-artifacts</span>
+                <span>grilling</span><span>writing-for-agents</span><span>unslop</span><span>caveman</span><span>skill-eval</span><span>html-artifacts</span>
+                <span>grilling</span><span>writing-for-agents</span><span>unslop</span><span>caveman</span><span>skill-eval</span><span>html-artifacts</span>
+                <span>grilling</span><span>writing-for-agents</span><span>unslop</span><span>caveman</span><span>skill-eval</span><span>html-artifacts</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="skills-cta reveal">
+          <p><strong>Want every description?</strong> Open the full filterable skill tables — Engineering and Productivity × user / model — on a dedicated page.</p>
+          <a class="btn btn-primary" href="skills.html">View full skills list</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="install" aria-labelledby="install-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Installation</p>
+          <h2 id="install-title">Three routes — pick one per agent</h2>
+          <p class="lead">Installing both a plugin and skills.sh for the same agent duplicates every skill. Prefer one route.</p>
+        </div>
+
+        <div class="install-grid stagger">
+          <article class="install-card reveal">
+            <h3>Claude Code</h3>
+            <p class="who">Plugin — updates when the version changes</p>
+            <div class="code-block">
+              <button type="button" class="copy-btn" data-copy="claude plugin marketplace add ahmed-zhran/z-yami-coding-skills
+claude plugin install z-yami-coding-skills@z-yami">Copy</button>
+              <pre><code>claude plugin marketplace add ahmed-zhran/z-yami-coding-skills
+claude plugin install z-yami-coding-skills@z-yami</code></pre>
+            </div>
+            <p class="note">Marketplace id: <code>z-yami</code></p>
+          </article>
+
+          <article class="install-card reveal">
+            <h3>Codex</h3>
+            <p class="who">Plugin — updates at startup</p>
+            <div class="code-block">
+              <button type="button" class="copy-btn" data-copy="codex plugin marketplace add ahmed-zhran/z-yami-coding-skills
+codex plugin add z-yami-coding-skills@z-yami">Copy</button>
+              <pre><code>codex plugin marketplace add ahmed-zhran/z-yami-coding-skills
+codex plugin add z-yami-coding-skills@z-yami</code></pre>
+            </div>
+            <p class="note">Same marketplace remote as Claude</p>
+          </article>
+
+          <article class="install-card reveal">
+            <h3>skills.sh</h3>
+            <p class="who">Cursor, OpenCode, Windsurf, Devin, Amp, Pi</p>
+            <div class="code-block">
+              <button type="button" class="copy-btn" data-copy="npx skills@latest add ahmed-zhran/z-yami-coding-skills -a cursor">Copy</button>
+              <pre><code>npx skills@latest add ahmed-zhran/z-yami-coding-skills -a &lt;agent&gt;</code></pre>
+            </div>
+            <p class="note">Include <code>setup-z-yami-coding-skills</code> when the installer asks. Update with <code>npx skills@latest update</code>.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="start" aria-labelledby="start-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Quick start</p>
+          <h2 id="start-title">From empty repo to a release door</h2>
+          <p class="lead">Grounded in the package README — commands you type, outcomes you get.</p>
+        </div>
+
+        <div class="reveal" style="overflow-x:auto;">
+          <table class="flow-table">
+            <thead>
+              <tr><th>Phase</th><th>You type</th><th>You get</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Setup</td>
+                <td><code>/setup-z-yami-coding-skills</code></td>
+                <td>Tracker, labels, branching, and a surface map in a monorepo</td>
+              </tr>
+              <tr>
+                <td>Orient</td>
+                <td><code>/ask-yami</code></td>
+                <td>Project-state check and the next recommended command</td>
+              </tr>
+              <tr>
+                <td>Shape</td>
+                <td><code>/grill-with-docs</code>, <code>/to-spec</code>, <code>/to-tickets</code></td>
+                <td>One spec per feature, then tickets — each with a recorded base</td>
+              </tr>
+              <tr>
+                <td>One ticket</td>
+                <td><code>/ship-ticket</code></td>
+                <td>Branch cut from that base through an approved merge</td>
+              </tr>
+              <tr>
+                <td>One spec</td>
+                <td><code>/ship-spec</code></td>
+                <td>That spec’s tickets, then the spec lands in the release</td>
+              </tr>
+              <tr>
+                <td>One PR for a spec</td>
+                <td><code>/implement-spec</code></td>
+                <td>Every ticket of one spec, one pull request into the release</td>
+              </tr>
+              <tr>
+                <td>Release</td>
+                <td><code>/ship-release</code></td>
+                <td><code>/ship-spec</code> once per feature, then a tag after you approve</td>
+              </tr>
+              <tr>
+                <td>After the tag</td>
+                <td><code>/sync-skills</code>, then <code>/empower-crafting</code></td>
+                <td>Package skills updated; live craft-skills router approved from draft + learnings</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="ref-grid stagger" id="reference">
+          <article class="ref-card reveal">
+            <h3>Review axes</h3>
+            <p>Standards and Spec on the diff by default. Security on risky diffs. Deep when you ask for a strict maintainability pass.</p>
+          </article>
+          <article class="ref-card reveal">
+            <h3>Surfaces</h3>
+            <p>A map of each app, service, and package, the contracts between them, and the context an agent needs in a monorepo.</p>
+          </article>
+          <article class="ref-card reveal">
+            <h3>Bugs</h3>
+            <p>A bug ticket lands into the open release, a hotfix cut from the production tag, or <code>main</code> when no release is open.</p>
+          </article>
+          <article class="ref-card reveal">
+            <h3>Learning loop</h3>
+            <p>Solution notes after non-obvious fixes, a debt ledger and retro after the tag, plus a skill evaluator for triggers.</p>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="final-cta" id="cta" aria-labelledby="cta-title">
+      <div class="wrap">
+        <div class="panel reveal">
+          <div>
+            <p class="eyebrow">Ready when you are</p>
+            <h2 id="cta-title">Install once. Ship with lineage.</h2>
+            <p class="lead" style="margin-top:12px;">
+              62 MIT-licensed skills · v1.8.0 · Claude, Codex, and skills.sh agents.
+              You approve the landings.
+            </p>
+          </div>
+          <div class="actions">
+            <a class="btn btn-primary" href="#install">Get the skills</a>
+            <a class="btn btn-secondary" href="https://github.com/ahmed-zhran/z-yami-coding-skills" target="_blank" rel="noopener">Star on GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap inner">
+      <div class="od-row" style="--od-gap:12px">
+        <svg class="brand-mark" viewBox="0 0 144 144" width="28" height="28" aria-hidden="true">
+          <polygon points="6,118 118,92 138,116 26,142" fill="#1a1e30"/>
+          <polygon points="12,76 124,50 144,74 32,100" fill="#8eb6ff"/>
+          <polygon points="18,34 130,8 150,32 38,58" fill="#f4f7ff"/>
+        </svg>
+        <p>Yami Coding by Ahmed Zhran · MIT · v1.8.0</p>
+      </div>
+      <ul class="footer-links">
+        <li><a href="skills.html">Full skills</a></li>
+        <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://ahmed-zhran.github.io/z-yami-coding-skills" target="_blank" rel="noopener">Site</a></li>
+        <li><a href="https://github.com/ahmed-zhran/z-yami-coding-skills/blob/main/LICENSE" target="_blank" rel="noopener">License</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var root = document.documentElement;
+    var progress = document.getElementById("progress");
+    var nav = document.getElementById("site-nav");
+    var toggle = document.getElementById("nav-toggle");
+    var navLinks = document.querySelectorAll("[data-nav]");
+    var shipItem = document.getElementById("nav-ship");
+    var shipTrigger = document.getElementById("nav-ship-trigger");
+    var shipSectionIds = {
+      orchestrate: true,
+      cycle: true,
+      tickets: true,
+      lineage: true,
+      gates: true,
+      writing: true
+    };
+    var sections = ["overview", "orchestrate", "cycle", "tickets", "lineage", "gates", "writing", "capabilities", "install", "start", "cta"]
+      .map(function (id) { return document.getElementById(id); })
+      .filter(Boolean);
+
+    function closeShipMenu() {
+      if (!shipItem || !shipTrigger) return;
+      shipItem.classList.remove("is-open");
+      shipTrigger.setAttribute("aria-expanded", "false");
+    }
+
+    function onScroll() {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var y = window.scrollY || 0;
+      var pct = max > 0 ? (y / max) * 100 : 0;
+      if (progress) progress.style.width = pct + "%";
+      root.style.setProperty("--scroll-y", String(y));
+
+      var active = null;
+      for (var i = 0; i < sections.length; i++) {
+        var rect = sections[i].getBoundingClientRect();
+        if (rect.top <= 120 && rect.bottom > 160) active = sections[i].id;
+      }
+      navLinks.forEach(function (a) {
+        var href = a.getAttribute("href") || "";
+        a.classList.toggle("is-active", active && href === "#" + active);
+      });
+      if (shipTrigger) {
+        shipTrigger.classList.toggle("is-active", !!(active && shipSectionIds[active]));
+      }
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    if (shipTrigger && shipItem) {
+      shipTrigger.addEventListener("click", function (e) {
+        e.preventDefault();
+        var open = !shipItem.classList.contains("is-open");
+        shipItem.classList.toggle("is-open", open);
+        shipTrigger.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      document.addEventListener("click", function (e) {
+        if (!shipItem.contains(e.target)) closeShipMenu();
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeShipMenu();
+      });
+    }
+
+    if (toggle && nav) {
+      toggle.addEventListener("click", function () {
+        var open = nav.classList.toggle("is-open");
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        toggle.textContent = open ? "Close" : "Menu";
+        if (!open) closeShipMenu();
+      });
+      navLinks.forEach(function (a) {
+        a.addEventListener("click", function () {
+          nav.classList.remove("is-open");
+          toggle.setAttribute("aria-expanded", "false");
+          toggle.textContent = "Menu";
+          closeShipMenu();
+        });
+      });
+    }
+
+    var heroViz = document.getElementById("hero-viz");
+    if (!reduce) {
+      window.addEventListener("pointermove", function (e) {
+        var x = (e.clientX / window.innerWidth) * 100;
+        var y = (e.clientY / window.innerHeight) * 100;
+        root.style.setProperty("--mx", x.toFixed(2) + "%");
+        root.style.setProperty("--my", y.toFixed(2) + "%");
+        if (heroViz) {
+          var rect = heroViz.getBoundingClientRect();
+          var nx = ((e.clientX - rect.left) / Math.max(rect.width, 1)) * 2 - 1;
+          var ny = ((e.clientY - rect.top) / Math.max(rect.height, 1)) * 2 - 1;
+          heroViz.style.setProperty("--tilt-x", (ny * -6).toFixed(2) + "deg");
+          heroViz.style.setProperty("--tilt-y", (nx * 8).toFixed(2) + "deg");
+        }
+      }, { passive: true });
+    }
+
+    var shipSteps = [
+      {
+        cmd: "/ship-ticket",
+        lines: [
+          '<span class="dim">record base → open worktree</span>',
+          "branch → PR → review → merge",
+          '<span class="ok">landed into recorded ticket base</span>'
+        ]
+      },
+      {
+        cmd: "/ship-spec",
+        lines: [
+          '<span class="dim">collect ready tickets under this spec</span>',
+          "run ticket landings → restack children",
+          '<span class="ok">spec door owns this level’s land gate</span>'
+        ]
+      },
+      {
+        cmd: "/ship-release",
+        lines: [
+          '<span class="dim">assemble shipped specs for the release</span>',
+          "land specs → open release PR → tag gate",
+          '<span class="ok">release recorded — you approve the landing</span>'
+        ]
+      }
+    ];
+    var shipCmd = document.getElementById("ship-cmd");
+    var shipOut = document.getElementById("ship-out");
+    var shipBar = document.getElementById("ship-bar");
+    var shipLabel = document.getElementById("ship-step-label");
+    var shipStatus = document.getElementById("ship-status");
+    var shipStepEls = document.querySelectorAll("#ship-steps .ship-flow__step");
+
+    function sleep(ms) {
+      return new Promise(function (resolve) { setTimeout(resolve, ms); });
+    }
+
+    function typeText(el, text, msPerChar) {
+      return new Promise(function (resolve) {
+        if (reduce) {
+          el.textContent = text;
+          resolve();
+          return;
+        }
+        el.textContent = "";
+        var i = 0;
+        function tick() {
+          i += 1;
+          el.textContent = text.slice(0, i);
+          if (i < text.length) setTimeout(tick, msPerChar);
+          else resolve();
+        }
+        tick();
+      });
+    }
+
+    function setShipStep(index, phase) {
+      shipStepEls.forEach(function (el, i) {
+        el.classList.toggle("is-active", i === index && phase !== "done-all");
+        el.classList.toggle("is-done", i < index || phase === "done-all");
+      });
+      if (shipLabel) {
+        shipLabel.textContent = String(index + 1).padStart(2, "0") + " / 03";
+      }
+      if (shipBar) {
+        var pct = phase === "done-all" ? 100 : ((index + (phase === "out" ? 0.65 : 0.2)) / 3) * 100;
+        shipBar.style.width = Math.min(100, pct).toFixed(1) + "%";
+      }
+      if (shipStatus) shipStatus.textContent = phase === "out" ? "landing" : phase === "done-all" ? "loop" : "typing";
+    }
+
+    async function runShipSequence() {
+      if (!shipCmd || !shipOut) return;
+      if (reduce) {
+        shipSteps.forEach(function (step, i) {
+          if (shipStepEls[i]) shipStepEls[i].classList.add("is-done");
+        });
+        if (shipStepEls[0]) shipStepEls[0].classList.add("is-active");
+        shipCmd.textContent = shipSteps[0].cmd;
+        shipOut.innerHTML = shipSteps[0].lines.join("\n");
+        if (shipBar) shipBar.style.width = "100%";
+        if (shipLabel) shipLabel.textContent = "01 / 03";
+        if (shipStatus) shipStatus.textContent = "ready";
+        return;
+      }
+      while (true) {
+        for (var s = 0; s < shipSteps.length; s++) {
+          var step = shipSteps[s];
+          setShipStep(s, "type");
+          shipOut.innerHTML = "";
+          await typeText(shipCmd, step.cmd, 72);
+          setShipStep(s, "out");
+          await sleep(480);
+          for (var L = 0; L < step.lines.length; L++) {
+            shipOut.innerHTML += (L ? "\n" : "") + step.lines[L];
+            await sleep(620);
+          }
+          await sleep(1600);
+        }
+        setShipStep(2, "done-all");
+        if (shipBar) shipBar.style.width = "100%";
+        if (shipStatus) shipStatus.textContent = "looping";
+        await sleep(2000);
+        shipStepEls.forEach(function (el) {
+          el.classList.remove("is-active", "is-done");
+        });
+        if (shipBar) shipBar.style.width = "0%";
+        if (shipCmd) shipCmd.textContent = "";
+        if (shipOut) shipOut.innerHTML = "";
+      }
+    }
+
+    runShipSequence();
+
+    var factsStrip = document.querySelector(".facts");
+    var factReveals = factsStrip
+      ? factsStrip.querySelectorAll(".reveal")
+      : [];
+    var counters = document.querySelectorAll("[data-count]");
+
+    function animateCount(el, target) {
+      if (reduce) {
+        el.textContent = String(target);
+        return;
+      }
+      var token = (el._countToken = (el._countToken || 0) + 1);
+      el.textContent = "0";
+      var start = performance.now();
+      var dur = 900;
+      function frame(now) {
+        if (el._countToken !== token) return;
+        var t = Math.min(1, (now - start) / dur);
+        var eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = String(Math.round(target * eased));
+        if (t < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    function resetCount(el) {
+      el._countToken = (el._countToken || 0) + 1;
+      el.textContent = "0";
+    }
+
+    var factsToken = 0;
+    async function playFacts() {
+      var my = (factsToken += 1);
+      factReveals.forEach(function (el) { el.classList.add("is-in"); });
+      counters.forEach(function (el) {
+        animateCount(el, Number(el.getAttribute("data-count") || "0"));
+      });
+      await sleep(2200);
+      if (my !== factsToken) return;
+      counters.forEach(resetCount);
+      await sleep(180);
+      if (my !== factsToken) return;
+      playFacts();
+    }
+
+    function resetFacts() {
+      factsToken += 1;
+      factReveals.forEach(function (el) { el.classList.remove("is-in"); });
+      counters.forEach(resetCount);
+    }
+
+    var revealEls = Array.prototype.filter.call(
+      document.querySelectorAll(".reveal"),
+      function (el) {
+        return !(factsStrip && factsStrip.contains(el));
+      }
+    );
+    if (reduce) {
+      revealEls.forEach(function (el) { el.classList.add("is-in"); });
+      factReveals.forEach(function (el) { el.classList.add("is-in"); });
+      counters.forEach(function (el) {
+        el.textContent = el.getAttribute("data-count") || "0";
+      });
+    } else if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-in");
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+      revealEls.forEach(function (el) { io.observe(el); });
+
+      if (factsStrip) {
+        var factsVisible = false;
+        var fio = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              if (factsVisible) return;
+              factsVisible = true;
+              playFacts();
+            } else if (factsVisible) {
+              factsVisible = false;
+              resetFacts();
+            }
+          });
+        }, { threshold: 0.2 });
+        fio.observe(factsStrip);
+      } else {
+        counters.forEach(function (el) {
+          el.textContent = el.getAttribute("data-count") || "0";
+        });
+      }
+    } else {
+      revealEls.forEach(function (el) { el.classList.add("is-in"); });
+      playFacts();
+    }
+
+    var landRoot = document.querySelector("[data-land-flow]");
+    var landStage = landRoot ? landRoot.querySelector(".land-flow__stage") : null;
+    var landSlope = landRoot ? landRoot.querySelector("[data-land-slope]") : null;
+    var landStatus = landRoot ? landRoot.querySelector("[data-land-status]") : null;
+    var landPath = landRoot ? landRoot.querySelector("[data-land-path]") : null;
+    var landSpark = landRoot ? landRoot.querySelector("[data-land-spark]") : null;
+    var landLevels = landRoot
+      ? Array.prototype.slice.call(landRoot.querySelectorAll(".land-node")).sort(function (a, b) {
+          return Number(a.getAttribute("data-order") || "0") - Number(b.getAttribute("data-order") || "0");
+        })
+      : [];
+    var landToken = 0;
+    var landVisible = false;
+    var landRunning = false;
+    var landPointAt = [0, 0.33, 0.66, 1];
+    var landPathPoints = [
+      { x: 80, y: 275 },
+      { x: 340, y: 198 },
+      { x: 600, y: 122 },
+      { x: 880, y: 45 }
+    ];
+    var landLabels = {
+      ticket: "climbing · ticket",
+      spec: "climbing · ticket → spec",
+      release: "climbing · spec → release",
+      main: "landing · release → main",
+      close: "closing · spanning four levels",
+      done: "landed · looping",
+      idle: "idle · waiting for viewport"
+    };
+
+    function setLandStatus(key, state) {
+      if (!landStatus) return;
+      landStatus.textContent = landLabels[key] || key;
+      landStatus.setAttribute("data-state", state || "live");
+    }
+
+    function setLandProgress(t) {
+      if (!landPath) return;
+      var value = Math.max(0, Math.min(1, t));
+      landPath.style.strokeDasharray = "1";
+      landPath.style.strokeDashoffset = String(1 - value);
+      if (landSpark && landPathPoints.length) {
+        var scaled = value * (landPathPoints.length - 1);
+        var i0 = Math.floor(scaled);
+        var i1 = Math.min(landPathPoints.length - 1, i0 + 1);
+        var mix = scaled - i0;
+        var a = landPathPoints[i0];
+        var b = landPathPoints[i1];
+        landSpark.setAttribute("cx", String(a.x + (b.x - a.x) * mix));
+        landSpark.setAttribute("cy", String(a.y + (b.y - a.y) * mix));
+      }
+    }
+
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function animateLandProgress(from, to, duration, token) {
+      return new Promise(function (resolve) {
+        var start = performance.now();
+        function frame(now) {
+          if (token !== landToken || !landVisible) {
+            resolve(false);
+            return;
+          }
+          var t = Math.min(1, (now - start) / duration);
+          setLandProgress(from + (to - from) * easeOutCubic(t));
+          if (t < 1) {
+            requestAnimationFrame(frame);
+          } else {
+            resolve(true);
+          }
+        }
+        requestAnimationFrame(frame);
+      });
+    }
+
+    function clearLandCycle() {
+      landLevels.forEach(function (el) {
+        el.classList.remove("is-active", "is-landed");
+      });
+      if (landSlope) landSlope.classList.remove("is-closing");
+      if (landStage) landStage.classList.remove("is-closing");
+      setLandProgress(0);
+    }
+
+    function resetLandFlow() {
+      landToken += 1;
+      landVisible = false;
+      if (landSlope) landSlope.classList.remove("is-live", "is-closing");
+      if (landStage) landStage.classList.remove("is-closing");
+      clearLandCycle();
+      setLandStatus("idle", "idle");
+    }
+
+    function showLandStatic() {
+      landLevels.forEach(function (el) {
+        el.classList.add("is-landed");
+        el.classList.remove("is-active");
+      });
+      if (landSlope) {
+        landSlope.classList.add("is-live");
+        landSlope.classList.remove("is-closing");
+      }
+      if (landStage) landStage.classList.remove("is-closing");
+      setLandProgress(1);
+      setLandStatus("done", "done");
+    }
+
+    async function runLandCycle(token) {
+      clearLandCycle();
+      if (landSlope) {
+        landSlope.classList.add("is-live");
+        landSlope.classList.remove("is-closing");
+      }
+      setLandStatus("ticket", "live");
+      await sleep(160);
+      if (token !== landToken || !landVisible) return false;
+      var prev = 0;
+      for (var i = 0; i < landLevels.length; i++) {
+        if (token !== landToken || !landVisible) return false;
+        var level = landLevels[i];
+        var id = level.getAttribute("data-level") || "";
+        var target = landPointAt[i] || 0;
+        landLevels.forEach(function (el) { el.classList.remove("is-active"); });
+        level.classList.add("is-active");
+        setLandStatus(id, "live");
+        var ok = await animateLandProgress(prev, target, 720, token);
+        if (!ok || token !== landToken || !landVisible) return false;
+        prev = target;
+        level.classList.remove("is-active");
+        level.classList.add("is-landed");
+        await sleep(180);
+      }
+      if (token !== landToken || !landVisible) return false;
+      setLandProgress(1);
+      setLandStatus("close", "live");
+      if (landSlope) landSlope.classList.add("is-closing");
+      if (landStage) landStage.classList.add("is-closing");
+      await sleep(1200);
+      if (token !== landToken || !landVisible) return false;
+      setLandStatus("done", "live");
+      await sleep(700);
+      if (token !== landToken || !landVisible) return false;
+      if (landSlope) landSlope.classList.remove("is-closing");
+      if (landStage) landStage.classList.remove("is-closing");
+      clearLandCycle();
+      await sleep(320);
+      return token === landToken && landVisible;
+    }
+
+    async function playLandFlow() {
+      if (landRunning) return;
+      landRunning = true;
+      while (landVisible) {
+        var token = (landToken += 1);
+        var keepGoing = await runLandCycle(token);
+        if (!keepGoing || !landVisible) break;
+      }
+      landRunning = false;
+    }
+
+    if (landStage) {
+      if (reduce) {
+        showLandStatic();
+      } else if ("IntersectionObserver" in window) {
+        var lio = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              if (landVisible) return;
+              landVisible = true;
+              playLandFlow();
+            } else if (landVisible) {
+              resetLandFlow();
+            }
+          });
+        }, { threshold: 0.08, rootMargin: "40px 0px" });
+        lio.observe(landStage);
+      } else {
+        landVisible = true;
+        playLandFlow();
+      }
+    }
+
+    var orchRoot = document.querySelector("[data-orch-stage]");
+    var orchStatus = orchRoot ? orchRoot.querySelector("[data-orch-status]") : null;
+    var orchMainPanel = orchRoot ? orchRoot.querySelector('[data-orch-panel="main"]') : null;
+    var orchPlanPanel = orchRoot ? orchRoot.querySelector('[data-orch-panel="plan"]') : null;
+    var orchCmd = orchRoot ? orchRoot.querySelector("[data-orch-cmd]") : null;
+    var orchOut = orchRoot ? orchRoot.querySelector("[data-orch-out]") : null;
+    var orchMainBadge = orchRoot ? orchRoot.querySelector("[data-orch-main-badge]") : null;
+    var orchPlanSteps = orchRoot
+      ? Array.prototype.slice.call(orchRoot.querySelectorAll("[data-plan-step]"))
+      : [];
+    var orchGraph = orchRoot ? orchRoot.querySelector("[data-orch-graph]") : null;
+    var orchNodes = {
+      spec: orchRoot ? orchRoot.querySelector('[data-orch-node="spec"]') : null,
+      t1: orchRoot ? orchRoot.querySelector('[data-orch-node="t1"]') : null,
+      t2: orchRoot ? orchRoot.querySelector('[data-orch-node="t2"]') : null,
+      t3: orchRoot ? orchRoot.querySelector('[data-orch-node="t3"]') : null
+    };
+    var orchEdges = orchRoot
+      ? Array.prototype.slice.call(orchRoot.querySelectorAll("[data-orch-edge]"))
+      : [];
+    var orchWorkers = orchRoot
+      ? Array.prototype.slice.call(orchRoot.querySelectorAll("[data-orch-worker]"))
+      : [];
+    var orchMerge = orchRoot ? orchRoot.querySelector("[data-orch-merge]") : null;
+    var orchToken = 0;
+
+    function setOrchStatus(text, state) {
+      if (!orchStatus) return;
+      orchStatus.textContent = text;
+      orchStatus.setAttribute("data-state", state || "live");
+    }
+
+    function setWorkerState(worker, state, log) {
+      if (!worker) return;
+      var badge = worker.querySelector("[data-orch-wbadge]");
+      var logEl = worker.querySelector("[data-orch-wlog]");
+      worker.classList.toggle("is-lit", state !== "idle");
+      worker.classList.toggle("is-active", state === "run");
+      worker.classList.toggle("is-done", state === "done");
+      worker.classList.toggle("is-waiting", state === "wait");
+      if (badge) {
+        badge.setAttribute("data-state", state === "run" ? "run" : state === "done" ? "done" : "wait");
+        badge.textContent = state === "run" ? "running" : state === "done" ? "done" : state === "wait" ? "waiting" : "idle";
+      }
+      if (logEl && typeof log === "string") logEl.innerHTML = log;
+    }
+
+    function resetOrch() {
+      orchToken += 1;
+      if (orchMainPanel) orchMainPanel.classList.remove("is-lit", "is-active");
+      if (orchPlanPanel) orchPlanPanel.classList.remove("is-lit", "is-active");
+      if (orchCmd) orchCmd.textContent = "";
+      if (orchOut) orchOut.innerHTML = "";
+      if (orchMainBadge) orchMainBadge.textContent = "session";
+      orchPlanSteps.forEach(function (el) {
+        el.classList.remove("is-lit", "is-active", "is-done");
+      });
+      if (orchGraph) orchGraph.classList.remove("is-lit", "is-active");
+      Object.keys(orchNodes).forEach(function (key) {
+        var el = orchNodes[key];
+        if (!el) return;
+        el.classList.remove("is-lit", "is-active", "is-blocked", "is-done");
+      });
+      orchEdges.forEach(function (el) { el.classList.remove("is-lit"); });
+      orchWorkers.forEach(function (w) {
+        setWorkerState(w, "idle", "");
+        w.classList.remove("is-lit", "is-active", "is-done", "is-waiting");
+      });
+      if (orchMerge) orchMerge.classList.remove("is-lit");
+      setOrchStatus("idle · waiting for viewport", "idle");
+    }
+
+    function showOrchStatic() {
+      if (orchMainPanel) {
+        orchMainPanel.classList.add("is-lit");
+        orchMainPanel.classList.remove("is-active");
+      }
+      if (orchPlanPanel) orchPlanPanel.classList.add("is-lit");
+      if (orchCmd) orchCmd.textContent = "/ship-release";
+      if (orchOut) {
+        orchOut.innerHTML =
+          '<span class="accent">plan ready</span>\n' +
+          "specs cut · tickets linked with depends-on\n" +
+          "children A+B parallel · C unblocked after\n" +
+          '<span class="ok">results folded back — release session continues</span>';
+      }
+      if (orchMainBadge) orchMainBadge.textContent = "complete";
+      orchPlanSteps.forEach(function (el) {
+        el.classList.add("is-done", "is-lit");
+        el.classList.remove("is-active");
+      });
+      if (orchGraph) orchGraph.classList.add("is-lit");
+      Object.keys(orchNodes).forEach(function (key) {
+        var el = orchNodes[key];
+        if (!el) return;
+        el.classList.add("is-lit", "is-done");
+        el.classList.remove("is-active", "is-blocked");
+      });
+      orchEdges.forEach(function (el) { el.classList.add("is-lit"); });
+      orchWorkers.forEach(function (w, i) {
+        var logs = [
+          "ticket/schema · landed",
+          "ticket/api · landed",
+          "ticket/ui · unblocked · landed"
+        ];
+        setWorkerState(w, "done", logs[i] || "");
+      });
+      if (orchMerge) orchMerge.classList.add("is-lit");
+      setOrchStatus("complete · looping", "done");
+    }
+
+    async function playOrch() {
+      orchToken += 1;
+      var token = orchToken;
+      if (orchMainPanel) orchMainPanel.classList.remove("is-lit", "is-active");
+      if (orchPlanPanel) orchPlanPanel.classList.remove("is-lit", "is-active");
+      if (orchCmd) orchCmd.textContent = "";
+      if (orchOut) orchOut.innerHTML = "";
+      if (orchMainBadge) orchMainBadge.textContent = "session";
+      orchPlanSteps.forEach(function (el) {
+        el.classList.remove("is-lit", "is-active", "is-done");
+      });
+      if (orchGraph) orchGraph.classList.remove("is-lit", "is-active");
+      Object.keys(orchNodes).forEach(function (key) {
+        var el = orchNodes[key];
+        if (!el) return;
+        el.classList.remove("is-lit", "is-active", "is-blocked", "is-done");
+      });
+      orchEdges.forEach(function (el) { el.classList.remove("is-lit"); });
+      orchWorkers.forEach(function (w) {
+        setWorkerState(w, "idle", "");
+        w.classList.remove("is-lit", "is-active", "is-done", "is-waiting");
+      });
+      if (orchMerge) orchMerge.classList.remove("is-lit");
+      setOrchStatus("live · prompting /ship-release", "live");
+
+      if (orchMainPanel) {
+        orchMainPanel.classList.add("is-lit", "is-active");
+      }
+      if (orchMainBadge) orchMainBadge.textContent = "typing";
+      if (orchCmd) await typeText(orchCmd, "/ship-release", 36);
+      if (token !== orchToken) return;
+      if (orchMainBadge) orchMainBadge.textContent = "planning";
+      if (orchOut) orchOut.innerHTML = '<span class="dim">received /ship-release</span>';
+      await sleep(280);
+      if (token !== orchToken) return;
+
+      if (orchPlanPanel) orchPlanPanel.classList.add("is-lit", "is-active");
+      setOrchStatus("live · building the plan", "live");
+      for (var p = 0; p < orchPlanSteps.length; p++) {
+        if (token !== orchToken) return;
+        orchPlanSteps.forEach(function (el) { el.classList.remove("is-active"); });
+        orchPlanSteps[p].classList.add("is-lit", "is-active");
+        if (orchOut) {
+          var planLines = [
+            "01 plan release scope on release/&lt;N&gt;",
+            "02 cut specs with recorded bases",
+            "03 cut tickets · wire depends-on edges",
+            "04 span child agents on ready tickets"
+          ];
+          orchOut.innerHTML =
+            '<span class="dim">received /ship-release</span>\n' +
+            planLines.slice(0, p + 1).join("\n");
+        }
+        await sleep(520);
+        if (token !== orchToken) return;
+        orchPlanSteps[p].classList.remove("is-active");
+        orchPlanSteps[p].classList.add("is-done");
+      }
+      if (orchPlanPanel) orchPlanPanel.classList.remove("is-active");
+
+      if (orchGraph) orchGraph.classList.add("is-lit", "is-active");
+      setOrchStatus("live · creating specs & tickets", "live");
+      if (orchNodes.spec) {
+        orchNodes.spec.classList.add("is-lit", "is-active");
+      }
+      if (orchOut) {
+        orchOut.innerHTML += '\n<span class="accent">created spec/auth-flow</span>';
+      }
+      await sleep(480);
+      if (token !== orchToken) return;
+      if (orchNodes.spec) orchNodes.spec.classList.remove("is-active");
+
+      orchEdges.forEach(function (el) { el.classList.add("is-lit"); });
+      if (orchNodes.t1) orchNodes.t1.classList.add("is-lit", "is-active");
+      if (orchNodes.t2) orchNodes.t2.classList.add("is-lit", "is-active");
+      if (orchNodes.t3) orchNodes.t3.classList.add("is-lit", "is-blocked");
+      if (orchOut) {
+        orchOut.innerHTML +=
+          "\nticket/schema · ticket/api ready" +
+          "\nticket/ui blocked · depends-on schema + api";
+      }
+      await sleep(640);
+      if (token !== orchToken) return;
+      if (orchNodes.t1) orchNodes.t1.classList.remove("is-active");
+      if (orchNodes.t2) orchNodes.t2.classList.remove("is-active");
+      if (orchGraph) orchGraph.classList.remove("is-active");
+
+      setOrchStatus("live · spanning children in parallel", "live");
+      if (orchMainBadge) orchMainBadge.textContent = "orchestrating";
+      if (orchOut) {
+        orchOut.innerHTML += '\n<span class="accent">spawn child A · child B · child C waits</span>';
+      }
+      setWorkerState(
+        orchWorkers[0],
+        "run",
+        "claim ticket/schema\nopen worktree\nrun /ship-ticket…"
+      );
+      setWorkerState(
+        orchWorkers[1],
+        "run",
+        "claim ticket/api\nopen worktree\nrun /ship-ticket…"
+      );
+      setWorkerState(
+        orchWorkers[2],
+        "wait",
+        "blocked on depends-on\nwaiting for schema + api"
+      );
+      if (orchNodes.t1) orchNodes.t1.classList.add("is-active");
+      if (orchNodes.t2) orchNodes.t2.classList.add("is-active");
+      await sleep(720);
+      if (token !== orchToken) return;
+
+      setWorkerState(
+        orchWorkers[0],
+        "run",
+        "ticket/schema\ntests green\nopening PR → land"
+      );
+      setWorkerState(
+        orchWorkers[1],
+        "run",
+        "ticket/api\ntypecheck pass\nopening PR → land"
+      );
+      await sleep(700);
+      if (token !== orchToken) return;
+
+      setWorkerState(orchWorkers[0], "done", "ticket/schema · landed\nreply → main");
+      setWorkerState(orchWorkers[1], "done", "ticket/api · landed\nreply → main");
+      if (orchNodes.t1) {
+        orchNodes.t1.classList.remove("is-active");
+        orchNodes.t1.classList.add("is-done");
+      }
+      if (orchNodes.t2) {
+        orchNodes.t2.classList.remove("is-active");
+        orchNodes.t2.classList.add("is-done");
+      }
+      if (orchOut) {
+        orchOut.innerHTML +=
+          '\n<span class="ok">child A done</span> · <span class="ok">child B done</span>';
+      }
+      await sleep(420);
+      if (token !== orchToken) return;
+
+      if (orchNodes.t3) {
+        orchNodes.t3.classList.remove("is-blocked");
+        orchNodes.t3.classList.add("is-active");
+      }
+      setWorkerState(
+        orchWorkers[2],
+        "run",
+        "unblocked\nclaim ticket/ui\nrun /ship-ticket…"
+      );
+      setOrchStatus("live · unblocking dependent ticket", "live");
+      await sleep(680);
+      if (token !== orchToken) return;
+
+      setWorkerState(orchWorkers[2], "done", "ticket/ui · landed\nreply → main");
+      if (orchNodes.t3) {
+        orchNodes.t3.classList.remove("is-active");
+        orchNodes.t3.classList.add("is-done");
+      }
+      if (orchNodes.spec) orchNodes.spec.classList.add("is-done");
+
+      if (orchMerge) orchMerge.classList.add("is-lit");
+      if (orchMainPanel) orchMainPanel.classList.add("is-active");
+      if (orchMainBadge) orchMainBadge.textContent = "merging";
+      if (orchOut) {
+        orchOut.innerHTML +=
+          '\n<span class="ok">all child replies attached</span>\nrelease session continues on main';
+      }
+      setOrchStatus("live · folding replies into main", "live");
+      await sleep(720);
+      if (token !== orchToken) return;
+
+      if (orchMainPanel) orchMainPanel.classList.remove("is-active");
+      if (orchMainBadge) orchMainBadge.textContent = "complete";
+      setOrchStatus("complete · looping", "live");
+      await sleep(1000);
+      if (token !== orchToken) return;
+      playOrch();
+    }
+
+    if (orchRoot) {
+      if (reduce) {
+        showOrchStatic();
+      } else if ("IntersectionObserver" in window) {
+        var orchVisible = false;
+        var oio = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              if (orchVisible) return;
+              orchVisible = true;
+              playOrch();
+            } else if (orchVisible) {
+              orchVisible = false;
+              resetOrch();
+            }
+          });
+        }, { threshold: 0.14 });
+        oio.observe(orchRoot);
+      } else {
+        playOrch();
+      }
+    }
+
+    function bindProcessStage(root) {
+      if (!root) return;
+      var status = root.querySelector("[data-process-status]");
+      var items = Array.prototype.slice.call(root.querySelectorAll("[data-process-rail] [data-step]")).sort(function (a, b) {
+        return Number(a.getAttribute("data-step") || "0") - Number(b.getAttribute("data-step") || "0");
+      });
+      var token = 0;
+      var kind = root.getAttribute("data-process") || "process";
+      var labels = {
+        idle: "idle · waiting for viewport",
+        live: "live · stepping",
+        done: "complete · looping"
+      };
+
+      function setStatus(key, state) {
+        if (!status) return;
+        status.textContent = labels[key] || key;
+        status.setAttribute("data-state", state || "live");
+      }
+
+      function reset() {
+        token += 1;
+        items.forEach(function (el) {
+          el.classList.remove("is-active", "is-done", "is-lit");
+        });
+        setStatus("idle", "idle");
+      }
+
+      function showStatic() {
+        items.forEach(function (el) {
+          el.classList.add("is-done", "is-lit");
+          el.classList.remove("is-active");
+        });
+        setStatus("done", "done");
+      }
+
+      async function play() {
+        var my = (token += 1);
+        items.forEach(function (el) {
+          el.classList.remove("is-active", "is-done", "is-lit");
+        });
+        setStatus("live", "live");
+        await sleep(kind === "cycle" ? 420 : 180);
+        for (var i = 0; i < items.length; i++) {
+          if (my !== token) return;
+          var el = items[i];
+          items.forEach(function (x) { x.classList.remove("is-active"); });
+          el.classList.add("is-active", "is-lit");
+          await sleep(kind === "gates" ? 420 : kind === "tickets" ? 480 : kind === "cycle" ? 1400 : 560);
+          if (my !== token) return;
+          el.classList.remove("is-active");
+          el.classList.add("is-done", "is-lit");
+          await sleep(kind === "cycle" ? 380 : 160);
+        }
+        if (my !== token) return;
+        setStatus("done", "live");
+        await sleep(kind === "cycle" ? 2200 : 900);
+        if (my !== token) return;
+        play();
+      }
+
+      if (reduce) {
+        showStatic();
+      } else if ("IntersectionObserver" in window) {
+        var processVisible = false;
+        var pio = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              if (processVisible) return;
+              processVisible = true;
+              play();
+            } else if (processVisible) {
+              processVisible = false;
+              reset();
+            }
+          });
+        }, { threshold: 0.16 });
+        pio.observe(root);
+      } else {
+        play();
+      }
+    }
+
+    document.querySelectorAll("[data-process]").forEach(bindProcessStage);
+
+    (function bindCycleOrbit() {
+      var orbit = document.querySelector("[data-cycle-orbit]");
+      if (!orbit) return;
+      if (reduce) {
+        orbit.classList.add("is-paused");
+        return;
+      }
+      function pause() { orbit.classList.add("is-paused"); }
+      function resume() { orbit.classList.remove("is-paused"); }
+      orbit.addEventListener("pointerenter", pause);
+      orbit.addEventListener("pointerleave", resume);
+      orbit.addEventListener("focusin", pause);
+      orbit.addEventListener("focusout", function (ev) {
+        if (!orbit.contains(ev.relatedTarget)) resume();
+      });
+    })();
+
+    function bindLineageStage(root) {
+      if (!root) return;
+      var status = root.querySelector("[data-lineage-status]");
+      var nodes = Array.prototype.slice.call(root.querySelectorAll("[data-lineage-tree] .lineage-node")).sort(function (a, b) {
+        return Number(a.getAttribute("data-step") || "0") - Number(b.getAttribute("data-step") || "0");
+      });
+      var beats = Array.prototype.slice.call(root.querySelectorAll("[data-lineage-beats] .lineage-beat"));
+      var whys = Array.prototype.slice.call(root.querySelectorAll("[data-lineage-why] .lineage-why__card"));
+      var token = 0;
+      var labels = {
+        idle: "idle · waiting for viewport",
+        live: "live · heartbeat climb",
+        done: "complete · looping"
+      };
+
+      function setStatus(key, state) {
+        if (!status) return;
+        status.textContent = labels[key] || key;
+        status.setAttribute("data-state", state || "live");
+      }
+
+      function clearBeat(el) {
+        el.classList.remove("is-lit", "is-active", "is-done", "is-beating");
+      }
+
+      function reset() {
+        token += 1;
+        nodes.forEach(clearBeat);
+        beats.forEach(clearBeat);
+        whys.forEach(clearBeat);
+        setStatus("idle", "idle");
+      }
+
+      function showStatic() {
+        nodes.forEach(function (el) {
+          el.classList.add("is-lit", "is-done");
+          el.classList.remove("is-active", "is-beating");
+        });
+        beats.forEach(function (el) {
+          el.classList.add("is-lit");
+          el.classList.remove("is-beating");
+        });
+        whys.forEach(function (el) {
+          el.classList.add("is-lit");
+          el.classList.remove("is-beating");
+        });
+        setStatus("done", "done");
+      }
+
+      async function play() {
+        var my = (token += 1);
+        nodes.forEach(clearBeat);
+        beats.forEach(clearBeat);
+        whys.forEach(clearBeat);
+        setStatus("live", "live");
+        await sleep(160);
+        for (var i = 0; i < nodes.length; i++) {
+          if (my !== token) return;
+          var el = nodes[i];
+          nodes.forEach(function (n) { n.classList.remove("is-active"); });
+          el.classList.add("is-lit", "is-active", "is-beating");
+          if (i < beats.length) {
+            beats[i].classList.add("is-lit", "is-beating");
+          }
+          await sleep(720);
+          if (my !== token) return;
+          el.classList.remove("is-active");
+          el.classList.add("is-done", "is-lit", "is-beating");
+          await sleep(180);
+        }
+        if (my !== token) return;
+        beats.forEach(function (el) {
+          el.classList.add("is-lit", "is-beating");
+        });
+        for (var w = 0; w < whys.length; w++) {
+          if (my !== token) return;
+          whys[w].classList.add("is-lit", "is-beating");
+          await sleep(220);
+        }
+        if (my !== token) return;
+        setStatus("done", "live");
+        await sleep(900);
+        if (my !== token) return;
+        play();
+      }
+
+      if (reduce) {
+        showStatic();
+      } else if ("IntersectionObserver" in window) {
+        var lineageVisible = false;
+        var lio = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              if (lineageVisible) return;
+              lineageVisible = true;
+              play();
+            } else if (lineageVisible) {
+              lineageVisible = false;
+              reset();
+            }
+          });
+        }, { threshold: 0.14 });
+        lio.observe(root);
+      } else {
+        play();
+      }
+    }
+
+    document.querySelectorAll("[data-lineage]").forEach(bindLineageStage);
+
+    function bindSkillCats(root) {
+      var cards = root.querySelectorAll("[data-skill-cat]");
+      var skillsVisible = false;
+      function restartTracks() {
+        cards.forEach(function (card) {
+          var track = card.querySelector(".skill-cat__track");
+          if (!track) return;
+          track.classList.add("is-restarting");
+          void track.offsetWidth;
+          track.classList.remove("is-restarting");
+        });
+      }
+      function play() {
+        cards.forEach(function (card) { card.classList.add("is-in"); });
+        restartTracks();
+      }
+      function reset() {
+        cards.forEach(function (card) { card.classList.remove("is-in"); });
+      }
+      if (reduce) {
+        play();
+        return;
+      }
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              if (skillsVisible) return;
+              skillsVisible = true;
+              play();
+            } else if (skillsVisible) {
+              skillsVisible = false;
+              reset();
+            }
+          });
+        }, { threshold: 0.12 });
+        io.observe(root);
+      } else {
+        play();
+      }
+    }
+    document.querySelectorAll("[data-skill-cats]").forEach(bindSkillCats);
+
+    document.querySelectorAll(".copy-btn").forEach(function (btn) {
+      btn.addEventListener("click", async function () {
+        var text = btn.getAttribute("data-copy") || "";
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(text);
+          } else {
+            var ta = document.createElement("textarea");
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+          }
+          btn.classList.add("is-copied");
+          var prev = btn.textContent;
+          btn.textContent = "Copied";
+          setTimeout(function () {
+            btn.classList.remove("is-copied");
+            btn.textContent = prev || "Copy";
+          }, 1400);
+        } catch (err) {
+          btn.textContent = "Copy failed";
+        }
+      });
+    });
+  })();
+  </script>
+</body>
+</html>

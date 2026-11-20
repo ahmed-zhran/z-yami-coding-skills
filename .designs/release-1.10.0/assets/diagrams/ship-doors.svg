@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 220" role="img" aria-labelledby="doorsTitle doorsDesc">
+  <title id="doorsTitle">Ship doors</title>
+  <desc id="doorsDesc">Three ship doors own land gates at ticket, spec, and release levels.</desc>
+  <style>
+    .panel { fill: #0d1118; stroke: #2a3344; stroke-width: 1.5; }
+    .title { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 14px; font-weight: 600; fill: #3db4ff; }
+    .body { font-family: "Sora", "Segoe UI", sans-serif; font-size: 13px; fill: #e8edf5; }
+    .muted { font-family: "Sora", "Segoe UI", sans-serif; font-size: 12px; fill: #8b95a8; }
+    .rule { stroke: #3db4ff; stroke-width: 2.5; stroke-linecap: square; }
+    .signal { fill: none; stroke: #8eb6ff; stroke-width: 1; opacity: 0.45; }
+  </style>
+
+  <path class="signal" d="M40 190 H880"/>
+
+  <rect class="panel" x="24" y="28" width="280" height="148" rx="2"/>
+  <line class="rule" x1="24" y1="28" x2="304" y2="28"/>
+  <text class="title" x="44" y="60">/ship-ticket</text>
+  <text class="body" x="44" y="92">One ticket: branch → build → review → merge</text>
+  <text class="muted" x="44" y="120">Lands into its recorded base</text>
+  <text class="muted" x="44" y="144">You approve before land</text>
+
+  <rect class="panel" x="320" y="28" width="280" height="148" rx="2"/>
+  <line class="rule" x1="320" y1="28" x2="600" y2="28"/>
+  <text class="title" x="340" y="60">/ship-spec</text>
+  <text class="body" x="340" y="92">One feature through its tickets</text>
+  <text class="muted" x="340" y="120">Tickets run under this session</text>
+  <text class="muted" x="340" y="144">Lands into the open release</text>
+
+  <rect class="panel" x="616" y="28" width="280" height="148" rx="2"/>
+  <line class="rule" x1="616" y1="28" x2="896" y2="28"/>
+  <text class="title" x="636" y="60">/ship-release</text>
+  <text class="body" x="636" y="92">Whole release, one feature at a time</text>
+  <text class="muted" x="636" y="120">Writes the next-release gate</text>
+  <text class="muted" x="636" y="144">You approve the release PR</text>
+</svg>

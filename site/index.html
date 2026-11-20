@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><script type="application/json" data-od-external-dependencies>["https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"]</script>
+<head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Yami Coding: Agent skills for shipping software</title>
-  <meta name="description" content="62 open-source agent skills for release, spec, and ticket. Lineage bases, ship doors, and review axes: you approve the landings. MIT. v1.10.0." />
+  <meta name="description" content="62 open-source agent skills for release, spec, and ticket. Lineage bases, ship doors, and review axes: you approve the landings. MIT. v2.0.0." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
@@ -844,7 +844,7 @@ code {
 /* Facts */
 .facts {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
 }
 .fact {
@@ -3104,7 +3104,7 @@ code {
     <section class="hero" id="top">
       <div class="wrap hero-grid">
         <div class="hero-copy reveal">
-          <p class="eyebrow">Open source · MIT · v1.10.0</p>
+          <p class="eyebrow">Open source · MIT · v2.0.0</p>
           <h1>Ship in the <em>dark</em>. Land with a recorded base.</h1>
           <p class="lead">
             Yami Coding is Ahmed Zhran’s plugin of <strong>62 skills</strong> for Claude Code, Codex, Cursor, and other agents.
@@ -3118,7 +3118,7 @@ code {
           <ul class="hero-meta">
             <li><strong>62</strong> skills</li>
             <li><strong>MIT</strong> license</li>
-            <li><strong>v1.10.0</strong> current</li>
+            <li><strong>v2.0.0</strong> current</li>
             <li>Claude · Codex · skills.sh agents</li>
           </ul>
         </div>
@@ -3220,6 +3220,18 @@ code {
           </div>
           <div class="fact reveal" role="listitem">
             <div class="od-stat">
+              <div class="fact-value"><span data-count="51">0</span></div>
+              <div class="fact-label">Engineering</div>
+            </div>
+          </div>
+          <div class="fact reveal" role="listitem">
+            <div class="od-stat">
+              <div class="fact-value"><span data-count="11">0</span></div>
+              <div class="fact-label">Productivity</div>
+            </div>
+          </div>
+          <div class="fact reveal" role="listitem">
+            <div class="od-stat">
               <div class="fact-value"><span data-count="3">0</span></div>
               <div class="fact-label">Install routes</div>
             </div>
@@ -3227,7 +3239,7 @@ code {
           <div class="fact reveal" role="listitem">
             <div class="od-stat">
               <div class="fact-value">MIT</div>
-              <div class="fact-label">License · v1.10.0</div>
+              <div class="fact-label">License · v2.0.0</div>
             </div>
           </div>
         </div>
@@ -3595,7 +3607,7 @@ code {
           <p class="eyebrow">Issue types</p>
           <h2 id="tickets-title">Three issue kinds. Ticket issues carry the subtypes.</h2>
           <p class="lead">
-            Every issue is a <strong>release</strong>, a <strong>spec</strong>, or a <strong>ticket</strong>. Ticket issues go further: feature/tracer, bug, research, or hotfix, each with a recorded <code>**Base:**</code>, surfaces, blockers, and what it delivers.
+            Every issue is a <strong>release</strong>, a <strong>spec</strong>, or a <strong>ticket</strong>. Ticket issues go further: feature/tracer, bug, research, or hotfix: each with a recorded <code>**Base:**</code>, surfaces, blockers, and what it delivers.
           </p>
         </div>
 
@@ -3878,7 +3890,7 @@ code {
           <p class="eyebrow">Code gating</p>
           <h2 id="gates-title">Tests, review, PR, then the door that owns the land.</h2>
           <p class="lead">
-            Work does not skip the rail. TDD seams and typecheck come first; <code>code-review</code> runs Standards and Spec axes before the pull request; landing only happens through the ship door that owns that level, and the release PR into <code>main</code> stays human.
+            Work does not skip the rail. TDD seams and typecheck come first; <code>code-review</code> runs Standards and Spec axes before the pull request; landing only happens through the ship door that owns that level: and the release PR into <code>main</code> stays human.
           </p>
         </div>
 
@@ -4043,7 +4055,7 @@ code {
         </div>
 
         <div class="skills-cta reveal">
-          <p><strong>Want every description?</strong> Open the full filterable skill tables: Engineering and Productivity × user / model: on a dedicated page.</p>
+          <p><strong>Want every description?</strong> Open the full filterable skill tables: Engineering and Productivity × user / model, on a dedicated page.</p>
           <a class="btn btn-primary" href="skills.html">View full skills list</a>
         </div>
       </div>
@@ -4182,7 +4194,7 @@ codex plugin add z-yami-coding-skills@z-yami</code></pre>
             <p class="eyebrow">Ready when you are</p>
             <h2 id="cta-title">Install once. Ship with lineage.</h2>
             <p class="lead" style="margin-top:12px;">
-              62 MIT-licensed skills · v1.10.0 · Claude, Codex, and skills.sh agents.
+              62 MIT-licensed skills · v2.0.0 · Claude, Codex, and skills.sh agents.
               You approve the landings.
             </p>
           </div>
@@ -4203,7 +4215,7 @@ codex plugin add z-yami-coding-skills@z-yami</code></pre>
           <polygon points="12,76 124,50 144,74 32,100" fill="#8eb6ff"/>
           <polygon points="18,34 130,8 150,32 38,58" fill="#f4f7ff"/>
         </svg>
-        <p>Yami Coding by Ahmed Zhran · MIT · v1.10.0</p>
+        <p>Yami Coding by Ahmed Zhran · MIT · v2.0.0</p>
       </div>
       <ul class="footer-links">
         <li><a href="skills.html">Full skills</a></li>
@@ -4245,7 +4257,7 @@ codex plugin add z-yami-coding-skills@z-yami</code></pre>
     function onScroll() {
       var max = document.documentElement.scrollHeight - window.innerHeight;
       var y = window.scrollY || 0;
-      var pct = max > 0 ? (y / max) * 100 : 0;
+      var pct = max > 0 ? (y / max) * 100: 0;
       if (progress) progress.style.width = pct + "%";
       root.style.setProperty("--scroll-y", String(y));
 
@@ -4271,7 +4283,7 @@ codex plugin add z-yami-coding-skills@z-yami</code></pre>
         e.preventDefault();
         var open = !shipItem.classList.contains("is-open");
         shipItem.classList.toggle("is-open", open);
-        shipTrigger.setAttribute("aria-expanded", open ? "true" : "false");
+        shipTrigger.setAttribute("aria-expanded", open ? "true": "false");
       });
       document.addEventListener("click", function (e) {
         if (!shipItem.contains(e.target)) closeShipMenu();
@@ -4284,8 +4296,8 @@ codex plugin add z-yami-coding-skills@z-yami</code></pre>
     if (toggle && nav) {
       toggle.addEventListener("click", function () {
         var open = nav.classList.toggle("is-open");
-        toggle.setAttribute("aria-expanded", open ? "true" : "false");
-        toggle.textContent = open ? "Close" : "Menu";
+        toggle.setAttribute("aria-expanded", open ? "true": "false");
+        toggle.textContent = open ? "Close": "Menu";
         if (!open) closeShipMenu();
       });
       navLinks.forEach(function (a) {
@@ -4380,10 +4392,10 @@ codex plugin add z-yami-coding-skills@z-yami</code></pre>
         shipLabel.textContent = String(index + 1).padStart(2, "0") + " / 03";
       }
       if (shipBar) {
-        var pct = phase === "done-all" ? 100 : ((index + (phase === "out" ? 0.65 : 0.2)) / 3) * 100;
+        var pct = phase === "done-all" ? 100: ((index + (phase === "out" ? 0.65: 0.2)) / 3) * 100;
         shipBar.style.width = Math.min(100, pct).toFixed(1) + "%";
       }
-      if (shipStatus) shipStatus.textContent = phase === "out" ? "landing" : phase === "done-all" ? "loop" : "typing";
+      if (shipStatus) shipStatus.textContent = phase === "out" ? "landing": phase === "done-all" ? "loop": "typing";
     }
 
     async function runShipSequence() {
@@ -4409,7 +4421,7 @@ codex plugin add z-yami-coding-skills@z-yami</code></pre>
           setShipStep(s, "out");
           await sleep(480);
           for (var L = 0; L < step.lines.length; L++) {
-            shipOut.innerHTML += (L ? "\n" : "") + step.lines[L];
+            shipOut.innerHTML += (L ? "\n": "") + step.lines[L];
             await sleep(620);
           }
           await sleep(1600);
@@ -4432,7 +4444,7 @@ codex plugin add z-yami-coding-skills@z-yami</code></pre>
     var factsStrip = document.querySelector(".facts");
     var factReveals = factsStrip
       ? factsStrip.querySelectorAll(".reveal")
-      : [];
+     : [];
     var counters = document.querySelectorAll("[data-count]");
 
     function animateCount(el, target) {
@@ -4529,16 +4541,16 @@ codex plugin add z-yami-coding-skills@z-yami</code></pre>
     }
 
     var landRoot = document.querySelector("[data-land-flow]");
-    var landStage = landRoot ? landRoot.querySelector(".land-flow__stage") : null;
-    var landSlope = landRoot ? landRoot.querySelector("[data-land-slope]") : null;
-    var landStatus = landRoot ? landRoot.querySelector("[data-land-status]") : null;
-    var landPath = landRoot ? landRoot.querySelector("[data-land-path]") : null;
-    var landSpark = landRoot ? landRoot.querySelector("[data-land-spark]") : null;
+    var landStage = landRoot ? landRoot.querySelector(".land-flow__stage"): null;
+    var landSlope = landRoot ? landRoot.querySelector("[data-land-slope]"): null;
+    var landStatus = landRoot ? landRoot.querySelector("[data-land-status]"): null;
+    var landPath = landRoot ? landRoot.querySelector("[data-land-path]"): null;
+    var landSpark = landRoot ? landRoot.querySelector("[data-land-spark]"): null;
     var landLevels = landRoot
       ? Array.prototype.slice.call(landRoot.querySelectorAll(".land-node")).sort(function (a, b) {
           return Number(a.getAttribute("data-order") || "0") - Number(b.getAttribute("data-order") || "0");
         })
-      : [];
+     : [];
     var landToken = 0;
     var landVisible = false;
     var landRunning = false;
@@ -4714,29 +4726,29 @@ codex plugin add z-yami-coding-skills@z-yami</code></pre>
     }
 
     var orchRoot = document.querySelector("[data-orch-stage]");
-    var orchStatus = orchRoot ? orchRoot.querySelector("[data-orch-status]") : null;
-    var orchMainPanel = orchRoot ? orchRoot.querySelector('[data-orch-panel="main"]') : null;
-    var orchPlanPanel = orchRoot ? orchRoot.querySelector('[data-orch-panel="plan"]') : null;
-    var orchCmd = orchRoot ? orchRoot.querySelector("[data-orch-cmd]") : null;
-    var orchOut = orchRoot ? orchRoot.querySelector("[data-orch-out]") : null;
-    var orchMainBadge = orchRoot ? orchRoot.querySelector("[data-orch-main-badge]") : null;
+    var orchStatus = orchRoot ? orchRoot.querySelector("[data-orch-status]"): null;
+    var orchMainPanel = orchRoot ? orchRoot.querySelector('[data-orch-panel="main"]'): null;
+    var orchPlanPanel = orchRoot ? orchRoot.querySelector('[data-orch-panel="plan"]'): null;
+    var orchCmd = orchRoot ? orchRoot.querySelector("[data-orch-cmd]"): null;
+    var orchOut = orchRoot ? orchRoot.querySelector("[data-orch-out]"): null;
+    var orchMainBadge = orchRoot ? orchRoot.querySelector("[data-orch-main-badge]"): null;
     var orchPlanSteps = orchRoot
       ? Array.prototype.slice.call(orchRoot.querySelectorAll("[data-plan-step]"))
-      : [];
-    var orchGraph = orchRoot ? orchRoot.querySelector("[data-orch-graph]") : null;
+     : [];
+    var orchGraph = orchRoot ? orchRoot.querySelector("[data-orch-graph]"): null;
     var orchNodes = {
-      spec: orchRoot ? orchRoot.querySelector('[data-orch-node="spec"]') : null,
-      t1: orchRoot ? orchRoot.querySelector('[data-orch-node="t1"]') : null,
-      t2: orchRoot ? orchRoot.querySelector('[data-orch-node="t2"]') : null,
-      t3: orchRoot ? orchRoot.querySelector('[data-orch-node="t3"]') : null
+      spec: orchRoot ? orchRoot.querySelector('[data-orch-node="spec"]'): null,
+      t1: orchRoot ? orchRoot.querySelector('[data-orch-node="t1"]'): null,
+      t2: orchRoot ? orchRoot.querySelector('[data-orch-node="t2"]'): null,
+      t3: orchRoot ? orchRoot.querySelector('[data-orch-node="t3"]'): null
     };
     var orchEdges = orchRoot
       ? Array.prototype.slice.call(orchRoot.querySelectorAll("[data-orch-edge]"))
-      : [];
+     : [];
     var orchWorkers = orchRoot
       ? Array.prototype.slice.call(orchRoot.querySelectorAll("[data-orch-worker]"))
-      : [];
-    var orchMerge = orchRoot ? orchRoot.querySelector("[data-orch-merge]") : null;
+     : [];
+    var orchMerge = orchRoot ? orchRoot.querySelector("[data-orch-merge]"): null;
     var orchToken = 0;
 
     function setOrchStatus(text, state) {
@@ -4754,8 +4766,8 @@ codex plugin add z-yami-coding-skills@z-yami</code></pre>
       worker.classList.toggle("is-done", state === "done");
       worker.classList.toggle("is-waiting", state === "wait");
       if (badge) {
-        badge.setAttribute("data-state", state === "run" ? "run" : state === "done" ? "done" : "wait");
-        badge.textContent = state === "run" ? "running" : state === "done" ? "done" : state === "wait" ? "waiting" : "idle";
+        badge.setAttribute("data-state", state === "run" ? "run": state === "done" ? "done": "wait");
+        badge.textContent = state === "run" ? "running": state === "done" ? "done": state === "wait" ? "waiting": "idle";
       }
       if (logEl && typeof log === "string") logEl.innerHTML = log;
     }
@@ -5070,21 +5082,21 @@ codex plugin add z-yami-coding-skills@z-yami</code></pre>
           el.classList.remove("is-active", "is-done", "is-lit");
         });
         setStatus("live", "live");
-        await sleep(kind === "cycle" ? 420 : 180);
+        await sleep(kind === "cycle" ? 420: 180);
         for (var i = 0; i < items.length; i++) {
           if (my !== token) return;
           var el = items[i];
           items.forEach(function (x) { x.classList.remove("is-active"); });
           el.classList.add("is-active", "is-lit");
-          await sleep(kind === "gates" ? 420 : kind === "tickets" ? 480 : kind === "cycle" ? 1400 : 560);
+          await sleep(kind === "gates" ? 420: kind === "tickets" ? 480: kind === "cycle" ? 1400: 560);
           if (my !== token) return;
           el.classList.remove("is-active");
           el.classList.add("is-done", "is-lit");
-          await sleep(kind === "cycle" ? 380 : 160);
+          await sleep(kind === "cycle" ? 380: 160);
         }
         if (my !== token) return;
         setStatus("done", "live");
-        await sleep(kind === "cycle" ? 2200 : 900);
+        await sleep(kind === "cycle" ? 2200: 900);
         if (my !== token) return;
         play();
       }
